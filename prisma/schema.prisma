@@ -1,0 +1,299 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  phone     String?  // 전화번호 (선택사항)
+  position  String?  // 직책 (선택사항)
+  avatar    String?
+  password  String
+  userLevel Int      @default(2) // 0: 최고관리자(admin), 1: 관리자, 2: 일반회원
+  isActive  Boolean  @default(true) // 활성/비활성 상태
+  lastSeen  DateTime? // 마지막 접속 시간 (온라인 상태 확인용)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 프로젝트 관계
+  ownedProjects    Project[] @relation("ProjectOwner")
+  projectMembers   ProjectMember[]
+  
+  // 할일 관계
+  tasks            Task[]
+  
+  // 채팅 관계
+  messages         Message[]
+  
+  // 관리 관계
+  managedUsers     UserManagementLog[] @relation("ManagedBy")
+  managerActions   UserManagementLog[] @relation("ManagerActions")
+  
+  // 게시판 관계
+  posts            Post[]    @relation("PostAuthor")
+  comments         Comment[] @relation("CommentAuthor")
+  
+  // 일정 관계
+  schedules        UserSchedule[]
+  
+  @@map("users")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  color       String   @default("#3B82F6")
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 처리장 정보
+  facilityType String?    // "하수처리장", "정수처리장", "폐수처리장"
+  facilityName String?    // 처리장명
+  address      String?    // 처리장 주소
+  
+  // 진단 정보
+  diagnosisType String?   // "기계", "전기", "환경", "종합"
+  startDate     DateTime? // 진단 시작일
+  endDate       DateTime? // 진단 완료 예정일
+  
+  // 연락처 정보
+  contactPerson String?   // 담당자명
+  contactPhone  String?   // 연락처
+  contactEmail  String?   // 이메일
+  
+  // 특별 사항
+  specialNotes  String?   // 특별 주의사항 및 메모
+  status        String    @default("준비중") // "준비중", "진행중", "완료", "보류"
+
+  // 관계
+  owner       User            @relation("ProjectOwner", fields: [ownerId], references: [id])
+  members     ProjectMember[]
+  tasks       Task[]
+  schedules   Schedule[]
+  files       ProjectFile[]
+  messages    Message[]
+  milestones  Milestone[]
+  facilityContacts FacilityContact[] // 처리장 담당자들
+
+  @@map("projects")
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  userId    String
+  role      String   @default("member") // owner, admin, member
+  specialty String?  // "기계", "전기", "환경", "총괄", "보조" 등 전문분야
+  joinedAt  DateTime @default(now())
+
+  // 관계
+  project   Project @relation(fields: [projectId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([projectId, userId])
+  @@map("project_members")
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String    @default("todo") // todo, in_progress, done
+  priority    String    @default("medium") // low, medium, high
+  dueDate     DateTime?
+  projectId   String
+  assigneeId  String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // 관계
+  project     Project @relation(fields: [projectId], references: [id])
+  assignee    User    @relation(fields: [assigneeId], references: [id])
+
+  @@map("tasks")
+}
+
+model Schedule {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  projectId   String
+  
+  // 공지 관련 필드
+  isNotice    Boolean  @default(false) // 공지 일정 여부 (관리자만 설정 가능)
+  createdBy   String?  // 일정 생성자 (공지 일정의 경우 관리자 ID)
+  priority    String   @default("normal") // "high", "normal", "low" (공지용 우선순위)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  project     Project @relation(fields: [projectId], references: [id])
+
+  @@map("schedules")
+}
+
+// 팀원 개인 일정 (일별 작업)
+model UserSchedule {
+  id          String   @id @default(cuid())
+  title       String   // 일정 제목
+  description String?  // 일정 설명
+  date        DateTime // 일정 날짜 (일별, 시간 정보 무시)
+  isCompleted Boolean  @default(false) // 완료 여부
+  isTeamEvent Boolean  @default(false) // 팀 전체 일정 여부 (관리자만 등록 가능)
+  userId      String   // 일정 소유자
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  user        User @relation(fields: [userId], references: [id])
+
+  @@map("user_schedules")
+}
+
+model ProjectFile {
+  id          String   @id @default(cuid())
+  name        String
+  originalName String
+  mimeType    String
+  size        Int
+  path        String
+  googleFileId String?
+  projectId   String?  // nullable로 변경 - 전역 파일은 null
+  uploadedBy  String
+  createdAt   DateTime @default(now())
+
+  // 관계 (uploadedBy는 User ID를 참조하지만 외래키 제약 없이)
+  project     Project? @relation(fields: [projectId], references: [id]) // nullable
+
+  @@map("project_files")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  projectId String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  // 관계
+  project   Project @relation(fields: [projectId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id])
+
+  @@map("messages")
+}
+
+model UserManagementLog {
+  id          String   @id @default(cuid())
+  managerId   String   // 관리 작업을 수행한 사용자 ID
+  targetUserId String  // 관리 대상 사용자 ID
+  action      String   // "LEVEL_CHANGE", "DEACTIVATE", "ACTIVATE", "DELETE"
+  oldValue    String?  // 이전 값 (등급 변경 시)
+  newValue    String?  // 새로운 값 (등급 변경 시)
+  reason      String?  // 관리 사유
+  createdAt   DateTime @default(now())
+
+  // 관계
+  manager     User @relation("ManagerActions", fields: [managerId], references: [id])
+  targetUser  User @relation("ManagedBy", fields: [targetUserId], references: [id])
+
+  @@map("user_management_logs")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  authorId  String
+  isNotice  Boolean  @default(false) // 공지사항 여부
+  viewCount Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  author    User      @relation("PostAuthor", fields: [authorId], references: [id])
+  comments  Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  post      Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author    User @relation("CommentAuthor", fields: [authorId], references: [id])
+
+  @@map("comments")
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  status      String   @default("NOT_STARTED") // NOT_STARTED, IN_PROGRESS, COMPLETED, ON_HOLD
+  progress    Int      @default(0) // 0-100
+  order       Int      @default(1)
+  projectId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  project     Project @relation(fields: [projectId], references: [id])
+
+  @@map("milestones")
+}
+
+// 처리장 담당자 정보 모델
+model FacilityContact {
+  id          String   @id @default(cuid())
+  projectId   String   // 연관된 프로젝트 ID
+  
+  // 담당자 기본 정보
+  name        String   // 담당자 이름
+  position    String   // 직책 (소장, 부소장, 기계담당, 전기담당, 환경담당, 공무담당 등)
+  department  String?  // 소속 부서
+  
+  // 연락처 정보
+  phone       String?  // 전화번호
+  mobile      String?  // 휴대폰
+  email       String?  // 이메일
+  extension   String?  // 내선번호
+  
+  // 담당 업무
+  responsibilities String? // 담당업무 및 메모
+  specialty       String?  // 전문분야 ("기계", "전기", "환경", "행정", "총괄" 등)
+  
+  // 기타 정보
+  isPrimary   Boolean  @default(false) // 주담당자 여부
+  isActive    Boolean  @default(true)  // 재직 상태
+  notes       String?  // 추가 메모
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("facility_contacts")
+}
