@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Bell, LogOut, Plus, Calendar, User, Settings, ChevronDown } from 'lucide-react';
-import UserProfile from '../UserProfile';
-import SettingsModal from '../Settings';
+// import UserProfile from '../UserProfile';
+// import SettingsModal from '../Settings';
 
 interface LeftSidebarProps {
   // 필요에 따라 나중에 props 추가 가능
@@ -500,16 +500,16 @@ export default function LeftSidebar({}: LeftSidebarProps = {}) {
       </div>
 
       {/* 사용자 프로필 모달 */}
-      <UserProfile 
+      {/* <UserProfile 
         isOpen={isProfileOpen}
         onClose={() => setIsProfileOpen(false)}
-      />
+      /> */}
       
       {/* 설정 모달 */}
-      <SettingsModal 
+      {/* <SettingsModal 
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
-      />
+      /> */}
     </div>
   );
 }

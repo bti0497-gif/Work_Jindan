@@ -27,6 +27,7 @@ export default function MainContent({
   projectViewMode = 'list',
   onProjectViewModeChange 
 }: MainContentProps) {
+  console.log('MainContent rendering, activeTab:', activeTab);
   const renderContent = () => {
     switch (activeTab) {
       case 'projects':
@@ -199,15 +200,53 @@ export default function MainContent({
       */
       
       default:
+        // 기본값으로 프로젝트 목록 표시 (또는 환영 화면)
         return (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                환영합니다!
-              </h3>
-              <p className="text-gray-500">
-                상단 탭에서 원하는 기능을 선택하여 시작하세요.
-              </p>
+          <div className="h-full overflow-y-auto">
+            <div className="p-4 lg:p-8">
+              <div className="max-w-6xl mx-auto">
+                {projectViewMode === 'list' ? (
+                  <div>
+                    <div className="mb-6 flex items-center justify-between">
+                      <div>
+                        <h1 className="text-2xl font-bold text-gray-900">프로젝트 관리</h1>
+                        <p className="text-gray-600 mt-1">프로젝트를 생성하고 관리하세요</p>
+                      </div>
+                      <div className="flex space-x-3">
+                        <button
+                          onClick={() => onProjectViewModeChange?.('detail')}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                        >
+                          새 프로젝트 생성
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <ProjectListView 
+                      onProjectSelect={(project: Project) => {
+                        onProjectSelect?.(project);
+                        onProjectViewModeChange?.('detail');
+                      }} 
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <div className="mb-6">
+                      <button
+                        onClick={() => onProjectViewModeChange?.('list')}
+                        className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        프로젝트 목록으로 돌아가기
+                      </button>
+                    </div>
+                    
+                    <CompactProjectManager />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         );

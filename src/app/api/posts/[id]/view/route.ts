@@ -9,9 +9,11 @@ import { PrismaClient } from '@prisma/client';
 // 조회수 증가
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
@@ -19,7 +21,7 @@ export async function POST(
     }
 
     await (prisma as any).post.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         viewCount: {
           increment: 1

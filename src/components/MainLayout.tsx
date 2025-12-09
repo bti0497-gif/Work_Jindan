@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 import LeftSidebar from './layout/LeftSidebar';
 import Header from './layout/Header';
@@ -30,11 +30,61 @@ interface MainLayoutProps {
 export default function MainLayout({ children }: MainLayoutProps) {
   const { data: session } = useSession();
   
+  // 사이드바 너비 상태 관리
+  const [leftSidebarWidth, setLeftSidebarWidth] = useState(260);
+  const [rightSidebarWidth, setRightSidebarWidth] = useState(320);
+  const isResizingLeft = useRef(false);
+  const isResizingRight = useRef(false);
+
   // 상태 관리
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('projects');
   const [projectViewMode, setProjectViewMode] = useState<'list' | 'detail'>('list');
   
+  // 사이드바 리사이징 핸들러
+  const startResizingLeft = useCallback(() => {
+    isResizingLeft.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  const startResizingRight = useCallback(() => {
+    isResizingRight.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  const stopResizing = useCallback(() => {
+    isResizingLeft.current = false;
+    isResizingRight.current = false;
+    document.body.style.cursor = 'default';
+    document.body.style.userSelect = 'auto';
+  }, []);
+
+  const resize = useCallback((mouseMoveEvent: MouseEvent) => {
+    if (isResizingLeft.current) {
+      const newWidth = mouseMoveEvent.clientX;
+      if (newWidth >= 200 && newWidth <= 400) {
+        setLeftSidebarWidth(newWidth);
+      }
+    }
+    if (isResizingRight.current) {
+      const newWidth = window.innerWidth - mouseMoveEvent.clientX;
+      if (newWidth >= 250 && newWidth <= 500) {
+        setRightSidebarWidth(newWidth);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('mousemove', resize);
+    window.addEventListener('mouseup', stopResizing);
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [resize, stopResizing]);
+
   // 프로젝트 데이터
   const [projects, setProjects] = useState<Project[]>([
     { id: '1', name: '웹사이트 리뉴얼', color: '#3B82F6', memberCount: 5 },
@@ -112,8 +162,19 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="h-screen w-full flex bg-gray-100 overflow-hidden">
       {/* 왼쪽 사이드바 */}
-      <div className="hidden lg:flex lg:w-64 lg:flex-shrink-0">
+      <div 
+        className="flex flex-shrink-0 relative"
+        style={{ width: leftSidebarWidth }}
+      >
         <LeftSidebar />
+        {/* 리사이즈 핸들 */}
+        <div
+          className="absolute top-0 right-0 w-4 h-full cursor-col-resize z-50 flex items-center justify-center group"
+          onMouseDown={startResizingLeft}
+          style={{ right: '-8px' }}
+        >
+          <div className="w-[2px] h-full bg-gray-400 group-hover:bg-blue-500 transition-colors shadow-sm" />
+        </div>
       </div>
 
       {/* 메인 콘텐츠 영역 */}
@@ -140,7 +201,18 @@ export default function MainLayout({ children }: MainLayoutProps) {
       </div>
 
       {/* 오른쪽 사이드바 */}
-      <div className="hidden xl:flex xl:w-80 xl:flex-shrink-0">
+      <div 
+        className="flex flex-shrink-0 relative"
+        style={{ width: rightSidebarWidth }}
+      >
+        {/* 리사이즈 핸들 */}
+        <div
+          className="absolute top-0 left-0 w-4 h-full cursor-col-resize z-50 flex items-center justify-center group"
+          onMouseDown={startResizingRight}
+          style={{ left: '-8px' }}
+        >
+          <div className="w-[2px] h-full bg-gray-400 group-hover:bg-blue-500 transition-colors shadow-sm" />
+        </div>
         <RightSidebar 
           messages={messages}
           onSendMessage={handleSendMessage}

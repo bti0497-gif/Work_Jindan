@@ -11,39 +11,39 @@ export async function PUT(request: NextRequest) {
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
-      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
     }
 
     const { name, phone, position } = await request.json();
 
-    // 입력 검증
+    // ?�력 검�?
     if (!name || name.trim().length < 2 || name.trim().length > 20) {
       return NextResponse.json(
-        { message: '이름은 2자 이상 20자 이하로 입력해주세요.' },
+        { message: '?�름?� 2???�상 20???�하�??�력?�주?�요.' },
         { status: 400 }
       );
     }
 
-    // 전화번호 형식 검증 (입력된 경우)
+    // ?�화번호 ?�식 검�?(?�력??경우)
     if (phone && phone.trim()) {
       const phoneRegex = /^01[0-9]-?[0-9]{3,4}-?[0-9]{4}$/;
       if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
         return NextResponse.json(
-          { message: '올바른 전화번호 형식이 아닙니다. (예: 010-1234-5678)' },
+          { message: '?�바�??�화번호 ?�식???�닙?�다. (?? 010-1234-5678)' },
           { status: 400 }
         );
       }
     }
 
-    // 직책 길이 검증 (입력된 경우)
+    // 직책 길이 검�?(?�력??경우)
     if (position && position.trim().length > 50) {
       return NextResponse.json(
-        { message: '직책은 50자 이하로 입력해주세요.' },
+        { message: '직책?� 50???�하�??�력?�주?�요.' },
         { status: 400 }
       );
     }
 
-    // 사용자 정보 업데이트
+    // ?�용???�보 ?�데?�트
     const updatedUser = await (prisma.user as any).update({
       where: { email: session.user.email },
       data: {
@@ -63,14 +63,14 @@ export async function PUT(request: NextRequest) {
     });
 
     return NextResponse.json({ 
-      message: '프로필이 성공적으로 업데이트되었습니다.',
+      message: '?�로?�이 ?�공?�으�??�데?�트?�었?�니??',
       user: updatedUser 
     });
 
   } catch (error) {
-    console.error('프로필 업데이트 오류:', error);
+    console.error('?�로???�데?�트 ?�류:', error);
     return NextResponse.json(
-      { message: '프로필 업데이트 중 오류가 발생했습니다.' },
+      { message: '?�로???�데?�트 �??�류가 발생?�습?�다.' },
       { status: 500 }
     );
   } finally {

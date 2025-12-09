@@ -9,16 +9,18 @@ import { PrismaClient } from '@prisma/client';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
-    const fileId = params.id;
+    const fileId = id;
 
     if (!fileId) {
       return NextResponse.json({ error: '파일 ID가 필요합니다' }, { status: 400 });

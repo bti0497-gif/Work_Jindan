@@ -1,0 +1,41 @@
+{
+  "version": "1.1.0",
+  "updateType": "feature",
+  "updateStrategy": "choice",
+  "mandatory": false,
+  "releaseDate": "2024-12-30T00:00:00Z",
+  "title": "프로세스 관리 시스템 추가",
+  "description": "새로운 프로세스 관리 시스템과 성능 개선이 포함된 업데이트입니다.",
+  "features": [
+    "📊 프로세스 관리 시스템 추가",
+    "⚡ 부분 업데이트 시스템 도입",
+    "🔒 백업 및 복원 기능 강화",
+    "💡 스마트 업데이트 전략 구현",
+    "🎨 UI 개선 및 최적화"
+  ],
+  "changedFiles": [
+    "src/components/ProcessManager.tsx",
+    "src/components/ui/process-card.tsx",
+    "src/components/ui/progress-bar.tsx",
+    "src/app/api/processes/route.ts",
+    "src/lib/process-utils.ts",
+    "src/types/process.ts",
+    "src/styles/process.css"
+  ],
+  "checksums": {
+    "src/components/ProcessManager.tsx": "a1b2c3d4e5f6789012345678901234567890abcd",
+    "src/components/ui/process-card.tsx": "b2c3d4e5f6789012345678901234567890abcdef1",
+    "src/components/ui/progress-bar.tsx": "c3d4e5f6789012345678901234567890abcdef12",
+    "src/app/api/processes/route.ts": "d4e5f6789012345678901234567890abcdef123",
+    "src/lib/process-utils.ts": "e5f6789012345678901234567890abcdef1234",
+    "src/types/process.ts": "f6789012345678901234567890abcdef12345",
+    "src/styles/process.css": "789012345678901234567890abcdef123456"
+  },
+  "rollbackVersion": "1.0.0",
+  "minimumAppVersion": "1.0.0",
+  "notes": [
+    "이 업데이트는 안전한 부분 업데이트로 진행할 수 있습니다.",
+    "전체 업데이트를 선택하면 더욱 안전하게 업데이트됩니다.",
+    "업데이트 중 문제가 발생하면 자동으로 이전 버전으로 복원됩니다."
+  ]
+}

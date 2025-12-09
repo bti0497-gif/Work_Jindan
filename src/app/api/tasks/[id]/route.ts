@@ -9,16 +9,18 @@ import { PrismaClient } from '@prisma/client';
 // 작업 수정
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
-    const taskId = params.id;
+    const taskId = id;
     const { title, description, status, priority, dueDate, assigneeId } = await request.json();
 
     // 작업이 존재하는지 확인
@@ -76,16 +78,18 @@ export async function PUT(
 // 작업 삭제
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
-    const taskId = params.id;
+    const taskId = id;
 
     // 작업이 존재하는지 확인
     const existingTask = await prisma.task.findUnique({

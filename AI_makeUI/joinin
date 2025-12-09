@@ -1,0 +1,448 @@
+요청하신 대로 회원가입 폼의 세로 길이를 최대한 줄여 한 화면에 담길 수 있도록 레이아웃을 수정했습니다. 각 입력 필드의 라벨과 텍스트 상자를 가로로 배치하여 공간을 효율적으로 사용했습니다.
+
+아래 코드를 `aimakeui` 폴더 안에 `registerform.html` 파일로 저장하시면 됩니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        /* Google Fonts - Noto Sans KR */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #007bff; /* Bright Blue */
+            --primary-dark-color: #0056b3;
+            --secondary-button-color: #6c757d; /* Gray for Cancel */
+            --secondary-button-hover-color: #5a6268;
+            --background-color: #f0f2f5; /* Light Gray Background */
+            --card-background-color: #ffffff; /* White Card */
+            --text-color: #333333; /* Dark Gray Text */
+            --input-background-color: #f8f9fa; /* Very Light Gray Input */
+            --input-border-color: #ced4da; /* Light Gray Border */
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --error-color: #dc3545; /* Red for errors */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .register-container {
+            background-color: var(--card-background-color);
+            padding: 20px; /* Further reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .register-header {
+            margin-bottom: 15px; /* Further reduced margin */
+            color: var(--primary-color);
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+        }
+
+        /* --- Horizontal Input Group Styling --- */
+        .input-group {
+            margin-bottom: 10px; /* Reduced margin between groups */
+            display: flex; /* Make it a flex container for horizontal layout */
+            align-items: baseline; /* Align text baselines of label and input */
+            gap: 10px; /* Space between label and input field wrapper */
+        }
+
+        .input-group label {
+            flex-basis: 90px; /* Fixed width for labels */
+            flex-shrink: 0; /* Prevent label from shrinking */
+            margin-bottom: 0; /* Remove bottom margin as it's flexed */
+            color: var(--text-color);
+            font-size: 0.85em;
+            font-weight: 500;
+            text-align: left; /* Align label text to the left within its allocated space */
+        }
+
+        .input-field-wrapper {
+            flex-grow: 1; /* Input and its error take remaining horizontal space */
+            display: flex;
+            flex-direction: column; /* Stacks input and error message vertically */
+        }
+
+        .input-field-wrapper input[type="text"],
+        .input-field-wrapper input[type="password"],
+        .input-field-wrapper input[type="email"],
+        .input-field-wrapper input[type="tel"] {
+            width: 100%; /* Ensures input fills its wrapper */
+            padding: 8px 10px; /* Further reduced padding */
+            border: 1px solid var(--input-border-color);
+            border-radius: 6px;
+            background-color: var(--input-background-color);
+            color: var(--text-color);
+            font-size: 0.9em; /* Further reduced font size */
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-field-wrapper input[type="text"]:focus,
+        .input-field-wrapper input[type="password"]:focus,
+        .input-field-wrapper input[type="email"]:focus,
+        .input-field-wrapper input[type="tel"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        /* Placeholder styles */
+        .input-field-wrapper input::placeholder {
+            color: #888;
+            opacity: 0.8;
+        }
+
+        .address-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .address-input-group input {
+            flex-grow: 1;
+        }
+
+        .address-input-group button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--secondary-button-color);
+            color: white;
+            font-size: 0.8em; /* Slightly smaller button text */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .address-input-group button:hover {
+            background-color: var(--secondary-button-hover-color);
+            transform: translateY(-1px);
+        }
+
+        #addressDetailGroup {
+            margin-top: 5px; /* Keeps a small gap between main and detailed address */
+        }
+        #addressDetailGroup input {
+            margin-top: 0px; /* Specific override */
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.75em; /* Smaller error font size */
+            margin-top: 2px; /* Reduced margin */
+            text-align: left;
+            display: none;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 15px; /* Reduced margin */
+        }
+
+        .button-group button {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #saveButton {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #saveButton:hover {
+            background-color: var(--primary-dark-color);
+            transform: translateY(-1px);
+        }
+
+        #saveButton:active {
+            background-color: var(--primary-dark-color);
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #cancelButton {
+            background-color: var(--secondary-button-color);
+            color: white;
+        }
+
+        #cancelButton:hover {
+            background-color: var(--secondary-button-hover-color);
+            transform: translateY(-1px);
+        }
+
+        #cancelButton:active {
+            background-color: var(--secondary-button-hover-color);
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="registerContainer" class="register-container">
+        <h2 id="registerHeader" class="register-header">회원가입</h2>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="nameInput">이름 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="text" id="nameInput" placeholder="이름을 입력하세요" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="usernameInput">아이디 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="text" id="usernameInput" placeholder="사용할 아이디를 입력하세요" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="passwordInput">비밀번호 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="password" id="passwordInput" placeholder="비밀번호를 입력하세요" required>
+                    <div id="passwordError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPasswordInput">비밀번호 확인 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="password" id="confirmPasswordInput" placeholder="비밀번호를 다시 입력하세요" required>
+                    <div id="confirmPasswordError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="emailInput">이메일 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="email" id="emailInput" placeholder="이메일 주소를 입력하세요" required>
+                    <div id="emailError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="phoneInput">전화번호 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <input type="tel" id="phoneInput" placeholder="예: 010-1234-5678" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}">
+                    <div id="phoneError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="addressInput">주소 <span style="color:var(--error-color);">*</span></label>
+                <div class="input-field-wrapper">
+                    <div class="address-input-group">
+                        <input type="text" id="addressInput" placeholder="주소 검색 버튼을 눌러주세요" required readonly>
+                        <button type="button" id="addressSearchButton">검색</button>
+                    </div>
+                    <div id="addressDetailGroup" style="margin-top: 5px;">
+                        <input type="text" id="addressDetailInput" placeholder="상세 주소를 입력하세요">
+                    </div>
+                    <div id="addressError" class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" id="saveButton">저장</button>
+                <button type="button" id="cancelButton">취소</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerForm = document.getElementById('registerForm');
+            const nameInput = document.getElementById('nameInput');
+            const usernameInput = document.getElementById('usernameInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+            const emailInput = document.getElementById('emailInput');
+            const phoneInput = document.getElementById('phoneInput');
+            const addressInput = document.getElementById('addressInput');
+            const addressSearchButton = document.getElementById('addressSearchButton');
+            const addressDetailGroup = document.getElementById('addressDetailGroup');
+            const addressDetailInput = document.getElementById('addressDetailInput');
+            const saveButton = document.getElementById('saveButton');
+            const cancelButton = document.getElementById('cancelButton');
+
+            // Error message elements
+            const passwordError = document.getElementById('passwordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
+            // const addressError = document.getElementById('addressError'); // 주소 에러 메시지 필요 시 활성화
+
+            // --- Validation Functions ---
+            const showError = (element, message) => {
+                element.textContent = message;
+                element.style.display = 'block';
+            };
+
+            const hideError = (element) => {
+                element.textContent = '';
+                element.style.display = 'none';
+            };
+
+            const validatePassword = () => {
+                if (passwordInput.value.length < 6) {
+                    showError(passwordError, '비밀번호는 최소 6자 이상이어야 합니다.');
+                    return false;
+                }
+                hideError(passwordError);
+                return true;
+            };
+
+            const validateConfirmPassword = () => {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    showError(confirmPasswordError, '비밀번호가 일치하지 않습니다.');
+                    return false;
+                }
+                hideError(confirmPasswordError);
+                return true;
+            };
+
+            const validateEmail = () => {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    showError(emailError, '유효한 이메일 주소를 입력해주세요.');
+                    return false;
+                }
+                hideError(emailError);
+                return true;
+            };
+
+            const validatePhone = () => {
+                const phoneRegex = /^\d{2,3}-\d{3,4}-\d{4}$/;
+                if (!phoneRegex.test(phoneInput.value)) {
+                    showError(phoneError, '유효한 전화번호 형식(예: 010-1234-5678)을 입력해주세요.');
+                    return false;
+                }
+                hideError(phoneError);
+                return true;
+            };
+
+            // --- Event Listeners ---
+            passwordInput.addEventListener('input', () => {
+                validatePassword();
+                if (confirmPasswordInput.value !== '') {
+                    validateConfirmPassword();
+                }
+            });
+
+            confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+            emailInput.addEventListener('input', validateEmail);
+            phoneInput.addEventListener('input', validatePhone);
+
+            // 주소 검색 버튼 클릭 이벤트 (API 연동 대신 알림창으로 대체)
+            addressSearchButton.addEventListener('click', () => {
+                alert("주소 검색 기능이 호출되었습니다.\n(실제 구현 시 Daum/Kakao 우편번호 서비스 등의 API를 연동해야 합니다.)");
+                // 예시: 주소 검색 후 결과가 있다고 가정
+                // addressInput.value = "서울특별시 강남구 테헤란로 123";
+                // addressDetailInput.focus();
+            });
+
+            // 저장 버튼 클릭 이벤트
+            registerForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                // 모든 필수 필드 및 유효성 검사
+                let isValid = true;
+                if (nameInput.value.trim() === '') { alert("이름을 입력해주세요."); isValid = false; }
+                else if (usernameInput.value.trim() === '') { alert("아이디를 입력해주세요."); isValid = false; }
+                else if (!validatePassword()) { isValid = false; }
+                else if (!validateConfirmPassword()) { isValid = false; }
+                else if (!validateEmail()) { isValid = false; }
+                else if (!validatePhone()) { isValid = false; }
+                else if (addressInput.value.trim() === '') { alert("주소를 입력해주세요."); isValid = false; }
+                
+                if (!isValid) {
+                    return;
+                }
+
+                const userData = {
+                    name: nameInput.value,
+                    username: usernameInput.value,
+                    password: passwordInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value,
+                    address: addressInput.value,
+                    addressDetail: addressDetailInput.value
+                };
+
+                alert(`
+                    회원가입 정보:
+                    이름: ${userData.name}
+                    아이디: ${userData.username}
+                    이메일: ${userData.email}
+                    전화번호: ${userData.phone}
+                    주소: ${userData.address} ${userData.addressDetail}
+                    (실제 회원가입 처리는 백엔드에서 이루어집니다.)
+                `);
+
+                // 실제 C# (WebView2) 통신 예시:
+                // if (window.chrome.webview) {
+                //     window.chrome.webview.postMessage({ type: 'REGISTER', userData });
+                // }
+
+                // 회원가입 성공 시 로그인 페이지로 이동하거나, 성공 메시지 표시
+                // alert('회원가입이 완료되었습니다!');
+                // window.location.href = "loginform.html";
+            });
+
+            // 취소 버튼 클릭 이벤트
+            cancelButton.addEventListener('click', () => {
+                alert("회원가입을 취소합니다. 이전 페이지로 돌아갑니다.");
+                // 실제 C# (WebView2) 통신 예시 또는 브라우저 뒤로가기
+                // if (window.chrome.webview) {
+                //     window.chrome.webview.postMessage({ type: 'NAVIGATE_BACK' });
+                // } else {
+                //     window.history.back();
+                // }
+                window.location.href = "loginform.html"; // 로그인 페이지로 돌아가기
+            });
+        });
+    </script>
+</body>
+</html>
+```

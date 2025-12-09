@@ -11,19 +11,19 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
-      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
     }
 
-    // 최고관리자만 접근 가능
+    // 최고관리자�??�근 가??
     const currentUser = await prisma.user.findUnique({
       where: { email: session.user.email! }
     });
 
     if (!currentUser || (currentUser as any).userLevel !== 0) {
-      return NextResponse.json({ error: '권한이 없습니다.' }, { status: 403 });
+      return NextResponse.json({ error: '권한???�습?�다.' }, { status: 403 });
     }
 
-    // 관리 로그 조회
+    // 관�?로그 조회
     const logs = await (prisma as any).userManagementLog.findMany({
       select: {
         id: true,
@@ -51,9 +51,9 @@ export async function GET() {
 
     return NextResponse.json({ logs });
   } catch (error) {
-    console.error('관리 로그 조회 오류:', error);
+    console.error('관�?로그 조회 ?�류:', error);
     return NextResponse.json(
-      { error: '관리 로그를 조회할 수 없습니다.' },
+      { error: '관�?로그�?조회?????�습?�다.' },
       { status: 500 }
     );
   }

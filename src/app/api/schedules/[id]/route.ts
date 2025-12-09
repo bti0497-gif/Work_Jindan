@@ -6,16 +6,18 @@ import prisma from '@/lib/prisma';
 // 일정 수정 (PATCH 메소드로 변경)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
-    const scheduleId = params.id;
+    const scheduleId = id;
     const { title, description, startDate, endDate } = await request.json();
 
     // 일정이 존재하는지 확인
@@ -66,16 +68,18 @@ export async function PATCH(
 // 일정 삭제
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
-    const scheduleId = params.id;
+    const scheduleId = id;
 
     // 일정이 존재하는지 확인
     const existingSchedule = await prisma.schedule.findUnique({

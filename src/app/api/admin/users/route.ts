@@ -11,19 +11,19 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
-      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
     }
 
-    // 최고관리자만 접근 가능
+    // 최고관리자�??�근 가??
     const currentUser = await prisma.user.findUnique({
       where: { email: session.user.email! }
     });
 
     if (!currentUser || (currentUser as any).userLevel !== 0) {
-      return NextResponse.json({ error: '권한이 없습니다.' }, { status: 403 });
+      return NextResponse.json({ error: '권한???�습?�다.' }, { status: 403 });
     }
 
-    // 모든 사용자 조회 (게시글, 댓글 수 포함)
+    // 모든 ?�용??조회 (게시글, ?��? ???�함)
     const users = await (prisma.user as any).findMany({
       select: {
         id: true,
@@ -49,9 +49,9 @@ export async function GET() {
 
     return NextResponse.json({ users });
   } catch (error) {
-    console.error('사용자 목록 조회 오류:', error);
+    console.error('?�용??목록 조회 ?�류:', error);
     return NextResponse.json(
-      { error: '사용자 목록을 조회할 수 없습니다.' },
+      { error: '?�용??목록??조회?????�습?�다.' },
       { status: 500 }
     );
   }

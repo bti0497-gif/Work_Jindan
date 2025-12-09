@@ -9,7 +9,7 @@ import { PrismaClient } from '@prisma/client';
 // 댓글 수정
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -32,9 +32,11 @@ export async function PUT(
       return NextResponse.json({ error: '내용이 필요합니다.' }, { status: 400 });
     }
 
+    const { id } = await params;
+
     // 댓글 조회 및 작성자 확인
     const comment = await (prisma as any).comment.findUnique({
-      where: { id: params.id }
+      where: { id }
     });
 
     if (!comment) {
@@ -46,7 +48,7 @@ export async function PUT(
     }
 
     const updatedComment = await (prisma as any).comment.update({
-      where: { id: params.id },
+      where: { id },
       data: { content },
       include: {
         author: {
@@ -73,7 +75,7 @@ export async function PUT(
 // 댓글 삭제
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -90,9 +92,11 @@ export async function DELETE(
       return NextResponse.json({ error: '사용자를 찾을 수 없습니다.' }, { status: 404 });
     }
 
+    const { id } = await params;
+
     // 댓글 조회 및 작성자 확인
     const comment = await (prisma as any).comment.findUnique({
-      where: { id: params.id }
+      where: { id }
     });
 
     if (!comment) {
@@ -107,7 +111,7 @@ export async function DELETE(
     }
 
     await (prisma as any).comment.delete({
-      where: { id: params.id }
+      where: { id }
     });
 
     return NextResponse.json({ message: '댓글이 삭제되었습니다.' });

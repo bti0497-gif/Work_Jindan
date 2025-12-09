@@ -1,20 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
 import { validatePassword } from '@/lib/password-validation';
-
-const prisma = new PrismaClient();
-
-
+import { adminAuth, adminDb } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, name, phone, position } = await request.json();
+    const { email, password, name, phone, position, username, address, addressDetail } = await request.json();
 
     // 입력 검증
-    if (!email || !password || !name) {
+    if (!email || !password || !name || !username) {
       return NextResponse.json(
-        { message: '이메일, 비밀번호, 이름은 필수 항목입니다.' },
+        { message: '아이디, 이메일, 비밀번호, 이름은 필수 항목입니다.' },
         { status: 400 }
       );
     }
@@ -55,62 +50,59 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 비밀번호 강도 검증
+    // 비밀번호 유효성 검사
     const passwordValidation = validatePassword(password);
     if (!passwordValidation.isValid) {
       return NextResponse.json(
-        { 
-          message: '비밀번호가 요구사항을 충족하지 않습니다.',
-          errors: passwordValidation.errors
-        },
+        { message: passwordValidation.errors.join(', ') },
         { status: 400 }
       );
     }
 
-    // 이메일 중복 검사
-    const existingUser = await prisma.user.findUnique({
-      where: { email }
-    });
-
-    if (existingUser) {
+    // 아이디 중복 검사 (Firestore Admin SDK)
+    const usersRef = adminDb.collection('users');
+    const snapshot = await usersRef.where('username', '==', username).get();
+    
+    if (!snapshot.empty) {
       return NextResponse.json(
-        { message: '이미 사용 중인 이메일입니다.' },
+        { message: '이미 사용 중인 아이디입니다.' },
         { status: 400 }
       );
     }
 
-    // 비밀번호 암호화
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // 사용자 생성
-    const user = await (prisma.user as any).create({
-      data: {
-        email,
-        name: name.trim(),
-        phone: phone?.trim() || null,
-        position: position?.trim() || null,
-        password: hashedPassword,
-      },
+    // Firebase Authentication에 사용자 생성 (Admin SDK)
+    const userRecord = await adminAuth.createUser({
+      email: email,
+      password: password,
+      displayName: name,
     });
 
-    // 비밀번호를 제외한 사용자 정보 반환
-    const { password: _, ...userWithoutPassword } = user;
+    // Firestore에 사용자 정보 저장 (Admin SDK)
+    await usersRef.doc(userRecord.uid).set({
+      uid: userRecord.uid,
+      email: email,
+      username: username, // 아이디 저장
+      name: name,
+      phone: phone || '',
+      position: position || '',
+      address: address || '',
+      addressDetail: addressDetail || '',
+      userLevel: 2, // 기본값: 일반 사용자
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      isActive: true
+    });
 
     return NextResponse.json(
-      { 
-        message: '회원가입이 완료되었습니다.',
-        user: userWithoutPassword 
-      },
+      { message: '회원가입이 완료되었습니다.', userId: userRecord.uid },
       { status: 201 }
     );
 
-  } catch (error) {
-    console.error('Registration error:', error);
+  } catch (error: any) {
+    console.error('회원가입 오류:', error);
     return NextResponse.json(
-      { message: '서버 오류가 발생했습니다.' },
+      { message: '회원가입 중 오류가 발생했습니다.', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

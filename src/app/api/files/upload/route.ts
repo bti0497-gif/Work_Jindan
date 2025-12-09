@@ -12,30 +12,30 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
     }
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const parentId = formData.get('parentId') as string | null;
-    // projectId 제거 - 전역 파일 업로드
+    // projectId ?�거 - ?�역 ?�일 ?�로??
 
     if (!file) {
-      return NextResponse.json({ error: '파일이 선택되지 않았습니다' }, { status: 400 });
+      return NextResponse.json({ error: '?�일???�택?��? ?�았?�니?? }, { status: 400 });
     }
 
-    // 파일 크기 제한 (10MB)
+    // ?�일 ?�기 ?�한 (10MB)
     if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: '파일 크기는 10MB를 초과할 수 없습니다' }, { status: 400 });
+      return NextResponse.json({ error: '?�일 ?�기??10MB�?초과?????�습?�다' }, { status: 400 });
     }
 
-    // 파일을 Buffer로 변환
+    // ?�일??Buffer�?변??
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
     let result;
     try {
-      // Google Drive에 업로드 시도
+      // Google Drive???�로???�도
       result = await uploadFileToDrive(
         buffer,
         file.name,
@@ -43,18 +43,18 @@ export async function POST(request: NextRequest) {
         parentId || undefined
       );
     } catch (error) {
-      console.error('Google Drive 업로드 실패:', error);
-      // Google Drive 실패 시 로컬에서만 생성
+      console.error('Google Drive ?�로???�패:', error);
+      // Google Drive ?�패 ??로컬?�서�??�성
       result = {
         id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         name: file.name
       };
     }
 
-    // 전역 파일로 저장 (projectId는 null)
+    // ?�역 ?�일�??�??(projectId??null)
     let firstProject = await prisma.project.findFirst();
     
-    // 전역 파일이므로 프로젝트 없이 저장
+    // ?�역 ?�일?��?�??�로?�트 ?�이 ?�??
     if (!firstProject) {
       firstProject = await prisma.project.create({
         data: {
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     
     const projectIdToUse = firstProject.id;
 
-    // 데이터베이스에 파일 정보 저장 (전역 파일)
+    // ?�이?�베?�스???�일 ?�보 ?�??(?�역 ?�일)
     const filePath = parentId 
       ? `/global/files/${parentId}/${result.id}`
       : `/global/files/${result.id}`;
@@ -98,9 +98,9 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('파일 업로드 오류:', error);
+    console.error('?�일 ?�로???�류:', error);
     return NextResponse.json(
-      { error: '파일 업로드 중 오류가 발생했습니다' },
+      { error: '?�일 ?�로??�??�류가 발생?�습?�다' },
       { status: 500 }
     );
   } finally {

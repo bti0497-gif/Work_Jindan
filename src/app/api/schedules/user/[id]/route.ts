@@ -9,9 +9,11 @@ import { PrismaClient } from '@prisma/client';
 // 특정 일정 조회
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -21,7 +23,7 @@ export async function GET(
     }
 
     const schedule = await prisma.userSchedule.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         user: {
           select: {
@@ -63,9 +65,11 @@ export async function GET(
 // 일정 수정
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -75,7 +79,7 @@ export async function PUT(
     }
 
     const schedule = await prisma.userSchedule.findUnique({
-      where: { id: params.id }
+      where: { id: id }
     });
 
     if (!schedule) {
@@ -106,7 +110,7 @@ export async function PUT(
     }
 
     const updatedSchedule = await prisma.userSchedule.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         ...(title !== undefined && { title }),
         ...(description !== undefined && { description }),
@@ -140,9 +144,11 @@ export async function PUT(
 // 일정 삭제
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -152,7 +158,7 @@ export async function DELETE(
     }
 
     const schedule = await prisma.userSchedule.findUnique({
-      where: { id: params.id }
+      where: { id: id }
     });
 
     if (!schedule) {
@@ -172,7 +178,7 @@ export async function DELETE(
     }
 
     await prisma.userSchedule.delete({
-      where: { id: params.id }
+      where: { id: id }
     });
 
     return NextResponse.json({ message: '일정이 삭제되었습니다.' });

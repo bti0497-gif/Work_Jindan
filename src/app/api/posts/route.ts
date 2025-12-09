@@ -12,14 +12,14 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
-      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
     }
 
     const posts = await (prisma as any).post.findMany({
       select: {
         id: true,
         title: true,
-        content: false, // 목록에서는 내용 제외
+        content: false, // 목록?�서???�용 ?�외
         isNotice: true,
         viewCount: true,
         createdAt: true,
@@ -39,28 +39,28 @@ export async function GET() {
         }
       },
       orderBy: [
-        { isNotice: 'desc' }, // 공지사항 우선
+        { isNotice: 'desc' }, // 공�??�항 ?�선
         { createdAt: 'desc' }
       ]
     });
 
     return NextResponse.json({ posts });
   } catch (error) {
-    console.error('게시글 목록 조회 오류:', error);
+    console.error('게시글 목록 조회 ?�류:', error);
     return NextResponse.json(
-      { error: '게시글 목록을 조회할 수 없습니다.' },
+      { error: '게시글 목록??조회?????�습?�다.' },
       { status: 500 }
     );
   }
 }
 
-// 게시글 작성
+// 게시글 ?�성
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
-      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
+      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
     }
 
     const currentUser = await prisma.user.findUnique({
@@ -68,16 +68,16 @@ export async function POST(request: NextRequest) {
     });
 
     if (!currentUser) {
-      return NextResponse.json({ error: '사용자를 찾을 수 없습니다.' }, { status: 404 });
+      return NextResponse.json({ error: '?�용?��? 찾을 ???�습?�다.' }, { status: 404 });
     }
 
     const { title, content, isNotice } = await request.json();
 
     if (!title || !content) {
-      return NextResponse.json({ error: '제목과 내용이 필요합니다.' }, { status: 400 });
+      return NextResponse.json({ error: '?�목�??�용???�요?�니??' }, { status: 400 });
     }
 
-    // 공지사항은 관리자만 작성 가능
+    // 공�??�항?� 관리자�??�성 가??
     const canWriteNotice = (currentUser as any).userLevel <= 1;
     const finalIsNotice = isNotice && canWriteNotice;
 
@@ -102,9 +102,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ post });
   } catch (error) {
-    console.error('게시글 작성 오류:', error);
+    console.error('게시글 ?�성 ?�류:', error);
     return NextResponse.json(
-      { error: '게시글 작성 중 오류가 발생했습니다.' },
+      { error: '게시글 ?�성 �??�류가 발생?�습?�다.' },
       { status: 500 }
     );
   }

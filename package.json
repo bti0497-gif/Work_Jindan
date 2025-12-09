@@ -1,9 +1,11 @@
 {
   "name": "team-collaboration",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "더죤환경기술(주) 기술진단팀 협업 시스템 - Google Drive 클라우드 데이터베이스",
+  "author": "더죤환경기술(주) 기술진단팀",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,7 +13,18 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:seed": "node ./scripts/create-admin.js"
+    "db:seed": "node ./scripts/create-admin.js",
+    "electron": "electron electron/main.js",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron electron/main.js\"",
+    "build-electron": "npm run build && electron-builder",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --publish=never",
+    "dist-with-build": "npm run build && electron-builder --publish=never",
+    "upload-version": "node ./scripts/upload-version.js",
+    "version:patch": "npm version patch && npm run upload-version",
+    "version:minor": "npm version minor && npm run upload-version",
+    "version:major": "npm version major && npm run upload-version",
+    "release": "npm run build && npm run dist && npm run upload-version"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.2",
@@ -21,18 +34,23 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "archiver": "^7.0.1",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "extract-zip": "^2.0.1",
+    "firebase": "^12.5.0",
+    "firebase-admin": "^13.5.0",
     "google-auth-library": "^10.4.1",
-    "googleapis": "^164.0.0",
+    "googleapis": "^164.1.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.546.0",
-    "next": "15.5.6",
+    "next": "14.2.21",
     "next-auth": "^4.24.11",
+    "nodemailer": "^7.0.11",
     "prisma": "^6.17.1",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.3.1"
@@ -41,11 +59,51 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.2",
+    "concurrently": "^9.2.1",
+    "electron": "^38.4.0",
+    "electron-builder": "^26.0.12",
     "eslint": "^9",
-    "eslint-config-next": "15.5.6",
+    "eslint-config-next": "14.2.21",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wait-on": "^8.0.5"
+  },
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.jindan.team-collaboration",
+    "productName": "더죤환경기술 기술진단팀",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "public/**/*",
+      "prisma/**/*",
+      "scripts/**/*",
+      "package.json",
+      "next.config.js",
+      "tsconfig.json",
+      "postcss.config.mjs",
+      "tailwind.config.js",
+      ".env.local",
+      "node_modules/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "asar": true
   }
 }

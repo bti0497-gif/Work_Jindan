@@ -2,16 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { PrismaClient } from '@prisma/client';
-
-
 
 // 프로젝트별 작업 조회
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session) {
+    if (!session?.user?.email) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
     }
 
@@ -22,11 +19,19 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: '프로젝트 ID가 필요합니다' }, { status: 400 });
     }
 
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: '사용자를 찾을 수 없습니다' }, { status: 404 });
+    }
+
     // 사용자가 해당 프로젝트의 멤버인지 확인
     const projectMember = await prisma.projectMember.findFirst({
       where: {
         projectId,
-        userId: session.user.id
+        userId: user.id
       }
     });
 
@@ -52,8 +57,6 @@ export async function GET(request: NextRequest) {
       { error: '작업을 불러오는 중 오류가 발생했습니다' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -62,8 +65,16 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session) {
+    if (!session?.user?.email) {
       return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: '사용자를 찾을 수 없습니다' }, { status: 404 });
     }
 
     const { title, description, priority, dueDate, projectId, assigneeId } = await request.json();
@@ -78,7 +89,7 @@ export async function POST(request: NextRequest) {
     const projectMember = await prisma.projectMember.findFirst({
       where: {
         projectId,
-        userId: session.user.id
+        userId: user.id
       }
     });
 
@@ -87,7 +98,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 담당자가 지정되지 않은 경우 현재 사용자로 설정
-    const finalAssigneeId = assigneeId || session.user.id;
+    const finalAssigneeId = assigneeId || user.id;
 
     const task = await prisma.task.create({
       data: {
@@ -117,7 +128,5 @@ export async function POST(request: NextRequest) {
       { error: '작업 생성 중 오류가 발생했습니다' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

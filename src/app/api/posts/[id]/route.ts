@@ -9,9 +9,11 @@ import { PrismaClient } from '@prisma/client';
 // 특정 게시글 상세 조회
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     
     if (!session?.user) {
@@ -19,7 +21,7 @@ export async function GET(
     }
 
     const post = await (prisma as any).post.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         author: {
           select: {

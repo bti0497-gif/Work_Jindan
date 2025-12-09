@@ -9,9 +9,11 @@ import { PrismaClient } from '@prisma/client';
 // 특정 마일스톤 조회
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
@@ -26,7 +28,7 @@ export async function GET(
     }
 
     const milestone = await prisma.milestone.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         project: {
           include: {
@@ -64,9 +66,11 @@ export async function GET(
 // 마일스톤 수정
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
@@ -88,7 +92,7 @@ export async function PUT(
 
     // 마일스톤 존재 여부 및 권한 확인
     const existingMilestone = await prisma.milestone.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         project: {
           include: {
@@ -130,7 +134,7 @@ export async function PUT(
 
     // 마일스톤 수정
     const updatedMilestone = await prisma.milestone.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         title: title.trim(),
         description: description?.trim() || null,
@@ -161,9 +165,11 @@ export async function PUT(
 // 마일스톤 삭제
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
@@ -179,7 +185,7 @@ export async function DELETE(
 
     // 마일스톤 존재 여부 및 권한 확인
     const milestone = await prisma.milestone.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         project: {
           include: {
@@ -205,7 +211,7 @@ export async function DELETE(
 
     // 마일스톤 삭제
     await prisma.milestone.delete({
-      where: { id: params.id }
+      where: { id: id }
     });
 
     return NextResponse.json({ 

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { adminDb } from '@/lib/firebase-admin';
 
 // 사용자 일정 목록 조회
 export async function GET(request: Request) {
@@ -17,38 +17,53 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get('date');
     
-    // 특정 날짜 조회 또는 오늘 날짜
+    // 일정 날짜 조회 또는 오늘 날짜
     const targetDate = date ? new Date(date) : new Date();
     targetDate.setHours(0, 0, 0, 0);
     
     const nextDate = new Date(targetDate);
     nextDate.setDate(nextDate.getDate() + 1);
 
-    const schedules = await prisma.userSchedule.findMany({
-      where: {
-        date: {
-          gte: targetDate,
-          lt: nextDate,
-        },
-        OR: [
-          { userId: session.user.id }, // 자신의 일정
-          { isTeamEvent: true }        // 팀 일정
-        ]
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true,
-            position: true
-          }
-        }
-      },
-      orderBy: {
-        createdAt: 'asc'
-      }
+    const schedulesRef = adminDb.collection('schedules');
+    
+    // Query 1: My schedules
+    const mySchedulesSnapshot = await schedulesRef
+        .where('userId', '==', session.user.id)
+        .where('date', '>=', targetDate)
+        .where('date', '<', nextDate)
+        .get();
+
+    // Query 2: Team schedules
+    const teamSchedulesSnapshot = await schedulesRef
+        .where('isTeamEvent', '==', true)
+        .where('date', '>=', targetDate)
+        .where('date', '<', nextDate)
+        .get();
+
+    const schedulesMap = new Map();
+
+    mySchedulesSnapshot.docs.forEach(doc => {
+        schedulesMap.set(doc.id, { id: doc.id, ...doc.data() });
     });
+
+    teamSchedulesSnapshot.docs.forEach(doc => {
+        schedulesMap.set(doc.id, { id: doc.id, ...doc.data() });
+    });
+
+    let schedules = Array.from(schedulesMap.values()).map((data: any) => ({
+        ...data,
+        date: data.date.toDate(),
+        createdAt: data.createdAt ? data.createdAt.toDate() : new Date(),
+        updatedAt: data.updatedAt ? data.updatedAt.toDate() : new Date(),
+        user: data.user || {
+             id: data.userId,
+             name: 'User',
+             avatar: null
+        }
+    }));
+
+    // Sort by createdAt
+    schedules.sort((a: any, b: any) => a.createdAt - b.createdAt);
 
     return NextResponse.json({
       schedules: schedules,
@@ -85,40 +100,40 @@ export async function POST(request: Request) {
       );
     }
 
-    // 팀 일정은 관리자만 생성 가능
-    if (isTeamEvent && (session.user.userLevel ?? 2) > 1) {
-      return NextResponse.json(
-        { error: '팀 일정은 관리자만 생성할 수 있습니다.' },
-        { status: 403 }
-      );
-    }
+    const newScheduleRef = adminDb.collection('schedules').doc();
+    const now = new Date();
+    const scheduleDate = new Date(date);
 
-    const schedule = await prisma.userSchedule.create({
-      data: {
+    const scheduleData = {
+        id: newScheduleRef.id,
         title,
         description,
-        date: new Date(date),
-        isTeamEvent: Boolean(isTeamEvent),
+        date: scheduleDate,
+        isTeamEvent: !!isTeamEvent,
         userId: session.user.id,
-      },
-      include: {
+        isCompleted: false,
+        createdAt: now,
+        updatedAt: now,
         user: {
-          select: {
-            id: true,
-            name: true,
-            avatar: true,
-            position: true
-          }
+            id: session.user.id,
+            name: session.user.name,
+            image: session.user.image
         }
-      }
-    });
+    };
 
-    return NextResponse.json(schedule);
+    await newScheduleRef.set(scheduleData);
+
+    return NextResponse.json({
+        ...scheduleData,
+        date: scheduleDate.toISOString(),
+        createdAt: now.toISOString(),
+        updatedAt: now.toISOString()
+    });
 
   } catch (error) {
     console.error('일정 생성 오류:', error);
     return NextResponse.json(
-      { error: '일정을 생성하는데 실패했습니다.' },
+      { error: '일정 생성 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   }

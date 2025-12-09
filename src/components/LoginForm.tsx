@@ -21,6 +21,18 @@ export default function LoginForm({ onToggleMode, isLogin }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [rememberEmail, setRememberEmail] = useState(false);
+
+  // 컴포넌트 마운트 시 저장된 이메일 로드
+  useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedEmail = localStorage.getItem('savedEmail');
+      if (savedEmail) {
+        setFormData(prev => ({ ...prev, email: savedEmail }));
+        setRememberEmail(true);
+      }
+    }
+  });
 
   // 비밀번호 검증 (회원가입 모드에서만 사용)
   const passwordValidation = usePasswordValidation(formData.password);
@@ -32,6 +44,13 @@ export default function LoginForm({ onToggleMode, isLogin }: LoginFormProps) {
 
     try {
       if (isLogin) {
+        // 아이디 저장 처리
+        if (rememberEmail) {
+          localStorage.setItem('savedEmail', formData.email);
+        } else {
+          localStorage.removeItem('savedEmail');
+        }
+        
         // 로그인 처리
         const result = await signIn('credentials', {
           email: formData.email,
@@ -113,8 +132,8 @@ export default function LoginForm({ onToggleMode, isLogin }: LoginFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-      <div className="max-w-md w-full space-y-8 p-8">
+    <div className="w-full p-8">
+      <div className="max-w-md w-full space-y-8 mx-auto">
         <div className="text-center">
           <div className="mx-auto h-12 w-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
             <User className="h-6 w-6 text-white" />
@@ -293,6 +312,22 @@ export default function LoginForm({ onToggleMode, isLogin }: LoginFormProps) {
               )}
             </div>
           </div>
+
+          {isLogin && (
+            <div className="flex items-center">
+              <input
+                id="remember-email"
+                name="remember-email"
+                type="checkbox"
+                checked={rememberEmail}
+                onChange={(e) => setRememberEmail(e.target.checked)}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="remember-email" className="ml-2 block text-sm text-gray-900">
+                아이디 저장
+              </label>
+            </div>
+          )}
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">

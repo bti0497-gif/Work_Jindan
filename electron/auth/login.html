@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더죤환경기술(주) 기술진단팀 - 로그인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #4f46e5;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: white;
+            color: #4f46e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab:not(.active) {
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+        }
+
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: #10b981;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>더죤환경기술(주)</h1>
+            <p>기술진단팀 협업 시스템</p>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab active" id="loginTab">로그인</div>
+            <div class="tab" id="registerTab">회원가입</div>
+        </div>
+
+        <!-- 로그인 폼 -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">이메일</label>
+                <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">비밀번호</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="autoLogin">
+                <label for="autoLogin">자동 로그인</label>
+            </div>
+            <button type="submit" class="submit-btn">로그인</button>
+            <div id="loginMessage"></div>
+        </form>
+
+        <!-- 회원가입 폼 -->
+        <form id="registerForm" class="hidden">
+            <div class="form-group">
+                <label for="registerName">이름</label>
+                <input type="text" id="registerName" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">이메일</label>
+                <input type="email" id="registerEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">비밀번호</label>
+                <input type="password" id="registerPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPosition">직책</label>
+                <input type="text" id="registerPosition" placeholder="예: 기술팀장, 연구원 등">
+            </div>
+            <div class="form-group">
+                <label for="registerPhone">전화번호</label>
+                <input type="tel" id="registerPhone" placeholder="010-1234-5678">
+            </div>
+            <button type="submit" class="submit-btn">회원가입</button>
+            <div id="registerMessage"></div>
+        </form>
+    </div>
+
+    <script>
+        // 탭 전환
+        document.getElementById('loginTab').addEventListener('click', () => {
+            document.getElementById('loginTab').classList.add('active');
+            document.getElementById('registerTab').classList.remove('active');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+        });
+
+        document.getElementById('registerTab').addEventListener('click', () => {
+            document.getElementById('registerTab').classList.add('active');
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+        });
+
+        // 로그인 처리
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const autoLogin = document.getElementById('autoLogin').checked;
+
+            const messageDiv = document.getElementById('loginMessage');
+            messageDiv.innerHTML = '';
+
+            try {
+                const result = await window.electronAPI.login({
+                    email,
+                    password,
+                    autoLogin
+                });
+
+                if (result.success) {
+                    messageDiv.innerHTML = '<div class="success-message">로그인 성공! 메인 화면을 여는 중...</div>';
+                } else {
+                    messageDiv.innerHTML = `<div class="error-message">${result.error}</div>`;
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error-message">로그인 처리 중 오류가 발생했습니다.</div>';
+                console.error('로그인 오류:', error);
+            }
+        });
+
+        // 회원가입 처리
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const position = document.getElementById('registerPosition').value;
+            const phone = document.getElementById('registerPhone').value;
+
+            const messageDiv = document.getElementById('registerMessage');
+            messageDiv.innerHTML = '';
+
+            try {
+                const result = await window.electronAPI.register({
+                    name,
+                    email,
+                    password,
+                    position,
+                    phone
+                });
+
+                if (result.success) {
+                    messageDiv.innerHTML = '<div class="success-message">회원가입 성공! 로그인 탭에서 로그인해주세요.</div>';
+                    // 로그인 탭으로 자동 전환
+                    setTimeout(() => {
+                        document.getElementById('loginTab').click();
+                        document.getElementById('loginEmail').value = email;
+                    }, 1500);
+                } else {
+                    messageDiv.innerHTML = `<div class="error-message">${result.error}</div>`;
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error-message">회원가입 처리 중 오류가 발생했습니다.</div>';
+                console.error('회원가입 오류:', error);
+            }
+        });
+
+        // 직책 필드 한글 자동 변환 및 추천
+        const positionField = document.getElementById('registerPosition');
+        const positionSuggestions = [
+            '기술팀장', '연구원', '선임연구원', '책임연구원', '주임연구원',
+            '기술부장', '연구부장', '프로젝트매니저', '팀장', '과장', '차장', '부장',
+            '기술사', '기사', '산업기사', '기능사'
+        ];
+
+        positionField.addEventListener('input', function(e) {
+            // 영문을 한글로 자동 변환
+            let value = e.target.value;
+            
+            // 일반적인 영문 -> 한글 변환
+            const engToKor = {
+                'manager': '매니저',
+                'leader': '팀장',
+                'senior': '선임',
+                'junior': '주임',
+                'engineer': '기술자',
+                'researcher': '연구원',
+                'director': '부장',
+                'assistant': '보조',
+                'chief': '책임',
+                'team': '팀',
+                'dept': '부서',
+                'head': '팀장'
+            };
+
+            for (let eng in engToKor) {
+                value = value.replace(new RegExp(eng, 'gi'), engToKor[eng]);
+            }
+
+            e.target.value = value;
+        });
+
+        // 전화번호 자동 하이픈 추가
+        const phoneField = document.getElementById('registerPhone');
+        phoneField.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+            
+            if (value.length <= 3) {
+                e.target.value = value;
+            } else if (value.length <= 7) {
+                e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+            } else {
+                e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+            }
+        });
+
+        // 이름 필드 한글만 입력 허용
+        const nameField = document.getElementById('registerName');
+        nameField.addEventListener('input', function(e) {
+            // 한글, 공백만 허용
+            e.target.value = e.target.value.replace(/[^ㄱ-ㅎㅏ-ㅣ가-힣\s]/g, '');
+        });
+
+        // Enter 키로 탭 이동
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                const activeElement = document.activeElement;
+                const inputs = Array.from(document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="tel"]'));
+                const currentIndex = inputs.indexOf(activeElement);
+                
+                if (currentIndex !== -1 && currentIndex < inputs.length - 1) {
+                    e.preventDefault();
+                    inputs[currentIndex + 1].focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# 팀 협업 플랫폼 (Team Collaboration Platform)This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ReferenceError: ipcMain is not defined# 팀 협업 플랫폼 (Team Collaboration Platform)This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 
 
