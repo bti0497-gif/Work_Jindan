@@ -173,7 +173,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           onMouseDown={startResizingLeft}
           style={{ right: '-8px' }}
         >
-          <div className="w-[2px] h-full bg-gray-400 group-hover:bg-blue-500 transition-colors shadow-sm" />
+          <div className="w-[2px] h-full bg-gray-600 group-hover:bg-blue-500 transition-colors shadow-sm" />
         </div>
       </div>
 
@@ -211,7 +211,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
           onMouseDown={startResizingRight}
           style={{ left: '-8px' }}
         >
-          <div className="w-[2px] h-full bg-gray-400 group-hover:bg-blue-500 transition-colors shadow-sm" />
+          <div className="w-[2px] h-full bg-gray-600 group-hover:bg-blue-500 transition-colors shadow-sm" />
         </div>
         <RightSidebar 
           messages={messages}
