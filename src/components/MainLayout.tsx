@@ -189,7 +189,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         />
         
         {/* 메인 콘텐츠 */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto bg-white">
           <MainContent 
             activeTab={activeTab}
             selectedProject={selectedProject}
