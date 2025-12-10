@@ -26,28 +26,20 @@ export async function GET(request: Request) {
 
     const schedulesRef = adminDb.collection('schedules');
     
-    // Query 1: My schedules
-    const mySchedulesSnapshot = await schedulesRef
-        .where('userId', '==', session.user.id)
-        .where('date', '>=', targetDate)
-        .where('date', '<', nextDate)
-        .get();
-
-    // Query 2: Team schedules
-    const teamSchedulesSnapshot = await schedulesRef
-        .where('isTeamEvent', '==', true)
+    // Query: All schedules for the date (filtering in memory to avoid composite index requirement)
+    const schedulesSnapshot = await schedulesRef
         .where('date', '>=', targetDate)
         .where('date', '<', nextDate)
         .get();
 
     const schedulesMap = new Map();
 
-    mySchedulesSnapshot.docs.forEach(doc => {
-        schedulesMap.set(doc.id, { id: doc.id, ...doc.data() });
-    });
-
-    teamSchedulesSnapshot.docs.forEach(doc => {
-        schedulesMap.set(doc.id, { id: doc.id, ...doc.data() });
+    schedulesSnapshot.docs.forEach(doc => {
+        const data = doc.data();
+        // Filter: My schedules OR Team schedules
+        if (data.userId === session.user.id || data.isTeamEvent === true) {
+            schedulesMap.set(doc.id, { id: doc.id, ...data });
+        }
     });
 
     let schedules = Array.from(schedulesMap.values()).map((data: any) => ({
