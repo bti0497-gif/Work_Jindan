@@ -54,3 +54,26 @@ QUICK_START.md
 
 # vscode settings
 .vscode/
+
+# build outputs and large files
+/dist/
+/portable-dist/
+*.exe
+*.zip
+*.7z
+*.nsis
+*.tar.gz
+*.rar
+
+# electron specific
+electron/dist/
+electron/build/
+
+# logs
+*.log
+dist-log.txt
+firebase-debug.log
+git-error-*.txt
+
+# temp files
+version-info-*.json
