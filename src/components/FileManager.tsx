@@ -69,6 +69,10 @@ export default function FileManager({}: FileManagerProps) {
   const [editingFile, setEditingFile] = useState<string | null>(null);
   const [editingName, setEditingName] = useState('');
   const [isCreatingNewFolder, setIsCreatingNewFolder] = useState(false);
+  // 용량 관리: 500GB 한도
+  const MAX_BYTES = 500 * 1024 * 1024 * 1024; // 500 GB
+  const totalUsed = files.reduce((acc, f) => acc + (f.size ?? 0), 0);
+  const progressPct = Math.min(100, (totalUsed / MAX_BYTES) * 100);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dropZoneRef = useRef<HTMLDivElement>(null);
@@ -763,6 +767,20 @@ export default function FileManager({}: FileManagerProps) {
         </div>
       </div>
 
+      {/* 파일 용량 한도 모니터링 바(500GB) */}
+      <div className="px-4 py-2 bg-white border-t border-gray-200">
+        <div className="text-sm text-gray-700 mb-1">전체 파일 용량 한도: 500 GB</div>
+        <div className="w-full bg-gray-200 rounded h-3 overflow-hidden">
+          <div
+            className={`h-3 ${progressPct < 100 ? 'bg-blue-600' : 'bg-red-600'}`}
+            style={{ width: `${progressPct}%` }}
+          ></div>
+        </div>
+        <div className="text-xs text-gray-500 mt-1">사용 중: {formatFileSize(totalUsed)} / 500 GB</div>
+        {totalUsed > MAX_BYTES && (
+          <div className="text-xs text-red-600 mt-1">경고: 용량 한도를 초과했습니다. 정리 필요.</div>
+        )}
+      </div>
       {/* 메인 파일 영역 - 드래그앤드롭 지원 */}
       <div 
         ref={dropZoneRef}

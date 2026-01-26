@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
@@ -11,39 +11,37 @@ import {
 } from '@/lib/google-api';
 import { PrismaClient } from '@prisma/client';
 
-
-
-// ?�역 ?�일 목록 조회 (?�더�?
+// 전역 파일 목록 조회 (폴더별)
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
     const url = new URL(request.url);
     const parentId = url.searchParams.get('parentId');
 
-    // ?�정 ?�더 ?�는 루트 ?�더???�일 조회
-    // 모든 ?�일??가?�온 ??JavaScript?�서 ?�터�?
+    // 특정 폴더 또는 루트 폴더의 파일 조회
+    // 모든 파일을 가져온 후 JavaScript에서 필터링
     const allFiles = await prisma.projectFile.findMany({
       orderBy: { createdAt: 'desc' }
     });
 
-    // JavaScript?�서 ?�바�?depth ?�터�?
+    // JavaScript에서 올바른 depth 필터링
     const filteredFiles = allFiles.filter(file => {
       const pathParts = file.path.split('/').filter(part => part !== '');
       
       if (parentId) {
-        // ?�정 ?�더 ?��???직계 ?�식�?
+        // 특정 폴더 내의 직계 자식만
         return (
           (file.path.startsWith(`/global/folders/${parentId}/`) || 
            file.path.startsWith(`/global/files/${parentId}/`)) &&
           pathParts.length === 4 // /global/folders|files/parentId/fileId
         );
       } else {
-        // 루트 ?�더??직계 ?�식�?
+        // 루트 폴더의 직계 자식만
         return (
           (file.path.startsWith('/global/folders/') || 
            file.path.startsWith('/global/files/')) &&
@@ -52,8 +50,8 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // Google Drive?�서 ?�일 ?�보??가?��???병합?????��?�? 
-    // ?�재???�이?�베?�스???�보�??�용
+    // Google Drive에서 파일 정보를 가져와 병합할 수 있지만 
+    // 현재는 데이터베이스의 정보만 사용
     const formattedFiles = filteredFiles.map(file => ({
       id: file.googleFileId || file.id,
       name: file.name,
@@ -67,9 +65,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ files: formattedFiles });
 
   } catch (error) {
-    console.error('?�일 목록 조회 ?�류:', error);
+    console.error('파일 목록 조회 오류:', error);
     return NextResponse.json(
-      { error: '?�일 목록??불러?�는 �??�류가 발생?�습?�다' },
+      { error: '파일 목록을 불러오는 중 오류가 발생했습니다' },
       { status: 500 }
     );
   } finally {
@@ -77,22 +75,22 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// ?�일 ??��
+// 파일 삭제
 export async function DELETE(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
     const { fileId } = await request.json();
 
     if (!fileId) {
-      return NextResponse.json({ error: '?�일 ID가 ?�요?�니?? }, { status: 400 });
+      return NextResponse.json({ error: '파일 ID가 필요합니다.' }, { status: 400 });
     }
 
-    // ?�일??존재?�는지 ?�인 (권한 ?�인 ?�거)
+    // 파일이 존재하는지 확인 (권한 확인 제거)
     const projectFile = await prisma.projectFile.findFirst({
       where: {
         OR: [
@@ -103,25 +101,25 @@ export async function DELETE(request: NextRequest) {
     });
 
     if (!projectFile) {
-      return NextResponse.json({ error: '?�일??찾을 ???�습?�다' }, { status: 404 });
+      return NextResponse.json({ error: '파일을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    // Google Drive?�서 ?�일 ??��
+    // Google Drive에서 삭제
     if (projectFile.googleFileId) {
       await deleteFileFromDrive(projectFile.googleFileId);
     }
 
-    // ?�이?�베?�스?�서 ?�일 ?�보 ??��
+    // DB에서 삭제
     await prisma.projectFile.delete({
       where: { id: projectFile.id }
     });
 
-    return NextResponse.json({ success: true, message: '?�일????��?�었?�니?? });
+    return NextResponse.json({ message: '파일이 삭제되었습니다.' });
 
   } catch (error) {
-    console.error('?�일 ??�� ?�류:', error);
+    console.error('파일 삭제 오류:', error);
     return NextResponse.json(
-      { error: '?�일 ??�� �??�류가 발생?�습?�다' },
+      { error: '파일 삭제 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   } finally {
@@ -129,84 +127,60 @@ export async function DELETE(request: NextRequest) {
   }
 }
 
-// ?�역 ?�더 ?�성
+// 폴더 생성
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
-    const { folderName, parentId } = await request.json();
+    const { name, parentId } = await request.json();
 
-    if (!folderName) {
-      return NextResponse.json({ error: '?�더 ?�름???�요?�니?? }, { status: 400 });
+    if (!name) {
+      return NextResponse.json({ error: '폴더 이름이 필요합니다.' }, { status: 400 });
     }
 
-    let driveResult;
-    try {
-      // Google Drive???�더 ?�성 ?�도
-      driveResult = await createDriveFolder(folderName, parentId);
-    } catch (error) {
-      console.error('Google Drive ?�더 ?�성 ?�패:', error);
-      // Google Drive ?�패 ??로컬?�서�??�성
-      driveResult = {
-        id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        name: folderName
-      };
+    // Google Drive에 폴더 생성
+    const folder = await createDriveFolder(name, parentId);
+
+    if (!folder) {
+      throw new Error('Google Drive 폴더 생성 실패');
     }
 
-    // ?�역 ?�일�??�??(projectId??null)
-    let firstProject = await prisma.project.findFirst();
-    
-    // ?�역 ?�일?��?�??�로?�트 ?�이 ?�??
-    if (!firstProject) {
-      firstProject = await prisma.project.create({
-        data: {
-          name: 'Global Files Project',
-          description: 'System generated project for global file storage',
-          ownerId: session.user.id,
-          color: '#3B82F6'
-        }
-      });
-    }
-    
-    const projectIdToUse = firstProject.id;
+    // DB에 폴더 정보 저장
+    const path = parentId 
+      ? `/global/folders/${parentId}/${folder.id}`
+      : `/global/folders/${folder.id}`;
 
-    // ?�이?�베?�스???�더 ?�보 ?�??(?�역 ?�일)
-    const folderPath = parentId 
-      ? `/global/folders/${parentId}/${driveResult.id}`
-      : `/global/folders/${driveResult.id}`;
-
-    const projectFile = await prisma.projectFile.create({
+    const newFolder = await prisma.projectFile.create({
       data: {
-        name: folderName,
-        originalName: folderName,
+        name: folder.name,
+        originalName: folder.name,
         mimeType: 'application/vnd.google-apps.folder',
         size: 0,
-        path: folderPath,
-        googleFileId: driveResult.id,
-        projectId: projectIdToUse,
+        path: path,
+        googleFileId: folder.id,
+        projectId: null, // 전역 파일
         uploadedBy: session.user.id
       }
     });
 
-    return NextResponse.json({
-      success: true,
+    return NextResponse.json({ 
       folder: {
-        id: driveResult.id,
-        name: driveResult.name,
-        mimeType: 'application/vnd.google-apps.folder',
-        isFolder: true,
-        projectFileId: projectFile.id
+        id: newFolder.googleFileId,
+        name: newFolder.name,
+        mimeType: newFolder.mimeType,
+        modifiedTime: newFolder.createdAt.toISOString(),
+        parentId: parentId
       }
     });
 
   } catch (error) {
-    console.error('?�더 ?�성 ?�류:', error);
+    console.error('폴더 생성 오류:', error);
     return NextResponse.json(
-      { error: '?�더 ?�성 �??�류가 발생?�습?�다' },
+      { error: '폴더 생성 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   } finally {
@@ -214,22 +188,22 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// ?�일/?�더 ?�름 변�?
+// 파일 이름 변경
 export async function PUT(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
-    const { fileId, newName } = await request.json();
+    const { fileId, name } = await request.json();
 
-    if (!fileId || !newName) {
-      return NextResponse.json({ error: '?�일 ID?� ???�름???�요?�니?? }, { status: 400 });
+    if (!fileId || !name) {
+      return NextResponse.json({ error: '파일 ID와 새 이름이 필요합니다.' }, { status: 400 });
     }
 
-    // ?�일??존재?�는지 ?�인
+    // 파일 조회
     const projectFile = await prisma.projectFile.findFirst({
       where: {
         OR: [
@@ -240,42 +214,26 @@ export async function PUT(request: NextRequest) {
     });
 
     if (!projectFile) {
-      return NextResponse.json({ error: '?�일??찾을 ???�습?�다' }, { status: 404 });
+      return NextResponse.json({ error: '파일을 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    try {
-      // Google Drive?�서 ?�름 변�??�도
-      if (projectFile.googleFileId) {
-        await updateDriveFileName(projectFile.googleFileId, newName);
-      }
-    } catch (error) {
-      console.error('Google Drive ?�름 변�??�패:', error);
-      // Google Drive ?�패?�도 계속 진행
+    // Google Drive 파일 이름 변경
+    if (projectFile.googleFileId) {
+      await updateDriveFileName(projectFile.googleFileId, name);
     }
 
-    // ?�이?�베?�스?�서 ?�름 ?�데?�트
-    const updatedFile = await prisma.projectFile.update({
+    // DB 업데이트
+    await prisma.projectFile.update({
       where: { id: projectFile.id },
-      data: { 
-        name: newName,
-        originalName: newName
-      }
+      data: { name: name }
     });
 
-    return NextResponse.json({
-      success: true,
-      file: {
-        id: updatedFile.googleFileId || updatedFile.id,
-        name: updatedFile.name,
-        mimeType: updatedFile.mimeType,
-        isFolder: updatedFile.mimeType === 'application/vnd.google-apps.folder'
-      }
-    });
+    return NextResponse.json({ message: '이름이 변경되었습니다.' });
 
   } catch (error) {
-    console.error('?�일 ?�름 변�??�류:', error);
+    console.error('이름 변경 오류:', error);
     return NextResponse.json(
-      { error: '?�일 ?�름 변�?�??�류가 발생?�습?�다' },
+      { error: '이름 변경 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   } finally {

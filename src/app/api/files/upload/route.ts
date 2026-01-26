@@ -1,41 +1,39 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { uploadFileToDrive } from '@/lib/google-api';
 import { PrismaClient } from '@prisma/client';
 
-
-
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session) {
-      return NextResponse.json({ error: '?�증???�요?�니?? }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const parentId = formData.get('parentId') as string | null;
-    // projectId ?�거 - ?�역 ?�일 ?�로??
+    // projectId 제거 - 전역 파일 업로드
 
     if (!file) {
-      return NextResponse.json({ error: '?�일???�택?��? ?�았?�니?? }, { status: 400 });
+      return NextResponse.json({ error: '파일이 선택되지 않았습니다.' }, { status: 400 });
     }
 
-    // ?�일 ?�기 ?�한 (10MB)
+    // 파일 크기 제한 (10MB)
     if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: '?�일 ?�기??10MB�?초과?????�습?�다' }, { status: 400 });
+      return NextResponse.json({ error: '파일 크기는 10MB를 초과할 수 없습니다' }, { status: 400 });
     }
 
-    // ?�일??Buffer�?변??
+    // 파일을 Buffer로 변환
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
     let result;
     try {
-      // Google Drive???�로???�도
+      // Google Drive에 업로드 시도
       result = await uploadFileToDrive(
         buffer,
         file.name,
@@ -43,18 +41,18 @@ export async function POST(request: NextRequest) {
         parentId || undefined
       );
     } catch (error) {
-      console.error('Google Drive ?�로???�패:', error);
-      // Google Drive ?�패 ??로컬?�서�??�성
+      console.error('Google Drive 업로드 실패:', error);
+      // Google Drive 실패 시 로컬에서만 생성
       result = {
         id: `local_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         name: file.name
       };
     }
 
-    // ?�역 ?�일�??�??(projectId??null)
+    // 전역 파일로 저장 (projectId는 null)
     let firstProject = await prisma.project.findFirst();
     
-    // ?�역 ?�일?��?�??�로?�트 ?�이 ?�??
+    // 전역 파일이므로 프로젝트 없이 저장
     if (!firstProject) {
       firstProject = await prisma.project.create({
         data: {
@@ -68,7 +66,7 @@ export async function POST(request: NextRequest) {
     
     const projectIdToUse = firstProject.id;
 
-    // ?�이?�베?�스???�일 ?�보 ?�??(?�역 ?�일)
+    // 데이터베이스에 파일 정보 저장 (전역 파일)
     const filePath = parentId 
       ? `/global/files/${parentId}/${result.id}`
       : `/global/files/${result.id}`;
@@ -98,9 +96,9 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('?�일 ?�로???�류:', error);
+    console.error('파일 업로드 오류:', error);
     return NextResponse.json(
-      { error: '?�일 ?�로??�??�류가 발생?�습?�다' },
+      { error: '파일 업로드 중 오류가 발생했습니다.' },
       { status: 500 }
     );
   } finally {

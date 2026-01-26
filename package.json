@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/prepare-standalone.js",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
@@ -79,20 +79,14 @@
     },
     "files": [
       "electron/**/*",
-      "src/**/*",
-      "public/**/*",
-      "prisma/**/*",
-      "scripts/**/*",
       "package.json",
-      "next.config.js",
-      "tsconfig.json",
-      "postcss.config.mjs",
-      "tailwind.config.js",
-      ".env.local",
-      "node_modules/**/*"
-    ],
-    "asarUnpack": [
-      "node_modules/**/*"
+      {
+        "from": ".next/standalone",
+        "to": ".",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "win": {
       "target": [
@@ -104,6 +98,6 @@
         }
       ]
     },
-    "asar": true
+    "asar": false
   }
 }

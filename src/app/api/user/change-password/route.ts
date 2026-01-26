@@ -1,86 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
+import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { validatePassword } from '@/lib/password-validation';
-
-
 
 export async function PUT(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
     if (!session?.user?.email) {
-      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
+      return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
     const { currentPassword, newPassword } = await request.json();
 
-    // ?�력 검�?
     if (!currentPassword || !newPassword) {
       return NextResponse.json(
-        { message: '?�재 비�?번호?� ??비�?번호�?모두 ?�력?�주?�요.' },
+        { error: '현재 비밀번호와 새 비밀번호를 모두 입력해주세요.' },
         { status: 400 }
       );
     }
 
-    // ??비�?번호 강도 검�?
-    const passwordValidation = validatePassword(newPassword);
-    if (!passwordValidation.isValid) {
+    // 새 비밀번호 유효성 검사
+    const validation = validatePassword(newPassword);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { 
-          message: '??비�?번호가 ?�구?�항??충족?��? ?�습?�다.',
-          errors: passwordValidation.errors
-        },
+        { error: '비밀번호가 요구사항을 충족하지 않습니다.' },
         { status: 400 }
       );
     }
 
-    // ?�용??조회
+    // 사용자 조회
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email }
+      where: { email: session.user.email },
     });
 
     if (!user) {
-      return NextResponse.json(
-        { message: '?�용?��? 찾을 ???�습?�다.' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: '사용자를 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    // ?�재 비�?번호 검�?
-    const isValidPassword = await bcrypt.compare(currentPassword, user.password);
-    if (!isValidPassword) {
+    // 현재 비밀번호 확인
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    if (!isPasswordValid) {
       return NextResponse.json(
-        { message: '?�재 비�?번호가 ?�바르�? ?�습?�다.' },
+        { error: '현재 비밀번호가 일치하지 않습니다.' },
         { status: 400 }
       );
     }
 
-    // ??비�?번호 ?�호??
-    const hashedNewPassword = await bcrypt.hash(newPassword, 12);
-
-    // 비�?번호 ?�데?�트
+    // 새 비밀번호 해싱 및 저장
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
     await prisma.user.update({
       where: { email: session.user.email },
-      data: {
-        password: hashedNewPassword,
-      },
+      data: { password: hashedPassword },
     });
 
-    return NextResponse.json({ 
-      message: '비�?번호가 ?�공?�으�?변경되?�습?�다.' 
-    });
-
+    return NextResponse.json({ message: '비밀번호가 성공적으로 변경되었습니다.' });
   } catch (error) {
-    console.error('비�?번호 변�??�류:', error);
+    console.error('비밀번호 변경 오류:', error);
     return NextResponse.json(
-      { message: '비�?번호 변�?�??�류가 발생?�습?�다.' },
+      { error: '비밀번호 변경 중 오류가 발생했습니다.' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

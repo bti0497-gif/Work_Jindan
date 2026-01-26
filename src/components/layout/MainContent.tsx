@@ -27,9 +27,10 @@ export default function MainContent({
   projectViewMode = 'list',
   onProjectViewModeChange 
 }: MainContentProps) {
+  const currentTab = (activeTab ?? 'projects') as TabType;
   console.log('MainContent rendering, activeTab:', activeTab);
   const renderContent = () => {
-    switch (activeTab) {
+    switch (currentTab) {
       case 'projects':
         return (
           <div className="h-full overflow-y-auto">

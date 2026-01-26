@@ -232,6 +232,16 @@ export default function GlobalBoard() {
     );
   }
 
+  // Helper to determine if a post is new within 24 hours
+  const isNewPost = (p: Post) => {
+    try {
+      const diff = Date.now() - new Date(p.createdAt).getTime();
+      return diff <= 24 * 60 * 60 * 1000;
+    } catch {
+      return false;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -539,7 +549,27 @@ export default function GlobalBoard() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredPosts.map((post) => (
+            {filteredPosts.map((post) => {
+              const isNew = isNewPost(post);
+              return (
+                <div key={post.id} className="border-b pb-3 last:border-b-0 hover:bg-gray-50 p-3 cursor-pointer" onClick={() => fetchPostDetail(post.id)}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center">
+                        {post.isNotice && (
+                          <span className="inline-flex items-center justify-center w-4 h-4 bg-red-500 text-white rounded-full mr-1">N*</span>
+                        )}
+                        <span className="font-semibold text-gray-900">{post.title}</span>
+                        {isNew && (
+                          <span className="inline-flex items-center justify-center w-5 h-5 bg-red-600 text-white text-xs rounded-full ml-2">N</span>
+                        )}
+                      </div>
+                    </div>
+                    <span className="text-xs text-gray-500">{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: ko })}</span>
+                  </div>
+                </div>
+              );
+            })}
                   <tr
                     key={post.id}
                     className="hover:bg-gray-50 cursor-pointer transition-colors"

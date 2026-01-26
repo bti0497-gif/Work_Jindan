@@ -2,39 +2,66 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
-// 개발 모드인지 확인
-const isDev = process.env.NODE_ENV !== 'production';
+// 개발 모드인지 확인 (패키징 여부로 판단)
+const isDev = !app.isPackaged;
 
 let nextServer = null;
 
 function startNextServer() {
   return new Promise((resolve, reject) => {
-    // Next.js 개발 서버를 시작합니다
-    const nextProcess = spawn('npm', ['run', 'dev'], {
-      cwd: path.join(__dirname, '..'),
-      shell: true,
-      env: { ...process.env, BROWSER: 'none' }
-    });
+    if (isDev) {
+      // 개발 모드: npm run dev 실행
+      const nextProcess = spawn('npm', ['run', 'dev'], {
+        cwd: path.join(__dirname, '..'),
+        shell: true,
+        env: { ...process.env, BROWSER: 'none' }
+      });
 
-    nextProcess.stdout.on('data', (data) => {
-      console.log(`Next.js: ${data}`);
-      // "Ready" 또는 "Local:" 메시지가 나오면 서버 준비 완료
-      if (data.toString().includes('Ready') || data.toString().includes('Local:')) {
-        setTimeout(() => resolve(), 2000); // 2초 추가 대기
-      }
-    });
+      nextProcess.stdout.on('data', (data) => {
+        console.log(`Next.js: ${data}`);
+        if (data.toString().includes('Ready') || data.toString().includes('Local:')) {
+          setTimeout(() => resolve(), 2000);
+        }
+      });
 
-    nextProcess.stderr.on('data', (data) => {
-      console.error(`Next.js Error: ${data}`);
-    });
+      nextProcess.stderr.on('data', (data) => {
+        console.error(`Next.js Error: ${data}`);
+      });
 
-    nextProcess.on('close', (code) => {
-      console.log(`Next.js 프로세스 종료 코드: ${code}`);
-    });
+      nextServer = nextProcess;
+    } else {
+      // 프로덕션 모드: standalone 서버 실행
+      // package.json의 files 설정에 따라 .next/standalone 내용이 앱 루트(app.getAppPath())로 복사됨
+      const serverPath = path.join(app.getAppPath(), 'server.js');
+      console.log('Starting production server from:', serverPath);
+      
+      const nextProcess = spawn(process.execPath, [serverPath], {
+        cwd: app.getAppPath(),
+        env: { 
+          ...process.env, 
+          NODE_ENV: 'production',
+          PORT: '3000',
+          HOSTNAME: 'localhost',
+          ELECTRON_RUN_AS_NODE: '1' 
+        }
+      });
 
-    nextServer = nextProcess;
+      nextProcess.stdout.on('data', (data) => {
+        console.log(`Next.js: ${data}`);
+        // 프로덕션 서버는 보통 "Listening on port 3000" 등을 출력
+        if (data.toString().includes('Listening') || data.toString().includes('Ready')) {
+          setTimeout(() => resolve(), 1000);
+        }
+      });
+
+      nextProcess.stderr.on('data', (data) => {
+        console.error(`Next.js Error: ${data}`);
+      });
+
+      nextServer = nextProcess;
+    }
     
-    // 10초 후에도 Ready 메시지가 없으면 강제로 resolve
+    // 10초 후에도 Ready 메시지가 없으면 강제로 resolve (서버가 이미 떠있거나 출력을 놓친 경우 대비)
     setTimeout(() => resolve(), 10000);
   });
 }
