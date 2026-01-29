@@ -1,0 +1,8 @@
+
+{
+  "name": "기술진단팀 협업스튜디오",
+  "description": "Professional collaboration system for the Technical Diagnosis Team at Deojon Environment Technology, featuring a 3-panel layout with real-time chat, project management, and task tracking.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
