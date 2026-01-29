@@ -136,7 +136,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
     }
 
-    const { name, parentId } = await request.json();
+    const body = await request.json();
+    const name = body.name || body.folderName;
+    const parentId = body.parentId;
 
     if (!name) {
       return NextResponse.json({ error: '폴더 이름이 필요합니다.' }, { status: 400 });

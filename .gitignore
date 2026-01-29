@@ -52,8 +52,9 @@ COMPONENT_GUIDE.md
 DEVELOPMENT_LOG.md
 QUICK_START.md
 
-# vscode settings
-.vscode/
+# vscode settings (except settings.json)
+.vscode/*
+!.vscode/settings.json
 
 # build outputs and large files
 /dist/

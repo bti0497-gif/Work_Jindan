@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validatePassword } from '@/lib/password-validation';
-import { adminAuth, adminDb } from '@/lib/firebase-admin';
+import prisma from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
+import { syncUsersToDrive } from '@/lib/drive-sync';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, name, phone, position, username, address, addressDetail } = await request.json();
+    const { email, password, name, phone, position } = await request.json();
 
     // 입력 검증
-    if (!email || !password || !name || !username) {
+    if (!email || !password || !name) {
       return NextResponse.json(
-        { message: '아이디, 이메일, 비밀번호, 이름은 필수 항목입니다.' },
+        { message: '이메일, 비밀번호, 이름은 필수 항목입니다.' },
         { status: 400 }
       );
     }
@@ -59,42 +61,39 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 아이디 중복 검사 (Firestore Admin SDK)
-    const usersRef = adminDb.collection('users');
-    const snapshot = await usersRef.where('username', '==', username).get();
+    // 이메일 중복 검사 (Prisma)
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
     
-    if (!snapshot.empty) {
+    if (existingUser) {
       return NextResponse.json(
-        { message: '이미 사용 중인 아이디입니다.' },
+        { message: '이미 사용 중인 이메일입니다.' },
         { status: 400 }
       );
     }
 
-    // Firebase Authentication에 사용자 생성 (Admin SDK)
-    const userRecord = await adminAuth.createUser({
-      email: email,
-      password: password,
-      displayName: name,
+    // 비밀번호 해싱
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 사용자 생성 (Prisma)
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name,
+        phone: phone || null,
+        position: position || null,
+        userLevel: 2, // 0: 최고관리자(admin), 1: 관리자, 2: 일반회원
+        isActive: true
+      }
     });
 
-    // Firestore에 사용자 정보 저장 (Admin SDK)
-    await usersRef.doc(userRecord.uid).set({
-      uid: userRecord.uid,
-      email: email,
-      username: username, // 아이디 저장
-      name: name,
-      phone: phone || '',
-      position: position || '',
-      address: address || '',
-      addressDetail: addressDetail || '',
-      userLevel: 2, // 기본값: 일반 사용자
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isActive: true
-    });
+    // 구글 드라이브 동기화 (비동기)
+    syncUsersToDrive().catch(err => console.error('Background user sync failed:', err));
 
     return NextResponse.json(
-      { message: '회원가입이 완료되었습니다.', userId: userRecord.uid },
+      { message: '회원가입이 완료되었습니다.', userId: user.id },
       { status: 201 }
     );
 

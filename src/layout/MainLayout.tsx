@@ -3,11 +3,11 @@
 import { useSession } from 'next-auth/react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-import LeftSidebar from './layout/LeftSidebar';
-import Header from './layout/Header';
-import TabNavigation, { TabType } from './layout/TabNavigation';
-import MainContent from './layout/MainContent';
-import RightSidebar from './layout/RightSidebar';
+import LeftSidebar from './components/LeftSidebar';
+import Header from './components/Header';
+import TabNavigation, { TabType } from './components/TabNavigation';
+import MainContent from './components/MainContent';
+import RightSidebar from './components/RightSidebar';
 
 interface Project {
   id: string;
@@ -160,7 +160,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   };
 
   return (
-    <div className="h-screen w-full flex bg-gray-100 overflow-hidden">
+    <div className="h-screen w-full flex bg-slate-50 overflow-hidden">
       {/* 왼쪽 사이드바 */}
       <div 
         className="flex flex-shrink-0 relative"

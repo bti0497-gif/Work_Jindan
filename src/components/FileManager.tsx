@@ -208,7 +208,7 @@ export default function FileManager({}: FileManagerProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          folderName: newFolderName,
+          name: newFolderName,
           parentId: currentFolderId
         }),
       });
@@ -243,7 +243,7 @@ export default function FileManager({}: FileManagerProps) {
         },
         body: JSON.stringify({ 
           fileId: fileId,
-          newName: newName.trim()
+          name: newName.trim()
         }),
       });
 
@@ -649,7 +649,7 @@ export default function FileManager({}: FileManagerProps) {
   const formatFileSize = (bytes?: number) => {
     if (!bytes) return '';
     const size = bytes;
-    if (size === 0) return '0 Bytes';
+    if size === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(size) / Math.log(k));

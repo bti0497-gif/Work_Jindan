@@ -95,10 +95,13 @@ export async function createDriveFolder(name: string, parentId?: string) {
   try {
     const drive = await getGoogleDriveClient();
     
+    // parentId가 없으면 설정된 GOOGLE_DRIVE_FOLDER_ID를 기본으로 사용
+    const targetParentId = parentId || process.env.GOOGLE_DRIVE_FOLDER_ID;
+
     const fileMetadata = {
       name,
       mimeType: 'application/vnd.google-apps.folder',
-      parents: parentId ? [parentId] : undefined,
+      parents: targetParentId ? [targetParentId] : undefined,
     };
 
     const response = await drive.files.create({
@@ -122,9 +125,12 @@ export async function uploadFileToDrive(
   try {
     const drive = await getGoogleDriveClient();
     
+    // parentId가 없으면 설정된 GOOGLE_DRIVE_FOLDER_ID를 기본으로 사용
+    const targetParentId = parentId || process.env.GOOGLE_DRIVE_FOLDER_ID;
+
     const fileMetadata = {
       name: fileName,
-      parents: parentId ? [parentId] : undefined,
+      parents: targetParentId ? [targetParentId] : undefined,
     };
 
     const media = {

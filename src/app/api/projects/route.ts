@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { adminDb } from '@/lib/firebase-admin';
-import { FieldValue } from 'firebase-admin/firestore';
+import prisma from '@/lib/prisma';
 
 // 프로젝트 목록 조회
 export async function GET(request: NextRequest) {
@@ -16,42 +15,64 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search');
 
-    const projectsRef = adminDb.collection('projects');
-    const snapshot = await projectsRef.get();
-
-    let projects = snapshot.docs.map(doc => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        owner: data.owner || { name: 'Unknown', email: '' },
-        members: data.members || [],
-        createdAt: data.createdAt ? data.createdAt.toDate() : new Date(),
-        updatedAt: data.updatedAt ? data.updatedAt.toDate() : new Date(),
-        _count: {
-            tasks: 0,
-            milestones: 0,
-            schedules: 0,
-            files: 0,
-            members: (data.members || []).length,
-        }
-      };
-    });
-
+    const where: any = {};
+    
     if (search && search.trim()) {
-      const searchLower = search.trim().toLowerCase();
-      projects = projects.filter((p: any) => 
-        p.name?.toLowerCase().includes(searchLower) || 
-        p.description?.toLowerCase().includes(searchLower) ||
-        p.facilityName?.toLowerCase().includes(searchLower)
-      );
+      const searchLower = search.trim();
+      where.OR = [
+        { name: { contains: searchLower } },
+        { description: { contains: searchLower } },
+        { facilityName: { contains: searchLower } },
+      ];
     }
 
-    projects.sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+    const projects = await prisma.project.findMany({
+      where,
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+          }
+        },
+        members: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar: true,
+              }
+            }
+          }
+        },
+        _count: {
+          select: {
+            tasks: true,
+            milestones: true,
+            schedules: true,
+            files: true,
+            members: true,
+          }
+        }
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+
+    const formattedProjects = projects.map(project => ({
+      ...project,
+      createdAt: project.createdAt.toISOString(),
+      updatedAt: project.updatedAt.toISOString(),
+      startDate: project.startDate?.toISOString() || null,
+      endDate: project.endDate?.toISOString() || null,
+    }));
 
     return NextResponse.json({ 
         success: true, 
-        data: projects 
+        data: formattedProjects 
     });
   } catch (error) {
     console.error('프로젝트 조회 오류:', error);
@@ -72,58 +93,79 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, description, facilityName, location, startDate, endDate } = body;
+    const { name, description, facilityName, address, startDate, endDate } = body;
 
     if (!name) {
         return NextResponse.json({ error: '프로젝트 이름이 필요합니다' }, { status: 400 });
     }
 
-    const newProjectRef = adminDb.collection('projects').doc();
-    const now = new Date();
+    const userId = session.user.id;
 
-    const projectData = {
-        id: newProjectRef.id,
-        name,
-        description,
-        facilityName,
-        location,
-        startDate: startDate ? new Date(startDate) : null,
-        endDate: endDate ? new Date(endDate) : null,
-        status: 'PLANNING',
+    // Use transaction to create project and add owner as member
+    const newProject = await prisma.$transaction(async (tx) => {
+      const project = await tx.project.create({
+        data: {
+          name,
+          description,
+          facilityName,
+          address,
+          startDate: startDate ? new Date(startDate) : null,
+          endDate: endDate ? new Date(endDate) : null,
+          status: '준비중', // Default status from schema
+          ownerId: userId,
+        }
+      });
+
+      await tx.projectMember.create({
+        data: {
+          projectId: project.id,
+          userId: userId,
+          role: 'ADMIN', // specific role string used in your system
+          specialty: '총괄'
+        }
+      });
+
+      return project;
+    });
+
+    // Re-fetch to get included data
+    const fullProject = await prisma.project.findUnique({
+      where: { id: newProject.id },
+      include: {
         owner: {
-            email: session.user.email,
-            name: session.user.name,
-            image: session.user.image,
-            id: session.user.id
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+          }
         },
-        members: [
-            {
-                user: {
-                    email: session.user.email,
-                    name: session.user.name,
-                    image: session.user.image,
-                    id: session.user.id
-                },
-                role: 'ADMIN'
+        members: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar: true, 
+              }
             }
-        ],
-        createdAt: now,
-        updatedAt: now
-    };
-
-    await newProjectRef.set(projectData);
+          }
+        },
+        _count: {
+          select: {
+            tasks: true,
+            milestones: true,
+            schedules: true,
+            files: true,
+            members: true,
+          }
+        }
+      }
+    });
 
     return NextResponse.json({
-        project: {
-            ...projectData,
-            _count: {
-                tasks: 0,
-                milestones: 0,
-                schedules: 0,
-                files: 0,
-                members: 1
-            }
-        }
+        project: fullProject
     }, { status: 201 });
 
   } catch (error) {

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, X, Edit, Trash2, Building, MapPin, Phone, User, FileText, Calendar, AlertCircle, Save, UserPlus } from 'lucide-react';
-import { useProjects, useCurrentUser, useModal, useForm } from '@/hooks/common';
+import { useProjects, useCurrentUser, useModal, useForm } from '@/shared/hooks/common';
 import { Project, FacilityContact } from '@/types/common';
-import { PermissionWrapper, PermissionButton, StatusBadge } from '@/components/common/PermissionComponents';
+import { PermissionWrapper, PermissionButton, StatusBadge } from '@/shared/components/common/PermissionComponents';
 
 // 시설 유형 및 진단 타입 상수
 const FACILITY_TYPES = [

@@ -2,6 +2,7 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
+import { syncPostsToDrive } from '@/lib/drive-sync';
 
 // 게시글 목록 조회
 export async function GET(request: NextRequest) {
@@ -118,6 +119,9 @@ export async function POST(request: NextRequest) {
         authorId: session.user.id,
       },
     });
+
+    // Sync to Google Drive
+    syncPostsToDrive().catch(err => console.error('Background post sync failed:', err));
 
     return NextResponse.json(post);
   } catch (error) {

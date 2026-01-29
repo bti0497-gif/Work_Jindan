@@ -39,8 +39,6 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "extract-zip": "^2.0.1",
-    "firebase": "^12.5.0",
-    "firebase-admin": "^13.5.0",
     "google-auth-library": "^10.4.1",
     "googleapis": "^164.1.0",
     "jsonwebtoken": "^9.0.2",

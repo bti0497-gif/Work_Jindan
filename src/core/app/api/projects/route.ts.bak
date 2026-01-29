@@ -1,0 +1,356 @@
+import { NextRequest, NextResponse } from 'next/server';import { NextRequest, NextResponse } from 'next/server';
+
+import { getServerSession } from 'next-auth';import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/lib/auth';import { authOptions } from '@/lib/auth';
+
+import prisma from '@/lib/prisma';import prisma from '@/lib/prisma';
+
+import { PrismaClient } from '@prisma/client';
+
+// 프로젝트 목록 조회
+
+export async function GET(request: NextRequest) {
+
+  try {
+
+    const session = await getServerSession(authOptions);// ?�로?�트 목록 조회 (?�용?��? ?�한 ?�로?�트??
+
+    if (!session?.user?.email) {export async function GET(request: NextRequest) {
+
+      return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });  try {
+
+    }    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+
+    const user = await prisma.user.findUnique({      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
+
+      where: { email: session.user.email },    }
+
+    });
+
+    const user = await prisma.user.findUnique({
+
+    if (!user) {      where: { email: session.user.email },
+
+      return NextResponse.json({ error: '사용자를 찾을 수 없습니다' }, { status: 404 });    });
+
+    }
+
+    if (!user) {
+
+    const { searchParams } = new URL(request.url);      return NextResponse.json({ error: '?�용?��? 찾을 ???�습?�다.' }, { status: 404 });
+
+    const search = searchParams.get('search');    }
+
+
+
+    let whereCondition: any = {};    // 검?�어 가?�오�?
+
+    const { searchParams } = new URL(request.url);
+
+    if (search && search.trim()) {    const search = searchParams.get('search');
+
+      whereCondition = {
+
+        OR: [    // 모든 ?�로?�트�?조회?????�도�??�정 (권한 ?�한 ?�음)
+
+          { name: { contains: search.trim() } },    let whereCondition: any = {};
+
+          { description: { contains: search.trim() } },
+
+          { facilityName: { contains: search.trim() } }    // 검?�어가 ?�는 경우 ?�터�?
+
+        ]    if (search && search.trim()) {
+
+      };      whereCondition = {
+
+    }        OR: [
+
+          { name: { contains: search.trim() } },
+
+    const projects = await prisma.project.findMany({          { description: { contains: search.trim() } },
+
+      where: whereCondition,          { facilityName: { contains: search.trim() } }
+
+      include: {        ]
+
+        owner: {      };
+
+          select: {    }
+
+            id: true,
+
+            name: true,    // 모든 ?�로?�트�?조회 (권한 ?�한 ?�음)
+
+            email: true,    const projects = await prisma.project.findMany({
+
+          }      where: whereCondition,
+
+        },      include: {
+
+        members: {        owner: {
+
+          select: {          select: {
+
+            id: true,            id: true,
+
+            name: true,            name: true,
+
+            email: true,            email: true,
+
+          }          }
+
+        },        },
+
+        _count: {        members: {
+
+          select: {          select: {
+
+            tasks: true,            id: true,
+
+            milestones: true,            role: true,
+
+          }            user: {
+
+        }              select: {
+
+      },                id: true,
+
+      orderBy: {                name: true,
+
+        createdAt: 'desc'                email: true,
+
+      }              }
+
+    });            }
+
+          }
+
+    return NextResponse.json({ projects });        },
+
+  } catch (error) {        _count: {
+
+    console.error('프로젝트 조회 오류:', error);          select: {
+
+    return NextResponse.json(            members: true,
+
+      { error: '프로젝트 조회 중 오류가 발생했습니다' },            schedules: true,
+
+      { status: 500 }            tasks: true,
+
+    );            files: true,
+
+  }          }
+
+}        }
+
+      },
+
+// 프로젝트 생성      orderBy: {
+
+export async function POST(request: NextRequest) {        updatedAt: 'desc'
+
+  try {      }
+
+    const session = await getServerSession(authOptions);    });
+
+    if (!session?.user?.email) {
+
+      return NextResponse.json({ error: '인증이 필요합니다' }, { status: 401 });    // 멤버 ?��? ?�함???�로?�트 ?�이??변??
+
+    }    const projectsWithMemberCount = projects.map(project => ({
+
+      id: project.id,
+
+    const user = await prisma.user.findUnique({      name: project.name,
+
+      where: { email: session.user.email },      description: project.description,
+
+    });      color: project.color,
+
+      status: project.status,
+
+    if (!user) {      startDate: project.startDate,
+
+      return NextResponse.json({ error: '사용자를 찾을 수 없습니다' }, { status: 404 });      endDate: project.endDate,
+
+    }      facilityType: project.facilityType,
+
+      facilityName: project.facilityName,
+
+    const body = await request.json();      address: project.address,
+
+    const { name, description, facilityName, startDate, endDate, memberIds } = body;      diagnosisType: project.diagnosisType,
+
+      contactPerson: project.contactPerson,
+
+    if (!name) {      contactPhone: project.contactPhone,
+
+      return NextResponse.json({ error: '프로젝트 이름이 필요합니다' }, { status: 400 });      contactEmail: project.contactEmail,
+
+    }      specialNotes: project.specialNotes,
+
+      createdAt: project.createdAt,
+
+    const project = await prisma.project.create({      updatedAt: project.updatedAt,
+
+      data: {      ownerId: project.ownerId,
+
+        name,      owner: project.owner,
+
+        description,      members: project.members,
+
+        facilityName,      memberCount: project._count.members + 1, // ?�유???�함
+
+        startDate: startDate ? new Date(startDate) : null,      scheduleCount: project._count.schedules,
+
+        endDate: endDate ? new Date(endDate) : null,      taskCount: project._count.tasks,
+
+        ownerId: user.id,      fileCount: project._count.files,
+
+        members: memberIds ? {    }));
+
+          connect: memberIds.map((id: string) => ({ id }))
+
+        } : undefined    return NextResponse.json({ 
+
+      },      success: true,
+
+      include: {      data: projectsWithMemberCount // useCRUD ?�에??기�??�는 ?�식
+
+        owner: {    });
+
+          select: {
+
+            id: true,  } catch (error) {
+
+            name: true,    console.error('?�로?�트 목록 조회 ?�류:', error);
+
+            email: true,    return NextResponse.json(
+
+          }      { error: '?�로?�트 목록??조회?�는???�패?�습?�다.' },
+
+        },      { status: 500 }
+
+        members: {    );
+
+          select: {  } finally {
+
+            id: true,    await prisma.$disconnect();
+
+            name: true,  }
+
+            email: true,}
+
+          }
+
+        }// ???�로?�트 ?�성
+
+      }export async function POST(request: NextRequest) {
+
+    });  try {
+
+    const session = await getServerSession(authOptions);
+
+    return NextResponse.json({ project }, { status: 201 });    if (!session?.user?.email) {
+
+  } catch (error) {      return NextResponse.json({ error: '?�증???�요?�니??' }, { status: 401 });
+
+    console.error('프로젝트 생성 오류:', error);    }
+
+    return NextResponse.json(
+
+      { error: '프로젝트 생성 중 오류가 발생했습니다' },    const user = await prisma.user.findUnique({
+
+      { status: 500 }      where: { email: session.user.email },
+
+    );    });
+
+  }
+
+}    if (!user) {
+
+      return NextResponse.json({ error: '?�용?��? 찾을 ???�습?�다.' }, { status: 404 });
+    }
+
+    const { 
+      name, 
+      description, 
+      color,
+      facilityType,
+      facilityName,
+      address,
+      diagnosisType,
+      startDate,
+      endDate,
+      contactPerson,
+      contactPhone,
+      contactEmail,
+      specialNotes,
+      status
+    } = await request.json();
+
+    if (!name || !name.trim()) {
+      return NextResponse.json({ error: '?�로?�트 ?�름?� ?�수?�니??' }, { status: 400 });
+    }
+
+    // ?�로?�트 ?�성
+    const project = await prisma.project.create({
+      data: {
+        name: name.trim(),
+        description: description?.trim() || null,
+        color: color || '#3B82F6',
+        ownerId: user.id,
+        // 처리???�보
+        facilityType: facilityType?.trim() || null,
+        facilityName: facilityName?.trim() || null,
+        address: address?.trim() || null,
+        // 진단 ?�보
+        diagnosisType: diagnosisType?.trim() || null,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
+        // ?�락�??�보
+        contactPerson: contactPerson?.trim() || null,
+        contactPhone: contactPhone?.trim() || null,
+        contactEmail: contactEmail?.trim() || null,
+        // ?�별 ?�항
+        specialNotes: specialNotes?.trim() || null,
+        status: status || '준비중',
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          }
+        },
+        _count: {
+          select: {
+            members: true,
+          }
+        }
+      }
+    });
+
+    return NextResponse.json({ 
+      success: true,
+      data: {
+        ...project,
+        memberCount: project._count.members + 1, // ?�유???�함
+      },
+      message: '?�로?�트가 ?�공?�으�??�성?�었?�니??' 
+    }, { status: 201 });
+
+  } catch (error) {
+    console.error('?�로?�트 ?�성 ?�류:', error);
+    return NextResponse.json(
+      { error: '?�로?�트 ?�성???�패?�습?�다.' },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
+  }
+}
