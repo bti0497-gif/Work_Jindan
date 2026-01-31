@@ -1,15 +1,15 @@
 'use client';
 
 import { TabType } from './TabNavigation';
-import FileManager from '../FileManager';
-import ScheduleTaskManager from '../ScheduleTaskManager';
-import UserManagement from '../UserManagement';
+import FileManager from '@/components/FileManager';
+import ScheduleTaskManager from '@/components/ScheduleTaskManager';
+import UserManagement from '@/components/UserManagement';
 
 // 컴포넌트 가져오기
-import CompactProjectManager from '../CompactProjectManager';
-import ProcessManager from '../ProcessManager';
-import GlobalBoard from '../GlobalBoard';
-import ProjectListView from '../ProjectListView';
+import CompactProjectManager from '@/components/CompactProjectManager';
+import ProcessManager from '@/components/ProcessManager';
+import GlobalBoard from '@/components/GlobalBoard';
+import ProjectListView from '@/components/ProjectListView';
 import { Project } from '@/types/database';
 
 interface MainContentProps {
