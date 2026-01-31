@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    if (!env.GEMINI_API_KEY) {
+      console.warn('[design-system] GEMINI_API_KEY is not set. AI features will be disabled. Create .env.local or set GEMINI_API_KEY to enable them.');
+    }
     return {
       server: {
         port: 3000,

@@ -10,11 +10,15 @@ View your app in AI Studio: https://ai.studio/apps/drive/1Da-WK71-KtqzxZ2u8kMRTK
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js (>= 18) and npm
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Create `.env.local` from `.env.local.example` and set the `GEMINI_API_KEY` if you want to enable AI features (optional):
+   - macOS / Linux: `cp .env.local.example .env.local`
+   - Windows (PowerShell): `copy .env.local.example .env.local`
+   Then set `GEMINI_API_KEY` in `.env.local`.
 3. Run the app:
    `npm run dev`
+
+> Note: If `GEMINI_API_KEY` is not set, AI-related features will be disabled but the UI and mock data continue to work.
