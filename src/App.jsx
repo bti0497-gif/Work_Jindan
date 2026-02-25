@@ -13,7 +13,7 @@ import BoardView from './components/BoardView';
 import { initSystemStorage } from './services/dataService';
 import { getCurrentUser } from './services/authService';
 import { dbService } from './services/dbService';
-import { syncAllData } from './services/syncService';
+import { syncAllData, pushLocalToSupabase } from './services/syncService';
 import ProjectList from './components/ProjectList';
 import ProjectWrite from './components/ProjectWrite';
 import ProjectView from './components/ProjectView';
@@ -45,6 +45,29 @@ function App() {
     onConfirm: null,
     onCancel: null
   });
+
+  // [SYNC ENGINE] 주기적 데이터 동기화 플러그인
+  useEffect(() => {
+    if (!sysReady) return;
+
+    // 1. 초기 동기화 실행
+    syncAllData().catch(err => console.error('Initial sync failed:', err));
+
+    // 2. 5분마다 하향 동기화 (클라우드 -> 로컬)
+    const pullInterval = setInterval(() => {
+      syncAllData();
+    }, 5 * 60 * 1000);
+
+    // 3. 1분마다 상향 동기화 (로컬 -> 클라우드)
+    const pushInterval = setInterval(() => {
+      pushLocalToSupabase();
+    }, 60 * 1000);
+
+    return () => {
+      clearInterval(pullInterval);
+      clearInterval(pushInterval);
+    };
+  }, [sysReady]);
 
   const showAlert = (message, title = '알림', type = 'alert') => {
     return new Promise((resolve) => {

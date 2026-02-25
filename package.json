@@ -1,9 +1,9 @@
 {
   "name": "jindan-studio",
   "private": true,
-  "version": "0.9.1",
+  "version": "0.9.10",
   "type": "module",
-  "main": "electron/main.cjs",
+  "main": "main.cjs",
   "description": "더죤환경기술(주) 기술진단팀 협업스튜디오",
   "author": "Jindan Team",
   "scripts": {
@@ -43,12 +43,13 @@
     },
     "files": [
       "dist/**/*",
-      "electron/**/*",
-      "package.json",
-      "node_modules/**/*"
+      "main.cjs",
+      "preload.cjs",
+      "package.json"
     ]
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.97.0",
     "electron-log": "^5.1.0",
     "electron-updater": "^6.1.8",
     "lucide-react": "^0.563.0",
@@ -57,17 +58,22 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.11",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.24",
     "concurrently": "^8.2.2",
-    "cross-env": "^10.1.0",
+    "cross-env": "^7.0.3",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
     "vite": "^7.2.4"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "q0oOi+Ig0hM=",
+  "success": true,
+  "projectFilePath": "E:\\Work_Jindan\\winforms\\WorkJindan.WinForms\\WorkJindan.WinForms.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.web.webview2\\1.0.2903.40\\microsoft.web.webview2.1.0.2903.40.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.22\\microsoft.netcore.app.crossgen2.win-x64.8.0.22.nupkg.sha512"
+  ],
+  "logs": []
+}

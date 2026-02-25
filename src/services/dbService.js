@@ -33,7 +33,30 @@ export const dbService = {
         }
 
         localStorage.setItem(`${STORAGE_KEY_PREFIX}${tableName}`, JSON.stringify(newList));
+        
+        // 동기화 큐에 추가 (Supabase 동기화용)
+        dbService.addToSyncQueue(tableName, data[idKey]);
+        
         return newList;
+    },
+
+    // 동기화 큐 관리
+    addToSyncQueue: (tableName, id) => {
+        const queue = JSON.parse(localStorage.getItem('jindan_sync_queue') || '[]');
+        // 중복 제거 후 추가
+        const filtered = queue.filter(item => !(item.tableName === tableName && item.id === id));
+        filtered.push({ tableName, id, timestamp: new Date().toISOString() });
+        localStorage.setItem('jindan_sync_queue', JSON.stringify(filtered));
+    },
+
+    getSyncQueue: () => {
+        return JSON.parse(localStorage.getItem('jindan_sync_queue') || '[]');
+    },
+
+    removeFromSyncQueue: (tableName, id) => {
+        const queue = dbService.getSyncQueue();
+        const newList = queue.filter(item => !(item.tableName === tableName && item.id === id));
+        localStorage.setItem('jindan_sync_queue', JSON.stringify(newList));
     },
 
     // 데이터 삭제

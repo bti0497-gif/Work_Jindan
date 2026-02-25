@@ -1,4 +1,17 @@
-# Logs
+node_modules/
+dist/
+dist_prod/
+release/
+.vs/
+.vscode/
+.env
+.env.local
+*.log
+*.cache
+*.DS_Store
+/.idea/
+*.user
+.history/# Logs
 logs
 *.log
 npm-debug.log*
