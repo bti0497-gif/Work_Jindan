@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function profile() {
+      return get(/databases/$(database)/documents/jindan_members/$(request.auth.uid)).data;
+    }
+    function member() { return signedIn() && profile().isActive == true; }
+    function admin() { return member() && profile().userLevel == 0; }
+    function validPost(data, id) {
+      return data.keys().hasAll(['id', 'menu', 'title', 'content', 'attachments', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted'])
+        && data.keys().hasOnly(['id', 'menu', 'title', 'content', 'attachments', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted', 'migratedBy'])
+        && data.id == id && data.menu in ['본사공지', '전체게시판']
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 300
+        && data.content is string && data.content.size() > 0 && data.content.size() <= 600000
+        && data.attachments is list && data.attachments.size() <= 10
+        && data.author is string && data.authorId is string && data.ownerUid is string
+        && data.createdAt is string && data.updatedAt is string && data.deleted is bool;
+    }
+    match /jindan_members/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || admin());
+      allow list: if admin();
+      allow create: if admin() && request.auth.uid != uid
+        && request.resource.data.uid == uid
+        && request.resource.data.name is string
+        && request.resource.data.person_id is string
+        && request.resource.data.userLevel in [0, 2] && request.resource.data.isActive is bool
+        && !request.resource.data.keys().hasAny(['password', 'password_hash', 'passwordHash']);
+      allow update: if admin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'position', 'userLevel', 'isActive', 'updatedAt'])
+        && request.resource.data.userLevel in [0, 2] && request.resource.data.isActive is bool
+        && (request.auth.uid != uid || (request.resource.data.userLevel == resource.data.userLevel && request.resource.data.isActive == resource.data.isActive));
+      allow delete: if false;
+    }
+    match /jindan_board_posts/{id} {
+      allow read: if member();
+      allow create: if member() && validPost(request.resource.data, id)
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.deleted == false
+        && (!('migratedBy' in request.resource.data) || (admin() && request.resource.data.migratedBy == request.auth.uid));
+      allow update: if member() && (resource.data.ownerUid == request.auth.uid || admin())
+        && validPost(request.resource.data, id)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'content', 'attachments', 'updatedAt', 'deleted'])
+        && resource.data.deleted == false;
+      // 삭제는 deleted 플래그로 처리하여 복구 가능하게 보존한다.
+      allow delete: if false;
+    }
+    match /jindan_board_comments/{id} {
+      allow read: if member();
+      allow create: if member()
+        && request.resource.data.keys().hasOnly(['id', 'postId', 'ownerUid', 'author', 'content', 'createdAt'])
+        && request.resource.data.id == id
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.author is string
+        && request.resource.data.content is string
+        && request.resource.data.content.size() > 0 && request.resource.data.content.size() <= 10000
+        && request.resource.data.createdAt is string
+        && getAfter(/databases/$(database)/documents/jindan_board_posts/$(request.resource.data.postId)).data.deleted == false;
+      allow update, delete: if false;
+    }
+    // 기존 posts/comments 등 다른 앱의 데이터에는 접근 권한을 추가하지 않는다.
+    match /{document=**} { allow read, write: if false; }
+  }
+}

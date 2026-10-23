@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>CAD PNG preview checks</title>
+<style>body{background:#101012;color:#eee;font:14px sans-serif;padding:20px}pre{white-space:pre-wrap}#probe{height:320px;width:600px}img{max-width:100%;max-height:100%;will-change:transform}</style>
+<h1>CAD PNG preview checks</h1>
+<pre id="results">Running…</pre>
+<div id="probe"></div>
+<script type="module">
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { readDxf, writeDwg2018 } from 'nasjidwg';
+import { renderCadPreview, warmCadEngine } from '../src/services/cadPreviewService.js';
+import { createPreviewCache } from '../src/services/previewCache.js';
+import { useImageTransform } from '../src/hooks/useImageTransform.js';
+
+const dxf = ['0','SECTION','2','TABLES','0','TABLE','2','LAYER','70','1',
+    '0','LAYER','2','WHITE','70','0','62','7','6','CONTINUOUS','0','ENDTAB','0','ENDSEC',
+    '0','SECTION','2','ENTITIES',
+    '0','LINE','8','WHITE','10','0','20','0','11','100000','21','50000',
+    '0','LINE','8','WHITE','62','1','10','0','20','50000','11','100000','21','0',
+    '0','ENDSEC','0','EOF'].join('\n');
+const lines = [];
+const check = (value, message) => { if (!value) throw new Error(message); };
+const report = value => { lines.push(value); document.querySelector('#results').textContent = lines.join('\n'); };
+const nextFrame = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+let lastBlob;
+try {
+    const warmStart = performance.now();
+    await Promise.all([warmCadEngine(), warmCadEngine()]);
+    report(`PASS engine preloaded before a drawing is selected, ${(performance.now() - warmStart).toFixed(0)}ms`);
+    for (const extension of ['dxf', 'dwg']) {
+        const source = extension === 'dwg' ? writeDwg2018(readDxf(dxf)).data : dxf;
+        const start = performance.now();
+        const png = await renderCadPreview({ name: `sample.${extension}` }, new Blob([source]));
+        check(png.type === 'image/png', 'Expected PNG MIME type');
+        const signature = Array.from(new Uint8Array(await png.slice(0, 8).arrayBuffer())).join(',');
+        check(signature === '137,80,78,71,13,10,26,10', 'Expected actual PNG bytes');
+        const bitmap = await createImageBitmap(png);
+        check(bitmap.width <= 1600 && bitmap.height <= 1600, 'Raster dimensions exceed the limit');
+        const canvas = document.createElement('canvas');
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        const context = canvas.getContext('2d');
+        context.drawImage(bitmap, 0, 0);
+        const pixels = context.getImageData(0, 0, bitmap.width, bitmap.height).data;
+        let white = 0;
+        let red = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+            if (pixels[i] > 220 && pixels[i + 1] > 220 && pixels[i + 2] > 220) white++;
+            if (pixels[i] > 200 && pixels[i + 1] < 80 && pixels[i + 2] < 80) red++;
+        }
+        check(white > 20 && red > 20, 'CAD layer colors are missing from the PNG');
+        report(`PASS ${extension.toUpperCase()}: actual PNG ${bitmap.width}×${bitmap.height}, ${png.size} bytes, ${(performance.now() - start).toFixed(0)}ms`);
+        bitmap.close();
+        lastBlob = png;
+    }
+    const portrait = await renderCadPreview({ name: 'portrait.dxf' }, new Blob([dxf.replaceAll('100000', '1000').replaceAll('50000', '500000')]));
+    const portraitBitmap = await createImageBitmap(portrait);
+    check(portraitBitmap.height > portraitBitmap.width && portraitBitmap.height <= 1600, 'Portrait raster exceeds pixel limit');
+    portraitBitmap.close();
+    report('PASS portrait drawing stays within 1600px');
+
+    const controller = new AbortController();
+    const cancelled = renderCadPreview({ name: 'sample.dxf' }, new Blob([dxf]), { signal: controller.signal });
+    setTimeout(() => controller.abort(), 0);
+    try { await cancelled; throw new Error('Cancellation did not reject'); }
+    catch (error) { check(error.name === 'AbortError', 'Wrong cancellation result'); }
+    report('PASS abandoned conversion cancels its worker');
+
+    const cache = createPreviewCache();
+    let conversions = 0;
+    const produce = async () => { conversions++; return lastBlob; };
+    await cache.load('drawing-v1', produce);
+    await cache.load('drawing-v1', produce);
+    check(conversions === 1, 'Cached drawing was converted twice');
+    report('PASS repeated drawing reuses its PNG');
+
+    const pngUrl = URL.createObjectURL(lastBlob);
+    let controls;
+    let renders = 0;
+    function Probe() {
+        renders++;
+        controls = useImageTransform();
+        return React.createElement('div', { ref: controls.stageRef, style: { height: '100%', width: '100%', display: 'grid', placeItems: 'center', overflow: 'hidden' } },
+            React.createElement('img', { src: pngUrl, ref: controls.imageRef, onLoad: controls.onImageLoad }));
+    }
+    createRoot(document.querySelector('#probe')).render(React.createElement(Probe));
+    await nextFrame();
+    controls.changeZoom(() => 2);
+    await nextFrame();
+    const before = renders;
+    controls.onPointerDown({ clientX: 0, clientY: 0, pointerId: 1, currentTarget: { setPointerCapture() {} } });
+    for (let i = 1; i <= 100; i++) controls.onPointerMove({ clientX: i, clientY: i / 2 });
+    controls.onPointerEnd();
+    await nextFrame();
+    check(renders === before, 'Dragging caused React rerenders');
+    check(controls.imageRef.current.style.transform.includes('100px, 50px'), 'Drag did not apply final pan');
+    controls.stageRef.current.dispatchEvent(new WheelEvent('wheel', { deltaY: -100, clientX: 200, clientY: 200, cancelable: true }));
+    await nextFrame();
+    check(controls.zoom > 2, 'Wheel zoom did not apply');
+    report('PASS 100 drag updates cause zero React rerenders; wheel zoom works');
+    report('ALL PASS');
+    document.title = 'PASS — CAD PNG preview checks';
+} catch (error) {
+    report(`FAIL: ${error.stack || error.message}`);
+    document.title = 'FAIL — CAD PNG preview checks';
+}
+</script>
+</html>

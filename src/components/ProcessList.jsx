@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { dbService } from '../services/dbService';
+import { getProjectPeriodProgress } from '../services/scheduleService';
 import { saveJsonData, saveActionLog } from '../services/dataService';
 import { deleteFile } from '../services/driveService';
 import { getCurrentUser } from '../services/authService';
@@ -328,15 +329,15 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                     {/* Placeholder for project overall completion? */}
                     {selectedProject && (
                         <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold text-slate-400">전체 완료율</span>
+                            <span className="text-[10px] font-bold text-slate-400">기간 진행률</span>
                             <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                 <div
                                     className="h-full bg-green-500 transition-all duration-1000"
-                                    style={{ width: `${Math.round((processes.filter(p => p.isCompleted).length / (processes.length || 1)) * 100)}%` }}
+                                    style={{ width: `${getProjectPeriodProgress(selectedProject, processes)}%` }}
                                 ></div>
                             </div>
                             <span className="text-[10px] font-black text-slate-900">
-                                {Math.round((processes.filter(p => p.isCompleted).length / (processes.length || 1)) * 100)}%
+                                {getProjectPeriodProgress(selectedProject, processes)}%
                             </span>
                         </div>
                     )}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, User, CheckCircle, XCircle } from 'lucide-react';
 
-const Login = ({ onLoginSuccess, showAlert, showConfirm }) => {
+const Login = ({ onLoginSuccess, showAlert }) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [rememberId, setRememberId] = useState(false);
@@ -90,7 +90,7 @@ const Login = ({ onLoginSuccess, showAlert, showConfirm }) => {
                                 <div className={`custom-chk ${rememberId ? 'checked' : ''}`}>
                                     {rememberId && <CheckCircle size={14} />}
                                 </div>
-                                <span>아이디 저장</span>
+                            <span>아이디 저장</span>
                             </label>
                         </div>
 

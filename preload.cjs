@@ -8,14 +8,16 @@ contextBridge.exposeInMainWorld('electron', {
         }
     },
     receive: (channel, func) => {
-        let validChannels = ['fromMain', 'update-available', 'update-downloaded', 'download-progress', 'update-error', 'update-status'];
+        let validChannels = ['fromMain', 'update-available', 'update-downloaded', 'download-progress', 'update-error', 'update-status', 'image-viewer-data'];
         if (validChannels.includes(channel)) {
             // Deliberately strip event as it includes `sender` 
-            ipcRenderer.on(channel, (event, ...args) => func(...args));
+            const listener = (event, ...args) => func(...args);
+            ipcRenderer.on(channel, listener);
+            return () => ipcRenderer.removeListener(channel, listener);
         }
     },
     invoke: (channel, data) => {
-        let validChannels = ['invokeMain'];
+        let validChannels = ['invokeMain', 'open-image-viewer', 'get-image-viewer-data', 'focus-main-window'];
         if (validChannels.includes(channel)) {
             return ipcRenderer.invoke(channel, data);
         }

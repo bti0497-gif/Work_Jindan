@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { dbService } from '../services/dbService';
+import { getProjectPeriodProgress } from '../services/scheduleService';
 import { Briefcase, Calendar, User, Search, RefreshCw, ChevronRight, Plus, ChevronLeft } from 'lucide-react';
 
 const ProjectList = ({ onWriteNew, onViewProject }) => {
@@ -17,11 +18,7 @@ const ProjectList = ({ onWriteNew, onViewProject }) => {
             const allProcesses = dbService.getAll('공정관리');
 
             const sortedData = [...data].map(proj => {
-                const projProcesses = allProcesses.filter(p => p.projectId === proj.id);
-                const completedCount = projProcesses.filter(p => p.isCompleted).length;
-                const progress = projProcesses.length > 0
-                    ? Math.round((completedCount / projProcesses.length) * 100)
-                    : 0;
+                const progress = getProjectPeriodProgress(proj, allProcesses);
                 return { ...proj, progress };
             }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -129,7 +126,7 @@ const ProjectList = ({ onWriteNew, onViewProject }) => {
                                     </div>
 
                                     {/* % 뱃지 */}
-                                    <div className="flex items-center gap-1.5 min-w-[80px] justify-end">
+                                    <div className="flex items-center gap-1.5 min-w-[80px] justify-end" title="등록 기간 경과에 따른 진행률">
                                         <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                                             <div
                                                 className={`h-full transition-all duration-1000 ${proj.progress === 100 ? 'bg-green-500' : 'bg-blue-500'}`}

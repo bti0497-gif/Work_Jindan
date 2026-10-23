@@ -1,109 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, User, Clock, Paperclip, Download, Trash2, Edit, MessageSquare, Send, FileText as FileIcon } from 'lucide-react';
-import { deleteFile, downloadFile } from '../services/driveService';
-import { getCurrentUser } from '../services/authService';
-import { saveJsonData, saveActionLog } from '../services/dataService';
-import { dbService } from '../services/dbService';
+import { downloadFile } from '../services/driveService';
+import { firebaseBoardService } from '../services/firebaseBoardService';
+import { canEditPost } from '../services/boardModel';
+import DOMPurify from 'dompurify';
 
-const BoardView = ({ post, onBack, onEdit, onDeleteSuccess, showAlert, showConfirm }) => {
+const BoardView = ({ post: initialPost, boardUser, onBack, onEdit, onDeleteSuccess, showAlert, showConfirm }) => {
+    const [post, setPost] = useState(initialPost);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        if (post && post.comments) {
-            setComments(post.comments);
-        } else {
-            setComments([]);
-        }
-    }, [post]);
+        if (!initialPost?.id) return;
+        const failed = err => { setError(err.message); setPost(null); };
+        const stopPost = firebaseBoardService.watchPost(initialPost.id, setPost, failed);
+        const stopComments = firebaseBoardService.watchComments(initialPost.id, setComments, failed);
+        return () => { stopPost(); stopComments(); };
+    }, [initialPost?.id]);
 
-    if (!post) return null;
-
-    const currentUser = getCurrentUser();
-    const isAuthor = currentUser && (post.authorId === currentUser.person_id || (!post.authorId && post.author === `${currentUser.name} ${currentUser.position}`));
-
+    const isAuthor = post && canEditPost(post, boardUser);
     const handleDelete = async () => {
-        const confirmed = await showConfirm('정말로 이 게시글을 삭제하시겠습니까?');
-        if (!confirmed) return;
-
-        try {
-            // 1. 명령 로그 먼저 저장 (삭제 사실을 알림)
-            await saveActionLog('DELETE', post.menu, post.id);
-
-            // 2. 실제 파일 삭제
-            await deleteFile(post.fileId);
-
-            // 3. 로컬 DB에서 삭제
-            dbService.remove(post.menu, post.id);
-
-            await showAlert('게시글이 삭제되었습니다.', '성공', 'success');
-            if (onDeleteSuccess) onDeleteSuccess();
-        } catch (err) {
-            showAlert(`삭제 실패: ${err.message}`, '오류', 'error');
-        }
-    };
-
-    const handleDownload = async (file) => {
-        try {
-            await downloadFile(file.id, file.name);
-        } catch (err) {
-            showAlert(`다운로드 실패: ${err.message}`, '오류', 'error');
-        }
-    };
-
-    const handleCommentSubmit = async (e) => {
-        e.preventDefault();
-        if (!newComment.trim() || isSubmitting) return;
-
-        // 즉시 반영을 위한 데이터 준비
-        const user = getCurrentUser();
-        const comment = {
-            id: Date.now(),
-            author: user ? `${user.name} ${user.position}` : '익명',
-            userId: user ? user.id : 'anonymous',
-            content: newComment,
-            createdAt: new Date().toISOString()
-        };
-
+        if (!await showConfirm('이 게시글을 삭제하시겠습니까?')) return;
         try {
             setIsSubmitting(true);
-            const updatedComments = [...comments, comment];
-
-            // 게시글 데이터 업데이트
-            const updatedPost = {
-                ...post,
-                comments: updatedComments
-            };
-
-            // 1. 새 JSON 저장
-            const saveResult = await saveJsonData(post.menu, updatedPost);
-
-            // 2. 변경 이력 로그 저장
-            await saveActionLog('UPDATE', post.menu, post.id);
-
-            // 3. 이전 JSON 삭제 (구버전 로그 삭제)
-            if (post.fileId) {
-                await deleteFile(post.fileId);
-            }
-
-            // 4. 로컬 DB 업데이트 (댓글 포함)
-            dbService.save(post.menu, { ...updatedPost, fileId: saveResult.id });
-
-            // 5. UI 및 부모 상태 반영
-            setComments(updatedComments);
-            setNewComment('');
-
-            // post 객체의 fileId도 최신화 (다음 댓글 작성을 위해)
-            post.fileId = saveResult.id;
-            post.comments = updatedComments;
-
-        } catch (err) {
-            showAlert(`댓글 등록 실패: ${err.message}`, '오류', 'error');
-        } finally {
-            setIsSubmitting(false);
-        }
+            await firebaseBoardService.remove(post.id);
+            onDeleteSuccess?.();
+            await showAlert('게시글이 삭제되었습니다.', '성공', 'success');
+        } catch (err) { await showAlert(`삭제 실패: ${err.message}`, '오류', 'error'); }
+        finally { setIsSubmitting(false); }
     };
+    const handleDownload = async file => {
+        try { await downloadFile(file.id, file.name); }
+        catch (err) { await showAlert(`다운로드 실패: ${err.message}`, '오류', 'error'); }
+    };
+    const handleCommentSubmit = async event => {
+        event.preventDefault();
+        if (!newComment.trim() || isSubmitting) return;
+        try {
+            setIsSubmitting(true);
+            await firebaseBoardService.comment(post.id, newComment);
+            setNewComment('');
+        } catch (err) { await showAlert(`댓글 등록 실패: ${err.message}`, '오류', 'error'); }
+        finally { setIsSubmitting(false); }
+    };
+    if (!post || error) return <div className="status-container error">
+        <p>{error || '게시글이 삭제되었거나 존재하지 않습니다.'}</p>
+        <button onClick={onBack}>목록으로 돌아가기</button>
+    </div>;
 
     return (
         <div className="board-view-container">
@@ -115,11 +60,11 @@ const BoardView = ({ post, onBack, onEdit, onDeleteSuccess, showAlert, showConfi
                 </button>
                 {isAuthor && (
                     <div className="view-actions">
-                        <button className="action-btn-text" onClick={onEdit}>
+                        <button className="action-btn-text" onClick={() => onEdit(post)}>
                             <Edit size={14} />
                             <span>수정</span>
                         </button>
-                        <button className="action-btn-text delete" onClick={handleDelete}>
+                        <button className="action-btn-text delete" disabled={isSubmitting} onClick={handleDelete}>
                             <Trash2 size={14} />
                             <span>삭제</span>
                         </button>
@@ -137,7 +82,7 @@ const BoardView = ({ post, onBack, onEdit, onDeleteSuccess, showAlert, showConfi
                     </div>
                 </div>
 
-                <div className="post-body-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div className="post-body-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
 
                 {/* Attachments Section */}
                 {post.attachments?.length > 0 && (
@@ -176,7 +121,7 @@ const BoardView = ({ post, onBack, onEdit, onDeleteSuccess, showAlert, showConfi
                         <div key={comment.id} className="comment-item-box">
                             <div className="comment-author-info">
                                 <span className="comment-author-name">{comment.author}</span>
-                                <span className="comment-time-text">{comment.createdAt}</span>
+                                <span className="comment-time-text">{new Date(comment.createdAt).toLocaleString('ko-KR')}</span>
                             </div>
                             <p className="comment-content-text">{comment.content}</p>
                         </div>
@@ -190,7 +135,7 @@ const BoardView = ({ post, onBack, onEdit, onDeleteSuccess, showAlert, showConfi
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                     />
-                    <button type="submit" className="comment-send-btn">
+                    <button type="submit" className="comment-send-btn" disabled={isSubmitting || !newComment.trim()}>
                         <Send size={16} />
                         <span>등록</span>
                     </button>

@@ -38,8 +38,7 @@ export const supabaseService = {
             return result;
         } catch (error) {
             console.warn(`Supabase upsert warning (${tableName}). Might be offline:`, error.message);
-            // 에러를 던지기보다 로컬에 저장되어 있으니 경고만 출력 (백그라운드 싱크에서 재시도 예정)
-            return null;
+            throw error;
         }
     },
 
@@ -81,7 +80,7 @@ export const supabaseService = {
             return data;
         } catch (error) {
             console.error(`Supabase fetch error (${tableName}):`, error);
-            return [];
+            throw error;
         }
     }
 };

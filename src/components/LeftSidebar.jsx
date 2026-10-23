@@ -1,8 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
+import ChangePassword from './ChangePassword';
 import {
     Users,
     Eye,
     LogOut,
+    KeyRound,
     LayoutDashboard,
     Settings,
     FileText,
@@ -11,6 +13,7 @@ import {
 } from 'lucide-react';
 
 const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAlert, showConfirm }) => {
+    const [changingPassword, setChangingPassword] = useState(false);
     const menuItems = [
         { name: '프로젝트관리', icon: <LayoutDashboard size={18} /> },
         { name: '공정관리', icon: <Settings size={18} /> },
@@ -22,14 +25,15 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
 
     const filteredMenuItems = menuItems.filter(item => {
         if (!currentUser) return false;
-        if (item.adminOnly && currentUser.position !== '관리자') return false;
+        if (item.adminOnly && currentUser.role !== 'admin') return false;
         return true;
     });
 
     const handleLogout = async () => {
         const confirmed = await showConfirm('로그아웃 하시겠습니까?');
         if (confirmed) {
-            import('../services/authService').then(m => m.logout());
+            const { logout } = await import('../services/authService');
+            await logout();
             window.location.reload(); // 세션 초기화 및 첫 화면으로 이동
         }
     };
@@ -46,6 +50,7 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
                                     {currentUser.name?.charAt(0)}
                                 </div>
                             </div>
+                            <button className="action-btn" title="비밀번호 변경" onClick={() => setChangingPassword(true)}><KeyRound size={16} /></button>
                             <button className="action-btn logout" title="로그아웃" onClick={handleLogout}>
                                 <LogOut size={16} />
                             </button>
@@ -83,6 +88,7 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
             <div className="sidebar-footer">
                 <p>© 2026 더죤환경기술(주)</p>
             </div>
+            {changingPassword && <ChangePassword onClose={() => setChangingPassword(false)} showAlert={showAlert} />}
         </aside>
     );
 };

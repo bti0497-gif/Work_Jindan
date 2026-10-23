@@ -11,8 +11,7 @@ import BoardWrite from './components/BoardWrite';
 import BoardList from './components/BoardList';
 import BoardView from './components/BoardView';
 import { initSystemStorage } from './services/dataService';
-import { getCurrentUser } from './services/authService';
-import { dbService } from './services/dbService';
+import { restoreSession } from './services/authService';
 import { syncAllData, pushLocalToSupabase } from './services/syncService';
 import ProjectList from './components/ProjectList';
 import ProjectWrite from './components/ProjectWrite';
@@ -25,6 +24,7 @@ import Login from './components/Login';
 import MemberList from './components/MemberList';
 import GlobalModal from './components/common/GlobalModal';
 import { Minus, X, Square } from 'lucide-react';
+import packageJson from '../package.json';
 /* ========================================================================== */
 
 function App() {
@@ -107,28 +107,8 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        await initSystemStorage(import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID);
-
-        // 초기 관리자 계정 확인 및 생성
-        try {
-          const members = dbService.getAll('회원관리');
-          if (!members.find(m => m.person_id === 'admin')) {
-            console.log('기본 관리자 계정 생성');
-            dbService.save('회원관리', {
-              person_id: 'admin',
-              password: 'admin',
-              name: '최고관리자',
-              department: '관리부',
-              position: '관리자',
-              role: 'admin',
-              email: 'admin@jindan.com',
-              phone: '010-0000-0000',
-              joinDate: new Date().toISOString().split('T')[0]
-            });
-          }
-        } catch (e) {
-          console.error('Admin init failed:', e);
-        }
+        await initSystemStorage(import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || import.meta.env.GOOGLE_DRIVE_FOLDER_ID)
+          .catch(error => console.warn('Drive initialization unavailable:', error));
 
         // 초기 데이터 동기화
         try {
@@ -140,31 +120,16 @@ function App() {
         setSysReady(true);
 
         // 세션 확인
-        const user = getCurrentUser();
+        const user = await restoreSession();
         if (user) setCurrentUser(user);
       } catch (err) {
         console.error('System initialization failed:', err);
+      } finally {
+        setSysReady(true);
       }
     };
     init();
   }, []);
-
-  // Sync data when menu changes to ensure fresh data
-  useEffect(() => {
-    const syncOnMenuChange = async () => {
-      if (sysReady && activeMenu && !isSyncing) {
-        try {
-          setIsSyncing(true);
-          // Don't await here to keep UI responsive
-          syncAllData().finally(() => setIsSyncing(false));
-        } catch (e) {
-          console.error('Menu sync failed:', e);
-          setIsSyncing(false);
-        }
-      }
-    };
-    syncOnMenuChange();
-  }, [activeMenu]);
 
   // 자동 업데이트 리스너
   useEffect(() => {
@@ -178,7 +143,7 @@ function App() {
         console.log(`Download progress: ${progressObj.percent}%`);
       });
 
-      window.electron.receive('update-downloaded', (info) => {
+      window.electron.receive('update-downloaded', () => {
         console.log('Update downloaded. Restarting to install...');
         // 다운로드 완료 시 즉시 재시작하여 업데이트 설치
         window.electron.send('restart_app');
@@ -228,6 +193,7 @@ function App() {
           return (
             <div style={boardWidthStyle}>
               <BoardWrite
+                menuName={activeMenu}
                 initialData={selectedPost}
                 onCancel={() => {
                   if (selectedPost) setViewMode('view');
@@ -248,9 +214,10 @@ function App() {
           return (
             <div style={boardWidthStyle}>
               <BoardView
-                postId={selectedPost?.id}
+                post={selectedPost}
+                boardUser={currentUser}
                 onBack={() => setViewMode('list')}
-                onEdit={() => setViewMode('write')}
+                onEdit={(post) => { setSelectedPost(post); setViewMode('write'); }}
                 onDeleteSuccess={() => {
                   setViewMode('list');
                   setLastDataUpdate(Date.now());
@@ -264,6 +231,9 @@ function App() {
         return (
           <div style={boardWidthStyle}>
             <BoardList
+              key={activeMenu}
+              menuName={activeMenu}
+              boardUser={currentUser}
               onViewPost={(post) => {
                 setSelectedPost(post);
                 setViewMode('view');
@@ -438,10 +408,10 @@ function App() {
             marginRight: '6px',
             animation: sysReady ? 'none' : 'pulse 1.5s infinite'
           }}></span>
-          {isSyncing ? 'Syncing...' : (sysReady ? 'Cloud Synced' : 'Syncing...')}
+          {isSyncing ? '동기화 확인 중...' : (sysReady ? '준비됨' : '시작 중...')}
         </div>
         <div className="status-item">
-          v1.0.0-prototype | 2026-02-06
+          v{packageJson.version}
         </div>
       </footer>
 

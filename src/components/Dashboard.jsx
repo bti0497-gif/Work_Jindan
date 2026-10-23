@@ -1,27 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { dbService } from '../services/dbService';
-import { Calendar, Image } from 'lucide-react';
+import { Calendar } from 'lucide-react';
+import DashboardGallery from './DashboardGallery';
+import packageJson from '../../package.json';
+import { getAveragePeriodProgress, getProjectPeriodProgress, getSchedule } from '../services/scheduleService';
 
 const Dashboard = () => {
     const [activeProjects, setActiveProjects] = useState([]);
-
-    useEffect(() => {
-        loadActiveProjects();
-    }, []);
+    const [allProjects, setAllProjects] = useState([]);
+    const [processes, setProcesses] = useState([]);
 
     const loadActiveProjects = () => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const allProjects = dbService.getAll('프로젝트관리');
-        const active = allProjects.filter(project => {
-            const start = new Date(project.startDate);
-            const end = new Date(project.endDate);
-            return today >= start && today <= end;
+        const projects = dbService.getAll('프로젝트관리');
+        const allProcesses = dbService.getAll('공정관리');
+        const projectsWithProgress = projects.map(project => {
+            const projectProcesses = allProcesses.filter(process => process.projectId === project.id);
+            const completedCount = projectProcesses.filter(process => process.isCompleted).length;
+            const completionPercentage = getProjectPeriodProgress(project, allProcesses, today);
+            return { ...project, completionPercentage, processCount: projectProcesses.length, completedCount };
+        });
+        const active = projectsWithProgress.filter(project => {
+            return getSchedule(project, today).status === '진행 중';
         });
 
+        setAllProjects(projectsWithProgress.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)));
+        setProcesses(allProcesses);
         setActiveProjects(active);
     };
+
+    useEffect(() => {
+        const frameId = window.requestAnimationFrame(loadActiveProjects);
+        return () => window.cancelAnimationFrame(frameId);
+    }, []);
 
     const formatDate = (dateStr) => {
         const date = new Date(dateStr);
@@ -31,10 +44,18 @@ const Dashboard = () => {
     const getDaysRemaining = (endDate) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const end = new Date(endDate);
-        const diff = Math.ceil((end - today) / (1000 * 60 * 60 * 24));
-        return diff;
+        return getSchedule({ startDate: endDate, endDate }, today).daysRemaining;
     };
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const schedules = processes.map(process => getSchedule(process, today));
+    const completedProcesses = schedules.filter(schedule => schedule.status === '완료').length;
+    const upcomingProcesses = schedules.filter(schedule => schedule.status === '예정').length;
+    const overdueProcesses = schedules.filter(schedule => schedule.status === '미완료').length;
+    const inProgressProcesses = schedules.filter(schedule => schedule.status === '진행 중').length;
+    const pendingProcesses = schedules.filter(schedule => schedule.status === '판정보류').length;
+    const overallProgress = getAveragePeriodProgress(processes, today);
 
     return (
         <div className="dashboard-container">
@@ -44,7 +65,7 @@ const Dashboard = () => {
                     <Calendar size={20} className="header-icon" />
                     <h2>진행 중인 프로젝트</h2>
                     <div className="flex items-center gap-2">
-                        <span className="version-badge">ver 0.9.1</span>
+                        <span className="version-badge">ver {packageJson.version}</span>
                         <span className="project-count">{activeProjects.length}</span>
                     </div>
                 </div>
@@ -85,7 +106,7 @@ const Dashboard = () => {
                                             </div>
                                             {project.completionPercentage !== undefined && (
                                                 <div className="meta-row">
-                                                    <span className="meta-label">진행률</span>
+                                                    <span className="meta-label">기간 진행률</span>
                                                     <div className="progress-container">
                                                         <div className="progress-bar">
                                                             <div
@@ -106,25 +127,46 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Gallery Placeholder */}
-            <div className="dashboard-card gallery-card">
+            <div className="dashboard-card progress-card">
                 <div className="card-header">
-                    <Image size={20} className="header-icon" />
-                    <h2>사진 갤러리</h2>
+                    <Calendar size={20} className="header-icon" />
+                    <h2>공정 기간 진행률</h2>
+                    <strong className="overall-progress-value">{overallProgress}%</strong>
                 </div>
-
                 <div className="card-content">
-                    <div className="empty-state">
-                        <Image size={48} className="empty-icon" />
-                        <p className="empty-title">갤러리가 준비중입니다</p>
-                        <p className="empty-subtitle">곧 사진 갤러리 기능이 추가될 예정입니다</p>
+                    <div className="overall-progress-track">
+                        <div className="overall-progress-fill" style={{ width: `${overallProgress}%` }} />
+                    </div>
+                    <div className="progress-stat-grid">
+                        <div><span className="stat-dot completed-dot" /><span>완료</span><strong>{completedProcesses}</strong></div>
+                        <div><span className="stat-dot active-dot" /><span>진행 중</span><strong>{inProgressProcesses}</strong></div>
+                        <div><span className="stat-dot upcoming-dot" /><span>예정</span><strong>{upcomingProcesses}</strong></div>
+                        <div><span className="stat-dot overdue-dot" /><span>미완료</span><strong>{overdueProcesses}</strong></div>
+                        <div><span className="stat-dot pending-dot" /><span>판정보류</span><strong>{pendingProcesses}</strong></div>
+                    </div>
+                    <div className="project-progress-list">
+                        {allProjects.length === 0 ? (
+                            <p className="progress-empty">등록된 프로젝트가 없습니다.</p>
+                        ) : allProjects.slice(0, 6).map(project => (
+                            <div className="project-progress-row" key={project.id}>
+                                <div className="project-progress-heading">
+                                    <strong>{project.title}</strong>
+                                    <span>{project.completedCount}/{project.processCount} 공정 · {project.completionPercentage}%</span>
+                                </div>
+                                <div className="project-progress-track">
+                                    <div className="project-progress-fill" style={{ width: `${project.completionPercentage}%` }} />
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
 
+            <DashboardGallery />
+
             <style jsx>{`
                 .dashboard-container {
-                    max-width: 650px;
+                    max-width: 1100px;
                     width: 100%;
                     margin: 0 auto;
                     padding: 40px 0;
@@ -327,6 +369,22 @@ const Dashboard = () => {
                 .projects-card .header-icon {
                   color: #3b82f6;
                 }
+                                .overall-progress-value { margin-left: auto; color: #2563eb; font-size: 18px; }
+                                .overall-progress-track, .project-progress-track { height: 9px; overflow: hidden; border-radius: 8px; background: #e2e8f0; }
+                                .overall-progress-fill, .project-progress-fill { height: 100%; border-radius: inherit; background: #2563eb; transition: width .4s ease; }
+                                .progress-stat-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 20px 0 24px; }
+                                .progress-stat-grid > div { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 8px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; color: #64748b; font-size: 12px; }
+                                .progress-stat-grid strong { color: #1e293b; font-size: 16px; }
+                                .stat-dot { width: 9px; height: 9px; border-radius: 50%; }
+                                .completed-dot { background: #10b981; } .active-dot { background: #3b82f6; } .upcoming-dot { background: #f59e0b; } .overdue-dot { background: #f43f5e; } .pending-dot { background: #94a3b8; }
+                                .project-progress-list { display: flex; flex-direction: column; gap: 16px; }
+                                .project-progress-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; font-size: 12px; }
+                                .project-progress-heading strong { overflow: hidden; color: #334155; text-overflow: ellipsis; white-space: nowrap; }
+                                .project-progress-heading span { flex: 0 0 auto; color: #64748b; }
+                                .project-progress-track { height: 6px; }
+                                .project-progress-fill { background: #10b981; }
+                                .progress-empty { margin: 0; color: #64748b; font-size: 13px; }
+                                @media (max-width: 640px) { .dashboard-container { padding: 20px 12px; } .progress-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .project-progress-heading { align-items: flex-start; flex-direction: column; gap: 4px; } }
             `}</style>
         </div>
     );

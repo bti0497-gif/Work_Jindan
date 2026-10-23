@@ -1,61 +1,69 @@
 
-import React, { useState, useEffect } from 'react';
-import { fetchTableLogs } from '../services/dataService';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { firebaseBoardService } from '../services/firebaseBoardService';
 import { dbService } from '../services/dbService';
 import { FileText, User, Clock, Plus, RefreshCw, ChevronRight, Search, ChevronLeft, MessageSquare } from 'lucide-react';
 
-const BoardList = ({ menuName, onWriteNew, onViewPost }) => {
+const BoardList = ({ menuName, boardUser, onWriteNew, onViewPost, showAlert, showConfirm }) => {
     const [posts, setPosts] = useState([]);
-    const [filteredPosts, setFilteredPosts] = useState([]);
+    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchInputValue, setSearchInputValue] = useState('');
+    const [importing, setImporting] = useState(false);
 
-    const fetchPosts = async () => {
+    const fetchPosts = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
 
-            // 로컬 DB에서 데이터 가져오기 (이미 App.jsx에서 싱크가 맞춰진 상태)
-            const localPosts = dbService.getAll(menuName);
-
-            const validPosts = [...localPosts]
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
+            const validPosts = await firebaseBoardService.list(menuName);
             setPosts(validPosts);
-            setFilteredPosts(validPosts);
         } catch (err) {
             setError(`데이터 로드 실패: ${err.message}`);
         } finally {
             setLoading(false);
         }
-    };
-
-    useEffect(() => {
-        fetchPosts();
     }, [menuName]);
 
-    useEffect(() => {
-        if (!searchTerm) {
-            setFilteredPosts(posts);
-        } else {
-            const lowerSearch = searchTerm.toLowerCase();
-            const filtered = posts.filter(p =>
-                p.title?.toLowerCase().includes(lowerSearch) ||
-                p.author?.toLowerCase().includes(lowerSearch)
-            );
-            setFilteredPosts(filtered);
-        }
+    useEffect(() => firebaseBoardService.watchList(menuName, data => {
+        setPosts(data);
+        setLoading(false);
+        setError(null);
+    }, err => { setError(`게시판 연결 실패: ${err.message}`); setLoading(false); }), [menuName]);
+
+    const importLocal = async () => {
+        const legacy = dbService.getAll(menuName);
+        if (!legacy.length) return showAlert('이 PC에 남아 있는 기존 게시글이 없습니다.');
+        if (!await showConfirm(`이 PC의 기존 게시글 ${legacy.length}개를 가져오시겠습니까? 서버에 같은 ID의 글이 있으면 건너뜁니다.`)) return;
+        setImporting(true);
+        try {
+            const result = await firebaseBoardService.importLocal(menuName, legacy);
+            await fetchPosts();
+            await showAlert(`${result.imported}개를 가져왔습니다. ${result.skipped}개는 건너뛰었습니다.`);
+        } catch (err) {
+            await showAlert(`가져오기 실패: ${err.message}. 다시 실행하면 이미 옮긴 글은 건너뜁니다.`);
+        } finally { setImporting(false); }
+    };
+
+    const filteredPosts = useMemo(() => {
+        const term = searchTerm.toLowerCase();
+        return posts.filter(post => !term || post.title?.toLowerCase().includes(term) || post.author?.toLowerCase().includes(term));
     }, [searchTerm, posts]);
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / 10));
+    const currentPage = Math.min(page, totalPages);
+    const visiblePosts = filteredPosts.slice((currentPage - 1) * 10, currentPage * 10);
 
     const clearSearch = () => {
         setSearchInputValue('');
         setSearchTerm('');
+        setPage(1);
     };
 
     const handleSearch = () => {
         setSearchTerm(searchInputValue);
+        setPage(1);
     };
 
     const handleKeyDown = (e) => {
@@ -71,6 +79,9 @@ const BoardList = ({ menuName, onWriteNew, onViewPost }) => {
                 <div>
                     <h1 className="board-title">{menuName}</h1>
                     <p className="post-count">총 {filteredPosts.length}개의 게시글</p>
+                    {boardUser?.role === 'admin' && <button type="button" className="action-btn-text" disabled={importing || loading} onClick={importLocal}>
+                        {importing ? '가져오는 중...' : '이 PC의 기존 게시글 가져오기'}
+                    </button>}
                 </div>
                 <button className="refresh-btn" onClick={fetchPosts} disabled={loading}>
                     <RefreshCw size={16} className={loading ? 'spin' : ''} />
@@ -99,7 +110,7 @@ const BoardList = ({ menuName, onWriteNew, onViewPost }) => {
                 {loading ? (
                     <div className="status-container font-loading">
                         <RefreshCw size={32} className="spin text-blue-500" />
-                        <p>데이터 동기화 중...</p>
+                        <p>게시판을 불러오는 중...</p>
                     </div>
                 ) : error ? (
                     <div className="status-container error">
@@ -118,7 +129,7 @@ const BoardList = ({ menuName, onWriteNew, onViewPost }) => {
                     </div>
                 ) : (
                     <div className="post-list">
-                        {filteredPosts.map((post) => (
+                        {visiblePosts.map((post) => (
                             <div key={post.id} className="post-item" onClick={() => onViewPost(post)}>
                                 <div className="post-info-top">
                                     <span className="post-title-text">{post.title}</span>
@@ -149,11 +160,9 @@ const BoardList = ({ menuName, onWriteNew, onViewPost }) => {
             {/* Footer: Pagination & Write */}
             <div className="board-footer">
                 <div className="pagination">
-                    <button className="page-btn disabled"><ChevronLeft size={16} /></button>
-                    <button className="page-btn active">1</button>
-                    <button className="page-btn">2</button>
-                    <button className="page-btn">3</button>
-                    <button className="page-btn"><ChevronRight size={16} /></button>
+                    <button className="page-btn" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)} aria-label="이전 페이지"><ChevronLeft size={16} /></button>
+                    <span>{currentPage} / {totalPages}</span>
+                    <button className="page-btn" disabled={currentPage === totalPages} onClick={() => setPage(currentPage + 1)} aria-label="다음 페이지"><ChevronRight size={16} /></button>
                 </div>
                 <button className="write-btn-float" onClick={onWriteNew}>
                     <Plus size={20} />

@@ -1,8 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
-import { fetchTableLogs, saveJsonData, saveActionLog } from '../services/dataService';
-import { dbService } from '../services/dbService';
-import { getFileContent } from '../services/driveService';
+import { useState, useEffect } from 'react';
+import { firebaseMemberService } from '../services/firebaseMemberService';
 import { Users, RefreshCw, ChevronLeft, ChevronRight, User, Hash, Calendar, ShieldCheck, Trash2, UserPlus, Edit3, X, Save } from 'lucide-react';
 
 const MemberList = ({ showAlert, showConfirm, onDataChange }) => {
@@ -10,155 +7,53 @@ const MemberList = ({ showAlert, showConfirm, onDataChange }) => {
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // Modal State
     const [showModal, setShowModal] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [formData, setFormData] = useState({ person_id: '', password: '', name: '', position: '사원' });
+    const emptyForm = { person_id: '', password: '', name: '', position: '사원', role: 'user' };
+    const [formData, setFormData] = useState(emptyForm);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const fetchMembers = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-
-            // 로컬 DB에서 데이터 가져오기 (이미 App.jsx에서 싱크가 맞춰진 상태)
-            const localMembers = dbService.getAll('회원관리');
-
-            // 가입일 순서대로 정렬 (오래된 순)
-            const sortedMembers = localMembers.sort((a, b) => {
-                const dateA = new Date(a.joinDate || a.createdAt || 0);
-                const dateB = new Date(b.joinDate || b.createdAt || 0);
-                return dateA - dateB;
-            });
-
-            setMembers(sortedMembers);
-        } catch (err) {
-            setError(`회원 목록을 불러오지 못했습니다: ${err.message}`);
-        } finally {
-            setLoading(false);
-        }
+        setLoading(true); setError(null);
+        try { setMembers(await firebaseMemberService.list()); }
+        catch (err) { setError(`회원 목록을 불러오지 못했습니다: ${err.message}`); }
+        finally { setLoading(false); }
     };
-
-    useEffect(() => {
-        fetchMembers();
-    }, []);
-
-    const handleSelectAll = (e) => {
-        if (e.target.checked) {
-            setSelectedIds(new Set(members.map(m => m.person_id)));
-        } else {
-            setSelectedIds(new Set());
-        }
-    };
-
-    const handleSelectMember = (id) => {
+    useEffect(() => { const frame = requestAnimationFrame(fetchMembers); return () => cancelAnimationFrame(frame); }, []);
+    const handleSelectAll = event => setSelectedIds(event.target.checked ? new Set(members.map(member => member.person_id)) : new Set());
+    const handleSelectMember = id => {
         const next = new Set(selectedIds);
-        if (next.has(id)) next.delete(id);
-        else next.add(id);
+        if (next.has(id)) next.delete(id); else next.add(id);
         setSelectedIds(next);
     };
-
     const handleDelete = async () => {
-        if (selectedIds.size === 0) return;
-        const confirmed = await showConfirm(`선택한 ${selectedIds.size}명의 회원을 삭제하시겠습니까?`);
-        if (!confirmed) return;
-
+        if (!selectedIds.size || !await showConfirm(`선택한 ${selectedIds.size}명의 계정을 비활성화하시겠습니까?`)) return;
         try {
-            const updatedMembers = members.filter(m => !selectedIds.has(m.person_id));
-
-            // 1. 로컬 DB 및 상태 즉시 업데이트 (낙관적 업데이트)
-            dbService.setTable('회원관리', updatedMembers);
-            setMembers(updatedMembers);
-            const deletedIds = Array.from(selectedIds);
-            setSelectedIds(new Set());
-
-            // 2. 구글 드라이브 및 로그 저장은 백그라운드에서 진행
-            (async () => {
-                try {
-                    await saveJsonData('회원관리', updatedMembers);
-                    for (const personId of deletedIds) {
-                        await saveActionLog('DELETE', '회원관리', personId);
-                    }
-                    console.log('Background member deletion sync complete');
-                } catch (syncErr) {
-                    console.error('Background member deletion sync failed:', syncErr);
-                }
-            })();
-
-            showAlert('삭제되었습니다.', '성공', 'success');
-            if (onDataChange) onDataChange();
-        } catch (err) {
-            showAlert(`삭제 실패: ${err.message}`, '오류', 'error');
-        }
+            await firebaseMemberService.deactivate(members.filter(member => selectedIds.has(member.person_id)));
+            await fetchMembers(); setSelectedIds(new Set());
+            await showAlert('계정을 비활성화했습니다.', '성공', 'success');
+            onDataChange?.();
+        } catch (err) { await showAlert(`처리 실패: ${err.message}`, '오류', 'error'); }
     };
-
-    const openAddModal = () => {
-        setIsEditMode(false);
-        setFormData({ person_id: '', password: '', name: '', position: '사원' });
-        setShowModal(true);
-    };
-
+    const openAddModal = () => { setIsEditMode(false); setFormData(emptyForm); setShowModal(true); };
     const openEditModal = () => {
         if (selectedIds.size !== 1) return;
-        const targetId = Array.from(selectedIds)[0];
-        const targetMember = members.find(m => m.person_id === targetId);
-        if (targetMember) {
-            setIsEditMode(true);
-            setFormData({ ...targetMember });
-            setShowModal(true);
-        }
+        const member = members.find(item => item.person_id === [...selectedIds][0]);
+        if (member) { setIsEditMode(true); setFormData({ ...member, password: '' }); setShowModal(true); }
     };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.person_id || !formData.password || !formData.name) {
-            return showAlert('모든 필드를 입력해 주세요.');
-        }
-
+    const handleFormSubmit = async event => {
+        event.preventDefault();
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
-            let updatedMembers;
-            const actionType = isEditMode ? 'UPDATE' : 'CREATE';
-            const targetPersonId = formData.person_id;
-
-            if (isEditMode) {
-                updatedMembers = members.map(m =>
-                    m.person_id === targetPersonId ? { ...m, ...formData } : m
-                );
-            } else {
-                // 중복 체크
-                if (members.some(m => m.person_id === targetPersonId)) {
-                    showAlert('이미 존재하는 아이디입니다.', '오류', 'error');
-                    return;
-                }
-                updatedMembers = [
-                    ...members,
-                    { ...formData, joinDate: new Date().toISOString().split('T')[0] }
-                ];
-            }
-
-            // 1. 로컬 DB 및 상태 즉시 업데이트 (낙관적 업데이트)
-            dbService.setTable('회원관리', updatedMembers);
-            setMembers(updatedMembers);
-            setShowModal(false);
-            setSelectedIds(new Set());
-
-            // 2. 백그라운드 구글 드라이브 업로드
-            (async () => {
-                try {
-                    await saveJsonData('회원관리', updatedMembers);
-                    await saveActionLog(actionType, '회원관리', targetPersonId);
-                    console.log('Background member save sync complete');
-                } catch (syncErr) {
-                    console.error('Background member save sync failed:', syncErr);
-                }
-            })();
-
-            showAlert(isEditMode ? '수정되었습니다.' : '추가되었습니다.', '성공', 'success');
-            if (onDataChange) onDataChange();
-        } catch (err) {
-            showAlert(`저장 실패: ${err.message}`, '오류', 'error');
-        }
+            if (!isEditMode && members.some(member => member.person_id === formData.person_id)) throw new Error('이미 존재하는 아이디입니다.');
+            const existing = isEditMode ? members.find(member => member.person_id === formData.person_id) : null;
+            await firebaseMemberService.save(formData, existing);
+            await fetchMembers(); setShowModal(false); setSelectedIds(new Set());
+            await showAlert(isEditMode ? '수정되었습니다.' : '회원 계정이 등록되었습니다.', '성공', 'success');
+            onDataChange?.();
+        } catch (err) { await showAlert(`저장 실패: ${err.message}`, '오류', 'error'); }
+        finally { setIsSubmitting(false); }
     };
 
     return (
@@ -479,7 +374,7 @@ const MemberList = ({ showAlert, showConfirm, onDataChange }) => {
                                         required
                                     />
                                 </div>
-                                <div className="form-group flex-1">
+                                {!isEditMode && <div className="form-group flex-1">
                                     <label>비밀번호</label>
                                     <input
                                         type="password"
@@ -488,8 +383,9 @@ const MemberList = ({ showAlert, showConfirm, onDataChange }) => {
                                         placeholder="비밀번호 입력"
                                         required
                                     />
-                                </div>
+                                </div>}
                             </div>
+                            <label style={{ color: '#475569', display: 'flex', alignItems: 'center', gap: 8 }}><input type="checkbox" checked={formData.role === 'admin'} onChange={event => setFormData({ ...formData, role: event.target.checked ? 'admin' : 'user' })} /> 관리자 권한</label>
                             <div className="form-row">
                                 <div className="form-group flex-1">
                                     <label>이름</label>

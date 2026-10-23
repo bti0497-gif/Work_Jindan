@@ -1,11 +1,12 @@
-import { saveJsonData, uploadResource, saveActionLog } from '../services/dataService';
-import { getCurrentUser } from '../services/authService';
+import { useEffect, useRef, useState } from 'react';
+import { initSystemStorage, uploadResource } from '../services/dataService';
 import { deleteFile } from '../services/driveService';
-import { dbService } from '../services/dbService';
+import { firebaseBoardService } from '../services/firebaseBoardService';
+import DOMPurify from 'dompurify';
 
-const BoardWrite = ({ menuName, onCancel, onSaveSuccess, initialData, showAlert, showConfirm }) => {
+const BoardWrite = ({ menuName, onCancel, onSaveSuccess, initialData, showAlert }) => {
     const [title, setTitle] = useState(initialData?.title || '');
-    const [content, setContent] = useState(initialData?.content || '');
+    const [, setContent] = useState(initialData?.content || '');
     const [attachments, setAttachments] = useState(initialData?.attachments || []);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const fileInputRef = useRef(null);
@@ -13,10 +14,10 @@ const BoardWrite = ({ menuName, onCancel, onSaveSuccess, initialData, showAlert,
 
     // 초기 데이터가 있을 경우 에디터 내용 설정
     useEffect(() => {
-        if (initialData && editorRef.current) {
-            editorRef.current.innerHTML = initialData.content;
+        if (editorRef.current) {
+            editorRef.current.innerHTML = DOMPurify.sanitize(initialData?.content || '');
         }
-    }, []);
+    }, [initialData]);
 
     // 툴바 명령 실행
     const execCmd = (command, value = null) => {
@@ -57,86 +58,35 @@ const BoardWrite = ({ menuName, onCancel, onSaveSuccess, initialData, showAlert,
             return showAlert('제목과 내용을 입력해 주세요.');
         }
 
+        if (isSubmitting) return;
+        const uploadedIds = [];
+        let saved = false;
         try {
-            // 1. 게시글 데이터(JSON) 생성 (로컬 전용)
-            const user = getCurrentUser();
-            const postId = initialData?.id || crypto.randomUUID();
-            const postData = {
-                id: postId,
-                title,
-                content: currentHTML,
-                author: initialData?.author || (user ? `${user.name} ${user.position}` : '익명'),
-                authorId: initialData?.authorId || (user ? user.person_id : 'anonymous'),
-                createdAt: initialData?.createdAt || new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                attachments: initialData?.attachments || [], // 일단 기존 첨부파일만 (신규는 백그라운드 업로드 후 업데이트)
-                comments: initialData?.comments || [],
+            setIsSubmitting(true);
+            const uploadedFiles = [];
+            if (attachments.some(file => !file.id)) {
+                await initSystemStorage(import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || import.meta.env.GOOGLE_DRIVE_FOLDER_ID);
+            }
+            for (const file of attachments) {
+                if (file.id) { uploadedFiles.push(file); continue; }
+                const result = await uploadResource(file);
+                uploadedIds.push(result.id);
+                uploadedFiles.push({ id: result.id, name: file.name, size: file.size, mimeType: file.type });
+            }
+            await firebaseBoardService.save({
+                id: initialData?.id,
+                expectedUpdatedAt: initialData?.updatedAt,
                 menu: menuName,
-                fileId: initialData?.fileId || null
-            };
-
-            // 2. 로컬 DB 동기화 (즉시 반영 - 낙관적 업데이트)
-            dbService.save(menuName, postData);
-
-            // 3. UI 즉시 대기 상태 해제 및 성공 알림
+                title,
+                content: DOMPurify.sanitize(currentHTML),
+                attachments: uploadedFiles,
+            });
+            saved = true;
             if (onSaveSuccess) onSaveSuccess();
-            showAlert(initialData ? '게시물을 수정했습니다.' : '게시물을 등록했습니다.', '성공', 'success');
-
-            // 4. 백그라운드 처리 (첨부파일 업로드 -> 드라이브 저장 -> 로그 기록)
-            (async () => {
-                try {
-                    console.log('Starting background sync for board post:', postId);
-
-                    // 4-1. 첨부파일 업로드
-                    const uploadedFiles = [];
-                    const currentAttachments = [...attachments]; // 스냅샷
-
-                    for (const file of currentAttachments) {
-                        if (file.id) {
-                            uploadedFiles.push(file);
-                            continue;
-                        }
-                        try {
-                            const result = await uploadResource(file);
-                            uploadedFiles.push({
-                                id: result.id,
-                                name: file.name,
-                                size: file.size,
-                                mimeType: file.type || file.mimeType
-                            });
-                        } catch (uploadErr) {
-                            console.error(`Failed to upload file ${file.name}:`, uploadErr);
-                        }
-                    }
-
-                    // 4-2. 최종 데이터 구성 (업로드된 파일 포함)
-                    const finalPostData = { ...postData, attachments: uploadedFiles };
-
-                    // 4-3. 구글 드라이브에 JSON 저장
-                    const saveResult = await saveJsonData(menuName, finalPostData);
-
-                    // 4-4. 명령 로그 저장
-                    await saveActionLog(initialData ? 'UPDATE' : 'CREATE', menuName, postId);
-
-                    // 4-5. 로컬 DB 재업데이트 (실제 드라이브 fileId 반영)
-                    dbService.save(menuName, { ...finalPostData, fileId: saveResult.id });
-
-                    // 4-6. 수정 모드일 경우 기존 로그 파일 삭제
-                    if (initialData && initialData.fileId && initialData.fileId !== saveResult.id) {
-                        try {
-                            await deleteFile(initialData.fileId);
-                        } catch (delErr) {
-                            console.warn('Failed to delete old log file:', delErr);
-                        }
-                    }
-                    console.log('Background sync complete for board post:', postId);
-                } catch (syncErr) {
-                    console.error('Background sync failed for board post:', syncErr);
-                }
-            })();
-
+            await showAlert(initialData ? '게시물을 수정했습니다.' : '게시물을 등록했습니다.', '성공', 'success');
         } catch (err) {
-            showAlert(`등록 실패: ${err.message}`, '오류', 'error');
+            if (!saved) await Promise.allSettled(uploadedIds.map(id => deleteFile(id)));
+            showAlert(`저장 실패: ${err.message}`, '오류', 'error');
         } finally {
             setIsSubmitting(false);
         }

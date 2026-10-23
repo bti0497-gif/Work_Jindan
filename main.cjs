@@ -9,6 +9,110 @@ autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
 let mainWindow;
+let imageViewerWindow;
+let imageViewerData;
+let imageViewerLoading;
+let imageViewerRequestId = 0;
+let isQuitting = false;
+const devServerUrl = process.env.VITE_DEV_SERVER_URL || 'http://127.0.0.1:3000';
+
+function loadAppPage(window, query = {}) {
+    if (process.env.NODE_ENV === 'development') {
+        const url = new URL(devServerUrl);
+        Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, value));
+        return window.loadURL(url.toString());
+    }
+    return window.loadFile(path.join(__dirname, 'dist/index.html'), { query });
+}
+
+function focusWindow(window) {
+    if (!window || window.isDestroyed()) return;
+    if (window.isMinimized()) window.restore();
+    window.show();
+    window.focus();
+}
+
+function prepareImageViewer() {
+    if (imageViewerWindow && !imageViewerWindow.isDestroyed()) {
+        return imageViewerLoading;
+    }
+
+    // An independent top-level window can be switched with the app using Alt+Tab.
+    const viewer = new BrowserWindow({
+        width: 1200,
+        height: 820,
+        minWidth: 620,
+        minHeight: 420,
+        resizable: true,
+        minimizable: true,
+        maximizable: true,
+        title: '사진·도면 뷰어',
+        show: false,
+        backgroundColor: '#101012',
+        autoHideMenuBar: true,
+        icon: path.join(__dirname, 'build/icon.ico'),
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            backgroundThrottling: false,
+            preload: path.join(__dirname, 'preload.cjs')
+        }
+    });
+    imageViewerWindow = viewer;
+    // Closing the viewer hides it; its engine and PNG cache stay warm while
+    // the main app is open. It still behaves as an independent top-level window.
+    viewer.on('close', event => {
+        if (!isQuitting && mainWindow && !mainWindow.isDestroyed()) {
+            event.preventDefault();
+            viewer.hide();
+        }
+    });
+    viewer.on('closed', () => {
+        if (imageViewerWindow === viewer) {
+            imageViewerWindow = null;
+            imageViewerData = null;
+            imageViewerLoading = null;
+        }
+    });
+    imageViewerLoading = loadAppPage(viewer, { view: 'image-viewer' }).then(() => viewer).catch(error => {
+        if (!viewer.isDestroyed()) viewer.destroy();
+        throw error;
+    });
+    return imageViewerLoading;
+}
+
+ipcMain.handle('open-image-viewer', async (event, data) => {
+    if (event.sender !== mainWindow?.webContents) throw new Error('Unsupported viewer request');
+    if (!data?.tree || typeof data.fileId !== 'string') throw new Error('Invalid viewer data');
+    imageViewerData = { ...data, requestId: ++imageViewerRequestId };
+    const viewer = await prepareImageViewer();
+    if (viewer.isDestroyed()) return;
+    viewer.webContents.send('image-viewer-data', imageViewerData);
+    focusWindow(viewer);
+});
+
+ipcMain.handle('get-image-viewer-data', event => {
+    if (event.sender !== imageViewerWindow?.webContents) throw new Error('Unsupported viewer request');
+    return imageViewerData;
+});
+
+ipcMain.handle('focus-main-window', event => {
+    if (event.sender !== imageViewerWindow?.webContents) throw new Error('Unsupported window request');
+    focusWindow(mainWindow);
+});
+
+async function waitForDevServer() {
+    const deadline = Date.now() + 30000;
+    while (Date.now() < deadline) {
+        try {
+            const response = await fetch(devServerUrl);
+            if (response.ok) return;
+        } catch {
+            await new Promise(resolve => setTimeout(resolve, 250));
+        }
+    }
+    throw new Error(`Vite dev server did not become ready at ${devServerUrl}`);
+}
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -22,15 +126,14 @@ function createWindow() {
             contextIsolation: true, // contextBridge를 사용하기 위해 true로 변경
             preload: path.join(__dirname, 'preload.cjs')
         },
-        icon: path.join(__dirname, '../build/icon.ico')
+        icon: path.join(__dirname, 'build/icon.ico')
     });
 
-    // 개발 모드와 프로덕션 모드 구분
-    if (process.env.NODE_ENV === 'development') {
-        mainWindow.loadURL('http://localhost:5173');
-    } else {
-        mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
-    }
+    loadAppPage(mainWindow).catch(error => log.error('Failed to load app:', error));
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+        if (imageViewerWindow && !imageViewerWindow.isDestroyed()) imageViewerWindow.close();
+    });
 
     // Debugging: Open DevTools in all modes
     // mainWindow.webContents.openDevTools();
@@ -49,6 +152,8 @@ function createWindow() {
     // 업데이트 이벤트 전송
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
+        // Prepare the engine without delaying or stealing focus from the app.
+        prepareImageViewer().catch(error => log.error('Viewer preload failed:', error));
         if (process.env.NODE_ENV !== 'development') {
             autoUpdater.checkForUpdatesAndNotify();
         }
@@ -57,7 +162,15 @@ function createWindow() {
 
 // 앱 준비 완료
 app.whenReady().then(() => {
-    createWindow();
+    const startApp = async () => {
+        if (process.env.NODE_ENV === 'development') await waitForDevServer();
+        createWindow();
+    };
+
+    startApp().catch(error => {
+        log.error('Failed to start app:', error);
+        app.quit();
+    });
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
@@ -65,6 +178,8 @@ app.whenReady().then(() => {
         }
     });
 });
+
+app.on('before-quit', () => { isQuitting = true; });
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

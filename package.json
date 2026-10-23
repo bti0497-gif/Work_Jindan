@@ -1,7 +1,7 @@
 {
   "name": "jindan-studio",
   "private": true,
-  "version": "0.9.10",
+  "version": "1.0.1",
   "type": "module",
   "main": "main.cjs",
   "description": "더죤환경기술(주) 기술진단팀 협업스튜디오",
@@ -11,14 +11,15 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "electron:dev": "concurrently \"vite\" \"electron .\"",
+    "electron:dev": "cross-env NODE_ENV=development concurrently -k -n VITE,ELECTRON \"vite --host 127.0.0.1 --port 3000 --strictPort\" \"electron .\"",
     "electron:build": "vite build && electron-builder",
     "electron:build:debug": "cross-env DEBUG=electron-builder vite build && electron-builder",
-    "publish": "vite build && electron-builder --publish always"
+    "publish": "vite build && node scripts/check-release-secrets.mjs && electron-builder --publish always"
   },
   "build": {
     "appId": "com.jindan.studio",
     "productName": "기술진단팀 협업스튜디오",
+    "afterPack": "scripts/verify-package.cjs",
     "directories": {
       "output": "release"
     },
@@ -32,7 +33,7 @@
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico",
-      "artifactName": "${productName}-Setup-${version}.${ext}"
+      "artifactName": "jindan-studio-setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
@@ -42,7 +43,14 @@
       "shortcutName": "기술진단팀 협업스튜디오"
     },
     "files": [
-      "dist/**/*",
+      {
+        "from": "dist",
+        "to": "dist",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "build/icon.ico",
       "main.cjs",
       "preload.cjs",
       "package.json"
@@ -50,11 +58,18 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
+    "dompurify": "3.4.17",
     "electron-log": "^5.1.0",
     "electron-updater": "^6.1.8",
+    "firebase": "12.19.0",
     "lucide-react": "^0.563.0",
+    "nasjidwg": "^0.18.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "overrides": {
+    "@firebase/app": "0.16.2",
+    "@firebase/app-compat": "0.5.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

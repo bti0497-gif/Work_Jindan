@@ -58,46 +58,101 @@ export const getFiles = async (folderId = FOLDER_ID) => {
         console.log(`Fetching files from folder: ${folderId}`);
 
         // 공유 드라이브(Shared Drive) 지원을 위해 supportsAllDrives, includeItemsFromAllDrives 추가
-        const url = new URL('https://www.googleapis.com/drive/v3/files');
-        url.searchParams.append('q', q);
-        url.searchParams.append('fields', 'files(id, name, size, modifiedTime, owners, mimeType, webContentLink)');
-        url.searchParams.append('pageSize', '50');
-        url.searchParams.append('orderBy', 'modifiedTime desc');
-        url.searchParams.append('supportsAllDrives', 'true');
-        url.searchParams.append('includeItemsFromAllDrives', 'true');
+        const allFiles = [];
+        let pageToken;
+        do {
+            const url = new URL('https://www.googleapis.com/drive/v3/files');
+            url.searchParams.append('q', q);
+            url.searchParams.append('fields', 'nextPageToken,files(id, name, size, modifiedTime, owners, mimeType, webContentLink)');
+            url.searchParams.append('pageSize', '100');
+            url.searchParams.append('orderBy', 'modifiedTime desc');
+            url.searchParams.append('supportsAllDrives', 'true');
+            url.searchParams.append('includeItemsFromAllDrives', 'true');
+            if (pageToken) url.searchParams.append('pageToken', pageToken);
 
-        const response = await fetch(url.toString(), {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
+            const response = await fetch(url.toString(), {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
 
-        if (response.status === 401) {
-            console.warn('Access token expired, retrying after refresh...');
-            await getAccessToken();
-            return getFiles(folderId);
-        }
+            if (response.status === 401) {
+                console.warn('Access token expired, retrying after refresh...');
+                await getAccessToken();
+                return getFiles(folderId);
+            }
 
-        const data = await response.json();
+            const data = await response.json();
+            if (data.error) {
+                console.error('Drive API Error:', data.error);
+                throw new Error(data.error.message);
+            }
 
-        if (data.error) {
-            console.error('Drive API Error:', data.error);
-            throw new Error(data.error.message);
-        }
+            allFiles.push(...(data.files || []));
+            pageToken = data.nextPageToken;
+        } while (pageToken);
 
-        console.log(`Successfully fetched ${data.files?.length || 0} files.`);
-
-        // 디버깅: 만약 파일이 0개라면, 토큰이 볼 수 있는 모든 파일을 출력해봅니다.
-        if (!data.files || data.files.length === 0) {
-            console.warn('No files found in designated folder. Running debug check...');
-            // getAllFilesDebug(); // 필수는 아니므로 주석 처리 가능
-        }
-
-        return data.files || [];
+        console.log(`Successfully fetched ${allFiles.length} files.`);
+        return allFiles;
     } catch (error) {
         console.error('Error in getFiles service:', error);
         throw error;
     }
+};
+
+export const getFilesRecursively = async (folderId = FOLDER_ID) => {
+    const visitedFolders = new Set();
+    const allFiles = [];
+    const folderMimeType = 'application/vnd.google-apps.folder';
+
+    const visitFolder = async (currentFolderId, depth = 0) => {
+        if (!currentFolderId || visitedFolders.has(currentFolderId) || depth > 10) return;
+        visitedFolders.add(currentFolderId);
+
+        const files = await getFiles(currentFolderId);
+        for (const file of files) {
+            if (file.mimeType === folderMimeType) {
+                await visitFolder(file.id, depth + 1);
+            } else {
+                allFiles.push(file);
+            }
+        }
+    };
+
+    await visitFolder(folderId);
+    return allFiles;
+};
+
+export const getDriveFolderTree = async (folderId = FOLDER_ID, folderName = '내 드라이브') => {
+    const visitedFolders = new Set();
+    const folderMimeType = 'application/vnd.google-apps.folder';
+
+    const buildFolder = async (currentFolderId, currentFolderName, folderPath = [], depth = 0) => {
+        if (!currentFolderId || visitedFolders.has(currentFolderId) || depth > 10) {
+            return { id: currentFolderId, name: currentFolderName, mimeType: folderMimeType, children: [] };
+        }
+        visitedFolders.add(currentFolderId);
+
+        const entries = await getFiles(currentFolderId);
+        const children = await Promise.all(entries.map(async entry => {
+            if (entry.mimeType === folderMimeType) {
+                return buildFolder(entry.id, entry.name, [...folderPath, entry.name], depth + 1);
+            }
+            return {
+                ...entry,
+                parentFolderId: currentFolderId,
+                parentFolderName: currentFolderName,
+                folderPath
+            };
+        }));
+
+        return {
+            id: currentFolderId,
+            name: currentFolderName,
+            mimeType: folderMimeType,
+            children
+        };
+    };
+
+    return buildFolder(folderId, folderName);
 };
 
 /**
@@ -303,6 +358,25 @@ export const downloadFile = async (fileId, fileName) => {
         console.error('Error downloading file:', error);
         alert('파일을 다운로드할 수 없습니다. (권한 또는 파일 형식 문제)');
     }
+};
+
+export const getFileBlob = async (fileId, { signal } = {}) => {
+    signal?.throwIfAborted();
+    if (!accessToken) await getAccessToken();
+    signal?.throwIfAborted();
+
+    const request = () => fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&supportsAllDrives=true`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        signal
+    });
+
+    let response = await request();
+    if (response.status === 401) {
+        await getAccessToken();
+        response = await request();
+    }
+    if (!response.ok) throw new Error('Image download failed');
+    return response.blob();
 };
 
 /**

@@ -1,5 +1,4 @@
 
-import { getFiles, getFileContent } from './driveService';
 import { dbService } from './dbService';
 import { fetchTableLogs, getSystemFolderIds, saveJsonData, saveActionLog } from './dataService';
 import { supabaseService } from './supabaseService';
@@ -15,6 +14,8 @@ export const pushLocalToSupabase = async () => {
 
     // 큐에 있는 항목들을 하나씩 처리
     for (const item of queue) {
+        // Firebase로 이전한 회원/게시판의 예전 큐는 Supabase로 보내지 않는다.
+        if (['회원관리', '본사공지', '전체게시판', '게시판댓글'].includes(item.tableName)) continue;
         try {
             const { tableName, id } = item;
             const data = dbService.getById(tableName, id);
@@ -48,7 +49,7 @@ export const syncAllData = async () => {
         
         // --- 1. Supabase에서 최신 데이터 가져오기 ---
         console.log('Syncing from Supabase...');
-        const tables = ['회원관리', '프로젝트관리', '공정관리', '할일관리', '전체게시판', '게시판댓글'];
+        const tables = ['프로젝트관리', '공정관리', '할일관리'];
         
         for (const tableName of tables) {
             try {
@@ -92,7 +93,7 @@ export const syncAllData = async () => {
  * 특정 메뉴(테이블) 진입 시 실행되는 빠른 동기화
  * (App.jsx의 onMenuSelect 등에서 호출)
  */
-export const syncMenuData = async (activeMenu) => {
+export const syncMenuData = async () => {
     // 특정 테이블만 동기화하더라도 전체 ACTION 로그를 체크하는 것이 안전함
     // 하지만 우선은 전체 싱크 프로시저를 호출하는 것으로 구현
     await syncAllData();
