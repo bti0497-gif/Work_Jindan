@@ -1,7 +1,7 @@
 {
   "name": "jindan-studio",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "main.cjs",
   "description": "더죤환경기술(주) 기술진단팀 협업스튜디오",

@@ -31,6 +31,11 @@ export default function BoardTest() {
     else if (view === 'view') content = <BoardView post={post} boardUser={user} onBack={() => setView('list')} onEdit={current => { setPost(current); setView('write'); }} onDeleteSuccess={() => setView('list')} {...dialogs} />;
     else content = <BoardList menuName="전체게시판" boardUser={user} onWriteNew={() => { setPost(null); setView('write'); }} onViewPost={item => { setPost(item); setView('view'); }} {...dialogs} />;
     return <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        {!user && <button onClick={() => {
+            localStorage.setItem('jindan_db_회원관리', JSON.stringify({
+                person_id: 'synthetic-legacy-user', name: '구버전 단일 레코드 검증',
+            }));
+        }}>구버전 회원 캐시 준비</button>}
         {user && <nav style={{ padding: 10, display: 'flex', gap: 20 }}>
             <span>{user.name}</span><button onClick={() => setView('list')}>전체게시판</button>
             <button onClick={() => setView('members')}>회원관리</button>
