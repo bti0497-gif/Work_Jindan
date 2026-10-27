@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, safeStorage } = require('electron');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
@@ -15,6 +15,37 @@ let imageViewerLoading;
 let imageViewerRequestId = 0;
 let isQuitting = false;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || 'http://127.0.0.1:3000';
+let reportAi;
+let reportCollector;
+function getReportCollector() {
+    if (!reportCollector) reportCollector = require('./report-collector.cjs').createReportCollector({ BrowserWindow });
+    return reportCollector;
+}
+const reportAiRequests = new Map();
+function getReportAi() {
+    if (!reportAi) reportAi = require('./report-ai.cjs').createReportAiService({
+        userDataPath: app.getPath('userData'), safeStorage,
+        envFile: app.isPackaged ? null : path.join(__dirname, '.env.local'),
+    });
+    return reportAi;
+}
+function requireReportCaller(event) {
+    if (event.sender !== mainWindow?.webContents) throw new Error('Unsupported report AI request');
+}
+ipcMain.handle('report-ai-status', event => { requireReportCaller(event); return getReportAi().status(); });
+ipcMain.handle('report-ai-configure', (event, config) => { requireReportCaller(event); return getReportAi().configure(config); });
+ipcMain.handle('report-ai-models', event => { requireReportCaller(event); return getReportAi().listModels(); });
+ipcMain.handle('report-ai-run', async (event, data) => {
+    requireReportCaller(event);
+    if (!data || typeof data.id !== 'string' || !/^[a-zA-Z0-9-]{1,80}$/.test(data.id) || reportAiRequests.has(data.id)) throw new Error('Invalid report AI request ID');
+    const controller = new AbortController();
+    reportAiRequests.set(data.id, controller);
+    try { return await getReportAi().execute(data.request, controller.signal); }
+    finally { reportAiRequests.delete(data.id); }
+});
+ipcMain.handle('report-ai-cancel', (event, data) => { requireReportCaller(event); reportAiRequests.get(data?.id)?.abort(); });
+ipcMain.handle('report-source-open', (event, scope) => { requireReportCaller(event); return getReportCollector().open(scope); });
+ipcMain.handle('report-source-capture', (event, scope) => { requireReportCaller(event); return getReportCollector().capture(scope); });
 
 function loadAppPage(window, query = {}) {
     if (process.env.NODE_ENV === 'development') {
@@ -132,6 +163,7 @@ function createWindow() {
     loadAppPage(mainWindow).catch(error => log.error('Failed to load app:', error));
     mainWindow.on('closed', () => {
         mainWindow = null;
+        reportCollector?.closeAll();
         if (imageViewerWindow && !imageViewerWindow.isDestroyed()) imageViewerWindow.close();
     });
 
@@ -179,7 +211,7 @@ app.whenReady().then(() => {
     });
 });
 
-app.on('before-quit', () => { isQuitting = true; });
+app.on('before-quit', () => { isQuitting = true; reportCollector?.closeAll(); for (const request of reportAiRequests.values()) request.abort(); });
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import ChangePassword from './ChangePassword';
+import { REPORT_SECTIONS } from '../services/report/reportSections.js';
 import {
     Users,
-    Eye,
+    ChevronDown,
     LogOut,
     KeyRound,
     LayoutDashboard,
@@ -14,10 +15,12 @@ import {
 
 const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAlert, showConfirm }) => {
     const [changingPassword, setChangingPassword] = useState(false);
+    const [reportsOpen, setReportsOpen] = useState(true);
     const menuItems = [
         { name: '프로젝트관리', icon: <LayoutDashboard size={18} /> },
         { name: '공정관리', icon: <Settings size={18} /> },
         { name: '파일관리', icon: <FileText size={18} /> },
+        { name: '보고서 작성', icon: <FileText size={18} />, children: REPORT_SECTIONS },
         { name: '할일관리', icon: <CheckSquare size={18} /> },
         { name: '전체게시판', icon: <MessageSquare size={18} /> },
         { name: '회원관리', icon: <Users size={18} />, adminOnly: true },
@@ -71,7 +74,14 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
             <nav className="sidebar-nav">
                 <div className="section-header">Main Menu</div>
                 <ul className="menu-list">
-                    {filteredMenuItems.map((item, index) => (
+                    {filteredMenuItems.map((item, index) => item.children ? (
+                        <li className="menu-group" key={item.name}>
+                            <button type="button" className={`menu-item menu-group-toggle ${item.children.some(child => child.menu === activeMenu) ? 'active' : ''}`} aria-expanded={reportsOpen} aria-controls="report-submenus" onClick={() => setReportsOpen(open => !open)}>
+                                <span className="menu-icon">{item.icon}</span><span className="menu-text">{item.name}</span><ChevronDown size={15} className={reportsOpen ? '' : 'collapsed'} />
+                            </button>
+                            {reportsOpen && <ul id="report-submenus" className="menu-submenu">{item.children.map(child => <li key={child.id}><button type="button" className={`menu-item ${activeMenu === child.menu ? 'active' : ''}`} aria-current={activeMenu === child.menu ? 'page' : undefined} onClick={() => onMenuSelect(child.menu)}><span className="menu-text">{child.label}</span></button></li>)}</ul>}
+                        </li>
+                    ) : (
                         <li
                             key={index}
                             className={`menu-item ${activeMenu === item.name ? 'active' : ''}`}

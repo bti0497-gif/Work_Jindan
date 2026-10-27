@@ -1,7 +1,7 @@
 {
   "name": "jindan-studio",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "main": "main.cjs",
   "description": "더죤환경기술(주) 기술진단팀 협업스튜디오",
@@ -52,15 +52,20 @@
       },
       "build/icon.ico",
       "main.cjs",
+      "report-ai.cjs",
+      "report-collector.cjs",
       "preload.cjs",
       "package.json"
     ]
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
+    "cfb": "1.2.2",
     "dompurify": "3.4.17",
     "electron-log": "^5.1.0",
     "electron-updater": "^6.1.8",
+    "fast-xml-parser": "5.11.2",
+    "fflate": "0.8.3",
     "firebase": "12.19.0",
     "lucide-react": "^0.563.0",
     "nasjidwg": "^0.18.0",

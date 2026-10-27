@@ -58,40 +58,33 @@ export const getFiles = async (folderId = FOLDER_ID) => {
         console.log(`Fetching files from folder: ${folderId}`);
 
         // 공유 드라이브(Shared Drive) 지원을 위해 supportsAllDrives, includeItemsFromAllDrives 추가
-        const allFiles = [];
+        const url = new URL('https://www.googleapis.com/drive/v3/files');
+        url.searchParams.append('q', q);
+        url.searchParams.append('fields', 'nextPageToken,files(id, name, size, modifiedTime, owners, mimeType, webContentLink)');
+        url.searchParams.append('pageSize', '1000');
+        url.searchParams.append('orderBy', 'modifiedTime desc');
+        url.searchParams.append('supportsAllDrives', 'true');
+        url.searchParams.append('includeItemsFromAllDrives', 'true');
+
+        const files = [];
         let pageToken;
         do {
-            const url = new URL('https://www.googleapis.com/drive/v3/files');
-            url.searchParams.append('q', q);
-            url.searchParams.append('fields', 'nextPageToken,files(id, name, size, modifiedTime, owners, mimeType, webContentLink)');
-            url.searchParams.append('pageSize', '100');
-            url.searchParams.append('orderBy', 'modifiedTime desc');
-            url.searchParams.append('supportsAllDrives', 'true');
-            url.searchParams.append('includeItemsFromAllDrives', 'true');
-            if (pageToken) url.searchParams.append('pageToken', pageToken);
-
-            const response = await fetch(url.toString(), {
+            if (pageToken) url.searchParams.set('pageToken', pageToken);
+            let response = await fetch(url.toString(), {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-
             if (response.status === 401) {
-                console.warn('Access token expired, retrying after refresh...');
                 await getAccessToken();
-                return getFiles(folderId);
+                response = await fetch(url.toString(), {
+                    headers: { Authorization: `Bearer ${accessToken}` }
+                });
             }
-
             const data = await response.json();
-            if (data.error) {
-                console.error('Drive API Error:', data.error);
-                throw new Error(data.error.message);
-            }
-
-            allFiles.push(...(data.files || []));
+            if (!response.ok || data.error) throw new Error(data.error?.message || `Drive 조회 실패 (${response.status})`);
+            files.push(...(data.files || []));
             pageToken = data.nextPageToken;
         } while (pageToken);
-
-        console.log(`Successfully fetched ${allFiles.length} files.`);
-        return allFiles;
+        return files;
     } catch (error) {
         console.error('Error in getFiles service:', error);
         throw error;

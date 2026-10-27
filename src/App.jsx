@@ -3,9 +3,10 @@
  * [PROTECTION ZONE] CORE IMPORTS - DO NOT REMOVE OR MODIFY ACCIDENTALLY
  * --------------------------------------------------------------------------
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useSyncExternalStore } from 'react';
 import './index.css';
 import LeftSidebar from './components/LeftSidebar';
+import { REPORT_SECTIONS } from './services/report/reportSections.js';
 import FileManager from './components/FileManager';
 import BoardWrite from './components/BoardWrite';
 import BoardList from './components/BoardList';
@@ -13,6 +14,7 @@ import BoardView from './components/BoardView';
 import { initSystemStorage } from './services/dataService';
 import { restoreSession } from './services/authService';
 import { syncAllData, pushLocalToSupabase } from './services/syncService';
+import { DRIVE_ROOT_ID, warmDriveCache, subscribeDriveCache, getDriveCacheStatus, formatDriveCacheStatus } from './services/driveCacheService';
 import ProjectList from './components/ProjectList';
 import ProjectWrite from './components/ProjectWrite';
 import ProjectView from './components/ProjectView';
@@ -25,6 +27,7 @@ import MemberList from './components/MemberList';
 import GlobalModal from './components/common/GlobalModal';
 import { Minus, X, Square } from 'lucide-react';
 import packageJson from '../package.json';
+const ReportWorkspace = React.lazy(() => import('./components/ReportWorkspace.jsx'));
 /* ========================================================================== */
 
 function App() {
@@ -36,6 +39,23 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isSyncing, setIsSyncing] = useState(false);
   const [lastDataUpdate, setLastDataUpdate] = useState(Date.now()); // 데이터 변경 감지용
+  const driveCache = useSyncExternalStore(subscribeDriveCache, getDriveCacheStatus);
+  const dataSyncRunningRef = useRef(false);
+  const promptValueRef = useRef('');
+  const synchronizeData = useCallback(async () => {
+    if (dataSyncRunningRef.current) return;
+    dataSyncRunningRef.current = true;
+    setIsSyncing(true);
+    try {
+      await syncAllData();
+      setLastDataUpdate(Date.now());
+    } catch (error) {
+      console.error('Background data sync failed:', error);
+    } finally {
+      dataSyncRunningRef.current = false;
+      setIsSyncing(false);
+    }
+  }, []);
   /* ------------ */
   const [modal, setModal] = useState({
     isOpen: false,
@@ -50,24 +70,32 @@ function App() {
   useEffect(() => {
     if (!sysReady) return;
 
-    // 1. 초기 동기화 실행
-    syncAllData().catch(err => console.error('Initial sync failed:', err));
-
     // 2. 5분마다 하향 동기화 (클라우드 -> 로컬)
     const pullInterval = setInterval(() => {
-      syncAllData();
+      synchronizeData();
     }, 5 * 60 * 1000);
 
     // 3. 1분마다 상향 동기화 (로컬 -> 클라우드)
     const pushInterval = setInterval(() => {
-      pushLocalToSupabase();
+      pushLocalToSupabase().catch(error => console.error('Background upload failed:', error));
     }, 60 * 1000);
 
     return () => {
       clearInterval(pullInterval);
       clearInterval(pushInterval);
     };
-  }, [sysReady]);
+  }, [sysReady, synchronizeData]);
+
+  useEffect(() => {
+    warmDriveCache({ force: true });
+    const refreshCache = () => { warmDriveCache({ force: true }); };
+    const timer = setInterval(refreshCache, 10 * 60 * 1000);
+    window.addEventListener('online', refreshCache);
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('online', refreshCache);
+    };
+  }, []);
 
   const showAlert = (message, title = '알림', type = 'alert') => {
     return new Promise((resolve) => {
@@ -104,24 +132,34 @@ function App() {
     });
   };
 
+  const showPrompt = (message, defaultValue = '', title = '입력') => new Promise(resolve => {
+    promptValueRef.current = defaultValue;
+    setModal({
+      isOpen: true, type: 'prompt', title, message, inputValue: defaultValue,
+      onConfirm: () => {
+        setModal(previous => ({ ...previous, isOpen: false }));
+        resolve(promptValueRef.current);
+      },
+      onCancel: () => {
+        setModal(previous => ({ ...previous, isOpen: false }));
+        resolve(null);
+      }
+    });
+  });
+
   useEffect(() => {
     const init = async () => {
       try {
-        await initSystemStorage(import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || import.meta.env.GOOGLE_DRIVE_FOLDER_ID)
-          .catch(error => console.warn('Drive initialization unavailable:', error));
-
-        // 초기 데이터 동기화
-        try {
-          await syncAllData();
-        } catch (e) {
-          console.error('Initial sync failed:', e);
-        }
-
+        // 로그인 화면과 저장된 목록은 Drive 탐색을 기다리지 않고 표시합니다.
         setSysReady(true);
-
-        // 세션 확인
-        const user = await restoreSession();
+        const user = await restoreSession().catch(error => {
+          console.warn('Session restore unavailable:', error);
+          return null;
+        });
         if (user) setCurrentUser(user);
+        await initSystemStorage(DRIVE_ROOT_ID)
+          .catch(error => console.warn('Drive initialization unavailable:', error));
+        await synchronizeData();
       } catch (err) {
         console.error('System initialization failed:', err);
       } finally {
@@ -129,7 +167,7 @@ function App() {
       }
     };
     init();
-  }, []);
+  }, [synchronizeData]);
 
   // 자동 업데이트 리스너
   useEffect(() => {
@@ -183,8 +221,13 @@ function App() {
     };
 
     switch (activeMenu) {
+      case '진단보고서':
+      case '보고서 작성/공정':
+      case '보고서 작성/기계':
+      case '보고서 작성/전기':
+        return <React.Suspense fallback={<div className="center-msg">보고서 엔진 로딩 중…</div>}><ReportWorkspace currentUser={currentUser} discipline={REPORT_SECTIONS.find(section => section.menu === activeMenu)?.id || 'electrical'} /></React.Suspense>;
       case '파일관리':
-        return <FileManager showAlert={showAlert} showConfirm={showConfirm} />;
+        return <FileManager showAlert={showAlert} showConfirm={showConfirm} showPrompt={showPrompt} />;
       case '할일관리':
         return <TaskManager showAlert={showAlert} showConfirm={showConfirm} onDataChange={() => setLastDataUpdate(Date.now())} />;
       case '본사공지':
@@ -356,10 +399,7 @@ function App() {
             setViewMode('list');
 
             // 메뉴 이동 시 자동 동기화 (백그라운드)
-            if (!isSyncing) {
-              setIsSyncing(true);
-              syncAllData().finally(() => setIsSyncing(false));
-            }
+            if (menu !== '파일관리') synchronizeData();
           }}
           activeMenu={activeMenu}
           currentUser={currentUser}
@@ -382,10 +422,7 @@ function App() {
               setViewMode('list');
 
               // 동기화는 백그라운드에서 진행
-              if (!isSyncing) {
-                setIsSyncing(true);
-                syncAllData().finally(() => setIsSyncing(false));
-              }
+              if (menu !== '파일관리') synchronizeData();
             }}
             activeMenu={activeMenu}
             isSyncing={isSyncing}
@@ -410,6 +447,9 @@ function App() {
           }}></span>
           {isSyncing ? '동기화 확인 중...' : (sysReady ? '준비됨' : '시작 중...')}
         </div>
+        <div className="status-item" role="status" title={driveCache.error || (driveCache.lastSynced ? `마지막 갱신: ${new Date(driveCache.lastSynced).toLocaleString()}` : '폴더·파일 목록을 미리 저장하고 백그라운드에서 갱신합니다.')}>
+          {formatDriveCacheStatus(driveCache)}
+        </div>
         <div className="status-item">
           v{packageJson.version}
         </div>
@@ -420,6 +460,10 @@ function App() {
         {...modal}
         onConfirm={modal.onConfirm}
         onCancel={modal.onCancel}
+        onInputChange={value => {
+          promptValueRef.current = value;
+          setModal(previous => ({ ...previous, inputValue: value }));
+        }}
       />
     </div>
   );

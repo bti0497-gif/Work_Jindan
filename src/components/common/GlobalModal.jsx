@@ -21,7 +21,9 @@ const GlobalModal = ({
     onConfirm,
     onCancel,
     confirmText = '확인',
-    cancelText = '취소'
+    cancelText = '취소',
+    inputValue = '',
+    onInputChange
 }) => {
     if (!isOpen) return null;
 
@@ -47,9 +49,21 @@ const GlobalModal = ({
                     </div>
                     {title && <h2 className="global-modal-title">{title}</h2>}
                     <p className="global-modal-message">{message}</p>
+                    {type === 'prompt' && <input
+                        className="global-modal-input"
+                        aria-label="새 폴더 이름"
+                        value={inputValue}
+                        autoFocus
+                        onChange={event => onInputChange?.(event.target.value)}
+                        onKeyDown={event => {
+                            if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+                            if (event.key === 'Enter') onConfirm();
+                            if (event.key === 'Escape') onCancel?.();
+                        }}
+                    />}
                 </div>
                 <div className="global-modal-footer">
-                    {type === 'confirm' && (
+                    {(type === 'confirm' || type === 'prompt') && (
                         <button className="global-modal-btn cancel" onClick={onCancel}>
                             {cancelText}
                         </button>
@@ -114,6 +128,7 @@ const GlobalModal = ({
                     display: flex;
                     gap: 12px;
                 }
+                .global-modal-input { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #93c5fd; border-radius: 6px; color: #1e293b; font: inherit; }
                 .global-modal-btn {
                     flex: 1;
                     padding: 12px;

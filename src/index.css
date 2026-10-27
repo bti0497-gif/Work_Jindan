@@ -750,3 +750,16 @@ body {
   background: #1e293b;
   transform: translateY(-2px);
 }
+
+.menu-group-toggle, .menu-submenu .menu-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+}
+.menu-group-toggle > svg { margin-left: auto; transition: transform .2s; }
+.menu-group-toggle > svg.collapsed { transform: rotate(-90deg); }
+.menu-submenu { list-style: none; margin: 0 0 8px 22px; padding: 0 0 0 12px; border-left: 1px solid var(--border-color); }
+.menu-submenu .menu-item { padding: 8px 12px; }
+.menu-group-toggle:focus-visible, .menu-submenu button:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; }

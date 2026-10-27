@@ -127,6 +127,15 @@ for (const mode of ['development', 'production']) {
     });
 }
 
+test('report AI IPC rejects the viewer and unrelated windows before reading credentials or starting requests', async () => {
+    const { handlers, main, windows } = await startMain('development');
+    for (const channel of ['report-ai-status', 'report-ai-configure', 'report-ai-models', 'report-ai-cancel', 'report-source-open', 'report-source-capture']) {
+        assert.throws(() => handlers.get(channel)({ sender: windows[1].webContents }, {}), /Unsupported report/);
+    }
+    await assert.rejects(handlers.get('report-ai-run')({ sender: windows[1].webContents }, {}), /Unsupported report/);
+    await assert.rejects(handlers.get('report-ai-run')({ sender: main.webContents }, { id: '../invalid' }), /Invalid report/);
+});
+
 test('application quit destroys the preloaded viewer instead of hiding it', async () => {
     const { windows, app } = await startMain('development');
     app.emit('before-quit');
