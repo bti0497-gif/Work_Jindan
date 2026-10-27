@@ -1,5 +1,6 @@
 import { replaceHwpxSlots } from './hwpxPackage.js';
 import { narrativeValue, validateData } from './reportEngine.js';
+import { repairReportNumbering } from './reportNumbering.js';
 
 export function fieldTextSlots(workspace, field) {
     if (!field.binding) return [];
@@ -63,5 +64,9 @@ export async function writeNativeReport(workspace, sourceBytes, mode = 'draft') 
     const plan = planNativeWrite(workspace, mode);
     if (plan.errors.length) throw new Error(plan.errors.join('\n'));
     const output = await replaceHwpxSlots(sourceBytes, workspace.source.sha256, plan.replacements);
-    return { ...output, review: { ...plan, replacements: plan.replacements.map(({ fieldId, slotId }) => ({ fieldId, slotId })), status: 'hancom-review-required' } };
+    const numbering = mode === 'draft' ? repairReportNumbering(output.bytes) : null;
+    return { ...output, bytes: numbering?.bytes || output.bytes,
+        review: { ...plan, numbering: numbering?.report || null,
+            warnings: [...plan.warnings, ...(numbering?.report.warnings || [])],
+            replacements: plan.replacements.map(({ fieldId, slotId }) => ({ fieldId, slotId })), status: 'hancom-review-required' } };
 }

@@ -119,6 +119,7 @@ function ReportProject({ project, userId, aiStatus, discipline }) {
     const [externalProposal, setExternalProposal] = useState(null);
     const [overwriteExternal, setOverwriteExternal] = useState(false);
     const [analysisProgress, setAnalysisProgress] = useState(null);
+    const [numberingReview, setNumberingReview] = useState(null);
     const analysisProposal = workspace?.analysisProposal || null;
     const [loadingSaved, setLoadingSaved] = useState(true);
     const section = reportSection(discipline);
@@ -154,6 +155,7 @@ function ReportProject({ project, userId, aiStatus, discipline }) {
     const change = updater => {
         setCollectionPreview(null);
         setExternalProposal(null);
+        setNumberingReview(null);
         if (typeof updater !== 'function' && latest.current && updater.source.sha256 !== latest.current.source.sha256) {
             saveWorkspace(userId, latest.current).catch(err => { if (alive.current) setError(err.message); });
             setProposal(null);
@@ -350,6 +352,7 @@ function ReportProject({ project, userId, aiStatus, discipline }) {
                 setBusy(false);
                 if (data.error) { setError(data.error); return; }
                 if (latest.current !== snapshot) { setError('작성 중 데이터가 변경되었습니다. 최신 데이터로 다시 작성하세요.'); return; }
+                setNumberingReview(data.native.review.numbering || null);
                 download(filename(mode === 'blank' ? '빈-작업본.hwpx' : '보고서-초안.hwpx'), data.native.bytes, 'application/octet-stream');
                 download(filename('초안-검토사항.json'), toJson(data.native.review));
             };
@@ -396,7 +399,7 @@ function ReportProject({ project, userId, aiStatus, discipline }) {
                 <button disabled={!workspace?.draft || !!busy} onClick={() => download(filename('보고서-초안.html'), draftHtml(workspace.draft), 'text/html')}>검토용 HTML 내려받기</button>
                 <button disabled={!workspace || !!busy} onClick={() => setStep(3)}>초안 내용 보기</button>
                 {workspace?.document.format === 'hwp' && <small>한글 초안 출력에는 HWPX 사본을 등록해 사용하세요.</small>}
-                <small>그림·쪽 배치·최종 결론은 내려받은 한글 초안에서 수정합니다.</small>
+                <small>한글 초안 저장 시 표·그림 번호와 본문 참조를 점검·수정합니다. 그림·쪽 배치·최종 결론은 한글에서 검토하세요.</small>
             </section>
         </div>
         {workspace && <section className="report-card report-analysis-summary"><div className="report-toolbar"><h2>{section.label} 보고서 분석 현황</h2><button disabled={!!busy} onClick={() => setStep(1)}>분석 내용 · 양식 편집</button></div>
@@ -408,6 +411,11 @@ function ReportProject({ project, userId, aiStatus, discipline }) {
         </section>}
         <div className="report-steps">{['기존 보고서', '입력 양식', '진단 데이터', '보고서 초안'].map((label, index) => <button key={label} className={index === step ? 'active' : ''} disabled={index > 0 && !workspace} onClick={() => setStep(index)}>{index + 1}. {label}</button>)}</div>
         {error && <p className="report-error" role="alert">{error}</p>}
+        {numberingReview && <section className="report-card" role="status"><h2>표·그림 번호 점검 결과</h2>
+            <p>표 {numberingReview.tables}개 · 그림 {numberingReview.figures}개 확인 · 번호·참조 수정 {numberingReview.corrections.length}건 · 검토 필요 {numberingReview.warnings.length}건</p>
+            {!!numberingReview.corrections.length && <details><summary>수정한 번호 확인</summary><ul>{numberingReview.corrections.map((item, index) => <li key={index}>{item.kind} {item.before} → {item.after} · {({ caption: '제목', reference: '본문·목차 참조', counter: '자동 번호 시작값' })[item.type]}</li>)}</ul></details>}
+            {!!numberingReview.warnings.length && <ul>{numberingReview.warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul>}
+        </section>}
         {externalProposal && <section className="report-card report-collection-preview"><h2>수집 자료 · 보고서 입력 연결 확인</h2><p>{externalProposal.capture.title} · {externalProposal.capture.capturedAt}</p><p>원본 조회 화면의 고객·연도·월·단위를 확인하세요. 기존 입력값과 다른 값은 아래 덮어쓰기 선택 전에는 교체하지 않습니다.</p>
             <div className="report-table-scroll"><table><thead><tr><th>설비·기간</th><th>입력항목</th><th>현재 값</th><th>수집 값</th><th>단위</th><th>원본 셀·제목</th></tr></thead><tbody>{externalProposal.cells.map(item => <tr key={item.fieldId}><td>{item.group}</td><td>{item.label}</td><td>{item.previous}</td><td>{item.value}</td><td>{item.unit}</td><td>{item.quotedText}<small>{item.sourceHeaders}</small></td></tr>)}</tbody></table></div>
             {!externalProposal.cells.length && <p>현재 표와 확실히 연결할 수 있는 입력항목이 없습니다. 아래 확인사항을 검토하고 해당 기간의 조회 표를 다시 선택하세요.</p>}
