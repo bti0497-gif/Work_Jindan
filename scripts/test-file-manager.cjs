@@ -249,6 +249,12 @@ async function runBrowserChecks() {
     const originalFetch = window.fetch;
     const listCalls = [];
     let authCalls = 0;
+    const previousElectron = window.electron;
+    window.electron = { invoke: async (channel, options) => {
+        check(channel === 'drive-auth-token', 'Only the Drive token bridge is used');
+        authCalls++; if(authCalls === 2) check(options.force, 'A rejected access token must trigger refresh');
+        return 'isolated-test-token';
+    } };
     let firstPageAttempts = 0;
     window.fetch = async url => {
         if (String(url).includes('oauth2.googleapis.com')) {
@@ -268,6 +274,7 @@ async function runBrowserChecks() {
         check(allPages.length === 2 && listCalls.length === 3 && listCalls[2] === 'next-page' && authCalls === 2, 'Drive listing must fetch every page and retry an expired token once');
     } finally {
         window.fetch = originalFetch;
+        window.electron = previousElectron;
     }
     finish('Drive pagination and bounded expired-token retry');
 
@@ -560,6 +567,7 @@ async function nodeMain() {
         window.__realDrive = realDrive;
         window.__realDownload = realDownload;
         window.__unzip = unzipSync;
+        window.electron = { invoke: async channel => { if(channel !== 'drive-auth-token') throw new Error('Unexpected bridge channel'); return 'archive-test-token'; } };
         window.__uiTest = { promptValues: [], confirms: [], confirmResponse: true, alerts: [], allowAlerts: false };
         window.__reloadCache = tag => import(/* @vite-ignore */ '/src/services/driveCacheService.js?test-instance=' + tag);
         createRoot(document.getElementById('root')).render(React.createElement(FileManager, {

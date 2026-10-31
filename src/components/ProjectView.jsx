@@ -1,9 +1,7 @@
 
 import React from 'react';
 import { ArrowLeft, User, Calendar, Edit, Trash2, Clock } from 'lucide-react';
-import { deleteFile } from '../services/driveService';
 import { getCurrentUser } from '../services/authService';
-import { saveActionLog } from '../services/dataService';
 import { dbService } from '../services/dbService';
 
 const ProjectView = ({ project, onBack, onEdit, onDeleteSuccess, showAlert, showConfirm }) => {
@@ -15,15 +13,7 @@ const ProjectView = ({ project, onBack, onEdit, onDeleteSuccess, showAlert, show
         if (!confirmed) return;
 
         try {
-            // 1. 명령 로그 기록
-            await saveActionLog('DELETE', '프로젝트관리', project.id);
-
-            // 2. 드라이브 파일 삭제
-            if (project.fileId) {
-                await deleteFile(project.fileId);
-            }
-
-            // 3. 로컬 DB에서 삭제
+            // 로컬 삭제와 Firebase 삭제 큐를 함께 기록한다.
             dbService.remove('프로젝트관리', project.id);
 
             await showAlert('프로젝트가 삭제되었습니다.', '성공', 'success');

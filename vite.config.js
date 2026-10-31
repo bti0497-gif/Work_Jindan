@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { reportRuntimeAssets } from './scripts/report-runtime-assets.mjs'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), reportRuntimeAssets()],
   base: './',
-  envPrefix: ['VITE_', 'GOOGLE_', 'GEMINI_'],
+  worker: { format: 'es' },
+  envPrefix: ['VITE_'],
 })

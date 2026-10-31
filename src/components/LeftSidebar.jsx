@@ -9,6 +9,7 @@ import {
     LayoutDashboard,
     Settings,
     FileText,
+    BookOpen,
     CheckSquare,
     MessageSquare
 } from 'lucide-react';
@@ -20,6 +21,7 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
         { name: '프로젝트관리', icon: <LayoutDashboard size={18} /> },
         { name: '공정관리', icon: <Settings size={18} /> },
         { name: '파일관리', icon: <FileText size={18} /> },
+        { name: '보고서 스튜디오', icon: <BookOpen size={18} /> },
         { name: '보고서 작성', icon: <FileText size={18} />, children: REPORT_SECTIONS },
         { name: '할일관리', icon: <CheckSquare size={18} /> },
         { name: '전체게시판', icon: <MessageSquare size={18} /> },

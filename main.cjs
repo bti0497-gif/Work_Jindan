@@ -17,6 +17,17 @@ let isQuitting = false;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || 'http://127.0.0.1:3000';
 let reportAi;
 let reportCollector;
+let driveAuth;
+function getDriveAuth() {
+    if (!driveAuth) driveAuth = require('./drive-auth.cjs').createDriveAuth({ userDataPath: app.getPath('userData'), safeStorage,
+        envFile: app.isPackaged ? null : path.join(__dirname, '.env.local') });
+    return driveAuth;
+}
+function requireDriveCaller(event) {
+    if (event.sender !== mainWindow?.webContents && event.sender !== imageViewerWindow?.webContents) throw new Error('Unsupported Drive request');
+}
+ipcMain.handle('drive-auth-token', (event, options) => { requireDriveCaller(event); return getDriveAuth().getToken(options); });
+ipcMain.handle('drive-auth-status', event => { requireDriveCaller(event); return getDriveAuth().status(); });
 function getReportCollector() {
     if (!reportCollector) reportCollector = require('./report-collector.cjs').createReportCollector({ BrowserWindow });
     return reportCollector;
@@ -46,6 +57,10 @@ ipcMain.handle('report-ai-run', async (event, data) => {
 ipcMain.handle('report-ai-cancel', (event, data) => { requireReportCaller(event); reportAiRequests.get(data?.id)?.abort(); });
 ipcMain.handle('report-source-open', (event, scope) => { requireReportCaller(event); return getReportCollector().open(scope); });
 ipcMain.handle('report-source-capture', (event, scope) => { requireReportCaller(event); return getReportCollector().capture(scope); });
+ipcMain.handle('report-page-pdf', async (event, model) => {
+    requireReportCaller(event);
+    return require('./report-page-export.cjs').printPageTrial({ BrowserWindow }, model);
+});
 
 function loadAppPage(window, query = {}) {
     if (process.env.NODE_ENV === 'development') {

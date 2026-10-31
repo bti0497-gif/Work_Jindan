@@ -966,12 +966,20 @@ const FileManager = ({ showAlert, showConfirm, showPrompt }) => {
                                 {displayFiles.map((file, index) => (
                                     <div
                                         key={file.id}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label={file.name}
                                         className={`file-item ${selectedFiles.some(f => f.id === file.id) ? 'selected' : ''} ${file.mimeType === 'application/vnd.google-apps.folder' ? 'is-folder' : ''} ${dragOverFolderId === file.id ? 'drag-target' : ''}`}
                                         onClick={(e) => handleItemClick(e, index)}
                                         onDoubleClick={() => handleItemDoubleClick(file)}
                                         onContextMenu={event => openContextMenu(event, file)}
                                         draggable={!renameState}
-                                        aria-selected={selectedFiles.some(f => f.id === file.id)}
+                                        aria-pressed={selectedFiles.some(f => f.id === file.id)}
+                                        onKeyDown={event => {
+                                            if (event.target !== event.currentTarget) return;
+                                            if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); handleItemDoubleClick(file); }
+                                            else if (event.key === ' ') { event.preventDefault(); event.stopPropagation(); toggleSelection(event, file); }
+                                        }}
                                         onDragStart={(e) => handleInternalDragStart(e, file)}
                                         onDragOver={(e) => handleInternalDragOver(e, file)}
                                         onDrop={(e) => handleInternalDrop(e, file)}

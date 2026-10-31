@@ -1,0 +1,4 @@
+interface:
+  display_name: "기술진단 보고서 형식 분석·재현"
+  short_description: "HWPX와 PDF에서 보고서 형식을 추출하고 편집 가능한 작성본을 검증합니다"
+  default_prompt: "$technical-report-hwpx 스킬로 이 보고서 폴더의 형식을 분석하고 재현 후보를 만들어 원본과 비교해줘."

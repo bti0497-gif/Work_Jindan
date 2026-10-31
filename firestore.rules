@@ -58,6 +58,76 @@ service cloud.firestore {
         && getAfter(/databases/$(database)/documents/jindan_board_posts/$(request.resource.data.postId)).data.deleted == false;
       allow update, delete: if false;
     }
+    function validWorkBase(data, id) {
+      return data.keys().hasAll(['id', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted'])
+        && data.id == id && id.size() > 0 && id.size() <= 128
+        && data.author is string && data.author.size() <= 300
+        && data.authorId is string && data.authorId.size() > 0 && data.authorId.size() <= 128
+        && data.ownerUid is string && data.ownerUid.size() > 0
+        && data.createdAt is string && data.updatedAt is string && data.deleted is bool;
+    }
+    function validWorkRange(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() <= 300
+        && data.startDate is string && data.startDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && data.endDate is string && data.endDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && data.startDate <= data.endDate;
+    }
+    function unchangedWorkOwner() {
+      return request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.authorId == resource.data.authorId
+        && request.resource.data.author == resource.data.author
+        && request.resource.data.createdAt == resource.data.createdAt;
+    }
+    function ownWork() {
+      return resource.data.ownerUid == request.auth.uid || resource.data.authorId == profile().person_id;
+    }
+    function validProject(data, id) {
+      return validWorkBase(data, id) && validWorkRange(data)
+        && data.keys().hasOnly(['id', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted', 'title', 'content', 'startDate', 'endDate'])
+        && data.content is string && data.content.size() <= 600000;
+    }
+    match /jindan_projects/{id} {
+      allow read: if member();
+      allow create: if member() && validProject(request.resource.data, id)
+        && request.resource.data.ownerUid == request.auth.uid && !request.resource.data.deleted
+        && (request.resource.data.authorId == profile().person_id || admin());
+      allow update: if member() && (ownWork() || admin()) && !resource.data.deleted
+        && validProject(request.resource.data, id) && unchangedWorkOwner();
+      allow delete: if false;
+    }
+    function validProcess(data, id) {
+      return validWorkBase(data, id) && validWorkRange(data)
+        && data.keys().hasOnly(['id', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted', 'title', 'projectId', 'startDate', 'endDate', 'isCompleted'])
+        && data.projectId is string && data.projectId.size() > 0 && data.projectId.size() <= 128
+        && data.isCompleted is bool;
+    }
+    match /jindan_processes/{id} {
+      allow read: if member();
+      allow create: if member() && validProcess(request.resource.data, id)
+        && request.resource.data.ownerUid == request.auth.uid && !request.resource.data.deleted
+        && (request.resource.data.authorId == profile().person_id || admin());
+      // 공정은 팀 공동 업무이며 작성자와 소속 프로젝트는 보존한다.
+      allow update: if member() && !resource.data.deleted && validProcess(request.resource.data, id)
+        && unchangedWorkOwner() && request.resource.data.projectId == resource.data.projectId;
+      allow delete: if false;
+    }
+    function validTask(data, id) {
+      return validWorkBase(data, id)
+        && data.keys().hasOnly(['id', 'author', 'authorId', 'ownerUid', 'createdAt', 'updatedAt', 'deleted', 'date', 'content', 'isPublic'])
+        && data.date is string && data.date.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && data.content is string && data.content.size() > 0 && data.content.size() <= 20000
+        && data.isPublic is bool;
+    }
+    match /jindan_tasks/{id} {
+      allow get: if member() && (!exists(/databases/$(database)/documents/jindan_tasks/$(id)) || resource.data.isPublic || resource.data.authorId == profile().person_id);
+      allow list: if member() && (resource.data.isPublic || resource.data.authorId == profile().person_id);
+      allow create: if member() && validTask(request.resource.data, id)
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.authorId == profile().person_id && !request.resource.data.deleted;
+      allow update: if member() && resource.data.authorId == profile().person_id && !resource.data.deleted
+        && validTask(request.resource.data, id) && unchangedWorkOwner();
+      allow delete: if false;
+    }
     // 기존 posts/comments 등 다른 앱의 데이터에는 접근 권한을 추가하지 않는다.
     match /{document=**} { allow read, write: if false; }
   }

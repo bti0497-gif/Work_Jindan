@@ -54,12 +54,14 @@
       "main.cjs",
       "report-ai.cjs",
       "report-collector.cjs",
+      "report-page-export.cjs",
+      "drive-auth.cjs",
+      "src/services/report/pageReproduction.js",
       "preload.cjs",
       "package.json"
     ]
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.97.0",
     "cfb": "1.2.2",
     "dompurify": "3.4.17",
     "electron-log": "^5.1.0",
@@ -69,8 +71,10 @@
     "firebase": "12.19.0",
     "lucide-react": "^0.563.0",
     "nasjidwg": "^0.18.0",
+    "pdfjs-dist": "5.4.624",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tesseract.js": "7.0.0"
   },
   "overrides": {
     "@firebase/app": "0.16.2",

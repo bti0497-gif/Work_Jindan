@@ -17,7 +17,7 @@ contextBridge.exposeInMainWorld('electron', {
         }
     },
     invoke: (channel, data) => {
-        let validChannels = ['invokeMain', 'open-image-viewer', 'get-image-viewer-data', 'focus-main-window', 'report-ai-status', 'report-ai-configure', 'report-ai-models', 'report-ai-run', 'report-ai-cancel', 'report-source-open', 'report-source-capture'];
+        let validChannels = ['invokeMain', 'open-image-viewer', 'get-image-viewer-data', 'focus-main-window', 'report-ai-status', 'report-ai-configure', 'report-ai-models', 'report-ai-run', 'report-ai-cancel', 'report-source-open', 'report-source-capture', 'report-page-pdf', 'drive-auth-token', 'drive-auth-status'];
         if (validChannels.includes(channel)) {
             return ipcRenderer.invoke(channel, data);
         }

@@ -1,12 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { saveJsonData, saveActionLog } from '../services/dataService';
 import { getCurrentUser } from '../services/authService';
-import { deleteFile } from '../services/driveService';
 import { dbService } from '../services/dbService';
 import { ArrowLeft, Save, X, Calendar, RefreshCw } from 'lucide-react';
 
-const ProjectWrite = ({ onCancel, onSaveSuccess, initialData, showAlert, showConfirm }) => {
+const ProjectWrite = ({ onCancel, onSaveSuccess, initialData, showAlert }) => {
     const [title, setTitle] = useState(initialData?.title || '');
     const [startDate, setStartDate] = useState(initialData?.startDate || '');
     const [endDate, setEndDate] = useState(initialData?.endDate || '');
@@ -50,28 +48,7 @@ const ProjectWrite = ({ onCancel, onSaveSuccess, initialData, showAlert, showCon
             if (onSaveSuccess) onSaveSuccess();
             showAlert(initialData ? '프로젝트가 수정되었습니다.' : '프로젝트가 등록되었습니다.', '성공', 'success');
 
-            // 3. 백그라운드 구글 드라이브 업로드
-            (async () => {
-                try {
-                    console.log('Starting background sync for project:', projectId);
-                    const saveResult = await saveJsonData('프로젝트관리', projectData);
-                    await saveActionLog(initialData ? 'UPDATE' : 'CREATE', '프로젝트관리', projectId);
-
-                    // 실제 드라이브 fileId 반영하여 로컬 DB 재업데이트
-                    dbService.save('프로젝트관리', { ...projectData, fileId: saveResult.id });
-
-                    if (initialData?.fileId && initialData.fileId !== saveResult.id) {
-                        try {
-                            await deleteFile(initialData.fileId);
-                        } catch (delErr) {
-                            console.warn('Failed to delete old project file:', delErr);
-                        }
-                    }
-                    console.log('Background sync complete for project:', projectId);
-                } catch (syncErr) {
-                    console.error('Background sync failed for project:', syncErr);
-                }
-            })();
+            // Firebase 전송은 로컬 큐에서 재시도하며 Drive 연결을 기다리지 않는다.
 
         } catch (err) {
             showAlert(`저장 실패: ${err.message}`, '오류', 'error');

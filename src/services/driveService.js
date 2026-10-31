@@ -2,47 +2,17 @@
  * Google Drive API v3 연동 서비스
  */
 
-const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
-const CLIENT_SECRET = import.meta.env.VITE_GOOGLE_CLIENT_SECRET || import.meta.env.GOOGLE_CLIENT_SECRET;
-const REFRESH_TOKEN = import.meta.env.VITE_GOOGLE_REFRESH_TOKEN || import.meta.env.GOOGLE_REFRESH_TOKEN;
 const FOLDER_ID = import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID || import.meta.env.GOOGLE_DRIVE_FOLDER_ID;
-
 let accessToken = '';
 
-/**
- * 리프레시 토큰을 사용하여 새로운 액세스 토큰을 가져옵니다.
- */
-export const getAccessToken = async () => {
-    console.log('Refreshing Google Access Token...');
-    try {
-        const response = await fetch('https://oauth2.googleapis.com/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                client_id: CLIENT_ID,
-                client_secret: CLIENT_SECRET,
-                refresh_token: REFRESH_TOKEN,
-                grant_type: 'refresh_token',
-            }),
-        });
-
-        const data = await response.json();
-        if (data.access_token) {
-            accessToken = data.access_token;
-            console.log('Access Token Refreshed Successfully');
-            return accessToken;
-        } else {
-            console.error('Failed to refresh token API Response:', data);
-            throw new Error(`Token refresh failed: ${data.error_description || data.error}`);
-        }
-    } catch (error) {
-        console.error('Error fetching access token:', error);
-        throw error;
-    }
+// Only an ephemeral access token crosses the trusted Electron bridge.
+export const getAccessToken = async (options = {}) => {
+    if (!window.electron?.invoke) throw new Error('Google Drive 파일관리는 연결된 데스크톱 앱에서 사용하세요.');
+    const token = await window.electron.invoke('drive-auth-token', { force: options.force === true });
+    if (typeof token !== 'string' || !token) throw new Error('드라이브 인증 연결을 확인하세요. 개발 앱을 다시 실행해야 할 수 있습니다.');
+    accessToken = token;
+    return token;
 };
-
 /**
  * 특정 폴더 내의 파일 리스트를 가져옵니다.
  * @param {string} folderId - 조회할 폴더의 ID (생략 시 기본 폴더 ID 사용)
@@ -74,7 +44,7 @@ export const getFiles = async (folderId = FOLDER_ID) => {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
             if (response.status === 401) {
-                await getAccessToken();
+                await getAccessToken({ force: true });
                 response = await fetch(url.toString(), {
                     headers: { Authorization: `Bearer ${accessToken}` }
                 });
@@ -204,7 +174,7 @@ export const uploadFile = async (file, folderId = FOLDER_ID, customName = null) 
         });
 
         if (response.status === 401) {
-            await getAccessToken();
+            await getAccessToken({ force: true });
             return uploadFile(file, folderId);
         }
 
@@ -365,7 +335,7 @@ export const getFileBlob = async (fileId, { signal } = {}) => {
 
     let response = await request();
     if (response.status === 401) {
-        await getAccessToken();
+        await getAccessToken({ force: true });
         response = await request();
     }
     if (!response.ok) throw new Error('Image download failed');

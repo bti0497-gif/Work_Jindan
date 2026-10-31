@@ -94,6 +94,47 @@ try {
     documents.add(`jindan_members/${outsider.localId}`);
     await expect('administrator can approve a new account', request(`jindan_members/${outsider.localId}`, admin, 'PATCH', profile(outsider)), 200);
     await expect('approved account gains board access', request('jindan_board_posts', outsider), 200);
+    if (process.argv.includes('--work')) {
+        const base = { author: 'Temporary test user', authorId: owner.localId, ownerUid: owner.localId, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), deleted: false };
+        const projectId = prefix + '_project', projectPath = `jindan_projects/${projectId}`;
+        const workProject = { ...base, id: projectId, title: 'Temporary work check', content: 'Fixture only', startDate: '2026-10-01', endDate: '2026-12-31' };
+        documents.add(projectPath);
+        await expect('anonymous work access denied', request('jindan_projects', null), 403);
+        await expect('member creates Firebase project', request(projectPath, owner, 'PATCH', workProject), 200);
+        await expect('team member reads project', request(projectPath, other), 200);
+        await expect('other member cannot edit project', request(`${projectPath}?updateMask.fieldPaths=title`, other, 'PATCH', { title: 'Forbidden' }), 403);
+        await expect('owner edits project', request(`${projectPath}?updateMask.fieldPaths=title`, owner, 'PATCH', { title: 'Updated' }), 200);
+        await expect('work owner cannot be reassigned', request(`${projectPath}?updateMask.fieldPaths=ownerUid`, owner, 'PATCH', { ownerUid: other.localId }), 403);
+        await expect('credentials cannot enter work records', request(`${projectPath}?updateMask.fieldPaths=password`, owner, 'PATCH', { password: 'synthetic' }), 403);
+        const processId = prefix + '_process', processPath = `jindan_processes/${processId}`;
+        documents.add(processPath);
+        await expect('member creates Firebase process', request(processPath, owner, 'PATCH', { ...base, id: processId, projectId, title: 'Process check', startDate: '2026-10-01', endDate: '2026-10-31', isCompleted: false }), 200);
+        await expect('team completes shared process', request(`${processPath}?updateMask.fieldPaths=isCompleted`, other, 'PATCH', { isCompleted: true }), 200);
+        await expect('process project cannot be reassigned', request(`${processPath}?updateMask.fieldPaths=projectId`, owner, 'PATCH', { projectId: 'foreign' }), 403);
+        const taskId = prefix + '_task', taskPath = `jindan_tasks/${taskId}`;
+        documents.add(taskPath);
+        await expect('owner can read a not-yet-created task for transactions', request(taskPath, owner), 404);
+        await expect('owner creates private Firebase task', request(taskPath, owner, 'PATCH', { ...base, id: taskId, date: '2026-10-31', content: 'Private fixture', isPublic: false }), 200);
+        await expect('private task visible to its author', request(taskPath, owner), 200);
+        await expect('private task hidden from other member', request(taskPath, other), 403);
+        await expect('private task hidden from administrator', request(taskPath, admin), 403);
+        await expect('unfiltered task query denied', request('jindan_tasks', owner), 403);
+        const taskQuery = async filter => {
+            const response = await fetch(`${root}:runQuery`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${owner.idToken}` }, body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'jindan_tasks' }], where: { fieldFilter: filter } } }) });
+            return { status: response.status, body: await response.json() };
+        };
+        await expect('public task query allowed', taskQuery({ field: { fieldPath: 'isPublic' }, op: 'EQUAL', value: { booleanValue: true } }), 200);
+        await expect('own-author task query allowed', taskQuery({ field: { fieldPath: 'authorId' }, op: 'EQUAL', value: { stringValue: owner.localId } }), 200);
+        await expect('owner publishes task', request(`${taskPath}?updateMask.fieldPaths=isPublic`, owner, 'PATCH', { isPublic: true }), 200);
+        await expect('other member reads public task', request(taskPath, other), 200);
+        await expect('other member cannot edit public task', request(`${taskPath}?updateMask.fieldPaths=content`, other, 'PATCH', { content: 'Forbidden' }), 403);
+        await expect('task hard deletion denied', request(taskPath, owner, 'DELETE'), 403);
+        await expect('owner soft-deletes task', request(`${taskPath}?updateMask.fieldPaths=deleted`, owner, 'PATCH', { deleted: true }), 200);
+        await expect('stale task cannot be resurrected', request(`${taskPath}?updateMask.fieldPaths=deleted`, owner, 'PATCH', { deleted: false }), 403);
+        await expect('owner soft-deletes project', request(`${projectPath}?updateMask.fieldPaths=deleted`, owner, 'PATCH', { deleted: true }), 200);
+        await expect('stale project cannot be resurrected', request(`${projectPath}?updateMask.fieldPaths=deleted`, owner, 'PATCH', { deleted: false }), 403);
+        console.log('Firebase work live checks passed.');
+    }
     console.log('Firebase board live checks passed.');
 } finally {
     const failures = [];

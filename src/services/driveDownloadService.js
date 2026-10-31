@@ -37,7 +37,7 @@ export const downloadSelection = async (items, onProgress = () => {}) => {
         }
         let response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
         if (response.status === 401) {
-            token = await getAccessToken();
+            token = await getAccessToken({ force: true });
             response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
         }
         if (!response.ok) throw new Error(`'${file.name}' 다운로드 실패 (${response.status}). 권한 또는 파일 형식을 확인하세요.`);

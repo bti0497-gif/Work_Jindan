@@ -11,7 +11,7 @@ const config = {
 
 export const getFirebase = () => {
     if (!config.apiKey || !config.projectId || !config.appId) {
-        throw new Error('Firebase 게시판 연결 설정이 없습니다. 관리자에게 문의해 주세요.');
+        throw new Error('Firebase 연결 설정이 없습니다. 관리자에게 문의해 주세요.');
     }
     const app = getApps().length ? getApp() : initializeApp(config);
     return { auth: getAuth(app), db: getFirestore(app) };

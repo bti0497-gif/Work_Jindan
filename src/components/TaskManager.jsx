@@ -7,12 +7,12 @@
  * explicit approval to maintain consistency and prevent regressions.
  * ==========================================================================
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { dbService } from '../services/dbService';
-import { saveJsonData, saveActionLog } from '../services/dataService';
-import { deleteFile } from '../services/driveService';
 import { getCurrentUser } from '../services/authService';
 import { Plus, ChevronLeft, ChevronRight, Save, X, Edit, Trash2 } from 'lucide-react';
+
+const formatDate = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 const TaskManager = ({ showAlert, showConfirm, onDataChange }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -22,11 +22,7 @@ const TaskManager = ({ showAlert, showConfirm, onDataChange }) => {
     const [editingContent, setEditingContent] = useState('');
     const [editingIsPublic, setEditingIsPublic] = useState(false);
 
-    useEffect(() => {
-        loadTasks();
-    }, [selectedDate]);
-
-    const loadTasks = () => {
+    const loadTasks = useCallback(() => {
         const dateStr = formatDate(selectedDate);
         const allTasks = dbService.getAll('할일관리');
         const user = getCurrentUser();
@@ -39,14 +35,12 @@ const TaskManager = ({ showAlert, showConfirm, onDataChange }) => {
         });
 
         setTasks(dateTasks);
-    };
+    }, [selectedDate]);
 
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
+    useEffect(() => {
+        const timer = setTimeout(loadTasks, 0);
+        return () => clearTimeout(timer);
+    }, [loadTasks]);
 
     const handleAddTask = () => {
         const user = getCurrentUser();
@@ -109,16 +103,7 @@ const TaskManager = ({ showAlert, showConfirm, onDataChange }) => {
             showAlert('저장되었습니다.', '성공', 'success');
             if (onDataChange) onDataChange();
 
-            // 3. 백그라운드 구글 드라이브 동기화
-            (async () => {
-                try {
-                    await saveJsonData('할일관리', taskToSync);
-                    await saveActionLog(isNewTask ? 'CREATE' : 'UPDATE', '할일관리', taskToSync.id);
-                    console.log('Background task sync complete:', taskToSync.id);
-                } catch (syncErr) {
-                    console.error('Background task sync failed:', syncErr);
-                }
-            })();
+            // Firebase 전송은 로컬 큐에서 처리한다.
 
         } catch (err) {
             showAlert(`저장 실패: ${err.message}`, '오류', 'error');
@@ -148,18 +133,7 @@ const TaskManager = ({ showAlert, showConfirm, onDataChange }) => {
             showAlert('삭제되었습니다.', '성공', 'success');
             if (onDataChange) onDataChange();
 
-            // 2. 백그라운드 구글 드라이브 동기화
-            (async () => {
-                try {
-                    if (task.fileId) {
-                        await deleteFile(task.fileId);
-                    }
-                    await saveActionLog('DELETE', '할일관리', task.id);
-                    console.log('Background task deletion sync complete:', task.id);
-                } catch (syncErr) {
-                    console.error('Background task deletion sync failed:', syncErr);
-                }
-            })();
+            // 삭제도 Firebase 전송 확인까지 큐에 보관한다.
 
         } catch (err) {
             showAlert(`삭제 실패: ${err.message}`, '오류', 'error');

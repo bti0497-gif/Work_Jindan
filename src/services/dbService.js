@@ -4,6 +4,10 @@
  */
 
 const STORAGE_KEY_PREFIX = 'jindan_db_';
+const workTables = new Set(['프로젝트관리', '공정관리', '할일관리']);
+const notifyWorkChange = table => {
+    if (workTables.has(table) && typeof window !== 'undefined') window.dispatchEvent(new Event('jindan-work-change'));
+};
 
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const readRecords = raw => {
@@ -34,6 +38,17 @@ const writeRecords = (key, records) => {
     }
     localStorage.setItem(key, JSON.stringify(records));
 };
+const writeQueuedRecords = (table, records, id, operation) => {
+    const previousQueue = localStorage.getItem('jindan_sync_queue');
+    try {
+        dbService.addToSyncQueue(table, id, operation);
+        writeRecords(`${STORAGE_KEY_PREFIX}${table}`, records);
+    } catch (error) {
+        if (previousQueue === null) localStorage.removeItem('jindan_sync_queue');
+        else localStorage.setItem('jindan_sync_queue', previousQueue);
+        throw error;
+    }
+};
 
 export const dbService = {
     // 특정 테이블의 전체 데이터 가져오기
@@ -62,20 +77,19 @@ export const dbService = {
             newList = [...currentList, data];
         }
 
-        writeRecords(`${STORAGE_KEY_PREFIX}${tableName}`, newList);
-        
-        // 동기화 큐에 추가 (Supabase 동기화용)
-        dbService.addToSyncQueue(tableName, data[idKey]);
+        // Firebase 전송이 확인될 때까지 로컬 큐에 보관한다.
+        writeQueuedRecords(tableName, newList, data[idKey], 'upsert');
+        notifyWorkChange(tableName);
         
         return newList;
     },
 
     // 동기화 큐 관리
-    addToSyncQueue: (tableName, id) => {
+    addToSyncQueue: (tableName, id, operation = 'upsert') => {
         const queue = dbService.getSyncQueue();
         // 중복 제거 후 추가
         const filtered = queue.filter(item => !(item.tableName === tableName && item.id === id));
-        filtered.push({ tableName, id, timestamp: new Date().toISOString() });
+        filtered.push({ tableName, id, operation, revision: crypto.randomUUID(), timestamp: new Date().toISOString() });
         writeRecords('jindan_sync_queue', filtered);
     },
 
@@ -83,9 +97,10 @@ export const dbService = {
         return readRecords(localStorage.getItem('jindan_sync_queue'));
     },
 
-    removeFromSyncQueue: (tableName, id) => {
+    removeFromSyncQueue: (tableName, id, expected) => {
         const queue = dbService.getSyncQueue();
-        const newList = queue.filter(item => !(item.tableName === tableName && item.id === id));
+        const newList = queue.filter(item => !(item.tableName === tableName && item.id === id
+            && (!expected || (expected.revision ? item.revision === expected.revision : item.timestamp === expected.timestamp))));
         writeRecords('jindan_sync_queue', newList);
     },
 
@@ -95,13 +110,18 @@ export const dbService = {
         const idKey = tableName === '회원관리' ? 'person_id' : 'id';
         const newList = currentList.filter(item => item[idKey] !== id);
 
-        writeRecords(`${STORAGE_KEY_PREFIX}${tableName}`, newList);
+        if (workTables.has(tableName)) {
+            writeQueuedRecords(tableName, newList, id, 'delete');
+            notifyWorkChange(tableName);
+        } else writeRecords(`${STORAGE_KEY_PREFIX}${tableName}`, newList);
         return newList;
     },
 
     // 테이블 전체 교체 (Full Sync용)
     setTable: (tableName, list) => {
         writeRecords(`${STORAGE_KEY_PREFIX}${tableName}`, list);
+        // Pulls update subscribers without re-queuing another upload/sync cycle.
+        if (workTables.has(tableName) && typeof window !== 'undefined') window.dispatchEvent(new Event('jindan-work-cache-change'));
     },
 
     // 마지막 동기화 시간 관리

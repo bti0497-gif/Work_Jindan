@@ -13,7 +13,7 @@ import BoardList from './components/BoardList';
 import BoardView from './components/BoardView';
 import { initSystemStorage } from './services/dataService';
 import { restoreSession } from './services/authService';
-import { syncAllData, pushLocalToSupabase } from './services/syncService';
+import { syncAllData, pushLocalToFirebase } from './services/syncService';
 import { DRIVE_ROOT_ID, warmDriveCache, subscribeDriveCache, getDriveCacheStatus, formatDriveCacheStatus } from './services/driveCacheService';
 import ProjectList from './components/ProjectList';
 import ProjectWrite from './components/ProjectWrite';
@@ -28,6 +28,7 @@ import GlobalModal from './components/common/GlobalModal';
 import { Minus, X, Square } from 'lucide-react';
 import packageJson from '../package.json';
 const ReportWorkspace = React.lazy(() => import('./components/ReportWorkspace.jsx'));
+const ReportStudio = React.lazy(() => import('./components/ReportStudio.jsx'));
 /* ========================================================================== */
 
 function App() {
@@ -38,24 +39,28 @@ function App() {
   const [sysReady, setSysReady] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [dataSyncError, setDataSyncError] = useState('');
   const [lastDataUpdate, setLastDataUpdate] = useState(Date.now()); // 데이터 변경 감지용
   const driveCache = useSyncExternalStore(subscribeDriveCache, getDriveCacheStatus);
   const dataSyncRunningRef = useRef(false);
   const promptValueRef = useRef('');
   const synchronizeData = useCallback(async () => {
+    if (!currentUser?.firebaseUid) return;
     if (dataSyncRunningRef.current) return;
     dataSyncRunningRef.current = true;
     setIsSyncing(true);
     try {
       await syncAllData();
+      setDataSyncError('');
       setLastDataUpdate(Date.now());
     } catch (error) {
+      setDataSyncError(error.message);
       console.error('Background data sync failed:', error);
     } finally {
       dataSyncRunningRef.current = false;
       setIsSyncing(false);
     }
-  }, []);
+  }, [currentUser?.firebaseUid]);
   /* ------------ */
   const [modal, setModal] = useState({
     isOpen: false,
@@ -68,7 +73,11 @@ function App() {
 
   // [SYNC ENGINE] 주기적 데이터 동기화 플러그인
   useEffect(() => {
-    if (!sysReady) return;
+    if (!sysReady || !currentUser?.firebaseUid) return;
+    synchronizeData();
+    let changeTimer;
+    const changed = () => { clearTimeout(changeTimer); changeTimer = setTimeout(synchronizeData, 250); };
+    window.addEventListener('jindan-work-change', changed);
 
     // 2. 5분마다 하향 동기화 (클라우드 -> 로컬)
     const pullInterval = setInterval(() => {
@@ -77,14 +86,16 @@ function App() {
 
     // 3. 1분마다 상향 동기화 (로컬 -> 클라우드)
     const pushInterval = setInterval(() => {
-      pushLocalToSupabase().catch(error => console.error('Background upload failed:', error));
+      pushLocalToFirebase().catch(error => { setDataSyncError(error.message); console.error('Background upload failed:', error); });
     }, 60 * 1000);
 
     return () => {
       clearInterval(pullInterval);
       clearInterval(pushInterval);
+      clearTimeout(changeTimer);
+      window.removeEventListener('jindan-work-change', changed);
     };
-  }, [sysReady, synchronizeData]);
+  }, [sysReady, currentUser?.firebaseUid, synchronizeData]);
 
   useEffect(() => {
     warmDriveCache({ force: true });
@@ -157,9 +168,8 @@ function App() {
           return null;
         });
         if (user) setCurrentUser(user);
-        await initSystemStorage(DRIVE_ROOT_ID)
+        if (DRIVE_ROOT_ID) await initSystemStorage(DRIVE_ROOT_ID)
           .catch(error => console.warn('Drive initialization unavailable:', error));
-        await synchronizeData();
       } catch (err) {
         console.error('System initialization failed:', err);
       } finally {
@@ -167,7 +177,7 @@ function App() {
       }
     };
     init();
-  }, [synchronizeData]);
+  }, []);
 
   // 자동 업데이트 리스너
   useEffect(() => {
@@ -221,6 +231,8 @@ function App() {
     };
 
     switch (activeMenu) {
+      case '보고서 스튜디오':
+        return <React.Suspense fallback={<div className="center-msg">보고서 스튜디오를 여는 중…</div>}><ReportStudio currentUser={currentUser} onExit={() => setActiveMenu('')} showConfirm={showConfirm} showPrompt={showPrompt} onRefreshProjects={synchronizeData} projectSyncing={isSyncing} projectSyncError={dataSyncError} /></React.Suspense>;
       case '진단보고서':
       case '보고서 작성/공정':
       case '보고서 작성/기계':
@@ -389,9 +401,9 @@ function App() {
       </header>
 
       {/* Main Layout Body */}
-      <main className="main-wrapper">
+      <main className={`main-wrapper ${currentUser && activeMenu === '보고서 스튜디오' ? 'studio-shell' : ''}`} style={currentUser && activeMenu === '보고서 스튜디오' ? { gridTemplateColumns: 'minmax(0, 1fr)' } : undefined}>
         {/* Left Sidebar (250px) */}
-        <LeftSidebar
+        {!(currentUser && activeMenu === '보고서 스튜디오') && <LeftSidebar
           onMenuSelect={(menu) => {
             if (!currentUser) return; // 미로그인 시 차단
 
@@ -406,7 +418,7 @@ function App() {
           disabled={!currentUser}
           showAlert={showAlert}
           showConfirm={showConfirm}
-        />
+        />}
 
         {/* Center Workspace (Responsive & Independent Scroll) */}
         <section className="workspace">
@@ -415,7 +427,7 @@ function App() {
 
 
         {/* Right Sidebar - Dashboard */}
-        {currentUser && (
+        {currentUser && activeMenu !== '보고서 스튜디오' && (
           <RightSidebar
             onMenuSelect={(menu) => {
               setActiveMenu(menu);
@@ -445,7 +457,7 @@ function App() {
             marginRight: '6px',
             animation: sysReady ? 'none' : 'pulse 1.5s infinite'
           }}></span>
-          {isSyncing ? '동기화 확인 중...' : (sysReady ? '준비됨' : '시작 중...')}
+          <span role="status" title={dataSyncError || '업무 자료는 Firebase와 동기화합니다.'}>{isSyncing ? 'Firebase 동기화 중...' : dataSyncError ? 'Firebase 동기화 재시도 필요' : (sysReady ? '준비됨' : '시작 중...')}</span>
         </div>
         <div className="status-item" role="status" title={driveCache.error || (driveCache.lastSynced ? `마지막 갱신: ${new Date(driveCache.lastSynced).toLocaleString()}` : '폴더·파일 목록을 미리 저장하고 백그라운드에서 갱신합니다.')}>
           {formatDriveCacheStatus(driveCache)}

@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { dbService } from '../services/dbService';
 import { getProjectPeriodProgress } from '../services/scheduleService';
-import { saveJsonData, saveActionLog } from '../services/dataService';
-import { deleteFile } from '../services/driveService';
 import { getCurrentUser } from '../services/authService';
 import { Search, Plus, CheckCircle, Calendar, Briefcase, X, ChevronRight, RefreshCw, AlertCircle, Edit, Trash2 } from 'lucide-react';
 
@@ -75,8 +73,6 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                 const proc = allProcs.find(p => p.id === id);
                 if (proc) {
                     const updatedProc = { ...proc, isCompleted: true };
-                    await saveJsonData('공정관리', updatedProc);
-                    await saveActionLog('UPDATE', '공정관리', id);
                     dbService.save('공정관리', updatedProc);
                 }
             }
@@ -123,13 +119,7 @@ const ProcessList = ({ showAlert, showConfirm }) => {
             for (const id of selectedProcessIds) {
                 const proc = processes.find(p => p.id === id);
                 if (proc) {
-                    // Delete from Drive if fileId exists
-                    if (proc.fileId) {
-                        await deleteFile(proc.fileId);
-                    }
-                    // Log deletion
-                    await saveActionLog('DELETE', '공정관리', id);
-                    // Remove from local DB
+                    // Firebase 삭제도 로컬 큐에서 처리한다.
                     dbService.remove('공정관리', id);
                 }
             }
@@ -161,8 +151,6 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                     startDate: newProcess.startDate,
                     endDate: newProcess.endDate
                 };
-                await saveJsonData('공정관리', updatedProc);
-                await saveActionLog('UPDATE', '공정관리', updatedProc.id);
                 dbService.save('공정관리', updatedProc);
                 await showAlert('공정이 수정되었습니다.', '성공', 'success');
             } else {
@@ -178,8 +166,6 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                     authorId: user?.person_id || '',
                     createdAt: new Date().toISOString()
                 };
-                await saveJsonData('공정관리', procData);
-                await saveActionLog('CREATE', '공정관리', procData.id);
                 dbService.save('공정관리', procData);
                 await showAlert('공정이 추가되었습니다.', '성공', 'success');
             }
