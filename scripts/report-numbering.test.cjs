@@ -167,7 +167,7 @@ test('reference sentences beside objects do not become captions; layout tables w
     assert.equal(output.report.uncaptionedObjects.length, 1);
 });
 
-test('native draft repair runs after fresh narrative replacement and does not renumber blank survey output or mutate the source', async () => {
+test('native content edits preserve numbering by default; explicit repair requires a start context', async () => {
     const [{ analyzeReport }, engine, writer] = await Promise.all([import('../src/services/report/sourceParser.js'), import('../src/services/report/reportEngine.js'), import('../src/services/report/nativeWriter.js')]);
     const bytes = fixture(numberedTable('[표 7] 측정표') + p('과거 의견'));
     const original = new Uint8Array(bytes), doc = await analyzeReport(bytes);
@@ -177,8 +177,11 @@ test('native draft repair runs after fresh narrative replacement and does not re
         valueSource: 'diagnosis', binding: { sourceSha256: state.source.sha256, paragraphId: paragraph.id } });
     state = engine.confirmSchema(state); state = engine.setNotes(state, { diagnosis: '표 7을 근거로 작성하였다.' });
     const output = await writer.writeNativeReport(state, bytes);
-    assert.match(text(output), /\[표 1\] 측정표/); assert.match(text(output), /표 1을 근거로 작성/);
-    assert.equal(output.review.numbering.corrections.length, 2);
+    assert.match(text(output), /\[표 7\] 측정표/); assert.match(text(output), /표 7을 근거로 작성/);
+    assert.equal(output.review.numbering,null);
+    await assert.rejects(writer.writeNativeReport(state,bytes,'draft',{renumber:true}),/시작 번호 문맥/);
+    const renumbered=await writer.writeNativeReport(state,bytes,'draft',{renumber:true,numberingContext:{startOrdinals:{'표:':1}}});
+    assert.match(text(renumbered),/\[표 1\] 측정표/);assert.match(text(renumbered),/표 1을 근거로 작성/);assert.equal(renumbered.review.numbering.corrections.length,2);
     assert.deepEqual(bytes, original);
     const blank = await writer.writeNativeReport(state, bytes, 'blank');
     assert.match(text(blank), /\[표 7\]/); assert.equal(blank.review.numbering, null);

@@ -20,7 +20,7 @@ export async function createCollectionForm(workspace, { scope = 'all' } = {}) {
     const schema = await schemaFingerprint(workspace);
     return {
         kind: 'jindan-collection', version: 1, projectId: workspace.projectId, projectTitle: workspace.projectTitle,
-        discipline: workspace.discipline || 'electrical', disciplineLabel: reportSection(workspace.discipline).label,
+        discipline: workspace.discipline || 'electrical', disciplineLabel: workspace.discipline==='common'?'공통':reportSection(workspace.discipline).label,
         sourceSha256: workspace.source.sha256, schemaRevision: workspace.revision, collectionScope: scope,
         schemaFingerprint: scope === 'all' ? schema : await fingerprint({ schema, scope, fieldIds: fields.map(field => field.id) }),
         fields: fields.map(({ id, label, group, type, unit, required }) => ({ id, label, group, type, unit, required })),

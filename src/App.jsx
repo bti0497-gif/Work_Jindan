@@ -12,7 +12,7 @@ import BoardWrite from './components/BoardWrite';
 import BoardList from './components/BoardList';
 import BoardView from './components/BoardView';
 import { initSystemStorage } from './services/dataService';
-import { restoreSession } from './services/authService';
+import { restoreSession, logout } from './services/authService';
 import { syncAllData, pushLocalToFirebase } from './services/syncService';
 import { DRIVE_ROOT_ID, warmDriveCache, subscribeDriveCache, getDriveCacheStatus, formatDriveCacheStatus } from './services/driveCacheService';
 import ProjectList from './components/ProjectList';
@@ -184,17 +184,19 @@ function App() {
     if (window.electron) {
       window.electron.receive('update-available', (info) => {
         console.log('Update available:', info);
-        // 사용자에게 알림을 줄 수도 있지만, "자동 교체"를 위해 로그만 남김
+        showAlert(`새로운 버전(${info.version})이 확인되었습니다. 백그라운드에서 다운로드를 시작합니다.`, '업데이트 안내', 'success');
       });
 
       window.electron.receive('download-progress', (progressObj) => {
         console.log(`Download progress: ${progressObj.percent}%`);
       });
 
-      window.electron.receive('update-downloaded', () => {
-        console.log('Update downloaded. Restarting to install...');
-        // 다운로드 완료 시 즉시 재시작하여 업데이트 설치
-        window.electron.send('restart_app');
+      window.electron.receive('update-downloaded', async () => {
+        const confirmed = await showConfirm(
+          '업데이트 파일 다운로드가 완료되었습니다. 지금 재시작하여 설치하시겠습니까?\n(취소 시 다음 앱 실행 시 적용됩니다)',
+          '업데이트 설치'
+        );
+        if (confirmed) window.electron.send('restart_app');
       });
 
       window.electron.receive('update-error', (err) => {
@@ -202,6 +204,16 @@ function App() {
       });
     }
   }, []);
+
+  const handleLogout = async () => {
+    await logout();
+    setCurrentUser(null);
+    setActiveMenu('');
+    setViewMode('list');
+    setSelectedPost(null);
+    setSelectedProject(null);
+    setDataSyncError('');
+  };
 
   // Window Controls
   const handleMinimize = () => window.electron?.send('minimize-window');
@@ -414,6 +426,7 @@ function App() {
             if (menu !== '파일관리') synchronizeData();
           }}
           activeMenu={activeMenu}
+          onLogout={handleLogout}
           currentUser={currentUser}
           disabled={!currentUser}
           showAlert={showAlert}

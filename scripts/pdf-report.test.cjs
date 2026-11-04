@@ -32,7 +32,8 @@ test('draft generation rejects foreign projects, unreviewed labels and mechanica
     assert.throws(()=>pdfAuthoringPlan(a,{pages:[1],labelsReviewed:true,disciplines:{1:'mechanical'}},'project:one'),/전기/);
     assert.throws(()=>pdfAuthoringPlan(a,{pages:[1],labelsReviewed:true,labelColumns:{[a.pages[0].tables[0].id]:[99]}},'project:one'),/항목 열/);
     assert.throws(()=>pdfAuthoringPlan(a,{pages:[1],chapterNumber:0},'project:one','reference'),/장 번호/);
-    a.pages[0].chapter='제7장 전기 설비';assert.ok(pdfAuthoringPlan(a,{pages:[1]},'project:one','reference').blocks[0].text.startsWith('제7장'));
+    a.pages[0].chapter='제7장 전기 설비';assert.ok(pdfAuthoringPlan(a,{pages:[1],labelsReviewed:true},'project:one','draft').blocks[0].text.startsWith('제7장'));
+    assert.ok(pdfAuthoringPlan(a,{pages:[1]},'project:one','reference').blocks[0].text.startsWith('제5장'));
 });
 test('OCR supplements raster body text without replacing native PDF cells or treating photos as body',async()=>{
     const {mergePdfOcr}=await import('../src/services/report/pdfOcr.js');

@@ -24,7 +24,7 @@ test('XLSX extraction follows sheet relations, shared strings and sparse address
 });
 test('report specification validates margins, source binding and fixed duplex policy',async()=>{
     const {specificationFromProfile,validateSpecification}=await import('../src/services/report/reportSpecification.js');
-    const spec=specificationFromProfile({source:{sha256:'a'.repeat(64)},sections:[{section:'Contents/section0.xml',widthMm:210,heightMm:297,marginsMm:{left:25,right:20,top:15,bottom:15}}],headers:[{text:'전기'}],typography:[{value:{font:'바탕',sizePt:11}}]});
+    const spec=specificationFromProfile({source:{sha256:'a'.repeat(64)},sections:[{section:'Contents/section0.xml',widthMm:210,heightMm:297,marginsMm:{left:25,right:20,top:15,bottom:15}}],headers:[{section:'Contents/section0.xml',text:'전기'}],typography:[{value:{font:'바탕',sizePt:11}}]});
     assert.equal(spec.margins.left,25);assert.equal(spec.header,'전기');assert.equal(validateSpecification({...spec,blankPageFurniture:true}).blankPageFurniture,false);assert.throws(()=>validateSpecification({...spec,margins:{...spec.margins,left:210}}),/여백/);
 });
 test('project archive rejects path traversal and missing or altered blobs before restoration',async()=>{

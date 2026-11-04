@@ -281,69 +281,70 @@ const MemberList = ({ showAlert, showConfirm, onDataChange }) => {
                 .modal-content {
                     background: #fff;
                     width: 100%;
-                    max-width: 450px;
-                    border-radius: 16px;
+                    max-width: 420px;
+                    border-radius: 12px;
                     box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
                     overflow: hidden;
                     animation: slideUp 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
                 }
                 .modal-header {
-                    padding: 20px 24px;
+                    padding: 14px 20px;
                     border-bottom: 1px solid #f1f5f9;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                 }
-                .modal-title { font-size: 18px; font-weight: 800; color: #1e293b; margin: 0; }
+                .modal-title { font-size: 16px; font-weight: 800; color: #1e293b; margin: 0; }
                 .modal-close { background: none; border: none; color: #94a3b8; cursor: pointer; padding: 4px; border-radius: 6px; }
                 .modal-close:hover { background: #f1f5f9; color: #64748b; }
 
-                .modal-form { padding: 24px; }
-                .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
-                .form-group { display: flex; flex-direction: column; gap: 6px; }
-                .form-group label { font-size: 13px; font-weight: 600; color: #64748b; }
+                .modal-form { padding: 16px 20px; }
+                .form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+                .form-group { display: flex; flex-direction: column; gap: 4px; }
+                .form-group label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.02em; }
                 .form-group input, .form-select {
-                    padding: 10px 12px;
-                    border-radius: 8px;
+                    width: 100%;
+                    padding: 7px 10px;
+                    border-radius: 6px;
                     border: 1px solid #e2e8f0;
-                    font-size: 14px;
+                    font-size: 13px;
                     outline: none;
                     transition: all 0.2s;
                     color: #1e293b;
                 }
                 .form-group input:focus, .form-select:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
                 .form-group input:disabled { background: #f8fafc; color: #94a3b8; cursor: not-allowed; }
-                .flex-1 { flex: 1; }
+                .flex-1 { flex: 1; min-width: 0; }
 
                 .modal-footer {
-                    margin-top: 24px;
+                    margin-top: 16px;
                     display: flex;
                     justify-content: flex-end;
-                    gap: 12px;
+                    gap: 10px;
                 }
                 .modal-btn-cancel {
-                    padding: 10px 20px;
-                    border-radius: 8px;
+                    padding: 8px 16px;
+                    border-radius: 6px;
                     border: 1px solid #e2e8f0;
                     background: #fff;
-                    font-size: 14px;
+                    font-size: 13px;
                     font-weight: 600;
                     color: #64748b;
                     cursor: pointer;
                 }
                 .modal-btn-cancel:hover { background: #f8fafc; }
                 .modal-btn-save {
-                    padding: 10px 24px;
-                    border-radius: 8px;
+                    padding: 8px 20px;
+                    border-radius: 6px;
                     border: none;
                     background: #3b82f6;
                     color: #fff;
-                    font-size: 14px;
+                    font-size: 13px;
                     font-weight: 700;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    gap: 8px;
+                    gap: 6px;
                     transition: all 0.2s;
                 }
                 .modal-btn-save:hover { background: #2563eb; transform: translateY(-1px); }

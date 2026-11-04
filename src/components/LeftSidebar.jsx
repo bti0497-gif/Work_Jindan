@@ -14,7 +14,7 @@ import {
     MessageSquare
 } from 'lucide-react';
 
-const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAlert, showConfirm }) => {
+const LeftSidebar = ({ onMenuSelect, onLogout, activeMenu, currentUser, disabled, showAlert, showConfirm }) => {
     const [changingPassword, setChangingPassword] = useState(false);
     const [reportsOpen, setReportsOpen] = useState(true);
     const menuItems = [
@@ -37,9 +37,16 @@ const LeftSidebar = ({ onMenuSelect, activeMenu, currentUser, disabled, showAler
     const handleLogout = async () => {
         const confirmed = await showConfirm('로그아웃 하시겠습니까?');
         if (confirmed) {
-            const { logout } = await import('../services/authService');
-            await logout();
-            window.location.reload(); // 세션 초기화 및 첫 화면으로 이동
+            try {
+                if (onLogout) await onLogout();
+                else {
+                    const { logout } = await import('../services/authService');
+                    await logout();
+                    window.location.reload();
+                }
+            } catch (error) {
+                showAlert(`로그아웃 실패: ${error.message}`, '오류', 'error');
+            }
         }
     };
 

@@ -2,7 +2,7 @@ import {unzipSync,strFromU8} from 'fflate';
 import {XMLParser,XMLValidator} from 'fast-xml-parser';
 import {analyzeReport} from './sourceParser.js';
 import {replaceHwpxSlots} from './hwpxPackage.js';
-import {repairReportNumbering} from './reportNumbering.js';
+import {planStyledTextReplacement} from './styledTextReplacement.js';
 
 const array=value=>value==null?[]:Array.isArray(value)?value:[value];
 const parser=new XMLParser({ignoreAttributes:false,attributeNamePrefix:'',removeNSPrefix:true,parseTagValue:false,parseAttributeValue:false});
@@ -37,15 +37,15 @@ export function readInputTables(input,filename) {
     if(!tables.length)throw new Error('읽을 수 있는 엑셀 시트가 없습니다.');
     return {kind:'tables',tables,reportReady:false};
 }
-export async function createReportTextCandidate(bytes,filename,sourceSha256,target,value) {
+export async function createReportTextCandidate(bytes,filename,sourceSha256,target,value,options={}) {
     const document=await analyzeReport(bytes,filename);
     if(document.format!=='hwpx'||document.source.sha256!==sourceSha256)throw new Error('HWPX 원본 버전과 적용 위치를 다시 확인하세요.');
     const cell=target.cellId?document.tables.find(table=>table.id===target.tableId)?.cells.find(cell=>cell.id===target.cellId):null;
     const paragraph=target.paragraphId?document.paragraphs.find(p=>p.id===target.paragraphId):null;
-    const slots=(cell||paragraph)?.textSlots;
+    const targetSlots=(cell||paragraph)?.textSlots,slots=target.slotId?targetSlots?.filter(s=>s.id===target.slotId):targetSlots;
     if(!slots?.length||slots.some(slot=>!slot.plain&&!slot.textOnly))throw new Error('선택한 위치는 글자 구간을 보존해 교체할 수 없습니다.');
     if(typeof value!=='string'||value.length>50000)throw new Error('적용할 새 내용은 50,000자 이하로 입력하세요.');
-    const replacements=slots.map((slot,index)=>({section:slot.section,slotId:slot.id,expectedText:slot.text,wholeText:true,value:index===0?value:''}));
-    const output=await replaceHwpxSlots(bytes,sourceSha256,replacements),numbering=repairReportNumbering(output.bytes);
-    return {bytes:numbering.bytes,review:{sourceSha256,target,previousText:cell?.text||paragraph?.text||'',value,numbering:numbering.report,status:'hancom-review-required',requiresLayoutReview:true}};
+    const replacements=planStyledTextReplacement(slots,value,options);
+    const output=replacements.length?await replaceHwpxSlots(bytes,sourceSha256,replacements):{bytes:new Uint8Array(bytes)};
+    return {bytes:output.bytes,review:{sourceSha256,target,previousText:cell?.text||paragraph?.text||'',value,numbering:{applied:false,reason:'내용 수정 시 원래 번호 보존'},status:'hancom-review-required',requiresLayoutReview:true}};
 }

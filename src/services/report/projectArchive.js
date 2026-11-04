@@ -1,7 +1,10 @@
+import {RETENTION_PURPOSES} from './draftRetention.js';
 import { zipSync, unzipSync, strToU8, strFromU8 } from 'fflate';
 import { inspectMaterial, listMaterials, loadMaterial, reportLibraryDatabase,REPORT_TYPES } from './reportLibrary.js';
 import {validateSpecification} from './reportSpecification.js';
 import { listReferenceEntries, listReferenceProjects } from './referenceProjects.js';
+import {validateReproductionReview} from './reproductionReview.js';
+import {DRAFT_PREPARATION_VERSION} from './draftPreparation.js';
 
 export const MAX_PROJECT_BYTES = 512 * 1024 * 1024;
 const MAX_EXPANDED = 768 * 1024 * 1024;
@@ -13,7 +16,7 @@ function collectIds(value, ids = new Set(), depth = 0) {
     if (!value || typeof value !== 'object') return ids;
     for (const [name, item] of Object.entries(value)) {
         if ((/materialId$/i.test(name) || name === 'coverId') && typeof item === 'string' && item) ids.add(item);
-        if (['materialIds','reportIds'].includes(name) && Array.isArray(item)) item.forEach(id=>ids.add(id));
+        if (['materialIds','reportIds','removedReportIds'].includes(name) && Array.isArray(item)) item.forEach(id=>ids.add(id));
         if (item && typeof item === 'object') collectIds(item, ids, depth+1);
     }
     return ids;
@@ -65,9 +68,9 @@ export async function readProjectArchive(input) {
     const manifest=JSON.parse(strFromU8(files['project.json'])); rejectUnsafeKeys(manifest);
     if(manifest.schema!==schema || !manifest.book || !Array.isArray(manifest.book.chapters) || !manifest.book.chapters.length || manifest.book.chapters.length>500 || typeof manifest.book.title!=='string' || !Array.isArray(manifest.materials) || manifest.materials.length>1000 || !Array.isArray(manifest.referenceProjects) || !Array.isArray(manifest.referenceEntries)) throw new Error('지원하는 보고서 프로젝트 형식이 아닙니다.');
     for(const chapter of manifest.book.chapters) if(typeof chapter.id!=='string'||typeof chapter.title!=='string'||typeof chapter.text!=='string'||!['cover','contents','chapter'].includes(chapter.kind)) throw new Error('프로젝트 목차 데이터가 올바르지 않습니다.');
-    for(const name of ['reportIds','materialIds','referenceProjectIds'])if(manifest.book[name]!=null&&(!Array.isArray(manifest.book[name])||manifest.book[name].some(id=>typeof id!=='string')))throw new Error('프로젝트 파일 목록이 올바르지 않습니다.');
+    for(const name of ['reportIds','removedReportIds','materialIds','referenceProjectIds'])if(manifest.book[name]!=null&&(!Array.isArray(manifest.book[name])||manifest.book[name].some(id=>typeof id!=='string')))throw new Error('프로젝트 파일 목록이 올바르지 않습니다.');
     for(const name of ['activeReportId','coverId','header','footer','titleAlign','titlePosition','projectName'])if(manifest.book[name]!=null&&typeof manifest.book[name]!=='string')throw new Error('프로젝트 문서 설정이 올바르지 않습니다.');
-    for(const name of ['applicationRuns','applicationChanges'])if(manifest.book[name]!=null&&!Array.isArray(manifest.book[name]))throw new Error('프로젝트 작업 기록이 올바르지 않습니다.');
+    for(const name of ['applicationRuns','applicationChanges','restorationRuns'])if(manifest.book[name]!=null&&!Array.isArray(manifest.book[name]))throw new Error('프로젝트 작업 기록이 올바르지 않습니다.');
     const ids=new Set(), restored=[];
     for(const m of manifest.materials) {
         if(!/^[a-f0-9]{64}$/.test(m.sha256)||m.id!==`${m.role}-${m.sha256}`||ids.has(m.id)||typeof m.filename!=='string'||m.filename.length>1000) throw new Error('프로젝트 원본 식별 정보가 올바르지 않습니다.');
@@ -81,7 +84,26 @@ export async function readProjectArchive(input) {
     }
     if(Object.keys(files).length!==restored.length+1) throw new Error('프로젝트에 등록되지 않은 원본 파일이 있습니다.');
     for(const id of collectIds(manifest.book)) if(!ids.has(id)) throw new Error('프로젝트 자료 연결이 누락됐습니다.');
-    for(const [id,spec] of Object.entries(manifest.book.reportSpecs||{})){if(!ids.has(id)||spec.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256)throw new Error('보고서 서식의 원본 연결이 다릅니다.');validateSpecification(spec);}
+    for(const [id,spec] of Object.entries(manifest.book.reportSpecs||{})){if(!ids.has(id)||spec.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256)throw new Error('보고서 서식의 원본 연결이 다릅니다.');validateSpecification(spec);for(const picture of spec.pictureReplacements||[])if(picture.sha256!==manifest.materials.find(m=>m.id===picture.materialId)?.sha256)throw new Error('교체 그림의 원본 연결이 다릅니다.');}
+    for(const [id,review] of Object.entries(manifest.book.restorationReviews||{}))if(!review||review.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256||!review.choices||typeof review.choices!=='object'||Array.isArray(review.choices)||Object.values(review.choices).some(value=>!['pending','replace','keep','exclude'].includes(value)))throw new Error('교체 자료 검토의 원본 연결과 결정을 확인하세요.');
+    for(const [id,analysis]of Object.entries(manifest.book.reportAnalyses||{})){
+        if(!ids.has(id)||analysis?.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256||analysis.schema!=='jindan-workflow-analysis/1'||typeof analysis.projectId!=='string')throw new Error('보고서 분석의 원본 연결을 확인하세요.');
+        for(const [key,max]of [['chapters',1000],['tables',5000],['pictures',20000],['sections',10000],['pageTypes',1000],['warnings',10000]])if(!Array.isArray(analysis[key])||analysis[key].length>max)throw new Error('보고서 분석 목록의 형식과 크기를 확인하세요.');
+        if(analysis.sections.some(row=>typeof row.id!=='string'||typeof row.text!=='string'||!row.target)||analysis.tables.some(table=>!Array.isArray(table.cells)||!Number.isInteger(table.rows)||!Number.isInteger(table.columns)))throw new Error('보고서 분석의 문단·표 구조를 확인하세요.');
+    }
+    for(const [id,review]of Object.entries(manifest.book.analysisReviews||{})){
+        if(!ids.has(id)||review?.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256||!review.items||typeof review.items!=='object'||Array.isArray(review.items)||Object.keys(review.items).length>10000)throw new Error('분석 검토의 원본 연결을 확인하세요.');
+        for(const item of Object.values(review.items))if(!item||typeof item!=='object'||item.decision&&!['pending','replace','rewrite','keep','exclude'].includes(item.decision)||item.contentRole&&!['label','measurement','diagnosis','improvement','management','context','heading'].includes(item.contentRole)||item.note!=null&&(typeof item.note!=='string'||item.note.length>2000)||item.draftText!=null&&(typeof item.draftText!=='string'||item.draftText.length>50000)||item.retentionPurpose!=null&&!Object.hasOwn(RETENTION_PURPOSES,item.retentionPurpose)||item.clearValue!=null&&typeof item.clearValue!=='boolean'||item.slotValues!=null&&(!item.slotValues||typeof item.slotValues!=='object'||Array.isArray(item.slotValues)||Object.keys(item.slotValues).length>10000||Object.entries(item.slotValues).some(([id,v])=>!id.includes(':text:')||typeof v!=='string'||v.length>50000))||item.materialIds!=null&&(!Array.isArray(item.materialIds)||item.materialIds.some(id=>!ids.has(id))))throw new Error('분석 검토의 결정과 근거자료를 확인하세요.');
+    }
+    for(const [id,review]of Object.entries(manifest.book.reproductionReviews||{}))validateReproductionReview(review,manifest.materials.find(m=>m.id===id)?.sha256);
+    for(const [id,prepared]of Object.entries(manifest.book.draftPreparations||{})){
+        const source=manifest.materials.find(m=>m.id===id);if(!source||prepared?.schema!==DRAFT_PREPARATION_VERSION||prepared.sourceMaterialId!==id||prepared.sourceSha256!==source.sha256||typeof prepared.projectId!=='string'||prepared.inputFingerprint!=null&&!/^[a-f0-9]{64}$/.test(prepared.inputFingerprint))throw new Error('초안 준비 기록의 원본 연결을 확인하세요.');
+        const counts=prepared.summary;if(!counts||['total','ready','pending','replacements','excluded','kept'].some(k=>!Number.isInteger(counts[k])||counts[k]<0||counts[k]>30000)||counts.ready+counts.pending!==counts.total)throw new Error('초안 준비 기록의 집계를 확인하세요.');
+    }
+    for(const [id,review]of Object.entries(manifest.book.chapterReviews||{})){
+        if(review?.sourceSha256!==manifest.materials.find(m=>m.id===id)?.sha256||!review.items||typeof review.items!=='object'||Array.isArray(review.items)||Object.keys(review.items).length>1000)throw new Error('챕터 검토의 원본 연결을 확인하세요.');
+        for(const item of Object.values(review.items)){if(!item||typeof item!=='object'||item.title!=null&&(typeof item.title!=='string'||item.title.length>160)||item.note!=null&&(typeof item.note!=='string'||item.note.length>2000)||item.discipline&&!['common','process','mechanical','electrical','unknown'].includes(item.discipline))throw new Error('챕터 분석 분류를 확인하세요.');if(item.styles){const spec=manifest.book.reportSpecs?.[id]||manifest.book.reportAnalyses?.[id]?.profile;if(!spec)throw new Error('챕터 서식의 원본 분석이 없습니다.');const {specificationFromProfile}=await import('./reportSpecification.js');validateSpecification({...('sourceSha256'in spec?spec:specificationFromProfile(spec)),roleStyles:item.styles});}}
+    }
     const projectIds=new Set(manifest.referenceProjects.map(p=>p.id));
     if(projectIds.size!==manifest.referenceProjects.length) throw new Error('중복된 기준 보고서 폴더입니다.');
     for(const ref of manifest.referenceEntries) if(!projectIds.has(ref.projectId)||!ids.has(ref.entry?.materialId)||ref.entry.sha256!==manifest.materials.find(m=>m.id===ref.entry.materialId)?.sha256||typeof ref.entry.id!=='string') throw new Error('기준 보고서 원본 연결이 올바르지 않습니다.');
@@ -95,6 +117,8 @@ export async function importProjectArchive(userId,input,target = null) {
     const projectMap=new Map(manifest.referenceProjects.map(p=>[p.id,crypto.randomUUID()]));
     const remap=value=>typeof value==='string'?(projectMap.get(value)||value):Array.isArray(value)?value.map(remap):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).map(([k,v])=>[k,remap(v)])):value;
     const book=remap(manifest.book); book.projectName=String(target?.projectName||manifest.projectName||book.title).slice(0,500);
+    for(const map of [book.reportAnalyses,book.pdfAnalyses])for(const analysis of Object.values(map||{}))if(analysis&&typeof analysis==='object')analysis.projectId=projectId;
+    for(const prepared of Object.values(book.draftPreparations||{})){prepared.projectId=projectId;prepared.inputFingerprint=null;prepared.status='needs-refresh';}
     if(target)book.businessProjectId=projectId;
     const db=await reportLibraryDatabase(),tx=db.transaction(['materials','files','referenceProjects','referenceEntries','facilityStudios'],'readwrite');
     const complete=new Promise((resolve,reject)=>{tx.oncomplete=resolve;tx.onabort=tx.onerror=()=>reject(tx.error||new Error('프로젝트 복원에 실패했습니다.'));});

@@ -69,8 +69,8 @@ export const initSystemStorage = async (rootFolderId) => {
 
             console.log('System storage initialized successfully:', { systemFolderId, jsonFolderId, resourceFolderId });
 
-            // 오래된 파일 정리 정책 실행 (7일 경과)
-            await cleanupOldData();
+            // 오래된 파일 정리 정책 실행 (7일 경과) - 백그라운드 진행
+            cleanupOldData();
 
             return { jsonFolderId, resourceFolderId };
         } catch (err) {
@@ -92,15 +92,17 @@ const cleanupOldData = async () => {
         const now = new Date();
         const sevenDaysAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
 
-        for (const file of files) {
-            // 회원관리 데이터는 영구 보존 정책에 따라 삭제 대상에서 제외
-            if (file.name.startsWith('회원관리_')) continue;
-
+        const filesToDelete = files.filter(file => {
+            if (file.name.startsWith('회원관리_')) return false;
             const modifiedTime = new Date(file.modifiedTime);
-            if (modifiedTime < sevenDaysAgo) {
-                console.log(`Cleaning up old system file: ${file.name} (${file.modifiedTime})`);
-                await deleteFile(file.id);
-            }
+            return modifiedTime < sevenDaysAgo;
+        });
+
+        if (filesToDelete.length > 0) {
+            console.log(`Cleaning up ${filesToDelete.length} old system files...`);
+            // 병렬 삭제로 속도 향상
+            await Promise.all(filesToDelete.map(file => deleteFile(file.id)));
+            console.log('Data cleanup completed.');
         }
     } catch (err) {
         console.error('Data cleanup failed:', err);

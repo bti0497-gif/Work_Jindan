@@ -583,6 +583,7 @@ async function nodeMain() {
         configFile: false,
         root: path.resolve(__dirname, '..'),
         envDir: temporaryEnv,
+        cacheDir: path.join(temporaryEnv, 'vite-cache'),
         define: { 'import.meta.env.VITE_GOOGLE_DRIVE_FOLDER_ID': JSON.stringify('root') },
         server: { host: '127.0.0.1', port: 0 },
         plugins: [react(), {

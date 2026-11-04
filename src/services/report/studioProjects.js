@@ -10,7 +10,7 @@ export function studioMaterialIds(book) {
     const visit = (value, key = '') => {
         if (typeof value === 'string' && (/materialId$/i.test(key) || key === 'coverId')) ids.add(value);
         else if (Array.isArray(value)) value.forEach(item => {
-            if (typeof item === 'string' && ['reportIds', 'materialIds'].includes(key)) ids.add(item);
+            if (typeof item === 'string' && ['reportIds', 'removedReportIds', 'materialIds'].includes(key)) ids.add(item);
             else visit(item);
         });
         else if (value && typeof value === 'object') Object.entries(value).forEach(([name, item]) => visit(item, name));

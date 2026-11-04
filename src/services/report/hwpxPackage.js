@@ -29,6 +29,17 @@ export function packHwpxPackage(entries) {
     return zipSync(ordered);
 }
 
+export function removeStaleImagePreview(entries){
+    delete entries['Preview/PrvImage.png'];
+    for(const name of ['META-INF/container.xml','Contents/content.hpf','META-INF/manifest.xml']){
+        if(!entries[name])continue;let xml=strFromU8(entries[name]);const native=indexHwpxSection(xml,name),removedIds=[],ranges=[];
+        for(const node of native.nodes)if(['rootfile','item','file-entry'].includes(local(node.name))&&Object.values(node.attrs).some(v=>String(v).replace(/^\.\//,'')==='Preview/PrvImage.png')){ranges.push({begin:node.start,end:node.end});if(node.attrs.id)removedIds.push(node.attrs.id);}
+        for(const node of native.nodes)if(local(node.name)==='itemref'&&removedIds.includes(node.attrs.idref))ranges.push({begin:node.start,end:node.end});
+        for(const range of ranges.sort((a,b)=>b.begin-a.begin))xml=xml.slice(0,range.begin)+xml.slice(range.end);
+        if(ranges.length)entries[name]=strToU8(xml);
+    }
+}
+
 // Locate character data without rebuilding XML. All surrounding bytes and package assets survive unchanged.
 export function indexHwpxSection(xml, section) {
     if (/<!DOCTYPE|<!ENTITY/i.test(xml) || XMLValidator.validate(xml) !== true) throw new Error('HWPX XML이 올바르지 않습니다.');
@@ -80,13 +91,15 @@ export function indexHwpxSection(xml, section) {
     return { paragraphs, slots, nodes };
 }
 
-export async function replaceHwpxSlots(input, sourceSha256, replacements) {
+export async function replaceHwpxSlots(input, sourceSha256, replacements, {removeObjects=[],clearTextControls=false,clearEmptyCaptionFields=false}={}) {
     const bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
     const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2, '0')).join('');
     if (hash !== sourceSha256) throw new Error('교체 대상 한글 원본 버전이 다릅니다.');
-    if (!Array.isArray(replacements) || !replacements.length) throw new Error('교체할 글자 구간이 없습니다.');
+    if (!Array.isArray(replacements)||!Array.isArray(removeObjects)||(!replacements.length&&!removeObjects.length)||replacements.length>100000||removeObjects.length>20000) throw new Error('교체할 글자 구간과 그림 개체를 확인하세요.');
     const entries = readHwpxPackage(bytes), changed = [], used = new Set();
     const bySection = new Map();
+    const removals=new Map();
+    for(const id of removeObjects){const match=/^(Contents\/section\d+\.xml):object:(\d+)$/.exec(id||'');if(!match||!entries[match[1]]||removals.has(id))throw new Error('제외할 원본 그림 위치를 확인하세요.');removals.set(id,{section:match[1],start:Number(match[2])});if(!bySection.has(match[1]))bySection.set(match[1],[]);}
     for (const replacement of replacements) {
         if (typeof replacement.value !== 'string' || !replacement.slotId || used.has(replacement.slotId)) throw new Error('중복되거나 올바르지 않은 교체 구간입니다.');
         if (Array.from(replacement.value).some(char => char.charCodeAt(0) < 32 && !['\t', '\n', '\r'].includes(char))) throw new Error('한글 본문에 사용할 수 없는 제어 문자가 있습니다.');
@@ -109,6 +122,17 @@ export async function replaceHwpxSlots(input, sourceSha256, replacements) {
             const text = edit.value.replaceAll('\r\n', '\n').replaceAll('\r', '\n').split('\n').map(xmlEscape).join(`<${prefix}lineBreak/>`);
             return { ...slot, replacement: slot.selfClosing ? `<${slot.tagName}>${text}</${slot.tagName}>` : text };
         });
+        for(const target of removals.values())if(target.section===section){const node=native.nodes.find(n=>n.start===target.start&&local(n.name)==='pic');if(!node)throw new Error('제외할 원본 그림이 변경되었습니다.');let area=node.parent;while(area&& !['header','footer'].includes(local(area.name)))area=area.parent;if(area)throw new Error('본문 그림 제외로 머리말·꼬리말을 변경할 수 없습니다.');patches.push({begin:node.start,end:node.end,replacement:''});}
+        if(clearTextControls){const wholeSlots=new Set(edits.filter(e=>e.wholeText).map(e=>e.slotId)),paragraphs=new Set([...editedParagraphs].map(i=>native.paragraphs[i]).filter(p=>p.textSlots.every(s=>wholeSlots.has(s.id))));for(const node of native.nodes.filter(n=>['lineBreak','tab'].includes(local(n.name)))){let parent=node.parent,owner;while(parent){if(local(parent.name)==='t')break;if(parent.paragraph){owner=parent.paragraph;break;}parent=parent.parent;}if(paragraphs.has(owner))patches.push({begin:node.start,end:node.end,replacement:''});}}
+        if(clearEmptyCaptionFields){
+            const emptied=new Set(edits.filter(e=>e.wholeText&&e.value==='').map(e=>e.slotId));
+            for(const node of native.nodes.filter(n=>local(n.name)==='indexmark'||local(n.name)==='autoNum'&&['TABLE','PICTURE','EQUATION'].includes(n.attrs.numType))){
+                const ctrl=node.parent;if(!ctrl||local(ctrl.name)!=='ctrl'||native.nodes.some(n=>n.parent===ctrl&&n!==node))continue;
+                let parent=ctrl.parent,owner,insideText=false,furniture=false;
+                while(parent){if(local(parent.name)==='t')insideText=true;if(['header','footer'].includes(local(parent.name)))furniture=true;if(!owner&&parent.paragraph)owner=parent.paragraph;parent=parent.parent;}
+                if(!furniture&&!insideText&&owner?.textSlots.length&&owner.textSlots.every(s=>emptied.has(s.id)))patches.push({begin:ctrl.start,end:ctrl.end,replacement:''});
+            }
+        }
         // Cached text positions can point past a shortened paragraph and cause HWP to reject the file.
         // Invalidate only edited paragraphs; font, indent, spacing and table properties remain intact.
         for (const index of editedParagraphs) for (const range of native.paragraphs[index].layoutCaches) patches.push({ ...range, replacement: '' });
@@ -120,6 +144,6 @@ export async function replaceHwpxSlots(input, sourceSha256, replacements) {
     }
     // Retain the container's text-preview target, but discard the stale picture preview.
     if (entries['Preview/PrvText.txt']) entries['Preview/PrvText.txt'] = strToU8('새 진단보고서 검토용 작업본입니다. 한글에서 본문과 쪽 배치를 검토하고 다시 저장하세요.');
-    delete entries['Preview/PrvImage.png'];
+    removeStaleImagePreview(entries);
     return { bytes: packHwpxPackage(entries), changedSections: changed, replacedSlots: replacements.length, needsHancomLayoutReview: true };
 }

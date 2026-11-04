@@ -14,7 +14,7 @@ function table(id, equipment) {
 function fixture() {
     return zipSync({ mimetype: [strToU8('application/hwp+zip'), { level: 0 }], 'version.xml': [strToU8('<version/>'), { level: 0 }],
         'Contents/section0.xml': strToU8(`<?xml version="1.0"?><hs:sec xmlns:hs="section" xmlns:hp="paragraph">${p('보고서에만 남을 진단 의견')}${table(1, '변압기')}${table(2, '차단기')}${table(3, '조사 제외 설비')}</hs:sec>`),
-        'Contents/header.xml': strToU8('<hh:head xmlns:hh="header" secCnt="1"><hh:refList><hh:charPr id="7"/><hh:paraPr id="3"/><hh:paraPr id="5"/></hh:refList></hh:head>'),
+        'Contents/header.xml': strToU8('<hh:head xmlns:hh="header" secCnt="1"><hh:refList><hh:charPr id="7"/><hh:paraProperties itemCnt="2"><hh:paraPr id="3" snapToGrid="0"><hh:align horizontal="LEFT" vertical="BASELINE"/><hh:heading type="NONE"/><hh:margin><hc:intent value="0"/><hc:left value="0"/><hc:right value="0"/><hc:prev value="0"/><hc:next value="0"/></hh:margin><hh:lineSpacing type="PERCENT" value="200"/></hh:paraPr><hh:paraPr id="5" snapToGrid="0"><hh:align horizontal="LEFT" vertical="BASELINE"/><hh:heading type="NONE"/><hh:margin><hc:intent value="0"/><hc:left value="0"/><hc:right value="0"/><hc:prev value="0"/><hc:next value="0"/></hh:margin><hh:lineSpacing type="PERCENT" value="200"/></hh:paraPr></hh:paraProperties></hh:refList></hh:head>'),
         'Contents/content.hpf': strToU8('<opf:package xmlns:opf="opf"><opf:metadata/><opf:manifest><opf:item id="header" href="Contents/header.xml"/><opf:item id="oldSection" href="Contents/section0.xml"/></opf:manifest><opf:spine><opf:itemref idref="header"/><opf:itemref idref="oldSection"/></opf:spine></opf:package>'),
         'BinData/image1.png': new Uint8Array([137, 80, 78, 71]), 'Preview/PrvImage.png': new Uint8Array([1, 2, 3]),
     });
@@ -61,7 +61,9 @@ test('one HWPX survey contains only selected original tables, retains equipment 
         assert.ok(judgments.every(cell => cell.textSlots[0].charShapeId === '7'));
     }
     const parts = unzipSync(output.bytes), originals = unzipSync(bytes);
-    assert.deepEqual(parts['Contents/header.xml'], originals['Contents/header.xml']);
+    const introClone=output.introStyle.sourceDefinition.replace(/\bid="[^"]*"/,`id="${output.introStyle.dedicatedParagraphShapeId}"`);
+    assert.equal(strFromU8(parts['Contents/header.xml']).replace(introClone,'').replace('itemCnt="3"','itemCnt="2"'),strFromU8(originals['Contents/header.xml']));
+    assert.equal(output.introStyle.lineCacheAdded,false);
     assert.deepEqual(parts['BinData/image1.png'], originals['BinData/image1.png']);
     assert.equal(parts['Preview/PrvImage.png'], undefined);
     assert.doesNotMatch(strFromU8(parts['Contents/content.hpf']), /oldSection/);
@@ -148,6 +150,9 @@ test('whole judgment cells with mixed styles, multiple paragraphs and inline lin
     const edited = await filled(output.bytes, Object.fromEntries(cells.map(cell => [cell.fieldName, '새 점검 결과'])));
     const preview = await collection.readNativeCollection(state, bytes, edited);
     state = await forms.importCollectionData(state, preview.collection);
+    await assert.rejects(writer.writeNativeReport(engine.buildDraft(state),bytes),/서로 다른 글자 서식/);
+    // A returned word processor may collapse styles. Require an explicit source-run mapping.
+    state.fields=state.fields.map(field=>({...field,outputSlotValues:Object.fromEntries(writer.fieldTextSlots(state,field).map((s,i)=>[s.id,i===0?'새 점검 결과':'']))}));
     const report = await writer.writeNativeReport(engine.buildDraft(state), bytes), result = await parser.analyzeReport(report.bytes);
     const cell = result.tables[0].cells.find(cell => cell.row === 1 && cell.column === 2);
     assert.equal(cell.text, '새 점검 결과');
@@ -160,7 +165,7 @@ test('survey extraction renumbers selected sections and prunes only unused manif
     const parts = unzipSync(fixture());
     parts['Contents/section1.xml'] = strToU8(`<hs:sec xmlns:hs="section" xmlns:hp="paragraph">${table(7, '추가 구역')}<hp:p><hp:run><hp:pic binaryItemIDRef="usedImage"/></hp:run></hp:p></hs:sec>`);
     // The picture outside selected tables is excluded from the survey. A header asset remains referenced.
-    parts['Contents/header.xml'] = strToU8('<hh:head xmlns:hh="header" secCnt="2"><hh:binData binaryItemIDRef="headerImage"/></hh:head>');
+    parts['Contents/header.xml'] = strToU8(strFromU8(parts['Contents/header.xml']).replace('secCnt="1"','secCnt="2"').replace('</hh:head>','<hh:binData binaryItemIDRef="headerImage"/></hh:head>'));
     parts['Contents/content.hpf'] = strToU8('<opf:package xmlns:opf="opf"><opf:manifest><opf:item id="s0" href="Contents/section0.xml"/><opf:item id="s1" href="Contents/section1.xml"/><opf:item id="headerImage" href="BinData/header.png"/><opf:item id="usedImage" href="BinData/outside.png"/></opf:manifest><opf:spine><opf:itemref idref="s0"/><opf:itemref idref="s1"/></opf:spine></opf:package>');
     parts['BinData/header.png'] = new Uint8Array([1, 2]); parts['BinData/outside.png'] = new Uint8Array([3, 4]);
     const bytes = zipSync(parts), document = await parser.analyzeReport(bytes);

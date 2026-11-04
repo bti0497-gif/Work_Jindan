@@ -1,0 +1,4 @@
+export default function ReportListPaging({total,size,page,onPage,label}){
+    const pages=Math.max(1,Math.ceil(total/size)),current=Math.min(pages,Math.max(1,page));
+    return <nav className="studio-material-tools" aria-label={label}><button className="studio-secondary" disabled={current===1} aria-label={`${label} 이전`} onClick={()=>onPage(current-1)}>이전</button><label>{total}개 · <input aria-label={`${label} 페이지`} type="number" min="1" max={pages} value={current} onChange={e=>{const n=Number(e.target.value);if(Number.isInteger(n)&&n>=1&&n<=pages)onPage(n);}}/> / {pages}</label><span>{total?`${(current-1)*size+1}–${Math.min(current*size,total)}개 표시`:'0개'}</span><button className="studio-secondary" disabled={current===pages} aria-label={`${label} 다음`} onClick={()=>onPage(current+1)}>다음</button></nav>;
+}

@@ -1,5 +1,5 @@
-// OCR and image crops run locally. No document pixels are sent to a server.
-const compact=text=>text.normalize('NFKC').replace(/[\s\p{P}]/gu,'');
+import {MAX_PDF_IMAGE_PIXELS,MAX_HWPX_PNG_BYTES,MAX_PDF_PICTURES_BYTES} from './pdfImageLimits.js';
+// OCR and original image extraction run locally. No document pixels are sent to a server.
 const inside=(box,x,y,margin=0)=>x>=box[0]-margin&&x<=box[2]+margin&&y>=box[1]-margin&&y<=box[3]+margin;
 const bundledFolder=folder=>new URL(`${folder}/`,new URL(import.meta.env?.BASE_URL||'./',document.baseURI)).href;
 export const reportRuntimeBase=()=>bundledFolder('report-runtime');
@@ -59,28 +59,36 @@ export async function enrichPdfOcr(bytes,analysis,numbers,{onProgress=()=>{},sig
         return {...analysis,pages,ocrUpdatedAt:new Date().toISOString(),status:'review-required',reportReady:false};
     }finally{signal?.removeEventListener('abort',cancel);if(worker)await worker.terminate().catch(()=>{});if(task)await task.destroy().catch(()=>{});}
 }
-export async function cropPdfPictures(bytes,analysis,numbers,{onProgress=()=>{},signal}={}) {
+export async function cropPdfPictures(bytes,analysis,numbers,{onProgress=()=>{},signal,includeTextImages=false}={}) {
     validateSelection(analysis,numbers);const task=await openPdfForRendering(bytes),pictures={};let totalBytes=0;
     const cancel=()=>task.destroy();signal?.addEventListener('abort',cancel,{once:true});
     try{
         if(signal?.aborted)throw new Error('그림 추출을 취소했습니다.');
-        const doc=await task.promise;
+        const doc=await task.promise,{pdfGraphics}=await import('./pdfStructure.js'),{pdfImageRgba,loadPdfImageObject}=await import('./pdfImagePixels.js'),{OPS}=await import('pdfjs-dist/legacy/build/pdf.mjs');
         for(const [index,number]of numbers.entries()){
             if(signal?.aborted)throw new Error('그림 추출을 취소했습니다.');
-            const source=analysis.pages.find(p=>p.number===number),images=source.images.filter(i=>i.kind==='figure');if(!images.length)continue;
+            const source=analysis.pages.find(p=>p.number===number),images=source.images.filter(i=>includeTextImages||i.kind==='figure');if(!images.length)continue;
             onProgress({stage:`PDF ${number}쪽 원문 그림 추출`,index,total:numbers.length});
-            const p=await doc.getPage(number),scale=1.6,viewport=p.getViewport({scale}),canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+            const p=await doc.getPage(number),viewport=p.getViewport({scale:1}),operators=await p.getOperatorList(),graphics=pdfGraphics(operators,OPS,viewport);
             try{
-                await p.render({canvasContext:canvas.getContext('2d'),viewport,background:'rgb(255,255,255)'}).promise;
                 for(const image of images){
-                    const [x,y,right,bottom]=image.bbox,part=document.createElement('canvas');part.width=Math.max(1,Math.ceil((right-x)*scale));part.height=Math.max(1,Math.ceil((bottom-y)*scale));
-                    if(part.width*part.height>4000000)throw new Error('큰 원문 그림은 별도 이미지로 등록하세요.');
-                    part.getContext('2d').drawImage(canvas,x*scale,y*scale,part.width,part.height,0,0,part.width,part.height);
-                    const blob=await new Promise(resolve=>part.toBlob(resolve,'image/png'));if(!blob)throw new Error('원문 그림을 추출하지 못했습니다.');
-                    totalBytes+=blob.size;if(totalBytes>80*1024*1024)throw new Error('그림은 한 번에 80MB 이하로 나누어 작성하세요.');
-                    pictures[image.id]={bytes:new Uint8Array(await blob.arrayBuffer()),width:part.width,height:part.height};part.width=part.height=0;
+                    if(signal?.aborted)throw new Error('그림 추출을 취소했습니다.');
+                    const found=graphics.images.find(g=>g.operator===image.operator&&g.bbox.every((v,i)=>Math.abs(v-image.bbox[i])<1));
+                    if(!found||operators.fnArray[image.operator]===OPS.paintImageXObjectRepeat)throw new Error('PDF 그림의 위치가 분석 결과와 다릅니다. 보고서를 다시 분석하세요.');
+                    const arg=operators.argsArray[image.operator]?.[0],original=typeof arg==='string'?await loadPdfImageObject(arg.startsWith('g_')?p.commonObjs:p.objs,arg,signal):arg;
+                    if(!original||!Number.isInteger(original.width)||!Number.isInteger(original.height)||original.width*original.height>MAX_PDF_IMAGE_PIXELS)throw new Error('PDF 원본 그림의 크기를 확인하세요.');
+                    const decoded=document.createElement('canvas'),part=document.createElement('canvas');decoded.width=original.width;decoded.height=original.height;
+                    try{
+                        if(original.bitmap)decoded.getContext('2d').drawImage(original.bitmap,0,0);else decoded.getContext('2d').putImageData(new ImageData(pdfImageRgba(original),original.width,original.height),0,0);
+                        const [a,b,c,d,e,f]=found.transform,[x,y,right,bottom]=image.bbox,area=(right-x)*(bottom-y),scale=Math.min(Math.max(original.width/Math.hypot(a,b),original.height/Math.hypot(c,d)),Math.sqrt(MAX_PDF_IMAGE_PIXELS/area));
+                        part.width=Math.max(1,Math.ceil((right-x)*scale));part.height=Math.max(1,Math.ceil((bottom-y)*scale));
+                        const sx=part.width/(right-x),sy=part.height/(bottom-y),context=part.getContext('2d');context.setTransform(sx*a/original.width,sy*b/original.width,-sx*c/original.height,-sy*d/original.height,sx*(c+e-x),sy*(d+f-y));context.drawImage(decoded,0,0);
+                        const blob=await new Promise(resolve=>part.toBlob(resolve,'image/png'));if(!blob)throw new Error('원문 그림을 추출하지 못했습니다.');
+                        if(blob.size>MAX_HWPX_PNG_BYTES)throw new Error('PNG image exceeds the shared HWPX limit.');totalBytes+=blob.size;if(totalBytes>MAX_PDF_PICTURES_BYTES)throw new Error('그림은 한 번에 80MB 이하로 나누어 작성하세요.');
+                        pictures[image.id]={bytes:new Uint8Array(await blob.arrayBuffer()),width:part.width,height:part.height,method:'pdf-image-object',originalWidth:original.width,originalHeight:original.height};
+                    }finally{decoded.width=decoded.height=part.width=part.height=0;}
                 }
-            }finally{canvas.width=canvas.height=0;p.cleanup();}
+            }finally{p.cleanup();}
         }
         return pictures;
     }finally{signal?.removeEventListener('abort',cancel);await task.destroy().catch(()=>{});}

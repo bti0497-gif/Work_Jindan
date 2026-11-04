@@ -1,9 +1,10 @@
 import { strFromU8, strToU8 } from 'fflate';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
-import { indexHwpxSection, packHwpxPackage, readHwpxPackage } from './hwpxPackage.js';
+import { indexHwpxSection, packHwpxPackage, readHwpxPackage, removeStaleImagePreview } from './hwpxPackage.js';
 import { analyzeReport } from './sourceParser.js';
 import { createCollectionForm, fingerprint, inputFields } from './collectionForms.js';
 import { validateData } from './reportEngine.js';
+import { collectionIntroStyle } from './collectionIntroStyle.js';
 
 const local = name => name.split(':').at(-1);
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[char]);
@@ -119,6 +120,9 @@ async function collectionPlan(workspace, sourceBytes, options) {
 
 export async function exportNativeCollection(workspace, sourceBytes, options) {
     const plan = await collectionPlan(workspace, sourceBytes, options);
+    if(!plan.entries['Contents/header.xml'])throw new Error('조사 양식의 원본 문단 서식이 없습니다.');
+    const intro=collectionIntroStyle(strFromU8(plan.entries['Contents/header.xml']),workspace.document);
+    plan.entries['Contents/header.xml']=strToU8(intro.header);
     const selected = new Set(plan.mappings.filter(item => !item.supplemental).map(item => plan.tableNodes.get(item.table.id)));
     const roots = [...selected].filter(node => {
         for (let parent = nearest(node, 'tbl'); parent; parent = nearest(parent, 'tbl')) if (selected.has(parent)) return false;
@@ -135,7 +139,7 @@ export async function exportNativeCollection(workspace, sourceBytes, options) {
         const secPr = section.nodes.find(node => local(node.name) === 'secPr');
         const rootStart = section.xml.slice(root.start, root.openEnd);
         let body = secPr ? `<hp:p id="0" paraPrIDRef="0" styleIDRef="0" pageBreak="0" columnBreak="0" merged="0"><hp:run charPrIDRef="0">${section.xml.slice(secPr.start, secPr.end)}</hp:run></hp:p>` : '';
-        if (!newSections.length) body += paragraph(`${workspace.projectTitle} · ${plan.form.disciplineLabel} 진단 조사 양식`) + paragraph('빈 입력 칸에 새 측정값·판정만 작성하고 HWPX로 저장하세요. 장비명·규격은 유지됩니다. 입력 셀의 필드 이름과 표·셀 구조는 지우지 마세요.');
+        if (!newSections.length) body += paragraph(`${workspace.projectTitle} · ${plan.form.disciplineLabel} 진단 조사 양식`,'0',intro.paragraphShapeId) + paragraph('빈 입력 칸에 새 측정값·판정만 작성하고 HWPX로 저장하세요. 장비명·규격은 유지됩니다. 입력 셀의 필드 이름과 표·셀 구조는 지우지 마세요.','0',intro.paragraphShapeId);
         for (const tableNode of tables) {
             const original = workspace.document.tables.find(table => plan.tableNodes.get(table.id) === tableNode);
             const mappings = plan.mappings.filter(item => !item.supplemental && item.node.start >= tableNode.start && item.node.end <= tableNode.end && item.table.anchor.section === name);
@@ -144,6 +148,8 @@ export async function exportNativeCollection(workspace, sourceBytes, options) {
                 patches.push({ begin: item.node.start, end: item.node.openEnd, text: replaceAttribute(section.xml.slice(item.node.start, item.node.openEnd), 'name', item.name) });
                 for (const slot of item.slots) patches.push({ begin: slot.begin, end: slot.end, text: slot.selfClosing ? `<${slot.tagName}/>` : '' });
             }
+            const cleared=new Set(mappings.flatMap(m=>m.slots.map(s=>s.id)));
+            for(const node of section.nodes)if(['lineBreak','tab'].includes(local(node.name))){const owner=nearest(node,'p')?.paragraph;if(!owner||!owner.textSlots.every(s=>cleared.has(s.id))||nearest(node,'t'))continue;patches.push({begin:node.start,end:node.end,text:''});}
             for (const p of section.paragraphs) for (const cache of p.layoutCaches) if (cache.begin >= tableNode.start && cache.end <= tableNode.end) patches.push({ ...cache, text: '' });
             for (const node of section.nodes) if (local(node.name) === 'pos' && node.parent === tableNode) patches.push({ begin: node.start, end: node.openEnd, text: replaceAttribute(section.xml.slice(node.start, node.openEnd), 'treatAsChar', '1') });
             const tableXml = patchXml(section.xml.slice(tableNode.start, tableNode.end), patches, tableNode.start);
@@ -183,8 +189,8 @@ export async function exportNativeCollection(workspace, sourceBytes, options) {
     }
     if (plan.entries['settings.xml']) plan.entries['settings.xml'] = strToU8(strFromU8(plan.entries['settings.xml']).replace(/<([\w.-]+:)?CaretPosition\b[^>]*\/>/, (_, prefix = '') => `<${prefix}CaretPosition listIDRef="0" paraIDRef="0" pos="0"/>`));
     if (plan.entries['Preview/PrvText.txt']) plan.entries['Preview/PrvText.txt'] = strToU8('새 측정값과 판정을 작성할 진단 조사 양식입니다. 작성 후 HWPX로 저장하여 앱에서 불러오세요.');
-    delete plan.entries['Preview/PrvImage.png'];
-    return { bytes: packHwpxPackage(plan.entries), fieldCount: plan.mappings.length, tableCount: roots.length + extra.length, schemaFingerprint: plan.form.schemaFingerprint };
+    removeStaleImagePreview(plan.entries);
+    return { bytes: packHwpxPackage(plan.entries), fieldCount: plan.mappings.length, tableCount: roots.length + extra.length, schemaFingerprint: plan.form.schemaFingerprint, introStyle:intro.evidence };
 }
 
 export async function readNativeCollection(workspace, sourceBytes, filledBytes, filename = '', options) {
@@ -219,5 +225,9 @@ export async function readNativeCollection(workspace, sourceBytes, filledBytes, 
     const collection = { ...plan.form, values, collectedFrom: { filename, sha256: document.source.sha256 } };
     const validation = validateData({ ...workspace, values: { ...workspace.values, ...values } });
     return { collection, warnings, errors: validation.errors, inputFingerprint: await fingerprint({ values: workspace.values, revision: workspace.revision }),
-        rows: plan.mappings.map(item => ({ id: item.field.id, group: item.field.group, label: item.field.label, unit: item.field.unit, previous: workspace.values[item.field.id] ?? '', value: values[item.field.id] })) };
+        rows: plan.mappings.map(item => {
+            const received=names.get(item.name).cell,original=item.slots;
+            const compatible=original&&original.length===received.textSlots.length&&original.every((s,i)=>s.charShapeId===received.textSlots[i].charShapeId&&(!i||(s.paragraphIndex===original[i-1].paragraphIndex)===(received.textSlots[i].paragraphIndex===received.textSlots[i-1].paragraphIndex)));
+            return {id:item.field.id,group:item.field.group,label:item.field.label,unit:item.field.unit,previous:workspace.values[item.field.id]??'',value:values[item.field.id],slotValues:item.field.binding?.scope==='cell'&&compatible?Object.fromEntries(original.map((s,i)=>[s.id,received.textSlots[i].text])):undefined};
+        }) }
 }

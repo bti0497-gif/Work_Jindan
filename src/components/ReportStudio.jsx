@@ -19,6 +19,11 @@ import ReportDataApplication from './ReportDataApplication.jsx';
 import PdfReportWorkbench from './PdfReportWorkbench.jsx';
 import {pdfAuthoringPlan} from '../services/report/pdfHwpxWriter.js';
 import ReportDrivePicker from './ReportDrivePicker.jsx';
+import ReportRestorationInventory from './ReportRestorationInventory.jsx';
+import {prepareRestorationPicture} from '../services/report/restorationImages.js';
+import {useStudioLayout,StudioResizeHandle} from './StudioLayoutControls.jsx';
+import StudioFitPage from './StudioFitPage.jsx';
+import ReportPlatform from './ReportPlatform.jsx';
 
 function studioWorker(message) {
     return new Promise((resolve,reject)=>{
@@ -95,6 +100,7 @@ function MaterialPreview({ userId, material, onClose }) {
 }
 
 function Studio({ userId, facilityId, projectName, projectOptions, onFacilityChange, onProjectImported, onRefreshProjects, onExit, showConfirm, showPrompt }) {
+    const layout=useStudioLayout(userId);
     const [book, setBook] = useState(null), latestBook = useRef(null);
     const [allMaterials, setMaterials] = useState([]), [pane, setPane] = useState(facilityId ? 'electrical' : 'library');
     const [folderMaterialIds,setFolderMaterialIds]=useState([]);
@@ -102,6 +108,8 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
     folderMaterialIds.forEach(id=>ownedMaterialIds.add(id));
     const materialScopeKey=JSON.stringify([...ownedMaterialIds].sort());
     const materials=useMemo(()=>{const ids=new Set(JSON.parse(materialScopeKey));return allMaterials.filter(item=>ids.has(item.id));},[allMaterials,materialScopeKey]);
+    const activeReportMaterialKey=JSON.stringify(materials.find(item=>item.id===book?.activeReportId)||null);
+    const activeReportMaterial=useMemo(()=>JSON.parse(activeReportMaterialKey),[activeReportMaterialKey]);
     const [role, setRole] = useState('reference'), [selectedId, setSelectedId] = useState('');
     const [chapterId, setChapterId] = useState(''), [search, setSearch] = useState('');
     const [working, setWorking] = useState(null), [notice, setNotice] = useState(''), [errors, setErrors] = useState([]);
@@ -137,8 +145,7 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
     },[userId,facilityId,referenceVersion]);
     useEffect(()=>{
         let cancelled=false,url;
-        const id=facilityId&&book?.activeReportId;if(!id){setReportState(null);return;}
-        const material=materials.find(item=>item.id===id);if(!material)return;
+        const material=activeReportMaterial,id=facilityId&&material?.id;if(!id){setReportState(null);return;}
         setReportState({id,material,loading:true});setApplicationTarget(null);setApplicationJob(null);
         loadMaterial(userId,id).then(async blob=>{
             if(cancelled)return;
@@ -147,7 +154,7 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
             if(!cancelled)setReportState({id,material,...data});
         }).catch(reason=>{if(!cancelled)setReportState({id,material,error:reason.message});});
         return()=>{cancelled=true;if(url)URL.revokeObjectURL(url);};
-    },[userId,book?.activeReportId,materials]);
+    },[userId,facilityId,activeReportMaterial]);
     useEffect(() => {
         let cancelled = false, url;
         if (!book?.coverId) return;
@@ -270,14 +277,14 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
         try{for(const [index,material] of projectInputMaterials.entries()){
             setWorking({index,total:projectInputMaterials.length,name:material.filename});const record={materialId:material.id,sha256:material.sha256,filename:material.filename,kind:'원본 이미지·문서 보관'};
             try{const action={pwv:'inspect-powerview',bmt:'inspect-thermal-bmt',xlsx:'read-input-tables',csv:'read-input-tables'}[material.format];if(action){const bytes=await(await loadMaterial(userId,material.id)).arrayBuffer(),data=await studioWorker({action,bytes,filename:material.filename});if(data.thermal)delete data.thermal.images;Object.assign(record,data,{kind:data.tables?'표 수치':data.powerView?'전력품질 원시값':'열화상 설정·원시 배열'});}}catch(reason){record.error=reason.message;}results.push(record);
-        }const job={createdAt:new Date().toISOString(),sourceMaterialId:reportState.id,sourceSha256:reportState.document.source.sha256,results,status:'review-pending'};setApplicationJob(job);changeBook(current=>({...current,applicationRuns:[...(current.applicationRuns||[]).slice(-9),{...job,results:results.map(({tables,powerView,thermal,...summary})=>summary)}]}));}finally{setWorking(null);}
+        }const job={createdAt:new Date().toISOString(),sourceMaterialId:reportState.id,sourceSha256:reportState.document.source.sha256,results,status:'review-pending'};setApplicationJob(job);changeBook(current=>({...current,applicationRuns:[...(current.applicationRuns||[]).slice(-9),{...job,results:results.map(record=>Object.fromEntries(Object.entries(record).filter(([key])=>!['tables','powerView','thermal'].includes(key))))}]}));}finally{setWorking(null);}
     });
     const applyText=(value,evidence)=>act(async()=>{
         if(!reportState?.document||!applicationJob||applicationJob.sourceSha256!==reportState.document.source.sha256)throw new Error('선택 보고서에서 데이터 적용 작업을 다시 시작하세요.');
         setWorking({index:0,total:1,name:'HWPX 적용 후보 만드는 중'});
         try{const material=reportState.material,bytes=await(await loadMaterial(userId,material.id)).arrayBuffer();const {candidate}=await studioWorker({action:'write-studio-replacement',bytes,filename:material.filename,sourceSha256:reportState.document.source.sha256,target:applicationTarget,value});
             const filename=`${material.filename.replace(/\.[^.]+$/,'')}-작성후보.hwpx`,{material:output}=await addMaterial(userId,new File([candidate.bytes],filename),'data');
-            setMaterials(await listMaterials(userId));changeBook(current=>({...current,reportIds:[...new Set([...(current.reportIds||[]),output.id])],activeReportId:output.id,reportSpecs:current.reportSpecs?.[material.id]?{...current.reportSpecs,[output.id]:{...current.reportSpecs[material.id],sourceSha256:output.sha256}}:current.reportSpecs,applicationChanges:[...(current.applicationChanges||[]),{sourceMaterialId:material.id,candidateMaterialId:output.id,evidence,...candidate.review,createdAt:new Date().toISOString()}]}));setNotice('선택 위치를 교체한 HWPX 후보를 만들었습니다. 원본과 쪽 배치·미교체 항목을 검토하세요.');
+            setMaterials(await listMaterials(userId));changeBook(current=>({...current,reportIds:[...new Set([...(current.reportIds||[]),output.id])],activeReportId:output.id,reportSpecs:current.reportSpecs?.[material.id]?{...current.reportSpecs,[output.id]:{...current.reportSpecs[material.id],sourceSha256:output.sha256,furnitureEdits:{},furnitureAlignments:{},objectPositions:{},pictureReplacements:[],pagePropertyPosition:undefined}}:current.reportSpecs,applicationChanges:[...(current.applicationChanges||[]),{sourceMaterialId:material.id,candidateMaterialId:output.id,evidence,...candidate.review,createdAt:new Date().toISOString()}]}));setNotice('선택 위치를 교체한 HWPX 후보를 만들었습니다. 원본과 쪽 배치·미교체 항목을 검토하세요.');
         }finally{setWorking(null);}
     });
     const generatePdfNative=async(mode,settings,pictures,{signal}={})=>{
@@ -292,13 +299,44 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
         changeBook(current=>({...current,reportIds:[...new Set([...(current.reportIds||[]),material.id])],activeReportId:material.id,pdfAuthoring:{...current.pdfAuthoring,[source.id]:settings},pdfWritingRuns:[...(current.pdfWritingRuns||[]),{sourceMaterialId:source.id,candidateMaterialId:material.id,...candidate.review,createdAt:new Date().toISOString()}]}));
         setNotice(`${mode==='draft'?'금회 전기 작성 양식':'전회 원문 재구성 참고본'} HWPX를 만들었습니다. 원본 대조와 한글 쪽 배치를 검토하세요.`);
     };
+    const exportRestoredSpec=spec=>act(async()=>{
+        const source=reportState?.material;if(!source||source.sha256!==spec.sourceSha256)throw new Error('선택한 보고서의 서식을 다시 확인하세요.');
+        setWorking({index:0,total:1,name:'원본 개체를 보존한 서식 후보 작성'});
+        try{
+            const bytes=await(await loadMaterial(userId,source.id)).arrayBuffer();
+            const pictures={},scope=studioMaterialIds(latestBook.current);
+            for(const replacement of spec.pictureReplacements||[]){
+                const image=materials.find(m=>m.id===replacement.materialId&&m.sha256===replacement.sha256&&scope.has(m.id));
+                const target=reportState.restoration?.objects.find(o=>o.id===replacement.objectId);
+                if(!image||!target?.image)throw new Error('현재 프로젝트의 교체 그림과 원본 개체를 확인하세요.');
+                pictures[target.id]=await prepareRestorationPicture(await loadMaterial(userId,image.id),image,target.image.mime);
+            }
+            const {candidate}=await studioWorker({action:'write-restoration-spec',bytes,spec,options:{pictures}});
+            const {material}=await addMaterial(userId,new File([candidate.bytes],`${source.filename.replace(/\.[^.]+$/,'')}-서식편집.hwpx`),'data');
+            if(!mounted.current)return;
+            setMaterials(await listMaterials(userId));
+            changeBook(current=>{
+                const reportSpecs={...current.reportSpecs,[source.id]:spec};delete reportSpecs[material.id];
+                return {...current,reportIds:[...new Set([...(current.reportIds||[]),material.id])],activeReportId:material.id,reportSpecs,
+                    restorationRuns:[...(current.restorationRuns||[]),{sourceMaterialId:source.id,candidateMaterialId:material.id,...candidate.review,createdAt:new Date().toISOString()}]};
+            });
+            setNotice('원본 표·그림·도형을 보존한 HWPX 서식 편집 후보를 만들었습니다. 실제 쪽 배치를 대조하세요.');
+        }finally{if(mounted.current)setWorking(null);}
+    });
+    const importRestorationImages=files=>act(async()=>{
+        const list=Array.from(files||[]);if(!list.length)return;if(list.length>30)throw new Error('교체 그림은 한 번에 30개 이하로 등록하세요.');
+        setWorking({index:0,total:list.length,name:'프로젝트 교체 그림 등록'});
+        try{const ids=[],failed=[];for(const [i,file]of list.entries()){setWorking({index:i,total:list.length,name:file.name});try{const {material}=await addMaterial(userId,file,'image');ids.push(material.id);}catch(reason){failed.push(`${file.name}: ${reason.message}`);}}
+            if(!mounted.current)return;setMaterials(await listMaterials(userId));changeBook(current=>({...current,materialIds:[...new Set([...(current.materialIds||[]),...ids])]}));setNotice(`교체 그림 ${ids.length}개를 프로젝트에 등록했습니다. 바꿀 개체를 선택하세요.`);if(failed.length)throw new Error(failed.join('\n'));
+        }finally{if(mounted.current)setWorking(null);}
+    });
     const reportSpec=reportState?.profile?(book.reportSpecs?.[reportState.id]||specificationFromProfile(reportState.profile)):null;
-    return <div className="report-studio" onDragOver={event => { if (event.dataTransfer.types.includes('Files')) event.preventDefault(); }} onDrop={event => event.preventDefault()}>
+    return <div className={`report-studio ${layout.compact?'studio-compact':''}`} onDragOver={event => { if (event.dataTransfer.types.includes('Files')) event.preventDefault(); }} onDrop={event => event.preventDefault()}>
         <header className="studio-topbar"><div className="studio-brand"><button className="studio-icon studio-exit" title="협업시스템으로 돌아가기" aria-label="협업시스템으로 돌아가기" disabled={!!working} onClick={onExit}><ArrowLeft size={19} /></button><span className="studio-brand-icon"><BookOpen size={20} /></span><div><strong>보고서 스튜디오</strong><small>자료 수집과 보고서 구성</small></div></div>
             <div className="studio-top-actions"><button className="studio-secondary" disabled={!book||!facilityId||!!working} onClick={saveProject}>프로젝트 파일 저장</button><button className="studio-secondary" disabled={!facilityId||!!working} onClick={()=>archivePicker.current.click()}>프로젝트 파일 열기</button><input ref={archivePicker} hidden type="file" accept=".jindanproj" aria-label="통합 프로젝트 파일 선택" onChange={event=>{openProject(event.target.files[0]);event.target.value='';}}/><span className="studio-save" role="status"><span />{saveStatus}</span><button className="studio-icon studio-settings-toggle" aria-label="문서 설정 열기" aria-expanded={inspectorOpen} onClick={() => setInspectorOpen(open => !open)}><LayoutTemplate size={19} /></button></div>
         </header>
-        <div className="studio-layout">
-            <aside className="studio-navigation" aria-label="목차와 자료 관리">
+        <div ref={layout.ref} className={`studio-layout studio-resizable ${layout.compact?'is-compact':''} ${inspectorOpen?'inspector-open':''} ${layout.dragging?'is-resizing':''}`} style={layout.style}>
+            <aside id="studio-left-sidebar" className="studio-navigation" aria-label="목차와 자료 관리">
                 <label className="studio-facility-select">프로젝트 선택<select aria-label="작성할 시설 보고서" disabled={!book || !!working} value={facilityId} onChange={event => onFacilityChange(event.target.value)}><option value="">프로젝트를 선택하세요</option>{projectOptions.map(project => <option key={project.id} value={project.id}>{project.name}</option>)}</select></label>
                 <button className="studio-secondary studio-project-refresh" disabled={!!working} onClick={onRefreshProjects}>프로젝트 목록 새로고침</button>
                 {!facilityId&&<p className="studio-reference-hint">프로젝트 관리에 등록한 목록에서 선택하세요. 지금은 형식 학습용 예시 공간입니다.</p>}
@@ -321,12 +359,13 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
                 </li>)}</ol>
                 <div className="studio-nav-bottom"><span className="studio-small-icon"><Check size={14} /></span><strong>양면 보고서 기본 규칙</strong><p>새 장·본문은 홀수 쪽 시작<br />빈 쪽의 머리말·꼬리말과<br />쪽 번호는 표시하지 않음</p></div>
             </aside>
+            <StudioResizeHandle {...layout.handle('left')}/>
             <main className="studio-center-panel" aria-label="보고서 작업 영역">
                 <div className="studio-pane-tabs"><button className={pane === 'library' ? 'active' : ''} onClick={() => setPane('library')}><Files size={16} />자료 등록</button><button className={pane === 'document' ? 'active' : ''} disabled={!book} onClick={() => setPane('document')}><FileText size={16} />보고서 구성</button>{referenceProjectId && <button className={pane === 'reference' ? 'active' : ''} onClick={() => setPane('reference')}><BookOpen size={16} />프로젝트 원본</button>}</div>
                 <div className="studio-scroll">
                     {!!errors.length && <div className="studio-error" role="alert"><strong>확인이 필요합니다</strong><ul>{errors.map((error, index) => <li key={index}>{error}</li>)}</ul><button className="studio-icon" aria-label="오류 메시지 닫기" onClick={() => setErrors([])}><X size={16} /></button></div>}
                     {notice && <p className="studio-notice" role="status"><Check size={15} />{notice}</p>}
-                    {pane==='report'?<div className="studio-report-workspace">{!reportState?<p className="studio-center">왼쪽에서 보고서를 선택하세요. HWPX 원본과 대응 PDF를 여러 개 등록할 수 있습니다.</p>:reportState.loading?<p className="studio-center">선택 보고서를 분석하고 있습니다…</p>:reportState.error?<p className="studio-error" role="alert">{reportState.error}</p>:<><div className="studio-page-heading"><h1>{reportState.material.filename}</h1><button className="studio-secondary" onClick={()=>act(async()=>download(await loadMaterial(userId,reportState.id),reportState.material.filename))}>선택 보고서 내려받기</button><p>{reportState.document?`문단 ${reportState.document.paragraphs.length} · 표 ${reportState.document.tables.length} · 원본 보존`:'PDF 분야 분석 · 전기 HWPX 신규 작성'}</p></div>{reportState.url?<PdfReportWorkbench key={reportState.id} userId={userId} projectId={facilityId} material={reportState.material} url={reportState.url} analysis={book.pdfAnalyses?.[reportState.id]} settings={book.pdfAuthoring?.[reportState.id]} onAnalysis={analysis=>changeBook(current=>({...current,pdfAnalyses:{...current.pdfAnalyses,[reportState.id]:analysis}}))} onSettings={settings=>changeBook(current=>({...current,pdfAuthoring:{...current.pdfAuthoring,[reportState.id]:settings}}))} onGenerate={generatePdfNative} inspectorTarget={pdfInspector} onShowInspector={()=>setInspectorOpen(true)}/>:<><ReportDataApplication document={reportState.document} materials={projectInputMaterials} job={applicationJob} target={applicationTarget} onTarget={setApplicationTarget} onStart={startApplication} onApply={applyText} onRegister={()=>setPane('electrical')} busy={!!working}/>{reportSpec?<ReportDocumentView document={reportState.document} spec={reportSpec} onTarget={setApplicationTarget} selection={applicationTarget}/>:<article>{reportState.document.paragraphs.slice(0,300).map(p=><p key={p.id}>{p.text}</p>)}</article>}</>}</>}</div>
+                    {pane==='report'?<div className="studio-report-workspace">{!reportState?<p className="studio-center">왼쪽에서 보고서를 선택하세요. HWPX 원본과 대응 PDF를 여러 개 등록할 수 있습니다.</p>:reportState.loading?<p className="studio-center">선택 보고서를 분석하고 있습니다…</p>:reportState.error?<p className="studio-error" role="alert">{reportState.error}</p>:<><div className="studio-page-heading"><h1>{reportState.material.filename}</h1><button className="studio-secondary" onClick={()=>act(async()=>download(await loadMaterial(userId,reportState.id),reportState.material.filename))}>선택 보고서 내려받기</button><p>{reportState.document?`문단 ${reportState.document.paragraphs.length} · 표 ${reportState.document.tables.length} · 원본 보존`:'PDF 분야 분석 · 전기 HWPX 신규 작성'}</p></div>{reportState.url?<PdfReportWorkbench key={reportState.id} userId={userId} projectId={facilityId} material={reportState.material} url={reportState.url} analysis={book.pdfAnalyses?.[reportState.id]} settings={book.pdfAuthoring?.[reportState.id]} onAnalysis={analysis=>changeBook(current=>({...current,pdfAnalyses:{...current.pdfAnalyses,[reportState.id]:analysis}}))} onSettings={settings=>changeBook(current=>({...current,pdfAuthoring:{...current.pdfAuthoring,[reportState.id]:settings}}))} onGenerate={generatePdfNative} styleMaterials={materials.filter(m=>m.format==='hwpx'&&(book.reportIds||[]).includes(m.id))} inspectorTarget={pdfInspector} onShowInspector={()=>setInspectorOpen(true)}/>:<><ReportRestorationInventory document={reportState.document} restoration={reportState.restoration} review={book.restorationReviews?.[reportState.id]} onObject={()=>{setInspectorOpen(true);setTimeout(()=>{const details=document.querySelector('.studio-native-objects');if(details){details.open=true;details.scrollIntoView({block:'nearest'});}},0);}} onReview={review=>changeBook(current=>({...current,restorationReviews:{...current.restorationReviews,[reportState.id]:review}}))} onTarget={setApplicationTarget}/><ReportDataApplication document={reportState.document} materials={projectInputMaterials} job={applicationJob} target={applicationTarget} onTarget={setApplicationTarget} onStart={startApplication} onApply={applyText} onRegister={()=>setPane('electrical')} busy={!!working}/>{reportSpec?<ReportDocumentView document={reportState.document} spec={reportSpec} onTarget={setApplicationTarget} selection={applicationTarget}/>:<article>{reportState.document.paragraphs.slice(0,300).map(p=><p key={p.id}>{p.text}</p>)}</article>}</>}</>}</div>
                         :pane === 'electrical' ? book && <ElectricalReportPreparation userId={userId} businessProjectId={facilityId} facility={projectName||book.projectName||book.title} value={book.electrical} pdfAnalyses={book.pdfAnalyses} pdfSettings={book.pdfAuthoring} onOpenReport={chooseReport}
                         onChange={updater => changeBook(current => ({ ...current, electrical: updater(current.electrical || { referenceProjectId: '', inputs: {}, notes: {} }) }))}
                         materials={materials} onMaterialsChanged={async () => { const records = await listMaterials(userId); if (mounted.current) {setMaterials(records);const newIds=records.filter(item=>!allMaterials.some(old=>old.id===item.id)).map(item=>item.id);changeBook(current=>({...current,materialIds:[...new Set([...(current.materialIds||[]),...newIds])]}));} }} onPreview={setPreviewSource}
@@ -352,17 +391,18 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
                         <p className="studio-local-note">등록한 원본과 설정은 로그인한 사용자의 이 PC에 보관됩니다. 자료 등록만으로 AI 분석이나 외부 전송을 시작하지 않습니다.</p>
                     </div> : pane === 'reference' ? <ReferenceProjectView key={referenceProjectId} userId={userId} projectId={referenceProjectId} partId={referencePartId} version={referenceVersion} onChanged={() => setReferenceVersion(value => value + 1)} onAnalysisProgress={value => { importing.current = !!value; if (mounted.current) setWorking(value); }} onPreview={entry => setPreviewSource({ ...entry, id: entry.materialId, title: entry.relativePath })} /> : book && chapter && <div className="studio-document">
                         <div className="studio-document-heading"><div><span>구성 미리보기</span><h1>{chapter.title}</h1></div><span className="studio-page-rule">홀수 쪽 시작</span></div>
-                        <div className={`studio-paper kind-${chapter.kind}`} style={{ '--studio-title-align': book.titleAlign }}>
+                        <StudioFitPage width={720} label="보고서 구성"><div className={`studio-paper kind-${chapter.kind}`} style={{ '--studio-title-align': book.titleAlign }}>
                             {chapter.kind === 'cover' ? <div className={`studio-cover position-${book.titlePosition}`}><small>기술진단 보고서</small><h2>{book.title}</h2>{book.coverId && cover?.id === book.coverId && <img src={cover.url} alt="선택한 표지 이미지" />}</div>
                                 : chapter.kind === 'contents' ? <div className="studio-contents"><h2>차 례</h2><ol>{book.chapters.filter(item => item.kind === 'chapter').map(item => <li key={item.id}><span>{item.title}</span><span /></li>)}</ol><p>쪽 번호는 본문 편집과 쪽 배치가 끝난 뒤 확정합니다.</p></div>
                                     : <><header className="studio-paper-header">{book.header}</header><h2>{chapter.title}</h2><textarea className="studio-body-editor" aria-label={`${chapter.title} 본문`} value={chapter.text} onChange={event => chapterChange({ text: event.target.value })} placeholder="본문 초안을 작성하거나, 자료 모음에서 작성한 조사자료를 등록하세요." /><footer className="studio-paper-footer">{book.footer}</footer></>}
-                        </div><p className="studio-draft-note">구성과 본문 메모를 저장하는 미리보기입니다. 원본 한글 서식 편집·조사자료 자동 반영·정밀 쪽 배치는 이후 연결합니다.</p>
+                        </div></StudioFitPage><p className="studio-draft-note">구성과 본문 메모를 저장하는 미리보기입니다. 원본 한글 서식 편집·조사자료 자동 반영·정밀 쪽 배치는 이후 연결합니다.</p>
                     </div>}
                 </div>
                 <footer className="studio-bottom-status"><span>{materials.length}개 자료 · 양식 비교 대상 {materials.filter(item => item.role === 'reference' && item.includeInPatterns).length}개</span><span>원본 보관 · 이 PC</span></footer>
             </main>
-            <aside className={`studio-inspector ${inspectorOpen ? 'open' : ''}`} aria-label="보고서와 자료 설정"><div className="studio-inspector-title"><span><LayoutTemplate size={16} />설정</span><button className="studio-icon studio-settings-toggle" aria-label="설정 닫기" onClick={() => setInspectorOpen(false)}><X size={17} /></button></div>
-                {pane==='report'&&reportState?.profile&&<ReportSpecification key={reportState.id} profile={reportState.profile} saved={book.reportSpecs?.[reportState.id]} disabled={!!working} onApply={spec=>{changeBook(current=>({...current,reportSpecs:{...current.reportSpecs,[reportState.id]:spec}}));setNotice('선택 보고서의 서식을 저장하고 가운데 미리보기에 적용했습니다.');}}/>}
+            <StudioResizeHandle {...layout.handle('right')}/>
+            <aside id="studio-right-sidebar" className={`studio-inspector ${inspectorOpen ? 'open' : ''}`} aria-label="보고서와 자료 설정"><div className="studio-inspector-title"><span><LayoutTemplate size={16} />설정</span><button className="studio-icon studio-settings-toggle" aria-label="설정 닫기" onClick={() => setInspectorOpen(false)}><X size={17} /></button></div>
+                {pane==='report'&&reportState?.profile&&<ReportSpecification key={reportState.id} profile={reportState.profile} restoration={reportState.restoration} onExport={exportRestoredSpec} imageMaterials={materials.filter(m=>['png','jpg','jpeg','webp'].includes(m.format)&&studioMaterialIds(book).has(m.id))} onAddImages={importRestorationImages} saved={book.reportSpecs?.[reportState.id]} disabled={!!working} onApply={spec=>{changeBook(current=>({...current,reportSpecs:{...current.reportSpecs,[reportState.id]:spec}}));setNotice('선택 보고서의 서식을 저장하고 가운데 미리보기에 적용했습니다.');}}/>}
                 {pane==='report'&&reportState?.url&&<section className="studio-pdf-inspector" ref={setPdfInspector} aria-label="PDF 분석·작성 설정"/>}{pane==='report'&&!reportState?.profile&&!reportState?.url&&<p className="studio-inspector-help">HWPX 보고서를 선택하면 머릿글·바닥글·폰트·여백·장 제목·쪽 번호 설정을 표시합니다.</p>}
                 {pane === 'reproduction' && <PageTrialInspector trial={book?.pageTrial} selectedId={trialSelectedId} onSelect={setTrialSelectedId} onChange={trial => changeBook(current => ({ ...current, pageTrial: trial }))} />}
                 {pane === 'library' && selected && <section className="studio-property-section" key={selected.id}><h2>선택한 자료</h2><label>자료 제목<input defaultValue={selected.title} maxLength={300} onBlur={event => { if (event.target.value !== selected.title) update(selected, { title: event.target.value }); }} /></label><label>보고서 종류<select value={selected.reportType} onChange={event => update(selected, { reportType: event.target.value })}>{Object.entries(REPORT_TYPES).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label><label>시설명<input defaultValue={selected.facility} maxLength={300} onBlur={event => update(selected, { facility: event.target.value })} placeholder="예: 대청 처리시설" /></label><label>양식 그룹<input defaultValue={selected.templateGroup} maxLength={300} onBlur={event => update(selected, { templateGroup: event.target.value })} placeholder="같은 양식끼리 묶는 이름" /></label>
@@ -383,7 +423,10 @@ function Studio({ userId, facilityId, projectName, projectOptions, onFacilityCha
     </div>;
 }
 
-export default function ReportStudio({ currentUser, onExit, showConfirm, showPrompt, onRefreshProjects, projectSyncError, projectSyncing }) {
+export default ReportPlatform;
+
+// Preserved for regression checks of stored legacy workspaces; the app uses ReportPlatform.
+export function LegacyReportStudio({ currentUser, onExit, showConfirm, showPrompt, onRefreshProjects, projectSyncError, projectSyncing }) {
     const [facilityId, setFacilityId] = useState('');
     const [projectOptions,setProjectOptions]=useState(()=>studioProjectOptions(dbService.getAll('프로젝트관리')));
     const [restoreVersion,setRestoreVersion]=useState(0);

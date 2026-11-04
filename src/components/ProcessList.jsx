@@ -414,9 +414,9 @@ const ProcessList = ({ showAlert, showConfirm }) => {
             {/* Add/Edit Process Modal */}
             {showAddModal && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-[2px]">
-                    <form onSubmit={handleSaveProcess} className="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-6 space-y-4">
+                    <form onSubmit={handleSaveProcess} className="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5 space-y-3">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-lg font-black text-slate-900">
+                            <h2 className="text-base font-black text-slate-900">
                                 {editingProcess ? '공정 수정' : '새 공정 추가'}
                             </h2>
                             <button
@@ -428,37 +428,37 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                                 }}
                                 className="text-slate-400 hover:text-red-500"
                             >
-                                <X size={20} />
+                                <X size={18} />
                             </button>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-3">
                             <div className="space-y-1">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">공정 명칭</label>
+                                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest">공정 명칭</label>
                                 <input
                                     type="text"
                                     placeholder="공정 제목을 입력하세요"
-                                    className="w-full px-4 py-2 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100"
+                                    className="w-full px-3 py-1.5 bg-slate-50 border-none rounded-lg text-xs focus:ring-2 focus:ring-blue-100"
                                     value={newProcess.title}
                                     onChange={(e) => setNewProcess({ ...newProcess, title: e.target.value })}
                                     required
                                 />
                             </div>
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-2">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={10} /> 시작일</label>
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={9} /> 시작일</label>
                                     <input
                                         type="date"
-                                        className="w-full px-3 py-2 bg-slate-50 border-none rounded-xl text-xs focus:ring-2 focus:ring-blue-100 font-bold text-slate-600"
+                                        className="w-full px-2 py-1.5 bg-slate-50 border-none rounded-lg text-[11px] focus:ring-2 focus:ring-blue-100 font-bold text-slate-600"
                                         value={newProcess.startDate}
                                         onChange={(e) => setNewProcess({ ...newProcess, startDate: e.target.value })}
                                         required
                                     />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={10} /> 종료일</label>
+                                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1"><Calendar size={9} /> 종료일</label>
                                     <input
                                         type="date"
-                                        className="w-full px-3 py-2 bg-slate-50 border-none rounded-xl text-xs focus:ring-2 focus:ring-blue-100 font-bold text-slate-600"
+                                        className="w-full px-2 py-1.5 bg-slate-50 border-none rounded-lg text-[11px] focus:ring-2 focus:ring-blue-100 font-bold text-slate-600"
                                         value={newProcess.endDate}
                                         onChange={(e) => setNewProcess({ ...newProcess, endDate: e.target.value })}
                                         required
@@ -466,13 +466,13 @@ const ProcessList = ({ showAlert, showConfirm }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="pt-2">
+                        <div className="pt-1">
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full py-3 bg-blue-600 text-white rounded-2xl font-black text-sm shadow-lg shadow-blue-100 hover:bg-blue-700 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                className="w-full py-2.5 bg-blue-600 text-white rounded-xl font-black text-xs shadow-lg shadow-blue-100 hover:bg-blue-700 active:scale-95 transition-all flex items-center justify-center gap-2"
                             >
-                                {isSubmitting ? <RefreshCw size={16} className="spin" /> : <Save size={16} />}
+                                {isSubmitting ? <RefreshCw size={14} className="spin" /> : <Save size={14} />}
                                 {editingProcess ? '공정 수정' : '공정 저장'}
                             </button>
                         </div>

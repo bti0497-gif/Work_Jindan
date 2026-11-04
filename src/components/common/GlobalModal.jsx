@@ -30,13 +30,14 @@ const GlobalModal = ({
     const getIcon = () => {
         switch (type) {
             case 'success':
-                return <CheckCircle size={40} className="text-green-500" />;
+                return <CheckCircle size={28} className="text-green-500" />;
             case 'error':
-                return <AlertCircle size={40} className="text-red-500" />;
+                return <AlertCircle size={28} className="text-red-500" />;
             case 'confirm':
-                return <HelpCircle size={40} className="text-blue-500" />;
+            case 'prompt':
+                return <HelpCircle size={28} className="text-blue-500" />;
             default:
-                return <AlertCircle size={40} className="text-blue-500" />;
+                return <AlertCircle size={28} className="text-blue-500" />;
         }
     };
 
@@ -82,8 +83,8 @@ const GlobalModal = ({
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background: rgba(0, 0, 0, 0.4);
-                    backdrop-filter: blur(8px);
+                    background: rgba(0, 0, 0, 0.3);
+                    backdrop-filter: blur(4px);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -92,60 +93,76 @@ const GlobalModal = ({
                 }
                 .global-modal-content {
                     background: #fff;
-                    width: 90%;
-                    max-width: 360px;
-                    border-radius: 24px;
-                    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+                    width: 280px;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
                     overflow: hidden;
                     animation: slideUp 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+                    border: 1px solid #e2e8f0;
                 }
                 .global-modal-body {
-                    padding: 32px 24px 24px 24px;
+                    padding: 24px 20px 16px 20px;
                     text-align: center;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 12px;
+                    gap: 8px;
                 }
                 .global-modal-icon {
-                    margin-bottom: 8px;
+                    margin-bottom: 4px;
                 }
                 .global-modal-title {
-                    font-size: 18px;
+                    font-size: 16px;
                     font-weight: 800;
                     color: #1e293b;
                     margin: 0;
                 }
                 .global-modal-message {
-                    font-size: 14px;
+                    font-size: 13px;
                     font-weight: 500;
                     color: #64748b;
-                    line-height: 1.6;
+                    line-height: 1.5;
                     white-space: pre-wrap;
                 }
-                .global-modal-footer {
-                    padding: 16px 24px 24px 24px;
-                    display: flex;
-                    gap: 12px;
+                .global-modal-input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 6px 12px;
+                    border: 1.5px solid #e2e8f0;
+                    border-radius: 8px;
+                    font-size: 13px;
+                    color: #1e293b;
+                    background: #ffffff;
+                    outline: none;
+                    transition: all 0.2s;
                 }
-                .global-modal-input { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #93c5fd; border-radius: 6px; color: #1e293b; font: inherit; }
+                .global-modal-input::placeholder {
+                    color: #94a3b8;
+                }
+                .global-modal-input:focus {
+                    border-color: #3b82f6;
+                }
+                .global-modal-footer {
+                    padding: 0 20px 20px 20px;
+                    display: flex;
+                    gap: 8px;
+                }
                 .global-modal-btn {
                     flex: 1;
-                    padding: 12px;
-                    border-radius: 12px;
-                    font-size: 14px;
+                    padding: 10px;
+                    border-radius: 8px;
+                    font-size: 13px;
                     font-weight: 700;
                     cursor: pointer;
                     transition: all 0.2s;
                     border: none;
                 }
                 .global-modal-btn.confirm {
-                    background: #3b82f6;
+                    background: #1e293b;
                     color: #fff;
                 }
                 .global-modal-btn.confirm:hover {
-                    background: #2563eb;
-                    transform: translateY(-1px);
+                    background: #334155;
                 }
                 .global-modal-btn.cancel {
                     background: #f1f5f9;
@@ -157,7 +174,7 @@ const GlobalModal = ({
                 }
                 
                 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
             ` }} />
         </div>
     );

@@ -1,0 +1,18 @@
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const material={id:'reference-'+ 'a'.repeat(64),sha256:'a'.repeat(64)},projectId='project:test';
+test('a positioned page anchor inherits its descendant chapter for picture ownership and paragraph scope',async()=>{
+    const {buildWorkflowAnalysis}=await import('../src/services/report/workflowAnalysis.js'),section='Contents/section0.xml',document={format:'hwpx',tables:[],paragraphs:[{id:'anchor',index:0,text:'nested',textSlots:[],area:'body',anchor:{section,path:'/1/0'}},{id:'chapter',index:1,text:'제3장 공정 운영',textSlots:[{text:'제3장 공정 운영'}],area:'body',anchor:{section,path:'/1/0/0/2'}},{id:'next',index:2,text:'제4장 기계',textSlots:[{text:'제4장 기계'}],area:'body',anchor:{section,path:'/1/1'}}]},restoration={objects:[{id:'picture',kind:'pic',area:'body',section,paragraphIndex:0}],furniture:[]};
+    const result=buildWorkflowAnalysis({material,projectId,document,restoration});assert.deepEqual(result.chapters.map(c=>c.number),[3,4]);assert.equal(result.pictures[0].chapterId,'chapter:3');assert.ok(result.chapters[0].paragraphScope.some(p=>p.index===0));
+});
+test('workflow analysis binds project/source, separates format and content roles and preserves review status',async()=>{
+    const {buildWorkflowAnalysis,isWorkflowAnalysisCurrent}=await import('../src/services/report/workflowAnalysis.js');
+    const pdf={source:{sha256:material.sha256},pages:[{number:1,kind:'body',chapter:'제3장 공정 운영',discipline:'process',widthPt:595,heightPt:842,warnings:[],images:[{id:'i',kind:'text-raster',bbox:[10,200,200,220]}],tables:[],lines:[{text:'제3장 공정 운영',bbox:[10,100,200,120],size:18},{text:'주기적인 청소와 유지관리가 필요함',bbox:[10,180,300,200],size:11},{text:'측정 전류 12 A',bbox:[10,220,200,240],size:11}]}]};
+    const result=buildWorkflowAnalysis({material,projectId,pdf});assert.equal(result.sections[1].contentRole,'management');assert.equal(result.sections[2].contentRole,'measurement');assert.equal(result.sections[0].formatRole,'chapterTitle');assert.equal(result.sections[1].chapter,'제3장 공정 운영');assert.equal(result.pictures.length,0);assert.equal(result.imageTextRegions.length,1);assert.equal(result.purpose,'restoration');assert.ok(result.warnings.some(w=>w.includes('OCR 없이')));assert.equal(result.reportReady,false);assert.equal(result.layoutVerified,false);
+    assert.ok(isWorkflowAnalysisCurrent(result,material,projectId));assert.equal(isWorkflowAnalysisCurrent(result,material,'project:other'),false);assert.equal(isWorkflowAnalysisCurrent(result,{...material,sha256:'b'.repeat(64)},projectId),false);
+});
+test('PDF restoration accepts process and mechanical pages without adding an electrical chapter or source-page banners',async()=>{
+    const {pdfAuthoringPlan,writePdfHwpx}=await import('../src/services/report/pdfHwpxWriter.js'),{analyzeReport}=await import('../src/services/report/sourceParser.js');
+    const pdf={schema:'jindan-pdf-analysis/1',projectId,source:{sha256:material.sha256},pages:[{number:1,kind:'body',discipline:'process',widthPt:595,heightPt:842,tables:[],images:[],lines:[{text:'제3장 공정 운영',bbox:[50,100,300,120],size:18},{text:'공정 원문 내용',bbox:[50,150,300,170],size:11}]},{number:2,kind:'blank',discipline:'mechanical',widthPt:595,heightPt:842,tables:[],images:[],lines:[]}]};
+    const plan=pdfAuthoringPlan(pdf,{pages:[1,2]},projectId,'reference'),doc=await analyzeReport(writePdfHwpx(plan).bytes,'restored.hwpx');
+    assert.equal(plan.blocks[0].text,'제3장 공정 운영');assert.ok(plan.blocks.some(b=>b.blankPage));assert.ok(!doc.paragraphs.some(p=>/전기 및|전회 PDF/.test(p.text)));assert.ok(doc.paragraphs.some(p=>p.text==='공정 원문 내용'));
+});

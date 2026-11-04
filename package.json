@@ -62,6 +62,7 @@
     ]
   },
   "dependencies": {
+    "@rhwp/core": "0.8.7",
     "cfb": "1.2.2",
     "dompurify": "3.4.17",
     "electron-log": "^5.1.0",
@@ -71,6 +72,7 @@
     "firebase": "12.19.0",
     "lucide-react": "^0.563.0",
     "nasjidwg": "^0.18.0",
+    "pdf-lib": "1.17.1",
     "pdfjs-dist": "5.4.624",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

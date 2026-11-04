@@ -1,8 +1,12 @@
+import {paragraphRole} from './paragraphRole.js';
 import { strFromU8, unzipSync } from 'fflate';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import { analyzeReport } from './sourceParser.js';
+import {paragraphStyleValues} from './paragraphFormatting.js';
+import {nativeTableMarginProfiles} from './pairedTableMargins.js';
+import {nativeCellTextFormat} from './pairedCellFormatting.js';
 
-export const REFERENCE_ANALYZER_VERSION = 1;
+export const REFERENCE_ANALYZER_VERSION = 4;
 const local = key => key.split(':').at(-1);
 const attributes = source => Object.fromEntries([...source.matchAll(/([\w.:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)].map(match => [local(match[1]), match[2] ?? match[3]]));
 const tags = (xml, name) => [...xml.matchAll(new RegExp(`<((?:[\\w.-]+:)?${name})\\b([^<>]*?)(?:\\/>|>([\\s\\S]*?)<\\/\\1\\s*>)`, 'g'))].map(match => ({ attrs: attributes(match[2]), content: match[3] || '', position: match.index }));
@@ -53,29 +57,39 @@ export async function analyzeReferenceSource(input, filename = '') {
     const shapes = new Map(nodes(header, 'charPr').map(shape => [String(shape.id), shape]));
     const paraShapes = new Map(nodes(header, 'paraPr').map(shape => [String(shape.id), shape]));
     const styles = new Map(nodes(header, 'style').map(style => [String(style.id), style]));
-    const typography = histogram(document.paragraphs.flatMap(paragraph => paragraph.textSlots.filter(slot => slot.text.trim()).map(slot => {
+    const bodyParagraphs=document.paragraphs.filter(p=>p.area==='body'&&!p.tableId&&p.textSlots.some(s=>s.text.trim())&&!/^(?:제\s*\d+\s*장|\d+(?:\.\d+){1,4}\.?\s)/.test(p.text));
+    const typographyFor=paragraphs=>histogram(paragraphs.flatMap(paragraph => paragraph.textSlots.filter(slot => slot.text.trim()).map(slot => {
         const shape = shapes.get(String(slot.charShapeId));
-        return shape ? { font: fonts.get(String(shape.fontRef?.hangul)) || '서체 참조 확인 필요', sizePt: Number(shape.height) / 100, bold: Object.hasOwn(shape, 'bold') } : null;
+        return shape ? { font: fonts.get(String(shape.fontRef?.hangul)) || '서체 참조 확인 필요', sizePt: Number(shape.height) / 100, bold: Object.hasOwn(shape, 'bold'),widthPercent:Number(shape.ratio?.hangul??100),spacingPercent:Number(shape.spacing?.hangul??0) } : null;
     })).filter(Boolean));
-    const paragraphFormats = histogram(document.paragraphs.filter(paragraph => paragraph.text).map(paragraph => {
+    const typography=typographyFor(document.paragraphs),bodyTypography=typographyFor(bodyParagraphs);
+    const formatsFor=paragraphs=>histogram(paragraphs.filter(paragraph => paragraph.text).map(paragraph => {
         const shape = paraShapes.get(String(paragraph.paragraphShapeId));
         return { styleId: String(paragraph.styleId), name: styles.get(String(paragraph.styleId))?.name || '', paragraphShapeId: String(paragraph.paragraphShapeId),
-            align: shape?.align?.horizontal || '', lineSpacing: nodes(shape || {}, 'lineSpacing')[0] || null };
+            align: shape?.align?.horizontal || '', ...paragraphStyleValues(shape,nodes) };
     }), 16);
+    const paragraphFormats=formatsFor(document.paragraphs),bodyParagraphFormats=formatsFor(bodyParagraphs);
+    const roleParagraphs={chapterTitle:[],subheading:[],body:[],tableCaption:[],tableBody:[]};
+    for(const p of document.paragraphs){if(p.area&&p.area!=='body')continue;const text=p.textSlots.map(s=>s.text).join('');if(!text.trim())continue;const role=paragraphRole(text,!!p.tableId);roleParagraphs[role].push(p);}
+    const roleTypography=Object.fromEntries(Object.entries(roleParagraphs).map(([role,paragraphs])=>[role,typographyFor(paragraphs)]));
+    const roleParagraphFormats=Object.fromEntries(Object.entries(roleParagraphs).map(([role,paragraphs])=>[role,formatsFor(paragraphs)]));
     const sections = [], headers = [], footers = [], pageNumbers = [];
-    let pictureCount = 0, explicitPageBreaks = 0;
+    let pictureCount = 0, explicitPageBreaks = 0, explicitLineBreaks=0;
     for (const [name, data] of Object.entries(files).filter(([name]) => /section\d+\.xml$/.test(name))) {
         const xml = strFromU8(data);
         for (const page of tags(xml, 'pagePr')) {
             const margin = opening(page.content, 'margin')[0] || {};
             sections.push({ section: name, position: page.position, widthMm: mm(page.attrs.width), heightMm: mm(page.attrs.height),
+                marginsHwpUnit:Object.fromEntries(['left','right','top','bottom','header','footer','gutter'].filter(k=>Number.isFinite(Number(margin[k]))).map(k=>[k,Number(margin[k])])),
                 marginsMm: Object.fromEntries(['left', 'right', 'top', 'bottom', 'header', 'footer', 'gutter'].map(key => [key, mm(margin[key])])),
                 pageStarts: opening(xml, 'startNum'), visibility: opening(xml, 'visibility'), hiddenFurniture: opening(xml, 'hide') });
         }
         for (const kind of ['header', 'footer']) for (const area of tags(xml, kind)) (kind === 'header' ? headers : footers).push({ section: name, position: area.position, applyPageType: area.attrs.applyPageType || '', text: plain(area.content).slice(0, 240), hasShapes: /<(?:[\w.-]+:)?(?:line|rect|pic|container)\b/.test(area.content) });
         pageNumbers.push(...opening(xml, 'pageNum').map(value => ({ section: name, ...value })));
+        pageNumbers.push(...tags(xml,'autoNum').filter(value=>value.attrs.numType==='PAGE').map(value=>({section:name,...value.attrs,formatType:opening(value.content,'autoNumFormat')[0]?.type||'DIGIT',field:true})));
         pictureCount += opening(xml, 'pic').length;
         explicitPageBreaks += opening(xml, 'p').filter(attrs => attrs.pageBreak === '1').length;
+        explicitLineBreaks += opening(xml,'lineBreak').length;
     }
     const catalogOnly = /목차|차례/.test(filename), chapterMap = new Map(), headings = [], captions = [];
     for (const paragraph of document.paragraphs.filter(paragraph => !paragraph.tableId && paragraph.text)) {
@@ -90,10 +104,16 @@ export async function analyzeReferenceSource(input, filename = '') {
         const label = caption(text);
         if (label && captions.length < 200) captions.push({ ...label, paragraphId: paragraph.id });
     }
-    return { version: REFERENCE_ANALYZER_VERSION, source: document.source, catalogOnly, chapters: [...chapterMap.values()].sort((a, b) => a.number - b.number), headings, captions,
-        counts: { paragraphs: document.paragraphs.length, tables: document.tables.length, cells: document.tables.reduce((sum, table) => sum + table.cells.length, 0), pictures: pictureCount, explicitPageBreaks },
-        sections, headers: headers.slice(0, 32), footers: footers.slice(0, 32), pageNumbers: pageNumbers.slice(0, 64), typography, paragraphFormats,
+    const profile={ version: REFERENCE_ANALYZER_VERSION, source: document.source, catalogOnly, chapters: [...chapterMap.values()].sort((a, b) => a.number - b.number), headings, captions,
+        characterStyles:Object.fromEntries([...shapes].map(([id,shape])=>[id,{font:fonts.get(String(shape.fontRef?.hangul))||'서체 참조 확인 필요',sizePt:Number(shape.height)/100,widthPercent:Number(shape.ratio?.hangul??100),spacingPercent:Number(shape.spacing?.hangul??0),useFontSpace:shape.useFontSpace==='1',bold:Object.hasOwn(shape,'bold'),italic:Object.hasOwn(shape,'italic'),color:shape.textColor,reconstructionSupported:(!shape.underline||shape.underline.type==='NONE')&&(!shape.strikeout||shape.strikeout.shape==='NONE'||shape.strikeout.type==='NONE')&&(!shape.outline||shape.outline.type==='NONE')&&(!shape.shadow||shape.shadow.type==='NONE')&&Object.values(shape.relSz||{}).every(v=>Number(v)===100)&&Object.values(shape.offset||{}).every(v=>Number(v)===0)}])),
+        paragraphStyles:Object.fromEntries([...paraShapes].map(([id,shape])=>[id,paragraphStyleValues(shape,nodes)])),
+        tableMarginProfiles:nativeTableMarginProfiles(document,files),
+        counts: { paragraphs: document.paragraphs.length, tables: document.tables.length, cells: document.tables.reduce((sum, table) => sum + table.cells.length, 0), pictures: pictureCount, explicitPageBreaks,explicitLineBreaks },
+        sections, headers: headers.slice(0, 32), footers: footers.slice(0, 32), pageNumbers: pageNumbers.slice(0, 64), typography, paragraphFormats,bodyTypography,bodyParagraphFormats,roleTypography,roleParagraphFormats,
         tableShapes: histogram(document.tables.map(table => ({ rows: table.rows, columns: table.columns, merged: table.cells.some(cell => cell.rowSpan > 1 || cell.colSpan > 1) }))),
         tableExamples: document.tables.slice(0, 8).map(table => ({ id: table.id, title: table.title.slice(0, 160), rows: table.rows, columns: table.columns, headerLabels: table.cells.filter(cell => cell.row === 0).slice(0, 12).map(cell => cell.text.slice(0, 100)) })),
         limitations: ['HWPX 구조에서 추출한 양식 후보이며 PDF와 시각 대조·한 쪽 재현 검증 전입니다.', '명시적 쪽 나눔 수는 실제 쪽 수가 아닙니다. 빈 쪽과 홀수 쪽 시작은 PDF로 확인해야 합니다.', '이전 진단의 측정값·판정·법령을 새 보고서 값으로 자동 재사용하지 않습니다.'] };
+    const byCell=new Map(document.tables.flatMap(t=>t.cells.map(c=>[c.id,c])));
+    for(const table of Object.values(profile.tableMarginProfiles))for(const cell of table.cells)cell.textFormat=nativeCellTextFormat(byCell.get(cell.referenceCellId),document,profile);
+    return profile;
 }

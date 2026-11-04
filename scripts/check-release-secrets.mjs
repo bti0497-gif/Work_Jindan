@@ -12,6 +12,7 @@ const secretNames = [
     'GOOGLE_CLIENT_SECRET', 'VITE_GOOGLE_CLIENT_SECRET',
     'GOOGLE_REFRESH_TOKEN', 'VITE_GOOGLE_REFRESH_TOKEN',
     'SUPABASE_SERVICE_ROLE_KEY', 'VITE_SUPABASE_SERVICE_ROLE_KEY',
+    'OPENAI_API_KEY', 'VITE_OPENAI_API_KEY',
     'GEMINI_API_KEY', 'VITE_GEMINI_API_KEY'
 ].filter(name => env[name]);
 const output = path.resolve('dist');

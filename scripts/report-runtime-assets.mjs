@@ -8,6 +8,8 @@ export function reportRuntimeAssets() {
     const pdfRoot=path.dirname(require.resolve('pdfjs-dist/package.json'));
     for(const dir of ['cmaps','standard_fonts','wasm'])for(const name of fs.readdirSync(path.join(pdfRoot,dir)))if(/\.(?:bcmap|pfb|ttf|wasm)$/.test(name)||/^LICENSE/.test(name))add(`pdf/${dir}/${name}`,path.join(pdfRoot,dir,name));
     add('pdf/LICENSE',path.join(pdfRoot,'LICENSE'));
+    add('pdf/LICENSE-pdf-lib',path.join(path.dirname(require.resolve('pdf-lib/package.json')),'LICENSE.md'));
+    add('hwp/LICENSE-rhwp',path.join(path.dirname(require.resolve('@rhwp/core/package.json')),'LICENSE'));
     const coreRoot=path.dirname(require.resolve('tesseract.js-core/package.json'));
     for(const name of fs.readdirSync(coreRoot))if(/^tesseract-core(?:-simd|-relaxedsimd)?-lstm\.wasm(?:\.js)?$/.test(name))add(`ocr/${name}`,path.join(coreRoot,name));
     add('ocr/worker.min.js',path.join(path.dirname(require.resolve('tesseract.js/package.json')),'dist','worker.min.js'));

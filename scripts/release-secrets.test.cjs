@@ -9,7 +9,7 @@ test('release check requires an explicit Drive exception and still blocks other 
     const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'jindan-release-check-'));
     const script = path.resolve('scripts/check-release-secrets.mjs');
     const env = { ...process.env };
-    for (const key of Object.keys(env)) if (/^(?:VITE_)?(?:GOOGLE_|SUPABASE_|GEMINI_)/.test(key)) delete env[key];
+    for (const key of Object.keys(env)) if (/^(?:VITE_)?(?:GOOGLE_|SUPABASE_|GEMINI_|OPENAI_)/.test(key)) delete env[key];
     try {
         await fs.mkdir(path.join(directory, 'dist'));
         const writeFixture = async other => {
@@ -29,6 +29,9 @@ test('release check requires an explicit Drive exception and still blocks other 
         assert.equal(blocked.status, 1);
         assert.match(blocked.stderr, /SUPABASE_SERVICE_ROLE_KEY/);
         assert.equal((blocked.stdout + blocked.stderr).includes('synthetic-service'), false);
+        await fs.writeFile(path.join(directory,'.env.local'),'OPENAI_API_KEY=sk-synthetic-openai-release-check\n');
+        await fs.writeFile(path.join(directory,'dist','app.js'),'"sk-synthetic-openai-release-check";');
+        const openaiBlocked=run(true);assert.equal(openaiBlocked.status,1);assert.match(openaiBlocked.stderr,/OPENAI_API_KEY/);assert.ok(!(openaiBlocked.stdout+openaiBlocked.stderr).includes('sk-synthetic-openai-release-check'));
     } finally {
         assert.equal(path.dirname(path.resolve(directory)), path.resolve(os.tmpdir()));
         assert.ok(path.basename(directory).startsWith('jindan-release-check-'));

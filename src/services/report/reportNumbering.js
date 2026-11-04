@@ -1,6 +1,6 @@
 import { strFromU8, strToU8 } from 'fflate';
 import { XMLValidator } from 'fast-xml-parser';
-import { indexHwpxSection, packHwpxPackage, readHwpxPackage } from './hwpxPackage.js';
+import { indexHwpxSection, packHwpxPackage, readHwpxPackage,removeStaleImagePreview } from './hwpxPackage.js';
 
 const local = node => node.name.split(':').at(-1);
 const kindOf = type => ({ TABLE: '표', PICTURE: '그림' })[type];
@@ -120,12 +120,13 @@ function attributePatch(xml, node, name, value) {
 }
 
 /** Repair displayed caption ordinals and unambiguous references without rebuilding document XML. */
-export function repairReportNumbering(input) {
+export function repairReportNumbering(input,{startOrdinals={},initialChapter=null,requireContext=false}={}) {
+    if(!startOrdinals||Array.isArray(startOrdinals)||typeof startOrdinals!=='object'||Object.entries(startOrdinals).some(([k,n])=>!/^(표|그림):(?:\d+(?:-\d+)*)?$/.test(k)||!Number.isInteger(n)||n<1||n>999999)||initialChapter!=null&&(!Number.isInteger(initialChapter)||initialChapter<1||initialChapter>999))throw new Error('논리 장과 표·그림 시작 번호 문맥을 확인하세요.');
     const entries = readHwpxPackage(input), sections = sectionRecords(entries);
     const report = { status: 'checked', tables: 0, figures: 0, captions: [], corrections: [], warnings: [], uncaptionedObjects: [] };
     const warn = message => { if (!report.warnings.includes(message)) report.warnings.push(message); };
-    const edits = [], counters = new Map(), targets = new Map(), captions = new Set(), assigned = new Map(), last = new Map(), nativeCaptions = [];
-    let chapter = null;
+    const edits = [], counters = new Map(Object.entries(startOrdinals).map(([k,n])=>[k,n-1])), targets = new Map(), captions = new Set(), assigned = new Map(), last = new Map(), nativeCaptions = [];
+    let chapter = initialChapter;
     for (const section of sections) for (const record of section.records) {
         if (!ancestor(record.node, node => ['tc', 'caption', 'header', 'footer', 'footNote', 'endNote'].includes(local(node)))) {
             const heading = /^\s*제\s*(\d+)\s*장(?:\s|[.·:：]|$)/.exec(record.text.normalize('NFKC'));
@@ -139,6 +140,7 @@ export function repairReportNumbering(input) {
         }
         if (item.wrongKind) { captions.add(record); warn(`${location}: 개체 종류와 표·그림 제목이 다릅니다. 제목을 확인하세요.`); continue; }
         const prefix = item.parts.slice(0, -1).map(Number).join('-'), scope = `${item.kind}:${prefix}`;
+        if(requireContext&&!Object.hasOwn(startOrdinals,scope)){captions.add(record);warn(`${location}: 앞 파일과 연결할 시작 번호 문맥이 없어 원래 번호를 보존했습니다.`);continue;}
         const continuation = /(?:[（([]\s*(?:계\s*속|continued)\s*[）)\]]|(?:계\s*속|continued)\s*$)/i.test(record.text);
         const previous = last.get(scope);
         if (continuation && (!previous || previous.key !== item.key)) {
@@ -258,6 +260,6 @@ export function repairReportNumbering(input) {
         entries[section.section] = strToU8(xml); changed = true;
     }
     report.status = report.warnings.length ? 'review-required' : report.corrections.length ? 'corrected' : 'checked';
-    if (changed) delete entries['Preview/PrvImage.png'];
+    if (changed) removeStaleImagePreview(entries);
     return { bytes: changed ? packHwpxPackage(entries) : input, report };
 }

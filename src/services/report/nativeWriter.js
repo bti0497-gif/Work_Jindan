@@ -1,6 +1,7 @@
 import { replaceHwpxSlots } from './hwpxPackage.js';
 import { narrativeValue, validateData } from './reportEngine.js';
 import { repairReportNumbering } from './reportNumbering.js';
+import {planStyledTextReplacement} from './styledTextReplacement.js';
 
 export function fieldTextSlots(workspace, field) {
     if (!field.binding) return [];
@@ -48,9 +49,9 @@ export function planNativeWrite(workspace, mode = 'draft') {
         if (mode === 'draft' && field.required && missing && !narrative) { errors.push(`${field.label}: 교체할 새 내용이 없습니다.`); continue; }
         if (mode === 'draft' && missing && narrative) reviewWarnings.push(`${field.label}: 담당자 작성·검토 필요`);
         const text = missing ? narrative ? '[담당자 작성·검토 필요]' : '미입력·검토 필요' : `${narrative && workspace.interpretationStale ? '[데이터 변경 후 진단 문구 재검토 필요]\n' : ''}${value}`;
-        const formatted = missing ? text : formatFieldValue(field, selected[0], text);
-        selected.forEach((slot, index) => replacements.push({ fieldId: field.id, section: slot.section, slotId: slot.id, expectedText: slot.text,
-            wholeText: wholeCell, value: mode === 'blank' || index > 0 ? '' : formatted }));
+        const original=wholeCell?{...selected[0],text:selected.map((s,i)=>`${i&&s.paragraphIndex!==selected[i-1].paragraphIndex?'\n':''}${s.text}`).join('')}:selected[0];
+        const formatted = missing ? text : formatFieldValue(field, original, text);
+        try{replacements.push(...planStyledTextReplacement(selected,mode==='blank'?'':formatted,{slotValues:mode==='blank'?undefined:field.outputSlotValues}).map(edit=>({...edit,fieldId:field.id,wholeText:wholeCell||edit.wholeText})));}catch(error){errors.push(`${field.label}: ${error.message}`);}
     }
     return {
         mode, sourceSha256: workspace.source.sha256, errors: [...new Set(errors)], replacements,
@@ -60,11 +61,12 @@ export function planNativeWrite(workspace, mode = 'draft') {
     };
 }
 
-export async function writeNativeReport(workspace, sourceBytes, mode = 'draft') {
+export async function writeNativeReport(workspace, sourceBytes, mode = 'draft',options={}) {
     const plan = planNativeWrite(workspace, mode);
     if (plan.errors.length) throw new Error(plan.errors.join('\n'));
-    const output = await replaceHwpxSlots(sourceBytes, workspace.source.sha256, plan.replacements);
-    const numbering = mode === 'draft' ? repairReportNumbering(output.bytes) : null;
+    const output = plan.replacements.length?await replaceHwpxSlots(sourceBytes, workspace.source.sha256, plan.replacements,{clearTextControls:true}):{bytes:new Uint8Array(sourceBytes)};
+    if(options.renumber&&(!options.numberingContext||!options.numberingContext.startOrdinals))throw new Error('번호 수정에는 논리 장과 앞 파일의 시작 번호 문맥을 지정하세요.');
+    const numbering = mode === 'draft'&&options.renumber ? repairReportNumbering(output.bytes,{...options.numberingContext,requireContext:true}) : null;
     return { ...output, bytes: numbering?.bytes || output.bytes,
         review: { ...plan, numbering: numbering?.report || null,
             warnings: [...plan.warnings, ...(numbering?.report.warnings || [])],

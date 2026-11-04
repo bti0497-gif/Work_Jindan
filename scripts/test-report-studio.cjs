@@ -430,6 +430,41 @@ async function projectWorkbenchChecks() {
     return passed;
 }
 
+async function restorationChecks(){
+    const lib=window.__library,wait=ms=>new Promise(r=>setTimeout(r,ms)),named=label=>[...document.querySelectorAll('[aria-label]')].find(e=>e.getAttribute('aria-label')===label);
+    const until=async(fn,label)=>{for(let i=0;i<500;i++){const value=await fn();if(value)return value;if(document.querySelector('[role="alert"]'))throw new Error(label+': '+document.querySelector('[role="alert"]').textContent);await wait(30);}throw new Error('Timeout: '+label);};
+    const check=(value,label)=>{if(!value)throw new Error(label);};
+    const fill=(input,value)=>{const type=input.tagName==='SELECT'?HTMLSelectElement:input.tagName==='TEXTAREA'?HTMLTextAreaElement:HTMLInputElement;Object.getOwnPropertyDescriptor(type.prototype,'value').set.call(input,value);input.dispatchEvent(new Event(input.tagName==='SELECT'?'change':'input',{bubbles:true}));};
+    const upload=(input,files)=>{const transfer=new DataTransfer();files.forEach(f=>transfer.items.add(f));input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));};
+    fill(named('작성할 시설 보고서'),'project:baengnyeong');await until(()=>document.querySelector('.studio-electrical'),'restoration project');
+    const {writePdfHwpx}=await import('/src/services/report/pdfHwpxWriter.js'),{inspectRestoration}=await import('/src/services/report/restoration.js'),{unzipSync,strFromU8}=await import('/node_modules/fflate/esm/browser.js');
+    const canvas=document.createElement('canvas');canvas.width=32;canvas.height=32;canvas.getContext('2d').fillRect(0,0,32,32);
+    const pictureBytes=new Uint8Array(await(await new Promise(resolve=>canvas.toBlob(resolve,'image/png'))).arrayBuffer());
+    const source=writePdfHwpx({schema:'jindan-pdf-authoring/1',projectId:'project:baengnyeong',mode:'reference',source:{sha256:'a'.repeat(64)},blocks:[{kind:'heading',text:'제5장 전기설비'},{kind:'paragraph',text:'2023년 전류 측정 결과 양호함'},{kind:'picture',images:[{id:'photo',bbox:[0,0,100,100]}]}],mapping:[],editedLocations:[],warnings:[]},{spec:{header:'전회 기관명',footer:'기술진단 보고서'},pictures:{photo:{bytes:pictureBytes,width:32,height:32}}});
+    upload(named('프로젝트 기존 보고서 파일 선택'),[new File([source.bytes],'복원 검증.hwpx')]);
+    const original=await until(async()=>{const b=await lib.loadStudio('studio-test','project:baengnyeong');return b?.activeReportId&&document.querySelector('.studio-report-spec small')?.textContent==='복원 검증.hwpx'?b:null;},'native restoration inspector');
+    const sourceId=original.activeReportId,material=(await lib.listMaterials('studio-test')).find(m=>m.id===sourceId),info=inspectRestoration(source.bytes,material.sha256),slot=info.furniture.find(a=>a.kind==='header').slots[0],picture=info.objects.find(o=>o.kind==='pic');
+    fill(named(`${slot.slotId} 머리말 꼬리말 편집`),'금회 기관명');fill(named('보고서 장평(%)'),'94');fill(named('보고서 자간(%)'),'-2');fill(named('보고서 좌 여백'),'23');
+    upload(named('복원본 교체 그림 등록'),[new File([pictureBytes],'금회 사진.png',{type:'image/png'})]);
+    const imageId='image-'+[...new Uint8Array(await crypto.subtle.digest('SHA-256',pictureBytes))].map(n=>n.toString(16).padStart(2,'0')).join('');
+    const image=await until(()=>[...(named(`${picture.id} 교체 그림`)?.options||[])].find(o=>o.value===imageId),'project image linked');fill(named(`${picture.id} 교체 그림`),image.value);
+    document.querySelector('.studio-restoration-inventory').open=true;const decision=[...document.querySelectorAll('.studio-restoration-inventory select')].find(e=>e.getAttribute('aria-label')?.endsWith('교체 여부'));fill(decision,'replace');
+    // Review changes must not discard unsaved inspector edits.
+    await wait(80);check(named('보고서 장평(%)').value==='94','Inventory updates retain pending inspector edits');
+    [...document.querySelectorAll('button')].find(b=>b.textContent==='서식 반영 HWPX 후보 만들기').click();
+    const book=await until(async()=>{const b=await lib.loadStudio('studio-test','project:baengnyeong');return b.restorationRuns?.length?b:null;},'native format export');
+    const bytes=new Uint8Array(await(await lib.loadMaterial('studio-test',book.activeReportId)).arrayBuffer()),files=unzipSync(bytes),xml=strFromU8(files['Contents/section0.xml']),header=strFromU8(files['Contents/header.xml']);
+    check(xml.includes('금회 기관명')&&header.includes('hangul="94"')&&xml.includes('left="6520"'),'Native header, typography and margins applied');
+    check(xml.includes('binaryItemIDRef="jindanReplacement1"')&&files['BinData/image0.png'],'Selected picture replaced while original asset preserved');
+    check(book.restorationReviews[sourceId].choices[decision.getAttribute('aria-label').replace(' 교체 여부','')]==='replace','Review decisions saved against original');
+    check((await lib.loadMaterial('studio-test',sourceId)).size===source.bytes.length,'Immutable original retained');
+    const archive=await window.__archives.readProjectArchive(await window.__archives.exportProjectArchive('studio-test',book,'복원 검증'));check(archive.manifest.book.restorationRuns.length===1,'Restoration history and linked images survive portable archive');
+    await until(()=>document.querySelector('.studio-report-spec small')?.textContent==='복원 검증-서식편집.hwpx','candidate inspector ready');
+    check(named('보고서 머릿글')===undefined&&document.querySelector('.studio-furniture-editor textarea')?.value==='금회 기관명','Candidate reanalyses rich furniture instead of copying stale source slots');
+    check(named('보고서 장평(%)').value==='94'&&named('보고서 자간(%)').value==='-2','Candidate defaults use body styles instead of repeated header styles');
+    console.log('PASS native restoration inspector, picture replacement, inventory and portable save');return ['native restoration inspector, picture replacement, inventory and portable save'];
+}
+
 async function browserMain() {
     const { app, BrowserWindow } = require('electron');
     app.setPath('userData', process.env.REPORT_STUDIO_TEST_DATA);
@@ -472,6 +507,25 @@ async function browserMain() {
         passed.push(...await window.webContents.executeJavaScript(`(${electricalChecks.toString()})()`));
         passed.push(...await window.webContents.executeJavaScript(`(${projectWorkbenchChecks.toString()})()`));
         await capture('project-workbench.png');
+        passed.push(...await window.webContents.executeJavaScript(`(${restorationChecks.toString()})()`));
+        await capture('native-restoration.png');
+        const layoutMeasure=()=>window.webContents.executeJavaScript(`(()=>{const box=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};return {left:box('.studio-navigation'),right:box('.studio-inspector'),center:box('.studio-center-panel'),leftHandle:box('.resize-left'),rightHandle:box('.resize-right'),scale:Number(document.querySelector('.studio-fit-page').dataset.pageScale)};})()`);
+        const resize=async(side,delta)=>{const before=await layoutMeasure(),handle=before[`${side}Handle`],factor=window.webContents.getZoomFactor(),x=Math.round((handle.x+handle.width/2)*factor),y=Math.round((handle.y+Math.min(160,handle.height/2))*factor),dx=Math.round(delta*factor);window.webContents.focus();window.webContents.sendInputEvent({type:'mouseMove',x,y});window.webContents.sendInputEvent({type:'mouseDown',x,y,button:'left',clickCount:1,modifiers:['leftButtonDown']});await new Promise(resolve=>setTimeout(resolve,30));window.webContents.sendInputEvent({type:'mouseMove',x:x+dx,y,button:'left',modifiers:['leftButtonDown']});await new Promise(resolve=>setTimeout(resolve,80));window.webContents.sendInputEvent({type:'mouseUp',x:x+dx,y,button:'left',clickCount:1});await new Promise(resolve=>setTimeout(resolve,80));return layoutMeasure();};
+        const initialLayout=await layoutMeasure(),leftLayout=await resize('left',80);
+        assert.ok(leftLayout.left.width>initialLayout.left.width+50,JSON.stringify({initialLayout,leftLayout}));assert.ok(leftLayout.scale<initialLayout.scale,'Growing sidebar scales the whole page down');
+        const wideLayout=await resize('right',-150);assert.ok(wideLayout.right.width>leftLayout.right.width+100,JSON.stringify({leftLayout,wideLayout}));
+        const wideForm=await window.webContents.executeJavaScript(`getComputedStyle(document.querySelector('.studio-report-spec .studio-property-row')).gridTemplateColumns.split(' ').filter(value=>parseFloat(value)>0).length`);assert.equal(wideForm,2,'Wide inspector places paired fields side by side');
+        await capture('resizable-wide-inspector.png');
+        await window.webContents.executeJavaScript(`document.querySelector('.resize-right').dispatchEvent(new KeyboardEvent('keydown',{key:'Home',bubbles:true}));`);
+        await new Promise(resolve=>setTimeout(resolve,100));
+        const narrowForm=await window.webContents.executeJavaScript(`getComputedStyle(document.querySelector('.studio-report-spec .studio-property-row')).gridTemplateColumns.split(' ').filter(value=>parseFloat(value)>0).length`);assert.equal(narrowForm,1,'Narrow inspector stacks form fields');
+        const grown=await resize('right',-150);await capture('resizable-workspace.png');
+        const savedLayout=await window.webContents.executeJavaScript(`JSON.parse(localStorage.getItem('jindan-studio-layout:'+JSON.stringify('studio-test')))`);
+        const layoutLoaded=new Promise(resolve=>window.webContents.once('did-finish-load',resolve));window.reload();await layoutLoaded;
+        await window.webContents.executeJavaScript(`new Promise((resolve,reject)=>{let tries=0;const timer=setInterval(()=>{const select=document.querySelector('[aria-label="작성할 시설 보고서"]');if(select&&!select.disabled){clearInterval(timer);Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(select,'project:baengnyeong');select.dispatchEvent(new Event('change',{bubbles:true}));resolve();}else if(++tries>300){clearInterval(timer);reject(new Error('Project selector did not reload'));}},30);})`);
+        await window.webContents.executeJavaScript(`new Promise((resolve,reject)=>{let tries=0;const timer=setInterval(()=>{if(document.querySelector('.studio-report-spec')){clearInterval(timer);resolve();}else if(++tries>300){clearInterval(timer);reject(new Error('Layout reload failed'));}},30);})`);
+        const restoredLayout=await layoutMeasure();assert.ok(Math.abs(restoredLayout.left.width-grown.left.width)<2&&Math.abs(restoredLayout.right.width-grown.right.width)<2,'Sidebar widths survive reload');
+        passed.push('pointer drag and keyboard resizing, automatic page scale, responsive inspector fields and width persistence');
         await window.webContents.executeJavaScript(`document.querySelector('[aria-label="작성할 시설 보고서"]').value='project:yeonpyeong'; document.querySelector('[aria-label="작성할 시설 보고서"]').dispatchEvent(new Event('change',{bubbles:true}));`);
         await new Promise(resolve => setTimeout(resolve, 180)); await capture('electrical.png');
         window.setSize(820, 950); await new Promise(resolve => setTimeout(resolve, 150));
@@ -479,8 +533,9 @@ async function browserMain() {
         await capture('compact.png');
         // Windows fractional scaling can round document width up by one CSS pixel.
         assert.notEqual(responsive.display, 'none', JSON.stringify(responsive)); assert.ok(responsive.scroll <= responsive.width + 1, JSON.stringify(responsive)); passed.push('compact window and accessible settings toggle');
+        const compactPreferences=await window.webContents.executeJavaScript(`JSON.parse(localStorage.getItem('jindan-studio-layout:'+JSON.stringify('studio-test')))`);assert.deepEqual(compactPreferences,savedLayout,'Compact windows preserve preferred desktop widths');
         console.log(JSON.stringify({ scenarios: passed.length, passed, screenshots: output }, null, 2));
-    } catch (error) { console.error(error); process.exitCode = 1; }
+    } catch (error) { console.error(error);await fs.writeFile(path.join(__dirname,'..','.firebase','report-studio-check','error.png'),(await window.webContents.capturePage()).toPNG()); process.exitCode = 1; }
     finally { clearTimeout(deadline); window.destroy(); app.exit(process.exitCode || 0); }
 }
 
@@ -496,7 +551,7 @@ async function nodeMain() {
     for (let index = 0; index < objects.length; index++) { offsets.push(pdf.length); pdf += `${index + 1} 0 obj\n${objects[index]}\nendobj\n`; }
     const xref = pdf.length; pdf += `xref\n0 6\n0000000000 65535 f \n${offsets.slice(1).map(offset => String(offset).padStart(10, '0') + ' 00000 n \n').join('')}trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
     const entry = `import React from 'react'; import {createRoot} from 'react-dom/client';
-        import ReportStudio from '/src/components/ReportStudio.jsx'; import * as library from '/src/services/report/reportLibrary.js'; import * as references from '/src/services/report/referenceProjects.js'; import {zipSync,strToU8} from 'fflate';
+        import {LegacyReportStudio as ReportStudio} from '/src/components/ReportStudio.jsx'; import * as library from '/src/services/report/reportLibrary.js'; import * as references from '/src/services/report/referenceProjects.js'; import {zipSync,strToU8} from 'fflate';
         import '/src/index.css';
         import {dbService} from '/src/services/dbService.js';window.__dbService=dbService;
         dbService.setTable('프로젝트관리',[{id:'yeonpyeong',title:'연평도 검증 프로젝트'},{id:'baengnyeong',title:'백령도 검증 프로젝트'},{id:'daecheong',title:'대청도 검증 프로젝트'}]);
@@ -514,6 +569,7 @@ async function nodeMain() {
         legacy.close();
         createRoot(document.getElementById('root')).render(React.createElement(ReportStudio,{currentUser:{person_id:'studio-test'},onExit:()=>{},showConfirm:async()=>window.__studioTest.confirm,showPrompt:async()=> '제2장 기계 진단'}));`;
     const server = await createServer({ configFile: false, root: path.resolve(__dirname, '..'), envDir: temporary,
+        cacheDir: path.join(temporary, 'vite-cache'),
         optimizeDeps: { include: ['react', 'react-dom/client', 'lucide-react', 'fflate', 'cfb', 'fast-xml-parser'] },
         server: { host: '127.0.0.1', port: 0 }, plugins: [react(), { name: 'isolated-report-studio-test',
             resolveId(source) { if (source === '/__studio_test.jsx') return '\0studio-test-entry.jsx'; },

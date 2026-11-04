@@ -4,10 +4,15 @@ async function invoke(channel, data) {
     if (result === undefined && channel !== 'report-ai-cancel') throw new Error('AI 연결을 적용하려면 앱을 다시 실행하세요.');
     return result;
 }
-export const getReportAiStatus = () => invoke('report-ai-status');
-export const configureReportAi = config => invoke('report-ai-configure', config);
-export const listReportAiModels = () => invoke('report-ai-models');
+export const getReportAiStatus = async () => {
+    const status=await invoke('report-ai-status');
+    if(status?.provider!=='openai')throw new Error('OpenAI 연결을 적용하려면 개발앱을 완전히 종료한 뒤 다시 실행하세요.');
+    return status;
+};
+export const configureReportAi = async config => {await getReportAiStatus();return invoke('report-ai-configure', config);};
+export const listReportAiModels = async () => {await getReportAiStatus();return invoke('report-ai-models');};
 export function startReportAi(request) {
     const id = crypto.randomUUID();
-    return { id, result: invoke('report-ai-run', { id, request }), cancel: () => invoke('report-ai-cancel', { id }) };
+    const controller=new AbortController();
+    return { id, result: getReportAiStatus().then(()=>{if(controller.signal.aborted)throw new Error('AI 요청을 취소했습니다.');return invoke('report-ai-run', { id, request });}), cancel: () => {controller.abort();return invoke('report-ai-cancel', { id });} };
 }

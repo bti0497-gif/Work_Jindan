@@ -7,5 +7,6 @@ export default defineConfig({
   plugins: [react(), reportRuntimeAssets()],
   base: './',
   worker: { format: 'es' },
+  optimizeDeps: { include: ['@rhwp/core'] },
   envPrefix: ['VITE_'],
 })

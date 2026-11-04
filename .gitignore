@@ -39,3 +39,8 @@ release
 .firebase/
 output/pdf/
 tmp/pdfs/
+
+# Local report corpus, supervision evidence, and generated native build caches
+/output/
+**/bin/
+**/obj/

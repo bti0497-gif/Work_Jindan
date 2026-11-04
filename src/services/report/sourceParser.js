@@ -214,16 +214,17 @@ function parseHwpx(bytes) {
     const sections = Object.keys(files).filter(n => /^Contents\/section\d+\.xml$/.test(n)).sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]));
     if (!sections.length || sections.length > 1000) fail('HWPX 본문을 찾을 수 없습니다.');
     const paragraphs = [], tables = [];
-    const walk = (nodes, section, table = null, cell = null, path = '') => {
+    const walk = (nodes, section, table = null, cell = null, path = '', area = 'body') => {
         (nodes || []).forEach((node, index) => {
             const key = Object.keys(node).find(k => k !== ':@' && k !== '#text');
             if (!key) return;
             const name = localName(key), location = `${path}/${index}`;
+            const nextArea=['header','footer'].includes(name)?name:area;
             let nextTable = table, nextCell = cell;
             if (name === 'tbl') {
                 const rows = Number(attr(node, 'rowCnt')), columns = Number(attr(node, 'colCnt'));
                 if (!rows || !columns || rows * columns > 100000) fail('HWPX 표 크기가 올바르지 않습니다.');
-                nextTable = { id: `${section}:t:${location}`, rows, columns, cells: [], anchor: { section, path: location } };
+                nextTable = { id: `${section}:t:${location}`, rows, columns, cells: [], area:nextArea, anchor: { section, path: location } };
                 tables.push(nextTable);
                 nextCell = null;
             } else if (name === 'tc' && table) {
@@ -235,11 +236,11 @@ function parseHwpx(bytes) {
                 nextCell = { id: `${table.id}:r${row}c${column}`, fieldName: String(attr(node, 'name')), row, column, rowSpan, colSpan, paragraphIds: [], anchor: { section, path: location } };
                 table.cells.push(nextCell);
             } else if (name === 'p') {
-                const paragraph = { id: `${section}:p:${location}`, text: xmlText(contents(node)).trim(), styleId: attr(node, 'styleIDRef'), tableId: table?.id || null, anchor: { section, path: location } };
+                const paragraph = { id: `${section}:p:${location}`, text: xmlText(contents(node)).trim(), styleId: attr(node, 'styleIDRef'), area:nextArea, tableId: table?.id || null, anchor: { section, path: location } };
                 paragraphs.push(paragraph);
                 cell?.paragraphIds.push(paragraph.id);
             }
-            walk(contents(node), section, nextTable, nextCell, location);
+            walk(contents(node), section, nextTable, nextCell, location,nextArea);
         });
     };
     for (const name of sections) {
