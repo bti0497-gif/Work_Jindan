@@ -1,0 +1,14 @@
+{
+  "receivedAt": "2026-11-05T01:43:29.508Z",
+  "userMarker": "REVIEW69-RESUME-20261105",
+  "instruction": "handoff/SUPERVISOR_R4_REVIEW69.md",
+  "requiredA": "incomplete snapshot rollback data loss",
+  "requiredB": "visual first-row selection differs from bound model/editors/preview",
+  "requiredC": "visible project selector/autorefresh/readable report tab",
+  "r4Immutable": true,
+  "r5ApprovalPending": true,
+  "guiOwner": "supervisor",
+  "snapshotBoundary": "R4/SOURCE66 and FILES66 are historical checkpoints; current source is under authorized revision for new R5.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

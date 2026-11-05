@@ -1,0 +1,1579 @@
+{
+  "schema": "jindan-global-parity/66",
+  "recordedAt": "2026-11-05T00:20:34.536Z",
+  "baselineRoot": "F:/jindan",
+  "newRoot": "F:/jindan-dotnet",
+  "inventorySha256": "ea60143fbe8ce2e2be64575a64d0ff688f89e8761af6adcd32c1995286bbc73b",
+  "featureCount": 28,
+  "allowedStatuses": [
+    "implemented-and-tested",
+    "implemented-not-live-verified",
+    "hybrid-tested",
+    "blocked",
+    "not-implemented"
+  ],
+  "statusSemantics": {
+    "implemented-and-tested": "Named local capabilities have synthetic implementation/test evidence; not exact legacy UX/live/native/company approval.",
+    "implemented-not-live-verified": "Local counterpart/boundary exists; required production adapter/integration remains not configured.",
+    "hybrid-tested": "Native UI/contracts invoke retained isolated JS/WASM implementation; not pure C# or native Hancom approval.",
+    "blocked": "Required external functionality is absent/not configured and forbidden/gated; local alternatives listed separately.",
+    "not-implemented": "No implementation or passing local evidence is asserted for that local capability."
+  },
+  "evidencePolicy": "This is coverage/claim discipline, not a final summed test certificate. Parent owns exact frozen source/artifact hashes and final evidence aggregation. Earlier failed logs remain failures; later scoped successes are separate.",
+  "finalFrozenArtifactPending": false,
+  "evidenceCatalog": {
+    "domain": {
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Domain.Tests/Jindan.Domain.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "evidence": [
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/domain.log"
+      ],
+      "scope": "Final frozen source headless 22/22; isolated synthetic scope. Actual native product execution is separate.",
+      "commandFormat": "argv; exact final Release invocation from the referenced headless receipt"
+    },
+    "desktop-ui": {
+      "command": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-main",
+        "--require-packaged-bytes"
+      ],
+      "evidence": [
+        "artifacts/final-r4-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+        "artifacts/final-r4-desktop-ui66-01/ui-result.json",
+        "artifacts/final-r4-calendar66-01/ui-result.json"
+      ],
+      "scope": "Exact R4 native main23/23 plus calendar4/4, including real owned owner/floating96?120 DPI transfer without test resizing, single-month calendar and Saturday native click. Synthetic local data; calendar cases overlap earlier task/DPI checks.",
+      "buildCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "build",
+        "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+        "-c",
+        "Release",
+        "-p:InstallationRoot=F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "-o",
+        "artifacts/retest-r4-ui-build"
+      ],
+      "commandReference": "tests/Jindan.Desktop.UiTests/README.md: final R4 rerun; fresh output paths only; coordinate exclusive owned GUI. Main automatically starts its fresh-process reopen child.",
+      "focusedCalendarCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-calendar",
+        "--require-packaged-bytes",
+        "--calendar-only"
+      ]
+    },
+    "desktop-reopen": {
+      "command": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-main",
+        "--require-packaged-bytes"
+      ],
+      "evidence": [
+        "artifacts/final-r4-desktop-ui66-01/ui-reopen-result.json"
+      ],
+      "scope": "Exact R4 separate fresh-process reopen4/4; prior failed/limited runs remain preserved.",
+      "buildCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "build",
+        "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+        "-c",
+        "Release",
+        "-p:InstallationRoot=F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "-o",
+        "artifacts/retest-r4-ui-build"
+      ],
+      "commandReference": "tests/Jindan.Desktop.UiTests/README.md: final R4 rerun; fresh output paths only; coordinate exclusive owned GUI. Main automatically starts its fresh-process reopen child."
+    },
+    "photos": {
+      "command": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-photos",
+        "--require-packaged-bytes",
+        "--photos-only"
+      ],
+      "evidence": [
+        "artifacts/final-r4-photo-thumbnails66-01/ui-result.json"
+      ],
+      "scope": "Exact R4 Photos8/8 with native captures, caption/header bounds, visible thumbnails, local asset/cancellation/project guards; not Drive or old Dashboard recent8 UX.",
+      "buildCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "build",
+        "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+        "-c",
+        "Release",
+        "-p:InstallationRoot=F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "-o",
+        "artifacts/retest-r4-ui-build"
+      ],
+      "commandReference": "tests/Jindan.Desktop.UiTests/README.md: final R4 rerun; fresh output paths only; coordinate exclusive owned GUI. Main automatically starts its fresh-process reopen child."
+    },
+    "local-modules": {
+      "command": ".tools/dotnet/dotnet.exe run --project tests/Jindan.LocalModules.Tests/Jindan.LocalModules.Tests.csproj -- <fresh-owned-output>",
+      "evidence": [
+        "artifacts/final-r4-local-modules66/RESULT.json"
+      ],
+      "scope": "Exact R4 Files/Board14/14: six package assembly matches, native captions/dock bounds, immutable import/dedup/folder history/list-tile/drop/rename/move/ZIP/ACL/reply/attachment/remap rollback. Tests exercise shared commands/native surfaces; physical F2/drag gestures are not asserted."
+    },
+    "legacy-import": {
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.LegacyImport.Tests/Jindan.LegacyImport.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "evidence": [
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/legacy-work-import.log"
+      ],
+      "scope": "Final frozen source headless 11/11; isolated synthetic scope. Actual native product execution is separate.",
+      "commandFormat": "argv; exact final Release invocation from the referenced headless receipt"
+    },
+    "sync": {
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Sync.Tests/Jindan.Sync.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "evidence": [
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/sync.log"
+      ],
+      "scope": "Final frozen source headless 24/24; isolated synthetic scope. Actual native product execution is separate.",
+      "commandFormat": "argv; exact final Release invocation from the referenced headless receipt"
+    },
+    "package": {
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "evidence": [
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/module-package.log"
+      ],
+      "scope": "Final frozen source headless 37/37; isolated synthetic scope. Actual native product execution is separate.",
+      "commandFormat": "argv; exact final Release invocation from the referenced headless receipt"
+    },
+    "product-patch": {
+      "command": ".tools/dotnet/dotnet.exe run --project tests/Jindan.Patch.ProductTests/Jindan.Patch.ProductTests.csproj -- <owned-clone-installation> <exact-candidate-directory> <fresh-output>",
+      "evidence": [
+        "artifacts/product-patch66-r4/run-r4/RESULT.json",
+        "artifacts/product-patch66-r4/COPY_RESULT.json"
+      ],
+      "scope": "Exact R4 disposable-clone actual product12/12: visible Projects v1?v2 filter?v1 rollback, failed-health rollback, unchanged unrelated host/runtime/module hashes and synthetic records. Not deployment/signing or live data approval."
+    },
+    "cad": {
+      "command": "node --test tests/NodeCad/*.test.cjs",
+      "evidence": [
+        "artifacts/final-r4-cad66.log",
+        "migration/cad-source-map66.json"
+      ],
+      "scope": "Exact bundled worker CAD5/5 parse/raster, cancellation and SVG boundary checks; hybrid preview, not CAD editing."
+    },
+    "worker": {
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.exe",
+        "--require",
+        "./tools/offline-tests.cjs",
+        "--test",
+        "--test-concurrency=4",
+        "tests/EngineRepair/repair66.test.cjs",
+        "tests/LegacyEngine/body-stroke28-regression.test.cjs",
+        "tests/LegacyEngine/chapter-conversion.test.cjs",
+        "tests/LegacyEngine/collection-intro-style.test.cjs",
+        "tests/LegacyEngine/draft-preparation.test.cjs",
+        "tests/LegacyEngine/electrical-preparation.test.cjs",
+        "tests/LegacyEngine/empty-furniture-probe.test.cjs",
+        "tests/LegacyEngine/engine-facade.test.cjs",
+        "tests/LegacyEngine/engine-recovery.test.cjs",
+        "tests/LegacyEngine/font-name60.test.cjs",
+        "tests/LegacyEngine/furniture-origin.test.cjs",
+        "tests/LegacyEngine/glyph-overprint38-regression.test.cjs",
+        "tests/LegacyEngine/hwpx-restoration-fidelity.test.cjs",
+        "tests/LegacyEngine/native-font28-regression.test.cjs",
+        "tests/LegacyEngine/native-paragraph-flow27.test.cjs",
+        "tests/LegacyEngine/native-pdf19-regression.test.cjs",
+        "tests/LegacyEngine/native-pdf25-regression.test.cjs",
+        "tests/LegacyEngine/native-preview.test.cjs",
+        "tests/LegacyEngine/native-save-audit57.test.cjs",
+        "tests/LegacyEngine/page-decoration.test.cjs",
+        "tests/LegacyEngine/paired-cell-formatting.test.cjs",
+        "tests/LegacyEngine/paired-table-margins.test.cjs",
+        "tests/LegacyEngine/paragraph-formatting.test.cjs",
+        "tests/LegacyEngine/pdf-fidelity.test.cjs",
+        "tests/LegacyEngine/pdf-font-space55-regression.test.cjs",
+        "tests/LegacyEngine/pdf-furniture-coordinates.test.cjs",
+        "tests/LegacyEngine/pdf-native24-regression.test.cjs",
+        "tests/LegacyEngine/pdf-operator-boundary41-regression.test.cjs",
+        "tests/LegacyEngine/pdf-report.test.cjs",
+        "tests/LegacyEngine/pdf-text-frame38-regression.test.cjs",
+        "tests/LegacyEngine/pdf-tracking33-regression.test.cjs",
+        "tests/LegacyEngine/pdf-whitespace38-regression.test.cjs",
+        "tests/LegacyEngine/png-density57.test.cjs",
+        "tests/LegacyEngine/powerview.test.cjs",
+        "tests/LegacyEngine/project-workbench.test.cjs",
+        "tests/LegacyEngine/recovery-draft60.test.cjs",
+        "tests/LegacyEngine/reference-analyzer.test.cjs",
+        "tests/LegacyEngine/report-engine.test.cjs",
+        "tests/LegacyEngine/report-list.test.cjs",
+        "tests/LegacyEngine/report-native-collection.test.cjs",
+        "tests/LegacyEngine/report-numbering.test.cjs",
+        "tests/LegacyEngine/report-pipeline.test.cjs",
+        "tests/LegacyEngine/report-reference-projects.test.cjs",
+        "tests/LegacyEngine/restoration.test.cjs",
+        "tests/LegacyEngine/section-bisection.test.cjs",
+        "tests/LegacyEngine/studio-supervision-regression.test.cjs",
+        "tests/LegacyEngine/thermal-bmt.test.cjs",
+        "tests/LegacyEngine/thermal-delivery.test.cjs",
+        "tests/LegacyEngine/workflow-analysis.test.cjs",
+        "tests/NodeCad/node-cad.test.cjs",
+        "tests/NodePictures/node-pictures.test.cjs",
+        "tests/WorkerProtocol/transport66.test.cjs"
+      ],
+      "evidence": [
+        "migration/report-parity66.json",
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json"
+      ],
+      "scope": "Final Release checkpoint retained JS/worker/engine regressions are part of the named offline260 suite; actual Hancom layout remains separate."
+    },
+    "report11": {
+      "command": "See docs/report-adapter66.md and docs/worker-protocol66.md for exact worker/adapter/STA UI commands",
+      "evidence": [
+        "migration/report-parity66.json",
+        "artifacts/report-ui66-packaged-r4/RESULT.json"
+      ],
+      "scope": "Authoritative detailed report11 map plus exact R4 native controls/packaged6assembly/worker60/60 synthetic checks; not native Hancom/full company approval."
+    },
+    "lifecycle": {
+      "command": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-main",
+        "--require-packaged-bytes"
+      ],
+      "evidence": [
+        "artifacts/final-r4-desktop-ui66-01/ui-result.json"
+      ],
+      "scope": "Exact R4 main suite includes4 actual native dirty-close Cancel/No/Yes, asynchronous save/failure and Workbench owner/float exit cases; deterministic synthetic test documents, not every feature failure path. Count overlaps main23, not additional independent tests.",
+      "buildCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "build",
+        "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+        "-c",
+        "Release",
+        "-p:InstallationRoot=F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "-o",
+        "artifacts/retest-r4-ui-build"
+      ],
+      "commandReference": "tests/Jindan.Desktop.UiTests/README.md: final R4 rerun; fresh output paths only; coordinate exclusive owned GUI. Main automatically starts its fresh-process reopen child."
+    },
+    "host-dpi-probe": {
+      "command": [
+        "./.tools/dotnet/dotnet.exe",
+        "artifacts/retest-r4-ui-build/Jindan.Desktop.UiTests.dll",
+        "--package",
+        "F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "--output",
+        "F:/jindan-dotnet/artifacts/retest-r4-main",
+        "--require-packaged-bytes"
+      ],
+      "evidence": [
+        "artifacts/final-r4-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+        "artifacts/final-r4-desktop-ui66-01/ui-result.json"
+      ],
+      "scope": "Exact R4 owned main/floating monitor96?120 transfers, production bounds without test-side resizing; controlled150/200 remains separate. Earlier limited source-host probes remain preserved.",
+      "buildCommand": [
+        "./.tools/dotnet/dotnet.exe",
+        "build",
+        "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+        "-c",
+        "Release",
+        "-p:InstallationRoot=F:/jindan-dotnet/artifacts/ready-for-review/final66-r4/application",
+        "-o",
+        "artifacts/retest-r4-ui-build"
+      ],
+      "commandReference": "tests/Jindan.Desktop.UiTests/README.md: final R4 rerun; fresh output paths only; coordinate exclusive owned GUI. Main automatically starts its fresh-process reopen child."
+    },
+    "headless-final": {
+      "command": [
+        "node",
+        "tools/run-checks66.mjs"
+      ],
+      "evidence": [
+        "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json"
+      ],
+      "scope": "Exact finalR4 clean Release/build zero warnings/errors and twelve headless commands exit0; Node260/shared8/domain22/native16/package37/sync24/legacy11/reportAdapter41. GUI/patch/entry evidence remains separately named. Exact component argument arrays, including Release configuration, are in the referenced receipt."
+    },
+    "actual-entry": {
+      "command": "Bundled dotnet.exe Jindan.Desktop.dll --installation-root <disposable-clone> (parent owned)",
+      "evidence": [
+        "artifacts/final-r4-actual-entry66/RESULT.json"
+      ],
+      "scope": "Exact packaged Program entry1/1 opens first-run local login and normal close through bundled runtime; no authentication input/business workflow inferred."
+    },
+    "launcher-health": {
+      "command": "powershell -NoProfile -File artifacts/ready-for-review/final66-r4/Run.ps1 -HealthCheck",
+      "evidence": [
+        "artifacts/final-r4-healthcheck66.json"
+      ],
+      "scope": "Read-only exact finalR4 inventory/integrity/type health1/1; no business or native report approval."
+    }
+  },
+  "archiveScopes": [
+    {
+      "kind": "new-native-workspace-export",
+      "contract": "jindan-workspace-export/1 ZIP",
+      "scope": "New LocalWorkspace records/assets; no users/permissions; explicit preview/new IDs/rollback. Not a whole legacy localStorage/Firestore database importer."
+    },
+    {
+      "kind": "legacy-work-json",
+      "contract": "jindan-legacy-work/1 envelope or exact Korean/localStorage work-table JSON",
+      "scope": "Only documented projects/processes/tasks; sanitizer and original/candidate SHA binding; no board/cloud/auth/history migration. docs/migration66.md"
+    },
+    {
+      "kind": "legacy-report-project",
+      "contract": "Verified .jindanproj reader",
+      "scope": "Explicit current-project copy; historical text/settings/files, no executable analysis/review/current evidence adoption. report11 owns details."
+    },
+    {
+      "kind": "portable-report-engine-recovery",
+      "contract": "Versioned engine recovery manifest+sidecars",
+      "scope": "Hash-bound report source/candidate/evidence/context; fresh analysis/review mandatory. Different limits and semantics from workspace ZIP and legacy project import."
+    }
+  ],
+  "verificationLimits": [
+    "Exact finalR4 owner and floating-window physical96?120 DPI monitor transfers and native single-month calendar checks passed without test-side post-move resizing. Controlled150/200 stress is separate; physical150/200 or every monitor arrangement is not verified.",
+    "Source fonts/embedded-font survival, jindan-source.json loss, three tab attributes, all-object native editing and real current-company reports remain HOLD.",
+    "Supervisor earlier exact28 image/print preservation was conditional on explicitly reviewed save-reduction setting; no native/settings action or approval is inherited by the new app.",
+    "All local tests use isolated synthetic records/evidence. Past report values are never declared current measurements/judgments.",
+    "No production Drive/Firebase/AI adapters or live auth/write verification; no paid calls/upload/deployment/commit/push."
+  ],
+  "features": [
+    {
+      "id": "shell",
+      "title": "현재 진입점·탐색·창 제어",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "shell"
+      },
+      "newModule": "Desktop",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Native WinForms MDI and tab/tile/cascade arrangements",
+        "Active document contributes shared left/right panels",
+        "Panel width/visibility/float/layout persistence; Ctrl+S/Ctrl+W",
+        "Dirty-context protection and owned-document lifecycle"
+      ],
+      "localTestEvidenceRefs": [
+        "desktop-ui",
+        "desktop-reopen",
+        "lifecycle",
+        "host-dpi-probe",
+        "actual-entry",
+        "launcher-health"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": null,
+      "remainingDifferences": [
+        "Exact R4 native lifecycle cases use deterministic synthetic documents; all feature-specific save/worker-drain failure paths are not universally approved.",
+        "Actual owned main/floating96?120 DPI transfer passed without test-side post-move resizing; controlled150/200 stress is not physical150/200 or every monitor arrangement approval.",
+        "Earlier final66 monitor overflow, R2 caption hiding and R3 calendar clipping remain preserved failures; exact R4 receipts describe the corrected bytes."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "projects",
+      "title": "프로젝트 목록·검색·CRUD·기간 상태",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "projects"
+      },
+      "newModule": "projects",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Local project create/update/search/logical delete and date validation",
+        "Schedule-derived progress/status from shared native rules",
+        "Persisted new copies, exact legacy work JSON preview and rollback"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui",
+        "desktop-reopen",
+        "legacy-import",
+        "local-modules"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-work",
+        "reason": "Real Firebase work adapter/rules/authentication are not implemented/configured or live-tested; no permitted production writes."
+      },
+      "remainingDifferences": [
+        "Legacy HTML content is preserved as text; native UI is not a browser HTML editor.",
+        "Live Firebase persistence is not configured."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "processes",
+      "title": "프로젝트 소속 공정·완료·수정·삭제",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "processes"
+      },
+      "newModule": "processes",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Project-scoped native list/editor with completion and logical deletion",
+        "Date/range and parent-project validation; schedule summaries",
+        "Service authorization and revision checks"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui",
+        "desktop-reopen",
+        "legacy-import"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-work",
+        "reason": "Real Firebase work adapter/rules/authentication are not implemented/configured or live-tested; no permitted production writes."
+      },
+      "remainingDifferences": [
+        "Native command/editor interactions replace legacy React layout.",
+        "Live Firebase persistence is not configured."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "tasks",
+      "title": "달력별 할일·공개/개인",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "tasks"
+      },
+      "newModule": "tasks",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Selected-date/month native task view and public/private editing",
+        "Owner/public visibility and service-side write checks",
+        "Work JSON date/content/public/deleted mapping and restart"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui",
+        "desktop-reopen",
+        "legacy-import",
+        "sync"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-work",
+        "reason": "Real Firebase work adapter/rules/authentication are not implemented/configured or live-tested; no permitted production writes."
+      },
+      "remainingDifferences": [
+        "Tasks are not assigned a process-completion state absent from the original model.",
+        "Cloud public/own queries and automatic periodic sync remain disabled."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "board-posts",
+      "title": "게시글 CRUD·실시간 목록·검색·페이지",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "board-posts"
+      },
+      "newModule": "board",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Local native post/notice CRUD, list-scoped search and paging",
+        "Owner/admin/revision protection and persisted body text",
+        "Replies and local hashed attachments through service boundaries"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui",
+        "desktop-reopen",
+        "local-modules"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-board",
+        "reason": "Real Firestore posts/listeners/transactions are not implemented/configured or live-tested; no permitted production writes."
+      },
+      "remainingDifferences": [
+        "Native body editing/display is safe text, not the old rich HTML renderer.",
+        "No live Firestore listener/transaction or old-cloud board migration is implemented."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "board-comments",
+      "title": "댓글·첨부·레거시 가져오기",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "board-comments"
+      },
+      "newModule": "board",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Explicit reply action binds parent post",
+        "Local attachment import/download/removal, limits and immutable hashes",
+        "Deleted-parent/project/authorization checks and new workspace ZIP remapping"
+      ],
+      "localTestEvidenceRefs": [
+        "local-modules",
+        "domain"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-board-drive",
+        "reason": "Remote Firestore comments and Drive attachments require actual authenticated adapters/rules and live tests; absent and prohibited here."
+      },
+      "remainingDifferences": [
+        "Existing new canonical workspace ZIP import is not an old Firestore/Drive migration tool.",
+        "Remote upload compensation and remote idempotent import remain unimplemented/not exercised."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "members",
+      "title": "회원·관리자 계정 관리",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "members"
+      },
+      "newModule": "members",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Local member/admin create/profile/role/project/disabled management",
+        "Immutable local identity, self/admin safeguards and service authorization",
+        "Persisted authenticated local accounts"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui",
+        "desktop-reopen"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-auth",
+        "reason": "Production Firebase sign-in/provisioning/role integration is not implemented/configured or live-tested; no credential/session migration."
+      },
+      "remainingDifferences": [
+        "Local identity is separate from real company Firebase Auth accounts.",
+        "No cloud account provisioning, sessions or permissions are copied."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "auth",
+      "title": "로그인·복원·비밀번호 변경·로그아웃",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "auth"
+      },
+      "newModule": "Identity",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Explicit-consent new local bootstrap, login, logout and password change",
+        "Salted local credential derivation; session identity verified by service",
+        "Role changes/context forgery checked at report and data boundaries"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-auth",
+        "reason": "Production Firebase sign-in/provisioning/role integration is not implemented/configured or live-tested; no credential/session migration."
+      },
+      "remainingDifferences": [
+        "Local account/session support does not implement Firebase production sign-in/reauthentication.",
+        "Automatic reuse of old cloud sessions is intentionally absent."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "work-sync",
+      "title": "업무 큐·충돌 보호·주기 동기화",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "work-sync"
+      },
+      "newModule": "Sync",
+      "status": "implemented-not-live-verified",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Separate durable user/project-scoped outbox and revision-matched ACK",
+        "Pending-local-wins, explicit tombstones, task-specific pruning, coalesced pushes",
+        "Partial retry, owned crash/restart, cancellation and isolated loopback simulator"
+      ],
+      "localTestEvidenceRefs": [
+        "sync"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "firebase-sync",
+        "reason": "NotConfiguredSyncAdapter is the production boundary. Loopback is synthetic only; no live server authorization/conflict verification."
+      },
+      "remainingDifferences": [
+        "Not wired to feature/UI auto-sync or production database.",
+        "Live adapter is explicitly NotConfigured; loopback requires explicit test opt-in and never means server authorization.",
+        "Legacy periodic250ms/1minute/5minute scheduler is not running."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "drive-files",
+      "title": "공유 Drive 탐색·파일 작업",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "drive-files"
+      },
+      "newModule": "files",
+      "status": "implemented-not-live-verified",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Project-scoped local virtual folder tree/parent navigation/import/rename/logical delete",
+        "Local duplicate-name policy, multiselect/move/selected-original ZIP export",
+        "Immutable asset hashes, path/project/revision/folder-cycle guards",
+        "Native folder back/forward history, visible bounded list/tile views, dropped-file import commands and immutable rename/move commands; F2/drag handlers installed"
+      ],
+      "localTestEvidenceRefs": [
+        "local-modules",
+        "domain"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "google-drive",
+        "reason": "No production Google Drive adapter/token/session, upload/download/trash/live permissions verification; local counterpart only."
+      },
+      "remainingDifferences": [
+        "Local Files is an explicit local counterpart, not Google Drive access.",
+        "Local native11/11 regression passed with actual list/tile visibility and shared drop/rename/move commands. F2/drag handlers exist, but physical keyboard/mouse gesture execution is not asserted.",
+        "Remote Drive trash/permissions/races/download/upload are not implemented."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "drive-cache",
+      "title": "Drive 목록 캐시·백그라운드 갱신",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "drive-cache"
+      },
+      "newModule": "Sync",
+      "status": "blocked",
+      "implementationMode": "none",
+      "hybrid": false,
+      "localStatus": "not-applicable",
+      "implementedLocal": [
+        "Local asset/folder state remains available without a remote cache"
+      ],
+      "localTestEvidenceRefs": [],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "google-drive-cache",
+        "reason": "Drive listing/cache background refresh implementation and live verification are absent; real authentication/service approval required."
+      },
+      "remainingDifferences": [
+        "No Drive cache hydration,10minute/online/manual refresh adapter, token or stale-list reconciliation is implemented.",
+        "The separate Sync loopback is not proof of Drive-cache behavior."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "native": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false,
+      "localApplicability": "external-only"
+    },
+    {
+      "id": "legacy-drive-system",
+      "title": "레거시 시스템 폴더·리소스·로그",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "legacy-drive-system"
+      },
+      "newModule": "Infrastructure",
+      "status": "blocked",
+      "implementationMode": "none",
+      "hybrid": false,
+      "localStatus": "not-applicable",
+      "implementedLocal": [
+        "No legacy cloud system-folder startup writes/deletes are adopted",
+        "New local workspace uses separate atomic state/assets and explicit retention by user operation"
+      ],
+      "localTestEvidenceRefs": [
+        "domain"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "legacy-drive-system",
+        "reason": "Old startup cloud folder creation/logging/cleanup is prohibited; new explicit retention and authenticated adapter would need separate review."
+      },
+      "remainingDifferences": [
+        "Legacy .system/json/resources creation, seven-day cleanup and cloud action/resource logs are not ported as live behavior.",
+        "Local backups/import rollback are different contracts; no remote cleanup is silently executed."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "native": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false,
+      "localApplicability": "external-only"
+    },
+    {
+      "id": "photos-gallery",
+      "title": "현행 사진·CAD 갤러리/뷰어",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "photos-gallery"
+      },
+      "newModule": "photos",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Local thumbnail gallery/list, selected image preview, previous/next, fit/zoom/pan",
+        "Project switch cancels stale decode assignments; bounded cache and owned disposal",
+        "CAD preview is available through Files hybrid adapter"
+      ],
+      "localTestEvidenceRefs": [
+        "photos",
+        "desktop-ui",
+        "desktop-reopen"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "google-drive-gallery",
+        "reason": "Remote Drive tree/blob/gallery adapter absent; native local photos work independently."
+      },
+      "remainingDifferences": [
+        "Drive-backed gallery listing/blobs are not connected.",
+        "Large synthetic thumbnail tests establish bounded behavior, not unlimited-memory leak proof.",
+        "Old Dashboard recent8 thumbnail strip is not claimed reproduced; the separate native Photos gallery is the local navigation counterpart."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "photos-new",
+      "title": "로드맵 신규 사진관리 요구",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "photos-new"
+      },
+      "newModule": "photos",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Project/site/album/classification/caption/capture metadata and local import",
+        "Hash dedup, preserved originals, edited-copy export and restart",
+        "120px thumbnail edge,96-entry cache,24visible-load bound and2decode slots"
+      ],
+      "localTestEvidenceRefs": [
+        "photos",
+        "desktop-ui",
+        "desktop-reopen",
+        "domain"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": null,
+      "remainingDifferences": [
+        "Real company photo ingestion and remote EXIF transmission were not performed.",
+        "Image metadata is not measurement evidence or engineering judgment."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "cad",
+      "title": "DWG/DXF 미리보기",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "cad"
+      },
+      "newModule": "files",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "Explicit native Files CAD preview via isolated Node/nasjidwg WASM",
+        "Actual DWG/DXF render, owned worker cancellation/timeout and malformed input checks"
+      ],
+      "localTestEvidenceRefs": [
+        "cad",
+        "worker"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": null,
+      "remainingDifferences": [
+        "CAD preview/render only; no general CAD editor or native C# DWG implementation is claimed.",
+        "Missing runtime/resources are a declared failure, never a fake rendered success."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "native": false
+    },
+    {
+      "id": "dashboard-search",
+      "title": "대시보드·기간 집계·분산 검색",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "dashboard-search"
+      },
+      "newModule": "dashboard",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Native local project/process schedule summaries and upcoming public/own tasks",
+        "Selected-project module navigation and result double-click navigation",
+        "New explicit authorized local cross-kind search across projects/processes/tasks/board/photos/files; original inventory only observed list-scoped search"
+      ],
+      "localTestEvidenceRefs": [
+        "domain",
+        "desktop-ui"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": null,
+      "remainingDifferences": [
+        "Cross-kind search is new native scope, not a claim that old app had a unified search.",
+        "Old Dashboard recent8 thumbnail strip is not reproduced in this Dashboard; local Photos gallery/list/preview is provided separately.",
+        "Live gallery/sync values are absent until real service adapters exist."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-platform",
+      "title": "현행 스튜디오 문서/분석/자료·패널",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-platform"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-platform",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-library",
+      "title": "원본·금회자료 보관·해시·유형",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-library"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "google-drive",
+        "reason": "Real Drive report/material import is not implemented/configured or live-verified; see matching report11 detail and native/company gates."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-library",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "report-analysis-restore",
+      "title": "PDF 복원분석·HWPX 작성분석·장별 재현",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-analysis-restore"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-analysis-restore",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-review-draft",
+      "title": "내용역할 검토·근거바인딩·금회/빈초안",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-review-draft"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-review-draft",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-collection",
+      "title": "조사양식 내려받기·한글저장반환·빈칸 적용",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-collection"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-collection",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-archive-recovery",
+      "title": "프로젝트아카이브·회수·fresh review 경계",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-archive-recovery"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-archive-recovery",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-discipline-workspace",
+      "title": "분야별 양식·계산·진단문구·백업",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-discipline-workspace"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-discipline-workspace",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "electrical-inputs",
+      "title": "전기분야 자료·범위·개선협의 준비",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "electrical-inputs"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "electrical-inputs",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "thermal",
+      "title": "Testo BMT 메타데이터·그림·열화상결과 묶음",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "thermal"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "thermal",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "power-quality",
+      "title": "PowerView PWV 측정자료 검사",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "power-quality"
+      },
+      "newModule": "report-studio",
+      "status": "hybrid-tested",
+      "implementationMode": "hybrid",
+      "native": true,
+      "hybrid": true,
+      "localStatus": "hybrid-tested",
+      "implementedLocal": [
+        "See corresponding feature in report-parity66.json; do not duplicate/extend its exact claims"
+      ],
+      "localTestEvidenceRefs": [
+        "report11"
+      ],
+      "liveAdapterImplementation": "not-applicable",
+      "liveVerification": "not-applicable",
+      "externalGate": {
+        "id": "native-company-report-approval",
+        "reason": "See report11 exact native/font/source JSON/tab/current-company gates; synthetic tests do not approve business reports."
+      },
+      "remainingDifferences": [
+        "Exact detailed source/evidence/native/company limitations are delegated to the report11 reference."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "power-quality",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    {
+      "id": "report-ai",
+      "title": "선택적 AI 분석·자료추출·진단초안",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-ai"
+      },
+      "newModule": "report-studio",
+      "status": "blocked",
+      "implementationMode": "hybrid",
+      "native": false,
+      "hybrid": true,
+      "localStatus": "implemented-not-live-verified",
+      "implementedLocal": [
+        "Manual notes and deterministic calculations work without paid providers; copied validators are retained"
+      ],
+      "localTestEvidenceRefs": [],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "report-ai",
+        "reason": "Production provider execution/settings/key/model/live paid calls are not configured/implemented in the new native UI. Existing copied validators/manual notes do not mean a working provider adapter."
+      },
+      "remainingDifferences": [
+        "No live provider/native AI execution is claimed."
+      ],
+      "reportParityRef": {
+        "path": "migration/report-parity66.json",
+        "featureId": "report-ai",
+        "scope": "Authoritative detailed report implementation/commands/limits/evidence; global row only maps inventory coverage."
+      },
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    },
+    {
+      "id": "updates-release",
+      "title": "기존 전체앱 업데이트와 새 모듈패치",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "updates-release"
+      },
+      "newModule": "Update",
+      "status": "implemented-and-tested",
+      "implementationMode": "native",
+      "native": true,
+      "hybrid": false,
+      "localStatus": "implemented-and-tested",
+      "implementedLocal": [
+        "Explicit trusted local file manifests and separate feature DLL packages",
+        "Stopped-app lease/staging/atomic journal/owned health/rollback/recovery",
+        "One-module Projects v1-v2-visible behavior and unrelated-host/module/data preservation"
+      ],
+      "localTestEvidenceRefs": [
+        "package",
+        "product-patch"
+      ],
+      "liveAdapterImplementation": "not-configured",
+      "liveVerification": "not-run",
+      "externalGate": {
+        "id": "release-publish",
+        "reason": "Production signing/distribution/release updater is unconfigured; commit/push/deploy/external upload forbidden."
+      },
+      "remainingDifferences": [
+        "Exact finalR4 product12/12 is limited to the recorded disposable clone/local trust/schema/data policy.",
+        "Allowlisted hashes are not publisher signing; production distribution is unconfigured."
+      ],
+      "companyWorkflowApproved": false,
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "liveAdapterImplemented": false,
+      "liveVerificationPassed": false
+    }
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "productSourceFreezeAnnounced": true,
+  "finalHeadlessGatePending": false,
+  "finalHeadlessGate": {
+    "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+    "passed": true,
+    "scope": "Exact finalR4 clean Release/build zero warnings/errors and twelve headless commands exit0; Node260/shared8/domain22/native16/package37/sync24/legacy11/reportAdapter41. GUI/patch/entry evidence remains separately named."
+  },
+  "previousPreparedArtifact": {
+    "root": "artifacts/ready-for-review/final66-r2",
+    "manifestSha256": "511326757b3d018dc8dbb4cb22016d65dd1e20d5fb570a6caf05d024c32f1cc1",
+    "sourceCheckpointSha256": "15cae709da68ad2f9137d4426ff690454141e037721f7f601d0490051c4b75b3",
+    "sourceStable": true,
+    "sourceInputs": 176,
+    "readOnlyVerification": "artifacts/packaging66/FINAL_R2_VERIFICATION.json",
+    "modulePayloadsIdenticalToPreviousAll9": true,
+    "applicationChangedOnly": [
+      "Jindan.Desktop.dll",
+      "LOCAL-TRUST-POLICY.json"
+    ],
+    "exactPackagedUiAndPatchVerification": "pending-parent-owned",
+    "historicalOnly": true,
+    "supersededBy": "artifacts/ready-for-review/final66-r4"
+  },
+  "finalPreparationTarget": "artifacts/ready-for-review/final66-r4",
+  "previousHeadlessGate": {
+    "path": "artifacts/checks66/2026-11-04T22-59-22-316Z/RESULT.json",
+    "passed": true,
+    "scope": "Parent-owned current-source clean headless regression; counts/source hashes are authoritative there. Actual final packaged UI/patch/native/company gates remain separate."
+  },
+  "finalPreparedArtifact": {
+    "root": "artifacts/ready-for-review/final66-r4",
+    "manifestSha256": "8b816b99814d21779f85a843c3c2f991856759d2ce144957cd1b154887ab6fb2",
+    "sourceCheckpointSha256": "bea660cb04a49cbc671054c7c5ea26123469310cda2a8033f91fd26798274e58",
+    "sourceStable": true,
+    "sourceInputs": 176,
+    "readOnlyVerification": "artifacts/packaging66/FINAL_R4_VERIFICATION.json",
+    "applicationFiles": 3212,
+    "applicationBytes": 431834821,
+    "applicationDeltaFromR3": {
+      "changed": 22,
+      "added": 0,
+      "removed": 0,
+      "scope": "Desktop/common controls, all9 feature DLLs/manifests and2 local trust policies rebuilt; this is not an unchanged-module claim."
+    },
+    "unchangedWorkerResources": 2690,
+    "unchangedRuntimeResources": 481,
+    "patchCandidate": {
+      "path": "artifacts/patches66/projects-v2-final66-r4",
+      "manifestSha256": "1918cf1e00f255e9801471b0e333ad4ceef0903dd35c6ca910ca42b8c02ed541"
+    },
+    "exactPackagedUiAndPatchVerification": {
+      "desktop39": "passed",
+      "report60": "passed",
+      "productPatch12": "passed",
+      "filesBoard14": "passed",
+      "actualEntry1": "passed",
+      "launcherHealth1": "passed",
+      "cadBundledWorker5": "passed"
+    },
+    "afterGuiReverification": {
+      "path": "artifacts/final-r4-after-ui-verification66.json",
+      "sha256": "df0828e93b2c1ee1e425e90ac27463aa564e36fc91e38fcb589c22c914e7b64a"
+    }
+  },
+  "allowedLocalStatuses": [
+    "implemented-and-tested",
+    "implemented-not-live-verified",
+    "hybrid-tested",
+    "not-applicable"
+  ],
+  "localStatusSemantics": {
+    "not-applicable": "Inventory capability requires an absent remote service; no applicable local cache/system-folder implementation is claimed. Its top-level status remains blocked; independently tested native alternatives are listed separately."
+  },
+  "unimplementedApplicableLocalFeatures": [],
+  "finalNamedEvidence": {
+    "scope": "Separate suite/case counts overlap; not a summed independent workflow certificate.",
+    "receipts": [
+      {
+        "path": "artifacts/final-r4-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+        "sha256": "8964698ba0c3e10d79274976247959d94acf25050ca97010beaea6bf2f56fee0"
+      },
+      {
+        "path": "artifacts/report-ui66-packaged-r4/RESULT.json",
+        "sha256": "55905e34883e612e09ec4c7a682a0ca6e3edcbda16acf047a0bd9300854d921d"
+      },
+      {
+        "path": "artifacts/product-patch66-r4/run-r4/RESULT.json",
+        "sha256": "daa4f8ede0c716986d6099ecfe0dad70f80b5c6748a6650a7b231dc56eec6739"
+      },
+      {
+        "path": "artifacts/final-r4-local-modules66/RESULT.json",
+        "sha256": "5ad908c63f80b670c9270e2e11384d1a495b24b91ced71fca41322e13b01aead"
+      },
+      {
+        "path": "artifacts/final-r4-actual-entry66/RESULT.json",
+        "sha256": "46a836a0eac747d1eeae44fa1475e0f64823a556ce942b5491fb581f5699380f"
+      },
+      {
+        "path": "artifacts/final-r4-healthcheck66.json",
+        "sha256": "a3ea1daba38704b319844a5099d12daa91f9b9b7ed61bc3c481c844417b6e2e9"
+      },
+      {
+        "path": "artifacts/final-r4-after-ui-verification66.json",
+        "sha256": "df0828e93b2c1ee1e425e90ac27463aa564e36fc91e38fcb589c22c914e7b64a"
+      },
+      {
+        "path": "artifacts/final-r4-cad66.log",
+        "sha256": "2ebba3392a95f5f7e806b868dbec67dac9c0fbd482bda066282f945b314a4821"
+      }
+    ]
+  },
+  "runbookOverride": {
+    "source": "docs/run-review66.md",
+    "scope": "Supersedes patch examples in the immutable package RUN-REVIEW.md: create a fresh disposable clone with tools/prepare-product-clone66.mjs, and patch/rollback/run only that clone; immutable baseline remains untouched."
+  },
+  "testProcessEnvironment": {
+    "DOTNET_GENERATE_ASPNET_CERTIFICATE": "false",
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+    "DOTNET_NOLOGO": "1",
+    "DOTNET_CLI_HOME": "F:/jindan-dotnet/.tools/cli-home"
+  }
+}

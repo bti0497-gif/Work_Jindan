@@ -1,0 +1,49 @@
+{
+  "schema": "jindan-root-visual-review66/1",
+  "reviewedAt": "2026-11-05T00:20:52.302Z",
+  "method": "Root inspected saved local images with view_image; this was not desktop input or native Hancom review.",
+  "files": [
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-native-__._DISPLAY2-window.png",
+      "sha256": "4a49fb18252a20a5c4caf6e77e9de7ed1aaccd96b52f4ce77ff8f4e598985782"
+    },
+    {
+      "path": "artifacts/final-r4-photo-thumbnails66-01/08-photo-visible-headers-window.png",
+      "sha256": "16362f76e8c7b75f0077d46a6d4d8c275f786d7aef3a450b4ebcd34908afd552"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/02-tabs-context-window.png",
+      "sha256": "6183a123034b5a3369e10530b02d35f5e71c051aa4b79f469063ca37438bdbbf"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/report-flow-native-controls.png",
+      "sha256": "1127ddef46d84b76b8a4c8e5a183c9054c7f3e768eb0737b1bbc1f252ac2f0a6"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v2-restored.png",
+      "sha256": "2336cae1ae2844faf0aa8490905b584055fabe91a7c90f49ce353503f34d4501"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66/files-tiles-native-window.png",
+      "sha256": "d792503a07cca0d7b675b97a6807eb7655309acbddfba5f773db2e73a5b90005"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66/board-native-window.png",
+      "sha256": "42904604ebcecd31c32818445afa2d61cddfda0fd9ede520e7cd17e44f680a88"
+    }
+  ],
+  "observations": [
+    "Native calendar has one complete month including Saturday and separate date filter after actual DPI return.",
+    "Native photo captions and thumbnail row are visible below toolbar; normal narrow-grid text truncation remains available through editors/scrolling rather than a claim of all columns readable simultaneously.",
+    "Main MDI tabs/scope labels and project v2 active-only filter are visible.",
+    "Report synthetic native controls show source/chapter/material/review and operation surfaces; engineering and full UX/native document fidelity acceptance remain separate.",
+    "Files tile/navigation and Board grid/thread are outside their toolbars. Final Board/Files captures contain empty current selections; content/attachment behavior is established by the separate named service/UI assertions."
+  ],
+  "limits": [
+    "Only listed captures were visually inspected by root in this final pass.",
+    "150/200% are controlled program scaling, not physical OS DPI.",
+    "No claim that every object/page/interaction or current company workflow is approved."
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false
+}

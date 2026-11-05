@@ -1,0 +1,29 @@
+using Jindan.Contracts;
+using Jindan.Desktop.Contracts;
+using Jindan.Core;
+namespace Jindan.Modules.Dashboard;
+
+public sealed class Module : IDesktopModule
+{
+    private IWorkspaceServices services = null!; public string ModuleId => "dashboard"; public string DisplayName => "대시보드·통합검색"; public string Version => "1.0.0"; public IReadOnlyList<RecordSchema> Schemas => [];
+    public void Initialize(IWorkspaceServices value) => services = value;
+    public IWorkspaceDocument CreateDocument(DocumentContext context) => new DashboardDocument(services, context);
+    public Control CreateLeftPanel(IWorkspaceDocument document) => ((DashboardDocument)document).Navigation;
+    public Control CreateRightPanel(IWorkspaceDocument document) => ((DashboardDocument)document).Inspector;
+    public void Activate(IWorkspaceDocument document) { }
+    public void Deactivate(IWorkspaceDocument document) { }
+    public void Dispose() { }
+}
+public sealed class DashboardDocument : UserControl, IWorkspaceDocument
+{
+    private readonly IWorkspaceServices services; private readonly TextBox search = new() { Dock = DockStyle.Top, PlaceholderText = "권한이 있는 로컬 업무 전체 검색", Name = "GlobalSearch" }; private readonly DataGridView grid = new() { Dock = DockStyle.Fill, ReadOnly = true, AllowUserToAddRows = false, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, SelectionMode = DataGridViewSelectionMode.FullRowSelect }; private readonly Label summary = new() { Dock = DockStyle.Top, Height = 135 }; private CancellationTokenSource pending = new(); private long generation;
+    public Control Navigation { get; } = new FlowLayoutPanel() { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false, AutoScroll = true }; public Control Inspector { get; } = new RichTextBox() { Dock = DockStyle.Fill, ReadOnly = true }; public string Title => "대시보드·통합검색"; public DocumentContext Context { get; private set; }
+    public Control View => this; public bool IsDirty => false; public event EventHandler? TitleChanged; public event EventHandler? SelectionChanged;
+    private static readonly (string Kind, string Module, string Label)[] Kinds = [("projects", "projects", "프로젝트"), ("processes", "processes", "공정"), ("tasks", "tasks", "할 일"), ("board", "board", "게시판"), ("photos", "photos", "사진"), ("files", "files", "자료")];
+    public DashboardDocument(IWorkspaceServices value, DocumentContext context) { services = value; Context = context; Dock = DockStyle.Fill; Controls.Add(grid); Controls.Add(summary); Controls.Add(search); foreach (var name in new[] { "구분", "제목", "프로젝트", "상태·기간" }) grid.Columns.Add(name, name); foreach (var item in Kinds) { var module = item.Module; var b = new Button() { Text = item.Label + " 열기", AutoSize = true }; b.Click += (_, _) => services.TryOpenDocument(module, Context.ProjectId); Navigation.Controls.Add(b); } search.TextChanged += async (_, _) => await RefreshAsync(); Load += async (_, _) => await RefreshAsync(); grid.SelectionChanged += (_, _) => { if (grid.CurrentRow?.Tag is WorkRecord record) { Inspector.Text = record.Kind + " / " + record.Id + "\n" + string.Join('\n', record.Fields.Select(p => p.Key + ": " + p.Value)); SelectionChanged?.Invoke(this, EventArgs.Empty); } }; grid.CellDoubleClick += (_, _) => { if (grid.CurrentRow?.Tag is WorkRecord record) services.TryOpenDocument(Kinds.First(k => k.Kind == record.Kind).Module, record.ProjectId ?? (record.Kind == "projects" ? record.Id : null)); }; }
+    public async Task RefreshAsync() { pending.Cancel(); pending.Dispose(); pending = new(); var ct = pending.Token; var g = ++generation; try { var records = new List<WorkRecord>(); var counts = new Dictionary<string, int>(); foreach (var kind in Kinds) { var rows = await services.Data.ListAsync(services.Actor, new(kind.Kind, Search: search.Text), ct); counts[kind.Kind] = rows.Count; records.AddRange(rows); } if (ct.IsCancellationRequested || g != generation || IsDisposed) return; grid.Rows.Clear(); foreach (var r in records) { var i = grid.Rows.Add(Kinds.First(k => k.Kind == r.Kind).Label, r.Fields.GetValueOrDefault("title", ""), r.ProjectId ?? "", r.Fields.GetValueOrDefault("status", "") + " " + r.Fields.GetValueOrDefault("startDate", "") + " ~ " + r.Fields.GetValueOrDefault("endDate", "")); grid.Rows[i].Tag = r; } summary.Text = string.Join("   ", counts.Select(k => $"{Kinds.First(x => x.Kind == k.Key).Label} {k.Value}개")) + "\n" + PeriodSummary(records) + "\nDrive/Firebase 연결·동기화와 AI 호출은 이번 실행에서 비활성입니다."; } catch (OperationCanceledException) { } catch { if (!IsDisposed) summary.Text = "권한·등록된 모듈·로컬 저장소를 확인하세요."; } }
+    public void SetContext(DocumentContext context) { if (context.ContextId != Context.ContextId) throw new InvalidOperationException(); Context = context; TitleChanged?.Invoke(this, EventArgs.Empty); _ = RefreshAsync(); }
+    public Task SaveAsync(CancellationToken ct = default) => Task.CompletedTask;
+    private string PeriodSummary(List<WorkRecord> records) { var today = DateOnly.FromDateTime(DateTime.Today); var projects = records.Where(r => r.Kind == "projects").ToArray(); var processes = records.Where(r => r.Kind == "processes").ToArray(); var upcoming = records.Count(r => r.Kind == "tasks" && DateOnly.TryParse(r.Fields.GetValueOrDefault("startDate"), out var date) && date >= today && date <= today.AddDays(7)); return "향후 7일 할 일 " + upcoming + "개\n" + string.Join(" / ", projects.Take(4).Select(p => p.Fields.GetValueOrDefault("title", "") + " 기간 " + Schedule.ProjectProgress(p, processes, today) + "% · 공정완료 " + Schedule.CompletionRatio(processes.Where(r => r.ProjectId == p.Id)) + "%")); }
+    protected override void Dispose(bool disposing) { if (disposing) { generation++; pending.Cancel(); pending.Dispose(); Navigation.Dispose(); Inspector.Dispose(); } base.Dispose(disposing); }
+}

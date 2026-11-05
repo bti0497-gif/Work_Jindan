@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "source": "F:/jindan/src/services/scheduleService.js",
+  "sourceSha256": "713796ac7dedd917f3970db012af0f538e31e5d9b4a84b7ffc242a909ed61190",
+  "vectors": [
+    {
+      "id": "future",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-06",
+        "endDate": "2026-11-20"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "예정",
+        "daysRemaining": 15,
+        "isValid": true
+      }
+    },
+    {
+      "id": "first-day",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-05",
+        "endDate": "2026-11-10"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "진행 중",
+        "daysRemaining": 5,
+        "isValid": true
+      }
+    },
+    {
+      "id": "inclusive-last-day",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-05"
+      },
+      "expected": {
+        "progress": 80,
+        "status": "진행 중",
+        "daysRemaining": 0,
+        "isValid": true
+      }
+    },
+    {
+      "id": "one-day-inclusive",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-05",
+        "endDate": "2026-11-05"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "진행 중",
+        "daysRemaining": 0,
+        "isValid": true
+      }
+    },
+    {
+      "id": "past-incomplete",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-04"
+      },
+      "expected": {
+        "progress": 100,
+        "status": "미완료",
+        "daysRemaining": -1,
+        "isValid": true
+      }
+    },
+    {
+      "id": "past-completed",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-04",
+        "isCompleted": "true"
+      },
+      "expected": {
+        "progress": 100,
+        "status": "완료",
+        "daysRemaining": -1,
+        "isValid": true
+      }
+    },
+    {
+      "id": "completed-during-period",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01",
+        "endDate": "2026-11-10",
+        "isCompleted": "true"
+      },
+      "expected": {
+        "progress": 40,
+        "status": "진행 중",
+        "daysRemaining": 5,
+        "isValid": true
+      }
+    },
+    {
+      "id": "missing",
+      "today": "2026-11-05",
+      "fields": {},
+      "expected": {
+        "progress": 0,
+        "status": "판정보류",
+        "daysRemaining": null,
+        "isValid": false
+      }
+    },
+    {
+      "id": "reversed",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-06",
+        "endDate": "2026-11-04"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "판정보류",
+        "daysRemaining": null,
+        "isValid": false
+      }
+    },
+    {
+      "id": "invalid-calendar",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-02-30",
+        "endDate": "2026-11-05"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "판정보류",
+        "daysRemaining": null,
+        "isValid": false
+      }
+    },
+    {
+      "id": "invalid-suffix",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01garbage",
+        "endDate": "2026-11-05"
+      },
+      "expected": {
+        "progress": 0,
+        "status": "판정보류",
+        "daysRemaining": null,
+        "isValid": false
+      }
+    },
+    {
+      "id": "iso-prefix",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-01T00:00:00+09:00",
+        "endDate": "2026-11-05"
+      },
+      "expected": {
+        "progress": 80,
+        "status": "진행 중",
+        "daysRemaining": 0,
+        "isValid": true
+      }
+    },
+    {
+      "id": "leap-year",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2024-02-29",
+        "endDate": "2024-03-01"
+      },
+      "expected": {
+        "progress": 100,
+        "status": "미완료",
+        "daysRemaining": -979,
+        "isValid": true
+      }
+    },
+    {
+      "id": "round-away",
+      "today": "2026-11-05",
+      "fields": {
+        "startDate": "2026-11-04",
+        "endDate": "2026-11-11"
+      },
+      "expected": {
+        "progress": 13,
+        "status": "진행 중",
+        "daysRemaining": 6,
+        "isValid": true
+      }
+    }
+  ]
+}

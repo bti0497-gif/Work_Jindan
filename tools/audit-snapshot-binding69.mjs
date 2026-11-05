@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const [dirArg,packageArg,outArg]=process.argv.slice(2);
+if(!outArg)throw Error('snapshot-run exact-application fresh-result.json required');
+const dir=path.resolve(root,dirArg),app=path.resolve(root,packageArg),out=path.resolve(root,outArg),owned=path.join(root,'artifacts')+path.sep;
+if(!dir.startsWith(owned)||!app.startsWith(path.join(root,'artifacts/ready-for-review')+path.sep)||!out.startsWith(owned)||out.startsWith(app+path.sep)||fs.existsSync(out))throw Error('Fresh owned evidence required');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),json=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
+const wrapper=json(path.join(dir,'RESULT.json')),run=wrapper.results.find(x=>x.name==='snapshot-regressions');
+if(!wrapper.passed||wrapper.tests.pass!==82||wrapper.tests.fail!==0||path.resolve(wrapper.installation)!==app||path.resolve(run.command[0])!==path.join(app,'.runtime/dotnet.exe'))throw Error('Exact82 wrapper/bundled runtime mismatch');
+const entries=[['Jindan.ModuleHost.dll','Jindan.ModuleHost.dll'],['Jindan.Update.dll','update-tool/Jindan.Update.dll'],['Jindan.Update.Tool.dll','update-tool/Jindan.Update.Tool.dll']].map(([local,actual])=>{const loaded=path.join(dir,'harness',local),packaged=path.join(app,actual);if(hash(loaded)!==hash(packaged))throw Error('Copied assembly changed '+actual);return{local:loaded,packaged,sha256:hash(loaded)};});
+const inner=json(path.join(wrapper.tests.evidence,'RESULT.json'));
+if(inner.pass!==82||inner.fail!==0||!inner.tests.some(t=>t.passed&&t.name.includes('three update libraries match exact review bytes')))throw Error('Inner actual binding assertion missing');
+const result={schema:'jindan-snapshot-binding69/1',observedAt:new Date().toISOString(),pass:1,fail:0,wrapper:{path:path.join(dir,'RESULT.json'),sha256:hash(path.join(dir,'RESULT.json'))},inner:{path:path.join(wrapper.tests.evidence,'RESULT.json'),sha256:hash(path.join(wrapper.tests.evidence,'RESULT.json'))},harness:{path:run.command[1],sha256:hash(run.command[1])},runtime:{path:run.command[0],sha256:hash(run.command[0])},entries,qualification:'Harness Main verifies these three loaded assemblies before regular/probe/interruption modes. Wrapper records exact bundled dotnet. This later audit rehashes copied harness bytes and receipts; it is not an independent rerun of82. First R5 inner receipt predates a test-only addition of packagedAssemblies/fixture hashes to its JSON report; that trace addition changes no product or test logic. CLI health apphost inherits bundled DOTNET_ROOT and uses copied harness libraries, without separate --packaged-root entry assertion.',reportReady:false,supervisorAccepted:false};
+fs.writeFileSync(out,JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({pass:1,fail:0,out}));

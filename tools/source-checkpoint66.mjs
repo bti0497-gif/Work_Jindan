@@ -1,0 +1,15 @@
+import {readdir,readFile,writeFile,mkdir,lstat} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const args=process.argv.slice(2),mode=args[0],target=path.resolve(args[1]??path.join(root,'handoff','SOURCE66.json'));
+if(!['capture','verify'].includes(mode)||!target.startsWith(path.join(root,'handoff')+path.sep))throw Error('Use capture|verify with an owned handoff manifest path.');
+const ignore=new Set(['bin','obj','node_modules','.tools','.git','artifacts']);
+async function walk(dir){const out=[];for(const entry of await readdir(dir,{withFileTypes:true})){if(ignore.has(entry.name))continue;const p=path.join(dir,entry.name),s=await lstat(p);if(s.isSymbolicLink())throw Error('Linked source is not allowed: '+p);if(entry.isDirectory())out.push(...await walk(p));else if(entry.isFile())out.push(p);}return out;}
+const selected=[];for(const name of['src','tests','tools','docs','migration','build']){try{selected.push(...await walk(path.join(root,name)));}catch(e){if(e.code!=='ENOENT')throw e;}}
+for(const entry of await readdir(root,{withFileTypes:true}))if(entry.isFile())selected.push(path.join(root,entry.name));
+const files=[];for(const file of selected.sort()){const relative=path.relative(root,file).replaceAll('\\','/');if(/(^|\/)(\.env(?:\.|$)|credentials?(?:\.|$)|auth\.json$)/i.test(relative))throw Error('Private configuration must not enter source checkpoint: '+relative);const bytes=await readFile(file);files.push({path:relative,size:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')});}
+const aggregateSha256=createHash('sha256').update(JSON.stringify(files)).digest('hex');
+if(mode==='capture'){try{await lstat(target);throw Error('Checkpoint already exists; choose a new name.');}catch(e){if(e.code!=='ENOENT')throw e;}await mkdir(path.dirname(target),{recursive:true});await writeFile(target,JSON.stringify({schema:'jindan-source-checkpoint66/1',createdAt:new Date().toISOString(),scope:'All new product, tests, fixtures, tools, docs, migration and root config. Mutable handoff/status and generated output are excluded to avoid circular hashes.',files,aggregateSha256,reportReady:false,supervisorAccepted:false},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({mode,pass:1,fail:0,files:files.length,aggregateSha256,target}));}
+else{const expected=JSON.parse(await readFile(target,'utf8'));const before=new Map(expected.files.map(f=>[f.path,f]));const differences=files.filter(f=>JSON.stringify(f)!==JSON.stringify(before.get(f.path))).map(f=>f.path);const after=new Set(files.map(f=>f.path));differences.push(...expected.files.filter(f=>!after.has(f.path)).map(f=>f.path));console.log(JSON.stringify({mode,pass:differences.length?0:1,fail:differences.length?1:0,files:files.length,aggregateSha256,differences}));if(differences.length||aggregateSha256!==expected.aggregateSha256)process.exitCode=1;}

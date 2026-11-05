@@ -1,0 +1,1 @@
+﻿<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup><ItemGroup><ProjectReference Include="../Jindan.Contracts/Jindan.Contracts.csproj" /><ProjectReference Include="../Jindan.Core/Jindan.Core.csproj" /></ItemGroup></Project>

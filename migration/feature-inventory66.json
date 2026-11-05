@@ -1,0 +1,1721 @@
+{
+  "schema": "jindan-feature-inventory/66",
+  "recordedAt": "2026-11-04T21:28:49.756912+00:00",
+  "baselineRoot": "F:\\jindan",
+  "entryPoint": "src/main.jsx -> src/App.jsx",
+  "activeStudioExport": "src/components/ReportStudio.jsx default -> ReportPlatform.jsx; legacy Studio is retained regression-only",
+  "method": "Read-only static source inventory; no old app execution; no credentials/session/config values read or copied; no live cloud operations. Source hashes identify observed code only.",
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "features": [
+    {
+      "id": "shell",
+      "proposedModule": "Desktop",
+      "title": "현재 진입점·탐색·창 제어",
+      "sourcePaths": [
+        "src/main.jsx",
+        "src/App.jsx",
+        "src/components/LeftSidebar.jsx",
+        "src/components/RightSidebar.jsx"
+      ],
+      "observedCommands": [
+        "Dashboard",
+        "Projects",
+        "Processes",
+        "Files",
+        "Report Studio",
+        "process/mechanical/electrical reports",
+        "Tasks",
+        "Board",
+        "admin Members",
+        "window controls"
+      ],
+      "modelFields": [
+        "activeMenu",
+        "viewMode",
+        "selectedProject",
+        "selectedPost",
+        "currentUser"
+      ],
+      "legacyStorage": "React state and Electron window IPC",
+      "externalGate": "No legacy IPC copy; native replacement local",
+      "requiredLocalVerification": [
+        "Multi-document switching",
+        "Active project/panel context",
+        "Unsaved close",
+        "Layout restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Current entry src/main.jsx imports src/App.jsx. Root App.tsx is not current. Notice/member/report aliases in App switch are not all visible left-menu entries."
+    },
+    {
+      "id": "projects",
+      "proposedModule": "Projects",
+      "title": "프로젝트 목록·검색·CRUD·기간 상태",
+      "sourcePaths": [
+        "src/components/ProjectList.jsx",
+        "src/components/ProjectWrite.jsx",
+        "src/components/ProjectView.jsx",
+        "src/services/workModel.js",
+        "src/services/scheduleService.js"
+      ],
+      "observedCommands": [
+        "List/search title and content",
+        "Create",
+        "Detail",
+        "Edit",
+        "Confirm own deletion",
+        "Calendar progress"
+      ],
+      "modelFields": [
+        "id",
+        "title",
+        "startDate",
+        "endDate",
+        "content(HTML)",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "menu",
+        "fileId",
+        "ownerUid",
+        "deleted"
+      ],
+      "legacyStorage": "localStorage jindan_db_프로젝트관리; queued Firebase jindan_projects",
+      "externalGate": "Local implementation possible; real Firebase adapter and auth verification separately gated",
+      "requiredLocalVerification": [
+        "Required title/date/range",
+        "Save/restart",
+        "Owner/admin/other authorization",
+        "Search",
+        "Related process preservation"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Status is schedule-derived, not independent project status. fileId is legacy retained linkage, not proof of a complete related-file UI."
+    },
+    {
+      "id": "processes",
+      "proposedModule": "Processes",
+      "title": "프로젝트 소속 공정·완료·수정·삭제",
+      "sourcePaths": [
+        "src/components/ProcessList.jsx",
+        "src/services/workModel.js",
+        "src/services/scheduleService.js"
+      ],
+      "observedCommands": [
+        "Search/select project",
+        "Order by start date",
+        "Create/edit process",
+        "Complete selected",
+        "Delete selected",
+        "Calendar progress"
+      ],
+      "modelFields": [
+        "id",
+        "projectId",
+        "title",
+        "startDate",
+        "endDate",
+        "isCompleted",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "ownerUid",
+        "deleted"
+      ],
+      "legacyStorage": "localStorage jindan_db_공정관리; queued Firebase jindan_processes",
+      "externalGate": "Local CRUD possible; production server permission integration unverified",
+      "requiredLocalVerification": [
+        "Project separation",
+        "Immutable parent project",
+        "Owner editing",
+        "Batch complete/delete",
+        "Inclusive end date",
+        "Restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Schedule states are upcoming/in progress/completed/incomplete/undetermined. Calendar elapsed percentage differs from completed-process ratio."
+    },
+    {
+      "id": "tasks",
+      "proposedModule": "Tasks",
+      "title": "달력별 할일·공개/개인",
+      "sourcePaths": [
+        "src/components/TaskManager.jsx",
+        "src/services/workModel.js",
+        "src/components/RightSidebar.jsx"
+      ],
+      "observedCommands": [
+        "Month navigation",
+        "Select date",
+        "Add/edit",
+        "Toggle public",
+        "Delete own",
+        "Upcoming task navigation"
+      ],
+      "modelFields": [
+        "id",
+        "date",
+        "content",
+        "isPublic",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "ownerUid",
+        "deleted"
+      ],
+      "legacyStorage": "localStorage jindan_db_할일관리; queued Firebase jindan_tasks",
+      "externalGate": "Local synthetic users possible; cloud public/own query separately gated",
+      "requiredLocalVerification": [
+        "Private visibility",
+        "Other-user write rejection",
+        "Date filter",
+        "Public/private toggle",
+        "Restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "No completed/status field found on legacy tasks. Do not force process-completion semantics onto tasks."
+    },
+    {
+      "id": "board-posts",
+      "proposedModule": "Board",
+      "title": "게시글 CRUD·실시간 목록·검색·페이지",
+      "sourcePaths": [
+        "src/components/BoardList.jsx",
+        "src/components/BoardWrite.jsx",
+        "src/components/BoardView.jsx",
+        "src/services/boardModel.js",
+        "src/services/firebaseBoardService.js"
+      ],
+      "observedCommands": [
+        "Board and notice lists",
+        "Search",
+        "Paging",
+        "Create/edit/delete",
+        "Concurrent-update detection"
+      ],
+      "modelFields": [
+        "id",
+        "menu",
+        "title",
+        "content(HTML)",
+        "attachments[]",
+        "author",
+        "authorId",
+        "ownerUid",
+        "createdAt",
+        "updatedAt",
+        "deleted",
+        "migratedBy"
+      ],
+      "legacyStorage": "Firestore jindan_board_posts direct transactions/listeners; legacy local import",
+      "externalGate": "Real writes prohibited; explicit local fake repository permitted",
+      "requiredLocalVerification": [
+        "300character title/600000byte body",
+        "Owner/admin",
+        "Expected timestamp conflict",
+        "Safe HTML display",
+        "Paging",
+        "Restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "DOMPurify sanitizes board content on write/view. Rich HTML must be treated as untrusted imported content."
+    },
+    {
+      "id": "board-comments",
+      "proposedModule": "Board",
+      "title": "댓글·첨부·레거시 가져오기",
+      "sourcePaths": [
+        "src/components/BoardView.jsx",
+        "src/components/BoardWrite.jsx",
+        "src/services/firebaseBoardService.js",
+        "src/services/dataService.js"
+      ],
+      "observedCommands": [
+        "Comment",
+        "Add/remove attachments",
+        "Download",
+        "Admin legacy import"
+      ],
+      "modelFields": [
+        "comment:id/postId/content/ownerUid/author/createdAt",
+        "attachment:id/name/size/mimeType"
+      ],
+      "legacyStorage": "Firestore jindan_board_comments; Google Drive resources",
+      "externalGate": "Drive upload/download and Firestore transactions live verification blocked",
+      "requiredLocalVerification": [
+        "Comment1..10000",
+        "Maximum10 attachments",
+        "Deleted post rejection",
+        "Idempotent import",
+        "Failed upload compensation",
+        "Asset hash preservation"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Attachment upload is outside post transaction with new-upload compensation on failure. Do not execute the legacy cloud cleanup path."
+    },
+    {
+      "id": "members",
+      "proposedModule": "Members",
+      "title": "회원·관리자 계정 관리",
+      "sourcePaths": [
+        "src/components/MemberList.jsx",
+        "src/services/firebaseMemberService.js",
+        "src/services/firebaseBoardAuth.js"
+      ],
+      "observedCommands": [
+        "Active list",
+        "Create account",
+        "Edit profile/role",
+        "Deactivate selected",
+        "Reject own administrator deletion"
+      ],
+      "modelFields": [
+        "uid",
+        "firebaseUid",
+        "person_id",
+        "name",
+        "position",
+        "userLevel",
+        "role",
+        "isActive",
+        "createdAt",
+        "updatedAt"
+      ],
+      "legacyStorage": "Firestore jindan_members; local profile cache; secondary Firebase Auth provisioning",
+      "externalGate": "Account creation/real role writes prohibited; fake test adapter explicit and non-production",
+      "requiredLocalVerification": [
+        "Admin service guard",
+        "Duplicate ID",
+        "Immutable person ID",
+        "Self-deactivation rejection",
+        "Role escalation rejection",
+        "Restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Initial password is transient input, not migrated storage. Administrator is userLevel0 and user is2; no secret values copied."
+    },
+    {
+      "id": "auth",
+      "proposedModule": "Identity",
+      "title": "로그인·복원·비밀번호 변경·로그아웃",
+      "sourcePaths": [
+        "src/components/Login.jsx",
+        "src/components/ChangePassword.jsx",
+        "src/services/authService.js",
+        "src/services/firebaseBoardAuth.js",
+        "src/services/firebaseIdentity.js"
+      ],
+      "observedCommands": [
+        "ID/password sign-in",
+        "Restore verified session",
+        "Reauthenticate and change password",
+        "Sign out"
+      ],
+      "modelFields": [
+        "uid",
+        "firebaseUid",
+        "person_id",
+        "name",
+        "position",
+        "role",
+        "email",
+        "isActive"
+      ],
+      "legacyStorage": "Firebase Auth; sessionStorage currentUser; verified member profile",
+      "externalGate": "No credentials/session copying; local identity fake clearly labeled; real auth adapter gated",
+      "requiredLocalVerification": [
+        "Anonymous rejection",
+        "Inactive member rejection",
+        "No credential logs",
+        "Clear context on logout",
+        "Role enforcement"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Cached session excludes password. Do not bypass authorization by treating all local actors as administrators."
+    },
+    {
+      "id": "work-sync",
+      "proposedModule": "Sync",
+      "title": "업무 큐·충돌 보호·주기 동기화",
+      "sourcePaths": [
+        "src/App.jsx",
+        "src/services/syncService.js",
+        "src/services/workModel.js",
+        "src/services/dbService.js",
+        "src/services/firebaseWorkService.js"
+      ],
+      "observedCommands": [
+        "Start/menu sync",
+        "Work-change debounce250ms",
+        "Push1minute",
+        "Pull5minutes",
+        "Error/retry status"
+      ],
+      "modelFields": [
+        "tableName",
+        "id",
+        "operation(upsert/delete)",
+        "revision",
+        "timestamp",
+        "ownerUid",
+        "deleted",
+        "updatedAt"
+      ],
+      "legacyStorage": "localStorage jindan_sync_queue/jindan_last_sync and3 work tables; Firebase",
+      "externalGate": "No live operation authorized; local fake transport testable",
+      "requiredLocalVerification": [
+        "Pending local wins",
+        "Explicit tombstones",
+        "Revision-matched queue acknowledgment",
+        "Partial retry",
+        "Concurrent sync coalescing",
+        "Crash recovery"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Missing cloud record is not deletion; only explicit tombstone removes. Public/own task pruning differs from project/process merge."
+    },
+    {
+      "id": "drive-files",
+      "proposedModule": "Files",
+      "title": "공유 Drive 탐색·파일 작업",
+      "sourcePaths": [
+        "src/components/FileManager.jsx",
+        "src/components/FileContextMenu.jsx",
+        "src/services/driveService.js",
+        "src/services/driveDownloadService.js",
+        "src/services/driveCacheService.js"
+      ],
+      "observedCommands": [
+        "Tree/back/forward/parent navigation",
+        "List/grid",
+        "Name search/sort",
+        "Multi/range/drag select",
+        "Create folder",
+        "Upload/drop",
+        "Duplicate-name policy",
+        "F2 rename",
+        "Trash",
+        "Drag move",
+        "Single download/multiple ZIP"
+      ],
+      "modelFields": [
+        "id",
+        "name",
+        "size",
+        "modifiedTime",
+        "owners",
+        "mimeType",
+        "webContentLink",
+        "parentFolderId",
+        "folderPath"
+      ],
+      "legacyStorage": "Drive v3 desktop ephemeral token; cached folder lists",
+      "externalGate": "Actual Drive writes/read auth not used; local file repository analog possible; production adapter gated",
+      "requiredLocalVerification": [
+        "Unsafe paths",
+        "Rename race",
+        "Duplicate policy",
+        "Nested ZIP",
+        "Cancel",
+        "Unauthorized delete/move",
+        "File lock"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Local file trash/permissions and cloud Drive semantics need explicit mapping. Live token/cache must not be copied."
+    },
+    {
+      "id": "drive-cache",
+      "proposedModule": "Sync",
+      "title": "Drive 목록 캐시·백그라운드 갱신",
+      "sourcePaths": [
+        "src/App.jsx",
+        "src/services/driveCacheService.js",
+        "src/components/FileManager.jsx"
+      ],
+      "observedCommands": [
+        "Start warm",
+        "10minute refresh",
+        "Online refresh",
+        "Manual sync",
+        "Cache status/error"
+      ],
+      "modelFields": [
+        "folders/files tree",
+        "lastSynced",
+        "syncing",
+        "error"
+      ],
+      "legacyStorage": "localStorage Drive cache plus live tree",
+      "externalGate": "Live listing and write disabled; explicit fake tree can exercise",
+      "requiredLocalVerification": [
+        "Immediate cache",
+        "Offline fallback",
+        "Rename/refresh race",
+        "Stale response",
+        "Hide system entries"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Drive cache refresh is independent from Firebase work sync; one success must not imply the other succeeded."
+    },
+    {
+      "id": "legacy-drive-system",
+      "proposedModule": "Infrastructure",
+      "title": "레거시 시스템 폴더·리소스·로그",
+      "sourcePaths": [
+        "src/App.jsx",
+        "src/services/dataService.js"
+      ],
+      "observedCommands": [
+        "Initialize .system/json/resources",
+        "JSON data log",
+        "Attachment resources",
+        "Action log",
+        "Delete JSON older than7days"
+      ],
+      "modelFields": [
+        "tableName",
+        "data",
+        "op",
+        "id",
+        "timestamp"
+      ],
+      "legacyStorage": "Google Drive .system/json/resources",
+      "externalGate": "PROHIBITED in port startup: actual folder create/delete and old cleanup are live writes",
+      "requiredLocalVerification": [
+        "Zero startup cloud writes",
+        "Fake resource compensation",
+        "Explicit retention policy"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Legacy startup initSystemStorage creates folders and invokes cleanupOldData. Do not copy these automatic writes/deletes into startup."
+    },
+    {
+      "id": "photos-gallery",
+      "proposedModule": "Photos",
+      "title": "현행 사진·CAD 갤러리/뷰어",
+      "sourcePaths": [
+        "src/components/DashboardGallery.jsx",
+        "src/components/ImageViewer.jsx",
+        "src/components/ImageViewerWindow.jsx",
+        "src/services/galleryData.js",
+        "src/services/imageViewerService.js",
+        "src/hooks/useImageTransform.js"
+      ],
+      "observedCommands": [
+        "Recent8 thumbnails",
+        "Open image/CAD window",
+        "Folder tree",
+        "Previous/next",
+        "Zoom/fit",
+        "Pan",
+        "Return to app"
+      ],
+      "modelFields": [
+        "file:id/name/mimeType/size/modifiedTime",
+        "parentFolderId",
+        "folderPath",
+        "selectedFolderId",
+        "selectedFileId",
+        "zoom/pan"
+      ],
+      "legacyStorage": "Drive tree/blobs; transient viewer state; bounded preview cache",
+      "externalGate": "Local photo browser possible; Drive real preview gated",
+      "requiredLocalVerification": [
+        "Corrupt images",
+        "Large async cancellation",
+        "Stale selection",
+        "Cache budget/disposal",
+        "Original immutability"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Existing product has Drive image/CAD viewer, not separate album/description/EXIF CRUD. Roadmap Photos expansion must be implemented as new scope."
+    },
+    {
+      "id": "photos-new",
+      "proposedModule": "Photos",
+      "title": "로드맵 신규 사진관리 요구",
+      "sourcePaths": [
+        "src/components/DashboardGallery.jsx",
+        "src/services/galleryData.js"
+      ],
+      "observedCommands": [
+        "NEW project/site/album linkage",
+        "NEW local import",
+        "NEW description/classification/capture metadata",
+        "NEW edited-copy export"
+      ],
+      "modelFields": [
+        "projectId",
+        "site",
+        "albumId",
+        "description",
+        "classification",
+        "captureMetadata",
+        "contentHash",
+        "originalPath",
+        "editedArtifactId"
+      ],
+      "legacyStorage": "NEW separate local repository; no automatic production import",
+      "externalGate": "All local functionality permitted; EXIF external transmission forbidden",
+      "requiredLocalVerification": [
+        "Project isolation",
+        "Hash dedup",
+        "Original preservation",
+        "Edited-copy export",
+        "Locked/corrupt input",
+        "Restart",
+        "Large thumbnail cancellation"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Roadmap M3 addition, not a statement that either tree implements it."
+    },
+    {
+      "id": "cad",
+      "proposedModule": "Files",
+      "title": "DWG/DXF 미리보기",
+      "sourcePaths": [
+        "src/services/cadEngine.js",
+        "src/services/cadPreviewService.js",
+        "src/services/cadPreview.worker.js",
+        "src/services/cadRender.js",
+        "src/services/cadRaster.js",
+        "src/services/viewerPreviewService.js"
+      ],
+      "observedCommands": [
+        "Warm CAD worker",
+        "Render DWG/DXF",
+        "PNG preview",
+        "Cancel"
+      ],
+      "modelFields": [
+        "filename",
+        "bytes",
+        "signal",
+        "render result",
+        "cache key(id/name/modifiedTime/size)"
+      ],
+      "legacyStorage": "nasjidwg WASM worker; bounded cache",
+      "externalGate": "Native C# replacement requires fit test; preserved JS runtime can be isolated; no fake successful CAD output",
+      "requiredLocalVerification": [
+        "DWG/DXF goldens",
+        "Malformed input",
+        "Worker crash/retry",
+        "Cancellation",
+        "Cache eviction"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Preview/render only; no general CAD editor observed. nasjidwg0.18.0 needs retained runtime/appropriate replacement."
+    },
+    {
+      "id": "dashboard-search",
+      "proposedModule": "Dashboard",
+      "title": "대시보드·기간 집계·분산 검색",
+      "sourcePaths": [
+        "src/components/Dashboard.jsx",
+        "src/components/RightSidebar.jsx",
+        "src/components/ProjectList.jsx",
+        "src/components/BoardList.jsx",
+        "src/components/FileManager.jsx",
+        "src/components/ReportPlatform.jsx"
+      ],
+      "observedCommands": [
+        "Active projects",
+        "Process status aggregates",
+        "Upcoming public/own tasks",
+        "Recent image/CAD",
+        "Per-list search"
+      ],
+      "modelFields": [
+        "activeProjects",
+        "allProjects",
+        "processes",
+        "schedule progress/status",
+        "upcomingTasks"
+      ],
+      "legacyStorage": "Local cached work records plus Drive gallery",
+      "externalGate": "Local dashboards permitted; no live sync claim",
+      "requiredLocalVerification": [
+        "Valid schedules/progress",
+        "Private task visibility",
+        "Correct destination",
+        "Fresh saved data",
+        "Explicit search scope"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "No unified cross-module full-text search command found; existing search is list scoped. New unified search must identify scope."
+    },
+    {
+      "id": "report-platform",
+      "proposedModule": "ReportStudio",
+      "title": "현행 스튜디오 문서/분석/자료·패널",
+      "sourcePaths": [
+        "src/components/ReportStudio.jsx",
+        "src/components/ReportPlatform.jsx",
+        "src/components/StudioLayoutControls.jsx",
+        "src/components/StudioFitPage.jsx",
+        "src/components/ReportAnalysisWorkspace.jsx",
+        "src/components/ReportChapterInspector.jsx"
+      ],
+      "observedCommands": [
+        "Select project",
+        "Import prior report local/Drive",
+        "Select/remove report link",
+        "Preview/analysis",
+        "Select chapter",
+        "Table/figure/data management",
+        "Source location/return",
+        "Input materials",
+        "Persist side widths",
+        "Edit formatting review"
+      ],
+      "modelFields": [
+        "businessProjectId",
+        "projectName",
+        "reportIds",
+        "removedReportIds",
+        "activeReportId",
+        "reportMetadata",
+        "reportAnalyses",
+        "analysisReviews",
+        "chapterReviews",
+        "reproductionReviews",
+        "pdfAnalyses",
+        "pdfAuthoring",
+        "materialIds",
+        "reportSpecs"
+      ],
+      "legacyStorage": "IndexedDB jindan-report-studio v3 facilityStudios/materials/files; user/project scope",
+      "externalGate": "Local source analysis permitted; native fidelity/company approval separate HOLD",
+      "requiredLocalVerification": [
+        "Project/active-document panel isolation",
+        "Remove only link",
+        "Distinct PDF/native preview source",
+        "Location return",
+        "Width/zoom/restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "ReportStudio.jsx:426 exports ReportPlatform; old Studio JSX is stored-workspace regression support. The independent ReportWorkspace route remains active."
+    },
+    {
+      "id": "report-library",
+      "proposedModule": "ReportStudio",
+      "title": "원본·금회자료 보관·해시·유형",
+      "sourcePaths": [
+        "src/services/report/reportLibrary.js",
+        "src/services/report/studioProjects.js",
+        "src/services/report/referenceProjects.js",
+        "src/components/ReportDrivePicker.jsx"
+      ],
+      "observedCommands": [
+        "Import/deduplicate",
+        "Edit metadata",
+        "Preview/download original",
+        "Unlink project material",
+        "Classify reference folder",
+        "Choose whole PDF"
+      ],
+      "modelFields": [
+        "id(role-SHA)",
+        "filename",
+        "title",
+        "format",
+        "size",
+        "sha256",
+        "role",
+        "reportType",
+        "facility",
+        "templateGroup",
+        "notes",
+        "includeInPatterns",
+        "addedAt",
+        "updatedAt",
+        "relativePath",
+        "componentKind",
+        "chapterNumber"
+      ],
+      "legacyStorage": "IndexedDB jindan-report-studio v3 materials/files/referenceProjects/referenceEntries/facilityStudios",
+      "externalGate": "Local adapters possible; Drive import real verification gated",
+      "requiredLocalVerification": [
+        "160MB/signature",
+        "Batch50",
+        "SHA dedup",
+        "Linked-deletion refusal",
+        "User/project scope",
+        "Unsafe folder paths"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Reference PDF/HWP/HWPX; data also XLSX/CSV/PWV/BMT; images PNG/JPG/JPEG/WebP. Image metadata alone is not measurement evidence."
+    },
+    {
+      "id": "report-analysis-restore",
+      "proposedModule": "ReportStudio",
+      "title": "PDF 복원분석·HWPX 작성분석·장별 재현",
+      "sourcePaths": [
+        "src/services/report/sourceParser.js",
+        "src/services/report/pdfAnalysis.js",
+        "src/services/report/pdfStructure.js",
+        "src/services/report/workflowAnalysis.js",
+        "src/services/report/chapterConversion.js",
+        "src/services/report/pdfHwpxWriter.js",
+        "src/services/report/pairedReferenceLearning.js",
+        "src/services/report/pairedTextReview.js",
+        "src/services/report/reproductionReview.js"
+      ],
+      "observedCommands": [
+        "PDF restoration analysis",
+        "Native authoring analysis",
+        "Paired-source learning/review",
+        "Selected chapter to HWPX",
+        "Extract font/picture",
+        "Analyze generated candidate"
+      ],
+      "modelFields": [
+        "source SHA/project",
+        "chapter/page/paragraph/table/cell/picture IDs",
+        "source anchors",
+        "textRuns",
+        "contentRole",
+        "formatRole",
+        "pageTypes",
+        "furniture",
+        "provenance",
+        "writer/analysis versions"
+      ],
+      "legacyStorage": "Analysis in scoped studio book; original blobs; separate generated material and run",
+      "externalGate": "JS Hybrid initially; native Hancom review owns layout approval; no COM/OCR shortcut",
+      "requiredLocalVerification": [
+        "Audit65 null/undefined",
+        "Duplicate ZIP parser and facade",
+        "Source/slot mismatch",
+        "Chapter selection",
+        "Picture/font goldens",
+        "No success after cancel"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Digital PDF text/geometry is primary. OCR helper exists but no OCR/COM adoption is authorized. Native fidelity approval remains separate."
+    },
+    {
+      "id": "report-review-draft",
+      "proposedModule": "ReportStudio",
+      "title": "내용역할 검토·근거바인딩·금회/빈초안",
+      "sourcePaths": [
+        "src/services/report/draftPreparation.js",
+        "src/services/report/draftWriter.js",
+        "src/services/report/draftRetention.js",
+        "src/services/report/draftSourceBindings.js",
+        "src/services/report/draftCollection.js",
+        "src/components/ReportDraftPreparation.jsx",
+        "src/components/ReportReproductionReview.jsx"
+      ],
+      "observedCommands": [
+        "keep/replace/rewrite/exclude",
+        "Declare static-label/history retention",
+        "Bind file/cell evidence",
+        "Reproduction review",
+        "Save preparation/input list",
+        "Generate blank/evidence draft"
+      ],
+      "modelFields": [
+        "sourceMaterialId",
+        "sourceSha256",
+        "projectId",
+        "analysis fingerprint",
+        "decision",
+        "contentRole",
+        "retention purpose",
+        "draftText",
+        "clearValue",
+        "materialIds",
+        "expected text/slot",
+        "reproductionReview"
+      ],
+      "legacyStorage": "Studio analysisReviews/reproductionReviews/draftPreparations/draftRuns; separate candidate HWPX",
+      "externalGate": "Actual current measurements/judgments absent => HOLD; local explicit synthetic test allowed",
+      "requiredLocalVerification": [
+        "Past measurement keep/static-label conflict",
+        "Empty replace versus clearValue",
+        "Actual evidence SHA",
+        "Stale source/review/slot",
+        "No invented current values"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Selected48 blank cells do not approve a company-wide blank form. Design constants and marked historical comparison differ from current measurements/judgments."
+    },
+    {
+      "id": "report-collection",
+      "proposedModule": "ReportStudio",
+      "title": "조사양식 내려받기·한글저장반환·빈칸 적용",
+      "sourcePaths": [
+        "src/services/report/draftCollection.js",
+        "src/services/report/collectionIntroStyle.js",
+        "src/components/ReportPlatform.jsx",
+        "src/services/report/styledTextReplacement.js"
+      ],
+      "observedCommands": [
+        "Export blank HWPX",
+        "Import filled form and preview",
+        "Apply returned values to same cells",
+        "Explicit all-empty confirmation",
+        "Bind returned-file receipt"
+      ],
+      "modelFields": [
+        "JDF_ cell name",
+        "schemaFingerprint",
+        "sourceSha256",
+        "fieldCount",
+        "rows(id/value)",
+        "warnings",
+        "receiptMaterialId/SHA",
+        "mode"
+      ],
+      "legacyStorage": "Files and collectionExports/collectionRuns; JDF cell names",
+      "externalGate": "Local synthetic UI full-flow possible; exact saved-company native tests separate",
+      "requiredLocalVerification": [
+        "Wrong source/context/cell",
+        "Duplicate/missing JDF",
+        "All-empty and warnings",
+        "Intro overlap regression",
+        "Immutable receipt",
+        "Restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "JDF identity must not depend on custom jindan-source.json surviving SaveAs. New SHA does not inherit an old native approval."
+    },
+    {
+      "id": "report-archive-recovery",
+      "proposedModule": "ReportStudio",
+      "title": "프로젝트아카이브·회수·fresh review 경계",
+      "sourcePaths": [
+        "src/services/report/projectArchive.js",
+        "src/services/report/engineRecovery.js",
+        "src/services/report/recoveredDraftSession.js",
+        "src/services/report/engineFacade.js",
+        "src/services/report/engineContract.js"
+      ],
+      "observedCommands": [
+        "Export/open jindanproj",
+        "Back up current work",
+        "Hash-verified recovery",
+        "Reanalyze native-saved",
+        "Fresh source/fingerprint review",
+        "Resume draft"
+      ],
+      "modelFields": [
+        "schema",
+        "manifest",
+        "materials/files hashes",
+        "roles source/candidate/native-saved/evidence/collection/draft",
+        "parent links",
+        "project/source/fingerprint",
+        "acknowledgedReview"
+      ],
+      "legacyStorage": "Studio ZIP512MB/expanded768MB/projectJSON16MB; engineRecovery separate512MB/160MB/8MB limits",
+      "externalGate": "Local replay possible; arbitrary recovered state never approval; actual project continuity separate HOLD",
+      "requiredLocalVerification": [
+        "Duplicates/path/inflation/limits",
+        "Record hash/link cycle",
+        "Stale bundle/review",
+        "Actual evidence bytes",
+        "Reanalysis invalidates acknowledgment",
+        "Worker timeout/stale result"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Project archive and portable engine recovery are different contracts. Do not collapse limits or weaken guards. Optional recovery boundary must be enforced by host."
+    },
+    {
+      "id": "report-discipline-workspace",
+      "proposedModule": "ReportStudio",
+      "title": "분야별 양식·계산·진단문구·백업",
+      "sourcePaths": [
+        "src/components/ReportWorkspace.jsx",
+        "src/services/report/reportEngine.js",
+        "src/services/report/reportStore.js",
+        "src/services/report/collectionForms.js",
+        "src/services/report/nativeWriter.js",
+        "src/services/report/reportSections.js",
+        "src/services/report/reportWorkflow.js"
+      ],
+      "observedCommands": [
+        "Select discipline/project/report",
+        "Select table/paragraph input slots",
+        "Judgment-column-only",
+        "Confirm schema",
+        "Enter current data",
+        "Rules/criteria/units",
+        "Reviewed narrative",
+        "New run/restore",
+        "Collection/backup/native exports"
+      ],
+      "modelFields": [
+        "engineVersion",
+        "projectId",
+        "discipline",
+        "source",
+        "document",
+        "revision/confirmedRevision",
+        "fields/rules",
+        "values",
+        "notes",
+        "narrativeValues",
+        "history/runs",
+        "materials/receipts",
+        "valueOrigins",
+        "collectedEvidence"
+      ],
+      "legacyStorage": "IndexedDB jindan-report-engine v2 keyed user/project/sourceSHA/discipline",
+      "externalGate": "Local calculations possible; AI optional external gate; HWP read-only/HWPX write",
+      "requiredLocalVerification": [
+        "Number parser",
+        "Zero versus blank",
+        "Operations/units",
+        "Confirmed criteria",
+        "Explicit text slot",
+        "Project/discipline separation",
+        "Backup/restart"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "This second report route is active beside ReportPlatform. Preserve field/rule editor, collection and run-history semantics."
+    },
+    {
+      "id": "electrical-inputs",
+      "proposedModule": "ReportStudio",
+      "title": "전기분야 자료·범위·개선협의 준비",
+      "sourcePaths": [
+        "src/components/ElectricalReportPreparation.jsx",
+        "src/services/report/electricalPreparation.js",
+        "src/components/ThermalDeliveries.jsx",
+        "src/services/report/thermalDelivery.js"
+      ],
+      "observedCommands": [
+        "Analyze PDF/folder candidates",
+        "KEPCO include/exclude reason",
+        "Period/scope",
+        "Link8 electrical input groups",
+        "Record conditions/notes",
+        "Improvement consultation"
+      ],
+      "modelFields": [
+        "referenceProjectId/referencePdfMaterialId",
+        "plan/signature/targets",
+        "scope",
+        "kepcoMode/kepcoReason",
+        "periodStart/end",
+        "inputs by section",
+        "notes.conditions/diagnosis/consultation/agreement",
+        "thermalDeliveries"
+      ],
+      "legacyStorage": "book.electrical; source material hashes; source entry signatures",
+      "externalGate": "File inspection local; live KEPCO automatic fetch not established; no fake data",
+      "requiredLocalVerification": [
+        "Stale SHA/link",
+        "Human review after classification",
+        "No exclusion on incomplete analysis",
+        "No invented diagnosis",
+        "IR/SR not duplicate measurement count"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "8 groups: kepco,thermal,quality,insulation,current,equipment,management,improvement. Keyword matches are review candidates, not diagnosis."
+    },
+    {
+      "id": "thermal",
+      "proposedModule": "ReportStudio",
+      "title": "Testo BMT 메타데이터·그림·열화상결과 묶음",
+      "sourcePaths": [
+        "src/services/report/thermalBmt.js",
+        "src/components/ThermalBmtPreview.jsx",
+        "src/services/report/thermalDelivery.js",
+        "src/components/ThermalDeliveries.jsx"
+      ],
+      "observedCommands": [
+        "Inspect BMT",
+        "Device/environment/display scale/camera points",
+        "Preview/real image",
+        "Bind modified BMT/final image/optional spreadsheet",
+        "Confirm points/image"
+      ],
+      "modelFields": [
+        "source SHA/bytes",
+        "device",
+        "recordedClock/timeZone unconfirmed",
+        "environment",
+        "detector/grid raw",
+        "scale",
+        "points",
+        "editor markers",
+        "recomputeCoefficients",
+        "delivery bmt/image/measurements",
+        "pointsConfirmed/imageConfirmed"
+      ],
+      "legacyStorage": "BMT binary up to48MB; local material and electrical linkage",
+      "externalGate": "No IRSoft edit automation; calibrated recomputation/native validation required; no rawgrid temperature claim",
+      "requiredLocalVerification": [
+        "Malformed fields/bounds",
+        "Corrupt BMT",
+        "Do not use raw grid/scale as measured temperature",
+        "Changed hash invalidates binding",
+        "Unconfirmed timestamp"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Camera point metadata is not verified edited IRSoft points; checksum not verified; raw unit unverified and temperatureC null."
+    },
+    {
+      "id": "power-quality",
+      "proposedModule": "ReportStudio",
+      "title": "PowerView PWV 측정자료 검사",
+      "sourcePaths": [
+        "src/services/report/powerView.js",
+        "src/components/PowerViewPreview.jsx"
+      ],
+      "observedCommands": [
+        "Inspect PWV",
+        "Choose instrument/site/record",
+        "Search channels",
+        "Count/min/max/missing/preview"
+      ],
+      "modelFields": [
+        "sourceSha256",
+        "instruments",
+        "sites",
+        "records",
+        "quantity/unit/prefix",
+        "representation",
+        "sample counts",
+        "snapshotLengthMs",
+        "channels count/finite/missing/min/max/preview"
+      ],
+      "legacyStorage": "UTF8 PQData XML up to48MB; Base64/GZip decoded budget64MB",
+      "externalGate": "Local parser possible; CT/PT/unit/period/engineering interpretation human gate",
+      "requiredLocalVerification": [
+        "DTD/entity rejection",
+        "Binary bounds/width",
+        "Single/Double missing samples",
+        "GZip limit",
+        "Channel units"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "No arbitrary PWV editing/device collection observed. Channel inspection is not an engineering judgment."
+    },
+    {
+      "id": "report-ai",
+      "proposedModule": "ReportStudio + provider service",
+      "title": "선택적 AI 분석·자료추출·진단초안",
+      "sourcePaths": [
+        "src/components/ReportAiSettings.jsx",
+        "src/services/report/reportAiClient.js",
+        "src/services/report/reportAnalyzer.js",
+        "src/services/report/reportInterpreter.js",
+        "src/services/report/reportCollection.js",
+        "report-ai.cjs"
+      ],
+      "observedCommands": [
+        "Status/config/model list",
+        "Propose slots",
+        "Extract file-table values",
+        "Propose interpretation",
+        "Cancel"
+      ],
+      "modelFields": [
+        "request id",
+        "source/project/discipline/input fingerprint",
+        "response schema",
+        "models/status/usage/cacheHit"
+      ],
+      "legacyStorage": "Electron IPC; local protected settings/environment reference only; response cache",
+      "externalGate": "PAID/API calls forbidden; no credentials copied; fake provider must explicit; real provider verification blocked",
+      "requiredLocalVerification": [
+        "Response schema/source fingerprint",
+        "Reject invented cell/value",
+        "Stale request result",
+        "Cancel",
+        "Redact logs",
+        "No unreviewed mutation"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Only source code contracts read; no environment/session/API key values. Current provider is OpenAI, model availability not verified."
+    },
+    {
+      "id": "updates-release",
+      "proposedModule": "Update",
+      "title": "기존 전체앱 업데이트와 새 모듈패치",
+      "sourcePaths": [
+        "src/App.jsx",
+        "package.json",
+        "main.cjs",
+        "preload.cjs"
+      ],
+      "observedCommands": [
+        "Legacy update events/progress",
+        "Confirmed restart",
+        "NSIS package",
+        "Publish script",
+        "NEW module package patch/rollback"
+      ],
+      "modelFields": [
+        "app version",
+        "update info/progress",
+        "package manifest/signature/hash (new)"
+      ],
+      "legacyStorage": "Legacy electron-updater/GitHub releases; NEW local package manifest policy",
+      "externalGate": "commit/push/deploy/upload prohibited; do not execute legacy publish; local patch fixture permitted",
+      "requiredLocalVerification": [
+        "One-module v1-to-v2",
+        "Unrelated host/module SHA unchanged",
+        "Missing/hash/contract/path rejection",
+        "File lock",
+        "Staging interruption",
+        "Health rollback",
+        "User data preservation"
+      ],
+      "migrationStatus": "inventory-only",
+      "observation": "read-only source inspection; no runtime or live-service verification",
+      "notes": "Old whole-app update does not satisfy modular patch gate. No legacy web-security/process-kill behavior may be copied."
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "relativePath": "main.cjs",
+      "sha256": "d269bf2beadf0597ef799670048ab6e987b28b385e8f91c9509574a5dc4ad1cf",
+      "bytes": 10739
+    },
+    {
+      "relativePath": "package.json",
+      "sha256": "13e4cdee0f7c88de58d9a4d49dbd85dd737c919a2fb8e580b91b7f41b0d06ce1",
+      "bytes": 3082
+    },
+    {
+      "relativePath": "preload.cjs",
+      "sha256": "fc2f3acf5a39f716366b4164b918b82b1b7d499fbf2c4402cbffe724bf40f302",
+      "bytes": 1357
+    },
+    {
+      "relativePath": "report-ai.cjs",
+      "sha256": "ad7b2da06a30f79159e8fa535b3c7c3738c448396967cb487ab509ec159788ac",
+      "bytes": 14335
+    },
+    {
+      "relativePath": "src/App.jsx",
+      "sha256": "8720360e2917c40cab73dc90819daa94149a87e0b9cc6d60c7c50fc2baa883ab",
+      "bytes": 18649
+    },
+    {
+      "relativePath": "src/components/BoardList.jsx",
+      "sha256": "960373ea8c9e832d7a00c71b08f32693737c5bf5c9c481d62c20d9a4dd0f088e",
+      "bytes": 8526
+    },
+    {
+      "relativePath": "src/components/BoardView.jsx",
+      "sha256": "57d82488424bc372d53d4dba29bf42747c9e4b86410e2a644d1bb8b027253130",
+      "bytes": 14947
+    },
+    {
+      "relativePath": "src/components/BoardWrite.jsx",
+      "sha256": "152cc8a81db28b941d4bf5e92c5c454f562f07613abfd7917293ce9d930c282f",
+      "bytes": 17451
+    },
+    {
+      "relativePath": "src/components/ChangePassword.jsx",
+      "sha256": "8dacb078f52e6e41803672fd4b507a17e333a7558e042d139b467f39240640b4",
+      "bytes": 3017
+    },
+    {
+      "relativePath": "src/components/Dashboard.jsx",
+      "sha256": "40fb07ac0bffdaecaa31c5576443788ef662337a6de90a9bc203b4daacaf2cfd",
+      "bytes": 18743
+    },
+    {
+      "relativePath": "src/components/DashboardGallery.jsx",
+      "sha256": "3b0ea7c0c01e6c666d739793c9f49a17f7123e9bfe35e5625d7a59f780170fc5",
+      "bytes": 6778
+    },
+    {
+      "relativePath": "src/components/ElectricalReportPreparation.jsx",
+      "sha256": "235a1658fec092a2fde25260692a9f0099a85b165a57265da2751b828f107df0",
+      "bytes": 19871
+    },
+    {
+      "relativePath": "src/components/FileContextMenu.jsx",
+      "sha256": "13381bbe30ae738e5f2b9b5e885cc07f88ce2b450ed0bb6d1c97325589d4a2a7",
+      "bytes": 5084
+    },
+    {
+      "relativePath": "src/components/FileManager.jsx",
+      "sha256": "31ad2ef6721bacf8fc6f104688efe1768a880ee3bb5c4c67794b3334dda9f226",
+      "bytes": 68826
+    },
+    {
+      "relativePath": "src/components/ImageViewer.jsx",
+      "sha256": "b22129a9992c3a20cf2a85906b51e2693ebacc5656fcac42dbe5ef61212b40df",
+      "bytes": 10568
+    },
+    {
+      "relativePath": "src/components/ImageViewerWindow.jsx",
+      "sha256": "916390540d54c813a7d5900331be055897a8cd4f7b596302af356defcb32386c",
+      "bytes": 2306
+    },
+    {
+      "relativePath": "src/components/LeftSidebar.jsx",
+      "sha256": "4c0208bd8b058a095e8c2cd02d85814ef508aa28d61eb63d632909a9a9952509",
+      "bytes": 5689
+    },
+    {
+      "relativePath": "src/components/Login.jsx",
+      "sha256": "cea85a5191b309fbf4ba5a0522ed7e95d79d216849e68a7784fc65d99a14b7c1",
+      "bytes": 7806
+    },
+    {
+      "relativePath": "src/components/MemberList.jsx",
+      "sha256": "f97cb241e0bffb0375f422d5380e1a1a0981fbc74ef95f2679d587bd8db49949",
+      "bytes": 22349
+    },
+    {
+      "relativePath": "src/components/PowerViewPreview.jsx",
+      "sha256": "4786768a8e46f3711f83bc0fb5376287720e9bc43aac040238f97aada0cab576",
+      "bytes": 4766
+    },
+    {
+      "relativePath": "src/components/ProcessList.jsx",
+      "sha256": "be95822ca76f3f9c0ca93aa464ddb670e15083a9fabe14e1a899168db9d01949",
+      "bytes": 26606
+    },
+    {
+      "relativePath": "src/components/ProjectList.jsx",
+      "sha256": "09c01ee76246c580bd9a7075ca8440f46359643f6309cb1dffad2a3936e303b3",
+      "bytes": 7513
+    },
+    {
+      "relativePath": "src/components/ProjectView.jsx",
+      "sha256": "696480c3f9fbc2817b59eb41bd812c03ce2478989a42b1c167e852b9e1cd9f24",
+      "bytes": 5851
+    },
+    {
+      "relativePath": "src/components/ProjectWrite.jsx",
+      "sha256": "49de9a278ac214679737312c6a482737ac793f33ac5e06694d7732fd8870710c",
+      "bytes": 9188
+    },
+    {
+      "relativePath": "src/components/ReportAiSettings.jsx",
+      "sha256": "f15ab09df3f3267fad8dad56601fec1d4151c3e58daae1b200b387d81853fb62",
+      "bytes": 3609
+    },
+    {
+      "relativePath": "src/components/ReportAnalysisWorkspace.jsx",
+      "sha256": "630f46f17b0d15cfd9a86e0f8f06df5f88d87ac2131c9ad66b18e2d7c3b9a6c2",
+      "bytes": 8087
+    },
+    {
+      "relativePath": "src/components/ReportChapterInspector.jsx",
+      "sha256": "2039325bc01972f5de3072615247ffd4c5ff03c75dc16a78768cb8d4b80435c8",
+      "bytes": 5117
+    },
+    {
+      "relativePath": "src/components/ReportDraftPreparation.jsx",
+      "sha256": "9d8baf93dac963f3fed56ee5b7b432b5ac607198ddd31ba23d7a55c177000596",
+      "bytes": 9621
+    },
+    {
+      "relativePath": "src/components/ReportDrivePicker.jsx",
+      "sha256": "a2b854da709da4b9c123432a28440b7c43b04e90f500a96fee7cafe3b1b288b8",
+      "bytes": 4140
+    },
+    {
+      "relativePath": "src/components/ReportPlatform.jsx",
+      "sha256": "03df291578044b2ee54a4559a3f957b577b301549b42272125c956355735db59",
+      "bytes": 57205
+    },
+    {
+      "relativePath": "src/components/ReportReproductionReview.jsx",
+      "sha256": "e907bf4aa1c11a28e1718a37427cb600dded25ed5f92ec1f34674935aff093be",
+      "bytes": 3500
+    },
+    {
+      "relativePath": "src/components/ReportStudio.jsx",
+      "sha256": "4dbe56fdd12322b42fa59fb79b01baf362f8e47e8dce04a0bc099d7e95e66555",
+      "bytes": 63415
+    },
+    {
+      "relativePath": "src/components/ReportWorkspace.jsx",
+      "sha256": "461f8210332d3fb8c07a45ca6e65150b98a457cef0e48554a169d3f61a74905e",
+      "bytes": 63025
+    },
+    {
+      "relativePath": "src/components/RightSidebar.jsx",
+      "sha256": "079bf1bc807029d5252a26dffe043e85191410349a54c16d3b9a2ceb581a9052",
+      "bytes": 7349
+    },
+    {
+      "relativePath": "src/components/StudioFitPage.jsx",
+      "sha256": "3dcfd2663bd518605be90fab6b7ad80d8eca80f61cc81fc77371726eaf1f5ff5",
+      "bytes": 1225
+    },
+    {
+      "relativePath": "src/components/StudioLayoutControls.jsx",
+      "sha256": "6e9a643445d9ad337aeb37265f52bf884e5b3a11bc5d73454036d0654b910176",
+      "bytes": 4328
+    },
+    {
+      "relativePath": "src/components/TaskManager.jsx",
+      "sha256": "345e3b8da3c00104e9a6eaaaae144425802e8e7bda1ffb75ce62f27c639cbaa4",
+      "bytes": 18940
+    },
+    {
+      "relativePath": "src/components/ThermalBmtPreview.jsx",
+      "sha256": "60c47c9e3e2bf5d6c3061212bb5de31a899cee372289253fb776d79e302d8b80",
+      "bytes": 3100
+    },
+    {
+      "relativePath": "src/components/ThermalDeliveries.jsx",
+      "sha256": "42bb6522f43a84c9edecabbc103b226b0d5fce4d0929e28c9f91f74b2a06af04",
+      "bytes": 4433
+    },
+    {
+      "relativePath": "src/hooks/useImageTransform.js",
+      "sha256": "84772e874b4cf2cbb3d1c3dab3115a421672365ddcee8c3bbf547a3e66211878",
+      "bytes": 3335
+    },
+    {
+      "relativePath": "src/main.jsx",
+      "sha256": "1aa1b9410faa7535d6a0dda0839517dd404979404687a05ca9c9afa446131f97",
+      "bytes": 450
+    },
+    {
+      "relativePath": "src/services/authService.js",
+      "sha256": "231cc9fd08cd92cdeb3c321cb18469b06bbf67c33eb22ce2f257a889acc4acc5",
+      "bytes": 1669
+    },
+    {
+      "relativePath": "src/services/boardModel.js",
+      "sha256": "654d58c768661edbc13eed92d9381a729c0c89052d0dd116a96b1951f9802823",
+      "bytes": 1959
+    },
+    {
+      "relativePath": "src/services/cadEngine.js",
+      "sha256": "ce72eba5b08af11da192b9cd2a0648989c6742f832ca6d555c6d4c6e1c33b54b",
+      "bytes": 4485
+    },
+    {
+      "relativePath": "src/services/cadPreview.worker.js",
+      "sha256": "c5e20c4a74d6a3484258263a555efdf9982530092e83771b751034d9386d1002",
+      "bytes": 453
+    },
+    {
+      "relativePath": "src/services/cadPreviewService.js",
+      "sha256": "f993912b09deff39e81f840308185473be8339e6f9a82fb91d4e983fee57128b",
+      "bytes": 971
+    },
+    {
+      "relativePath": "src/services/cadRaster.js",
+      "sha256": "a66bf81b8f890a7e32b54310b7bf08488aa1ba5b3c1af7f1ce1d8f78ecad9086",
+      "bytes": 1754
+    },
+    {
+      "relativePath": "src/services/cadRender.js",
+      "sha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660",
+      "bytes": 1310
+    },
+    {
+      "relativePath": "src/services/dataService.js",
+      "sha256": "e986052d987560a5ea09b6a45d5d622a856cf1e57671679c98431d1453098b0a",
+      "bytes": 6725
+    },
+    {
+      "relativePath": "src/services/dbService.js",
+      "sha256": "1b3149aa7ad5de603b34bfaa18c775d9a420abf7ef6d83e6a94182a02d2a3212",
+      "bytes": 5526
+    },
+    {
+      "relativePath": "src/services/driveCacheService.js",
+      "sha256": "c562c41ab88080151d538b4eb27bcd9858dafabcb334f031387cc3ca45ed5fb0",
+      "bytes": 8355
+    },
+    {
+      "relativePath": "src/services/driveDownloadService.js",
+      "sha256": "1bbb17d8ed61986fbb4a202a5bff9f234a80769bdece6aefbf911a050f5bf491",
+      "bytes": 4595
+    },
+    {
+      "relativePath": "src/services/driveService.js",
+      "sha256": "7b961cbfdaa707174bbe3d0e53e1a555df2a43d8cec428e93b9fb798cc140678",
+      "bytes": 13668
+    },
+    {
+      "relativePath": "src/services/firebaseBoardAuth.js",
+      "sha256": "04d8f5cad747f7c51c90deb983ae440117dc62cd7f4ddacd9c43c744b1a535c9",
+      "bytes": 3061
+    },
+    {
+      "relativePath": "src/services/firebaseBoardService.js",
+      "sha256": "6d9663926e58fbffc4a39f0985d2794a7add7d45504f060b7fc5a4f8426d1e4f",
+      "bytes": 6156
+    },
+    {
+      "relativePath": "src/services/firebaseIdentity.js",
+      "sha256": "5dfb0910f3eb3600f2988dcfcb854a50cb97e58908c35c9725c1c3b3977a9dad",
+      "bytes": 1030
+    },
+    {
+      "relativePath": "src/services/firebaseMemberService.js",
+      "sha256": "8d9e93c9cbd4e0b04b6700aeca74823033837cf13106c6d236b678149399ab26",
+      "bytes": 4256
+    },
+    {
+      "relativePath": "src/services/firebaseWorkService.js",
+      "sha256": "f182a79d2abf52a30a99c516bd4ee853d2bc73a3dbc34efb0be8459df1f1fc5b",
+      "bytes": 2269
+    },
+    {
+      "relativePath": "src/services/galleryData.js",
+      "sha256": "b32a3945bc4e451680044895dd31ff998f0ef5516db849a32b47b792801eccca",
+      "bytes": 2010
+    },
+    {
+      "relativePath": "src/services/imageViewerService.js",
+      "sha256": "e7ff4aba7b13e9b44c61675935dca8e0705a2573e27c39b73dd7310abdd0aa9b",
+      "bytes": 644
+    },
+    {
+      "relativePath": "src/services/report/chapterConversion.js",
+      "sha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745",
+      "bytes": 2255
+    },
+    {
+      "relativePath": "src/services/report/collectionForms.js",
+      "sha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029",
+      "bytes": 9398
+    },
+    {
+      "relativePath": "src/services/report/collectionIntroStyle.js",
+      "sha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea",
+      "bytes": 4385
+    },
+    {
+      "relativePath": "src/services/report/draftCollection.js",
+      "sha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91",
+      "bytes": 3471
+    },
+    {
+      "relativePath": "src/services/report/draftPreparation.js",
+      "sha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344",
+      "bytes": 8319
+    },
+    {
+      "relativePath": "src/services/report/draftRetention.js",
+      "sha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a",
+      "bytes": 2106
+    },
+    {
+      "relativePath": "src/services/report/draftSourceBindings.js",
+      "sha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc",
+      "bytes": 1080
+    },
+    {
+      "relativePath": "src/services/report/draftWriter.js",
+      "sha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7",
+      "bytes": 3826
+    },
+    {
+      "relativePath": "src/services/report/electricalPreparation.js",
+      "sha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d",
+      "bytes": 8444
+    },
+    {
+      "relativePath": "src/services/report/engineContract.js",
+      "sha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298",
+      "bytes": 2614
+    },
+    {
+      "relativePath": "src/services/report/engineFacade.js",
+      "sha256": "b60a870f51e8563ba11dcf3994f4d53a4934e4460fef048b3fc7890e16840e38",
+      "bytes": 10201
+    },
+    {
+      "relativePath": "src/services/report/engineRecovery.js",
+      "sha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2",
+      "bytes": 6048
+    },
+    {
+      "relativePath": "src/services/report/nativeWriter.js",
+      "sha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64",
+      "bytes": 6721
+    },
+    {
+      "relativePath": "src/services/report/pairedReferenceLearning.js",
+      "sha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50",
+      "bytes": 10974
+    },
+    {
+      "relativePath": "src/services/report/pairedTextReview.js",
+      "sha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1",
+      "bytes": 3865
+    },
+    {
+      "relativePath": "src/services/report/pdfAnalysis.js",
+      "sha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9",
+      "bytes": 5265
+    },
+    {
+      "relativePath": "src/services/report/pdfHwpxWriter.js",
+      "sha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154",
+      "bytes": 61542
+    },
+    {
+      "relativePath": "src/services/report/pdfStructure.js",
+      "sha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe",
+      "bytes": 25472
+    },
+    {
+      "relativePath": "src/services/report/powerView.js",
+      "sha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3",
+      "bytes": 9627
+    },
+    {
+      "relativePath": "src/services/report/projectArchive.js",
+      "sha256": "694aa12a3432810413efa1c4ef7b7448a6a595342eb3eaef445f3102e7bc31c4",
+      "bytes": 17593
+    },
+    {
+      "relativePath": "src/services/report/recoveredDraftSession.js",
+      "sha256": "7ac2ed3ed3fce75afa107adee715884165698918b1e6ba9a8fd23839df094326",
+      "bytes": 5568
+    },
+    {
+      "relativePath": "src/services/report/referenceProjects.js",
+      "sha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462",
+      "bytes": 17332
+    },
+    {
+      "relativePath": "src/services/report/reportAiClient.js",
+      "sha256": "f6c0bf4fc682cfe3fa452a33ffa0b3d04bb7b69341d2eca1da34a3d3098bd389",
+      "bytes": 1287
+    },
+    {
+      "relativePath": "src/services/report/reportAnalyzer.js",
+      "sha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b",
+      "bytes": 8163
+    },
+    {
+      "relativePath": "src/services/report/reportCollection.js",
+      "sha256": "8f254d3ec8f95fb2935293a8d2ae5309b27eae461d550d1350f23259115b8231",
+      "bytes": 7175
+    },
+    {
+      "relativePath": "src/services/report/reportEngine.js",
+      "sha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de",
+      "bytes": 22578
+    },
+    {
+      "relativePath": "src/services/report/reportInterpreter.js",
+      "sha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41",
+      "bytes": 4762
+    },
+    {
+      "relativePath": "src/services/report/reportLibrary.js",
+      "sha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5",
+      "bytes": 13969
+    },
+    {
+      "relativePath": "src/services/report/reportSections.js",
+      "sha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592",
+      "bytes": 1587
+    },
+    {
+      "relativePath": "src/services/report/reportStore.js",
+      "sha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a",
+      "bytes": 12997
+    },
+    {
+      "relativePath": "src/services/report/reportWorkflow.js",
+      "sha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644",
+      "bytes": 5252
+    },
+    {
+      "relativePath": "src/services/report/reproductionReview.js",
+      "sha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a",
+      "bytes": 2399
+    },
+    {
+      "relativePath": "src/services/report/sourceParser.js",
+      "sha256": "398e66a3fc91c8e9d4ada846f9bba7c480e31e722fa9b035a562ecbee39f94ea",
+      "bytes": 18135
+    },
+    {
+      "relativePath": "src/services/report/studioProjects.js",
+      "sha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30",
+      "bytes": 1141
+    },
+    {
+      "relativePath": "src/services/report/styledTextReplacement.js",
+      "sha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72",
+      "bytes": 2650
+    },
+    {
+      "relativePath": "src/services/report/thermalBmt.js",
+      "sha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b",
+      "bytes": 11687
+    },
+    {
+      "relativePath": "src/services/report/thermalDelivery.js",
+      "sha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092",
+      "bytes": 1358
+    },
+    {
+      "relativePath": "src/services/report/workflowAnalysis.js",
+      "sha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418",
+      "bytes": 11181
+    },
+    {
+      "relativePath": "src/services/scheduleService.js",
+      "sha256": "713796ac7dedd917f3970db012af0f538e31e5d9b4a84b7ffc242a909ed61190",
+      "bytes": 2072
+    },
+    {
+      "relativePath": "src/services/syncService.js",
+      "sha256": "d7ed8ccf23d97cd365660a3b0f66d22c3b3e74f3840f79003e4d0c0cb59239b5",
+      "bytes": 2025
+    },
+    {
+      "relativePath": "src/services/viewerPreviewService.js",
+      "sha256": "cdc3587f61a7300b4bfc8f76e0ed2159e2312e1861114695e27f72e4284ec354",
+      "bytes": 659
+    },
+    {
+      "relativePath": "src/services/workModel.js",
+      "sha256": "9513307438d27d19e44f8f491d6e02103f7c33b16c2c07c9e2b1ad959e460f27",
+      "bytes": 3828
+    }
+  ],
+  "sourceFileCount": 102,
+  "featureCount": 28,
+  "newProjectImplementationClaim": false,
+  "localVsExternalRule": "Locally implementable cannot be called blocked merely because old backend was cloud; real provider adapter/integration is separate gated scope. Every feature needs implementation/test or specific external gate in final parity matrix."
+}

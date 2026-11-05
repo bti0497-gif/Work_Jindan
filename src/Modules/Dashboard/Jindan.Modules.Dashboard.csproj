@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><UseWindowsForms>true</UseWindowsForms><AssemblyName>Jindan.Modules.Dashboard</AssemblyName></PropertyGroup><ItemGroup><ProjectReference Include="../../Jindan.Desktop.Contracts/Jindan.Desktop.Contracts.csproj" /><ProjectReference Include="../../Jindan.Core/Jindan.Core.csproj" /></ItemGroup></Project>

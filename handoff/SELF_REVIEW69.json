@@ -1,0 +1,412 @@
+{
+  "schema": "jindan-targeted-self-review69/1",
+  "state": "complete-targeted-local-review-independent-acceptance-pending",
+  "reviewedAt": "2026-11-05T02:53:46.439Z",
+  "scope": "Targeted implementation-owner and peer read-only source/state-machine/evidence review. Not an independent security audit, supervisor acceptance or company report approval.",
+  "reviewDirective": {
+    "path": "handoff/SUPERVISOR_R4_REVIEW69.md",
+    "sha256": "8f33284a67175868da33bbf4179f877008d509688e33c990c0c99a347b851202",
+    "marker": "REVIEW69-RESUME-20261105"
+  },
+  "selectedPackage": "artifacts/ready-for-review/final66-r6",
+  "artifactManifestSha256": "18ee3ca05967d16315d7d5648b744628f1773d00b1142babbd0e64409711c69d",
+  "sourceCheckpointSha256": "6ad2e9573ee5450a1ac4edfee244e9cbc38f03b6ea56603953ffcf77f7e4b20f",
+  "frozenProductInputCount": 178,
+  "sourceFiles": [
+    {
+      "path": "src/Jindan.Update/DataSnapshot.cs",
+      "size": 8972,
+      "sha256": "b9ade97c34ae933dfc1fec3ea58322bc263cfcbb044411b2cf1602b0b9765511"
+    },
+    {
+      "path": "src/Jindan.Update/RollbackTransaction.cs",
+      "size": 10391,
+      "sha256": "bbd613734ba3772dcffde41eb7bb459307999f1afed0a3775d9493557b943a63"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/RecordDocument.cs",
+      "size": 12048,
+      "sha256": "aa6047f3fa0cd4ff44fe29921bba8c54d6173d0b91e3f57161a25d42a6d787d5"
+    },
+    {
+      "path": "src/Jindan.Desktop/WorkbenchForm.cs",
+      "size": 22186,
+      "sha256": "ea1f06446436494fba5d3d55f1147e7384597647839388c15170a585a8c80fca"
+    },
+    {
+      "path": "src/Jindan.Update/UpdateCoordinator.cs",
+      "size": 20425,
+      "sha256": "5d699eb51a7cc370fc0ef1b8b121d613306e269052421fca4d784386c7229d4b"
+    },
+    {
+      "path": "src/Modules/Photos/Module.cs",
+      "size": 10684,
+      "sha256": "6c112d9f59ab64a8731ae03affa30c1423fd88f457c81f963a4f34b981e9de9c"
+    },
+    {
+      "path": "src/Modules/Photos/PhotoThumbnails.cs",
+      "size": 8163,
+      "sha256": "30f0b6e9bc27435b00435e62613c66868d247855a415daf2b46dad33a6679128"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportDocument.cs",
+      "size": 52040,
+      "sha256": "f918b19061c5d0da8363347984adba5742f25ef2cd468b05b3f4a9e726b39803"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportLibraryView.cs",
+      "size": 11925,
+      "sha256": "c156b02e8630e0f836a9397fe719d4e5055b6ac74d6d6656f0e2ea25b8c93a84"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/ReportService.cs",
+      "size": 25638,
+      "sha256": "5f24b341963c7e2fc4c1730c670c75da9bf21f4a63d49cf47cfc971b802febe2"
+    }
+  ],
+  "areas": [
+    {
+      "id": "A",
+      "finding": "R4 incomplete snapshot caused silent data loss in the exact injected-journal probe. New source publishes a complete hash/size/path/empty-directory manifest bound in journal; restore validates snapshot and trusted before/after package schemas before live mutation, verifies staging and preserves displaced trees through interruption/recovery.",
+      "peerReview": "Initial peer review identified journal/schema policy and resumed module preflight gaps; root added strict duplicate/stage/plan consistency and module/data preflight. Final static audit found no further substantive losing-tree/incoherent-terminal path in the inspected cooperative state machine.",
+      "limits": "Local journal is not authenticated against a hostile writer; flushed files and individual renames are not universal hardware/exFAT power-loss durability. Retained staging/displaced data requires explicit future retention policy.",
+      "evidence": [
+        "artifacts/review69-legacy-ab01/RESULT.json",
+        "artifacts/checks66/2026-11-05T01-58-45-761Z/RESULT.json"
+      ],
+      "finalPackagedGate": "artifacts/review69-r6-snapshot-tests01/RESULT.json",
+      "finalGateStatus": "Exact selectedR6 snapshot82/0 complete, manifest/loaded3libraries/runtime metadata bound; source81 and historicalR5audit remain separate."
+    },
+    {
+      "id": "B-C",
+      "finding": "Visible selected rows are synchronized with actual editors/selection and photo preview after import/refresh/reopen; dirty edits, stale context cancellation and project isolation remain required. Project selection remains outside toolbar overflow, native saves refresh choices and report captions use project names.",
+      "evidence": [
+        "artifacts/review69-r4-before-ui01/R4_BEFORE_HANDOFF.json",
+        "artifacts/review69-selection-ui04/SELECTION69_HANDOFF.json"
+      ],
+      "finalPackagedGate": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+      "finalGateStatus": "Exact selectedR6 native51/0 across7phases complete; first-row import/edit/save/refresh/reopen, row event ordering and navigation regressions included. No fullcompany acceptance."
+    },
+    {
+      "id": "trust-runtime-and-originals",
+      "finding": "Explicit9-module local hash trust, declared private dependencies, owned worker/runtime and no automatic cloud/provider integration. Full declaredR4/R5/R6each3226 +current178 hashes passed; all9 module packages/candidate,2690worker and481runtime resources identicalR5. SharedAdapter/native bundle changes are separately bound.",
+      "evidence": [
+        "artifacts/packaging66/R6_CURRENT_VERIFICATION.json",
+        "artifacts/packaging66/FINAL_R6_VERIFICATION.json"
+      ],
+      "limits": "Integrity allowlisting is not publisher authentication or plugin sandboxing. Same-schema patch/native company-report approval remain distinct."
+    },
+    {
+      "id": "owned-adapter-cleanup",
+      "finding": "Preserved02-19 source headless failed on actual Process.Dispose/WaitForExit handle race. Minimal ReportService cleanup serializes waits and sole request-finally disposal on the exactProcess lock, cachedPID/object identity prevents stale snapshot use, repeated Dispose retries retained entries while _disposed forbids new workers.",
+      "peerReview": "Read-only cleanup ownership/state audit; no further ordinary success/cancel/finally/repeated-dispose closed-handle race found statically. Failure retains ownership/open handle instead of falseActive0.",
+      "sourceSha256": "5f24b341963c7e2fc4c1730c670c75da9bf21f4a63d49cf47cfc971b802febe2",
+      "evidence": [
+        "artifacts/checks66/2026-11-05T02-19-00-861Z/RESULT.json",
+        "artifacts/review69-adapter-race-final01/RESULT.json",
+        "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+        "artifacts/packaging66/R6_PREPACK_CLEAN.json"
+      ],
+      "qualification": "Final source42 includes one12-actual-CPU-trial assertion; fullowned prepack clean +Release rebuild compiled frozen product. Exact Report60 also passed separately; counts overlap and do not grant native report/company approval."
+    }
+  ],
+  "preRepairEvidencePolicy": "A exactR4 expected-loss and B exactR4 expected-unbound-selection probes are positive defect reproductions, never acceptance. SourceB/C10 and sourcePackage81 do not replace exact selected-package gates. Rejected actualR5 native20/3/no-fresh and causal row1/1?2/0 remain separate. No unique grand total is asserted.",
+  "pendingFinalEvidence": [],
+  "frozenProductVersusTests": "Frozen R6 product/package checkpoint178 is independent of final test-only harness/aggregator/docs changes captured later by root SOURCE69. Historical R5 snapshot01 predates richer JSON trace; its separate binding audit does not substitute for fresh R6 inner3library/fixture trace.",
+  "environmentDeviation": "First SDK build emitted automatic ASP.NET development-certificate installation text; no independent certificate-store audit or explicit store operation. Later process flags prevent generation; see docs/sdk-first-run-observation66.md.",
+  "unresolved": [
+    "Native Hancom original font selection/embedding, source JSON/company metadata and tab-property retention",
+    "Every object editability, complete numerical/cell meaning and actual current-company measurement/judgment/workflow",
+    "Live Firebase/Drive/paid AI execution and production signing/distribution are absent or NotConfigured",
+    "Complex PDF/HWPX rendering remains hybrid; no pure C# renderer claim",
+    "Physical150/200 DPI and arbitrary monitor arrangements are unverified",
+    "Direct Aside delivery is not established by a file receipt; no delivery success is invented"
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "preservedR5Failure": {
+    "path": "artifacts/final-r5-desktop-ui66-01/ui-result.json",
+    "sha256": "f41d7351e80772541115a15e4809bf29799bbf7275a4561b36eb0098cfa7c5fa",
+    "pass": 20,
+    "fail": 3,
+    "freshProcessStarted": false,
+    "failedAreas": [
+      "dirty-project selection/save",
+      "board content/reply save",
+      "photo selected-row preview"
+    ],
+    "scope": "Actual R5 native regression; CurrentCell/SelectionChanged event-order cause is under SDK investigation. R5 Report60 was not executed, only built."
+  },
+  "causalRowOrderEvidence": [
+    {
+      "path": "artifacts/review69-row-r5-ui02/ui-result.json",
+      "sha256": "365d018d0956db1ab73eab5759b836c35a77724d0ce0c613ab6925345fa2e4a0"
+    },
+    {
+      "path": "artifacts/review69-row-fixed-ui01/ui-result.json",
+      "sha256": "92a242bd00f1828d1f97c5bf7fd5a5609377103f6f49adcdc7760fb100fa553b"
+    }
+  ],
+  "causalRowOrderQualification": "Old exactR5 common/three-module fixture reproduces1pass/1failure; one-common-DLL swap passes2/0. Source change is CurrentCellChanged attach/detach only per coordinator. This is causal scoped evidence, not finalR6/fullcompany approval.",
+  "historicalR5SnapshotBinding": {
+    "path": "artifacts/review69-r5-snapshot-binding01.json",
+    "sha256": "002058f74e7bfb19c9ae642eec54e6127f1dcfd273f0d98fec98c82d7cdbf0d7",
+    "qualification": "Retained copied-harness/runtime/receipt audit; no independent82 rerun or substitution for fresh selected-package test."
+  },
+  "preservedFailedHeadless": {
+    "path": "artifacts/checks66/2026-11-05T02-19-00-861Z/RESULT.json",
+    "sha256": "466ac8f17daf760fa2cf8a4fea04a17ebc17851d6f94b67ac273f676347d99e5",
+    "complete": false,
+    "passed": false,
+    "scope": "Actual prefreeze ReportAdapter Process.Dispose/WaitForExit handle race during disposal-drain test; root owns minimal repair and next full clean headless. No finalR6 preparation or acceptance."
+  },
+  "previousRejectedArtifact": {
+    "selectedPackage": "artifacts/ready-for-review/final66-r5",
+    "artifactManifestSha256": "d0a16bac5e8662fb69ae5e43636699e42b20fc02270029fb114090f844abc06a",
+    "sourceCheckpointSha256": "1a436a3be25010090729ef0324b1c0d2a1c34d5acdc7ea403e7914b28c006bcb",
+    "qualification": "Preserved R5 rejected native20/3/no-fresh; snapshot82 is separate. ReportR5 never executed."
+  },
+  "productChangeScope": {
+    "sinceR4": "10 inspected product files including2new snapshot/restore helpers",
+    "sinceR5": {
+      "added": [],
+      "removed": [],
+      "changed": [
+        {
+          "path": "src/Jindan.Desktop.Contracts/RecordDocument.cs",
+          "beforeSha256": "b60abf23680647b15f8e27ab587e64c095fac7834483b0bc3e21a9ffc9e72175",
+          "afterSha256": "aa6047f3fa0cd4ff44fe29921bba8c54d6173d0b91e3f57161a25d42a6d787d5",
+          "size": 12048
+        },
+        {
+          "path": "src/Jindan.Report.Adapter/ReportService.cs",
+          "beforeSha256": "8ef90206d40ced19285e92a6f188470165e1b97b698a6d32705115e7ffb92ddd",
+          "afterSha256": "5f24b341963c7e2fc4c1730c670c75da9bf21f4a63d49cf47cfc971b802febe2",
+          "size": 25638
+        }
+      ]
+    },
+    "sourceCheckpointCovers178": true
+  },
+  "packageAudit": {
+    "path": "artifacts/packaging66/FINAL_R6_VERIFICATION.json",
+    "sha256": "4e4427e2d0308b7a994701d74367f473b0a5e260294899a501a39e895202df59",
+    "declaredR4R5R6Each": 3226,
+    "currentInputs": 178,
+    "all9ModulePackagesAndCandidateIdenticalR5": true,
+    "unchangedWorkerResources": 2690,
+    "unchangedRuntimeResources": 481,
+    "appDeltaFromR5": [
+      "application/Jindan.Desktop.Contracts.dll",
+      "application/Jindan.Desktop.dll",
+      "application/Jindan.Report.Adapter.dll",
+      "application/LOCAL-TRUST-POLICY.json"
+    ],
+    "nativeManifestSha256": "27ae6eec5b7fc9543910fe902926d0831511083d5bccc8f9a204650fd6295dbe",
+    "newAdapterSha256": "26c10573e67d9bfb755b44037675fcc08d50b4b6b28f98aaeef3b29d75182c28",
+    "nativeAdapterMatchesApp": true
+  },
+  "receivedExactSnapshot": {
+    "wrapper": {
+      "path": "artifacts/review69-r6-snapshot-tests01/RESULT.json",
+      "sha256": "8e701dc7a1cf1c4b7b4a66406d3a6d362a0e65b1321a534222ada2911cd2fa13",
+      "bytes": 1993
+    },
+    "inner": {
+      "path": "F:/jindan-dotnet/artifacts/package-tests/20261105T023741-c9b7c99ffa5f4f19a4a2084da3e7b05f/RESULT.json",
+      "sha256": "2ee366f567a368e40e67ca7b1f60b359a956bec5a3b84e368ee660148855e7d2",
+      "bytes": 11576
+    },
+    "pass": 82,
+    "fail": 0,
+    "packagedAssemblies": 3,
+    "runtimeEnvironment": {
+      "DOTNET_ROOT": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\.runtime",
+      "DOTNET_ROOT_X64": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\.runtime",
+      "DOTNET_MULTILEVEL_LOOKUP": "0"
+    },
+    "scope": "Actual exact new schema snapshot/restore and update regressions. Metadata/hash checked here; no independent runtime rerun by this reviewer."
+  },
+  "receivedRuntimeEvidence": [
+    {
+      "kind": "main",
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-result.json",
+      "sha256": "24fad30dc07019ecf8f76e1e6292132b094cc29d4beee51364a7b1e5dcaa0c21",
+      "bytes": 29913,
+      "pass": 23,
+      "fail": 0
+    },
+    {
+      "kind": "fresh-main",
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-reopen-result.json",
+      "sha256": "1a7be3548a41fa490889238780366b6f6a3ea751c8fd2bb9a74124a131be5362",
+      "bytes": 6511,
+      "pass": 4,
+      "fail": 0
+    },
+    {
+      "kind": "photos",
+      "path": "artifacts/final-r6-photo-thumbnails66-01/ui-result.json",
+      "sha256": "3bcf507741e869467054ef5b825512023dec7f4e93af0036302f8b9d83623725",
+      "bytes": 8343,
+      "pass": 8,
+      "fail": 0
+    },
+    {
+      "kind": "calendar",
+      "path": "artifacts/final-r6-calendar66-01/ui-result.json",
+      "sha256": "373e8665117da099ff5daa11eb152195906ab9e5fc02bb84432605f821692c37",
+      "bytes": 18059,
+      "pass": 4,
+      "fail": 0
+    },
+    {
+      "kind": "selection",
+      "path": "artifacts/final-r6-selection69-ui01/ui-result.json",
+      "sha256": "a22d1d1680965cbb4433a42f724b41ed4393775d9bc2d8a6a1d4102843fbc88f",
+      "bytes": 9801,
+      "pass": 8,
+      "fail": 0
+    },
+    {
+      "kind": "fresh-selection",
+      "path": "artifacts/final-r6-selection69-ui01/selection69-reopen-result.json",
+      "sha256": "50a88dec364cfc7a74787d6130266967f08b5ca2440ac3c0f37bd380f6a11d1c",
+      "bytes": 5113,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "kind": "row-order",
+      "path": "artifacts/final-r6-row-order69-ui01/ui-result.json",
+      "sha256": "d6272f7fbdf4187c2a602e46b640f57aabcea2361792d2f2845d6ae8cc8504d0",
+      "bytes": 12814,
+      "pass": 2,
+      "fail": 0
+    },
+    {
+      "kind": "report",
+      "path": "artifacts/report-ui66-packaged-r6/RESULT.json",
+      "sha256": "b7d4cf88f44466ebd47e7cf0b4427537a55e1126f2f56189d970aff4bccfd34c",
+      "bytes": 2851,
+      "pass": 60,
+      "fail": 0
+    },
+    {
+      "kind": "product-patch",
+      "path": "artifacts/product-patch66-r6/run-r6/RESULT.json",
+      "sha256": "f1a91780ec0a1d22025810b0f54af73462e850e8f8eee4f5e0d919c8895650d0",
+      "bytes": 506197,
+      "pass": 12,
+      "fail": 0
+    },
+    {
+      "kind": "files-board",
+      "path": "artifacts/final-r6-local-modules66-03/RESULT.json",
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e",
+      "bytes": 1963,
+      "pass": 14,
+      "fail": 0
+    },
+    {
+      "kind": "actual-entry",
+      "path": "artifacts/final-r6-actual-entry66/RESULT.json",
+      "sha256": "94735afff7bc735174897732c68443234923b0fcfbd489628829c005ab7d35b8",
+      "bytes": 772,
+      "pass": 1,
+      "fail": 0
+    },
+    {
+      "kind": "launcher-health",
+      "path": "artifacts/final-r6-healthcheck69.json",
+      "sha256": "6cf9089dba1302667193a131a496ccbe3e106b3bdee8ad131ba8449c657056c5",
+      "bytes": 864,
+      "pass": 1,
+      "fail": 0
+    }
+  ],
+  "finalImmutableAndSourceReverification": {
+    "path": "artifacts/final-r6-completed-verification69-02.json",
+    "sha256": "5dbd1485221cc9866bee7f851eb01f7e78578b477f6012f7ab26968d63209dda",
+    "bytes": 868
+  },
+  "preservation": {
+    "path": "handoff/PRESERVATION69.json",
+    "sha256": "f0e8af329e077fcb135e20b8610b953cecad41ff6e5c0924bb38f2bf35e83e49",
+    "bytes": 1394
+  },
+  "nativeGate": {
+    "path": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+    "sha256": "c525a53bea138b9a4c2935be9c7f950e71f893b411af354a9d7cad9b848b9a10",
+    "bytes": 20690,
+    "pass": 51,
+    "fail": 0,
+    "phases": 7,
+    "freshProcesses": 2,
+    "captureCalls": 32,
+    "distinctCaptureFiles": 31,
+    "scope": "Counts overlap and include deliberate repeated row capture filename; not51 independent business workflows. All8common hashes and bundled runtime/fresh children are verified by the suite."
+  },
+  "source42AndPrepackEvidence": {
+    "headless": {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+      "sha256": "3e8045cf65dc23400707742aed52cac9dc37816aeb7c0698a71090c77db23266",
+      "bytes": 10241
+    },
+    "adapterRace": {
+      "path": "artifacts/review69-adapter-race-final01/RESULT.json",
+      "sha256": "b142750583ecbddef1f1f40daa2bb877693bc7a741a2e5b0eee2e85e12aac763",
+      "bytes": 1630
+    },
+    "sourceAssertions": 42,
+    "actualCpuTrialsInsideOneAssertion": 12,
+    "prepackClean": {
+      "path": "artifacts/packaging66/R6_PREPACK_CLEAN.json",
+      "sha256": "744bd9c133275564e593817e96791779140e2ac0afd4b666738f3c5d09a6cd2b",
+      "bytes": 726
+    },
+    "scope": "Preserved02-19 failure not erased. Later exact package rebuild closes initial solution-build timing qualification."
+  },
+  "filesCaptureQualification": {
+    "initial": {
+      "path": "artifacts/final-r6-local-modules66/RESULT.json",
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e",
+      "bytes": 1963
+    },
+    "initialFunctional": {
+      "pass": 14,
+      "fail": 0,
+      "captureUsable": false
+    },
+    "guardedHidden": {
+      "path": "artifacts/final-r6-local-modules66-02/RESULT.json",
+      "sha256": "17f877a2d86a774043afee4f1dbe77db39e4cf139bb8eaefd44728c4addcb3c1",
+      "bytes": 3225
+    },
+    "guardedHiddenCounts": {
+      "pass": 12,
+      "fail": 2
+    },
+    "finalVisible": {
+      "path": "artifacts/final-r6-local-modules66-03/RESULT.json",
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e",
+      "bytes": 1963
+    },
+    "finalCounts": {
+      "pass": 14,
+      "fail": 0
+    },
+    "sameHarnessSha256": "bddc26d186759001490e5ba411289dc87ae86911155230181e256687b570abec",
+    "scope": "Coordinator causal rerun: only owned GUI launcher windowsHide true?false changed between02/03. First capture black/guarded02 failure is preserved as launcher/capture limitation, not product regression; new Files/Board native images reviewed."
+  },
+  "visualReview": {
+    "path": "handoff/VISUAL69.json",
+    "sha256": "1516ed11cb100d729378e78d56428179a16585ed8398c175d67247ee91de8ce4",
+    "bytes": 6350,
+    "reviewedImages": 10,
+    "ownedPrintWindowImages": 8,
+    "controlledDrawToBitmapImages": 2,
+    "scope": "Coordinator actual viewed images; ReportGuiSmoke pair is controlled DrawToBitmap, never PrintWindow. Prior uniformly black returns are unusable. This review does not accept native Hancom/company output."
+  },
+  "countPolicy": "Exact named suite case counts overlap; no unique grand total. Source81, packaged82, source42/12trials, Report60, native51 and patch child assertions are distinct scopes; earlier expected-defect/source probes and failed runs are not accepted passes."
+}

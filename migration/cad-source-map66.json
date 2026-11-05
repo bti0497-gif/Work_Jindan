@@ -1,0 +1,70 @@
+{
+  "schema": "jindan-migration-source-map-addon/1",
+  "roadmap": "66",
+  "scope": "local CAD renderer only",
+  "files": [
+    {
+      "origin": "F:\\jindan\\src\\services\\cadRender.js",
+      "destination": "F:\\jindan-dotnet\\src\\Jindan.Report.Worker\\engine\\src\\services\\cadRender.js",
+      "originalSha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660",
+      "copiedSha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660",
+      "modified": false
+    }
+  ],
+  "dependency": {
+    "name": "nasjidwg",
+    "version": "0.18.0",
+    "license": "MIT",
+    "originalPackageLock": "F:/jindan/package-lock.json",
+    "originalIntegrity": "sha512-RRn1mC4ZF1s+tGsFTb75IrsVpy1hHtMivkmSoJIAuglKnjUQ67BeY8K+gsVAOLvlK1MuKuj9SyYZonGQeFGnZA==",
+    "registryMetadataUrl": "https://registry.npmjs.org/nasjidwg/0.18.0",
+    "sourceUrl": "https://github.com/NASJI-Packages/nasjidwg",
+    "installedVersion": "0.18.0"
+  },
+  "oldWorkspaceReadOnly": true,
+  "runtimeContract": {
+    "export": "renderNodeCad(filename, bytes, options)",
+    "workerOperation": "cadPreview",
+    "filenameParameter": "parameters.filename",
+    "output": "bounded PNG binary descriptor image/png with sourceSha256/sha256/width/height",
+    "previewOnly": true,
+    "inputModified": false,
+    "noWholeAppOrExternalProcess": true,
+    "maxInputBytes": 67108864,
+    "maxSvgBytes": 16777216,
+    "maxPngBytes": 16777216,
+    "maxEdge": 1600,
+    "svgPolicy": "local generated SVG only; tag/attribute/paint/numeric allowlist; no href/style/script/foreignObject/DOCTYPE/ENTITY; SVG never displayed",
+    "cancellation": "cooperative checks around synchronous CAD parse/native raster; owned worker supplies hard timeout/cancel"
+  },
+  "nativeHelper": {
+    "path": "src/Modules/Files/CadPreviewWindow.cs",
+    "api": "static Task ShowAsync(IWorkspaceServices services, DocumentContext context, AssetInfo asset)",
+    "features": [
+      "fit",
+      "100 percent",
+      "zoom buttons/wheel",
+      "mouse pan",
+      "owned operation cancellation"
+    ],
+    "buildExitCode": 0,
+    "warnings": 0,
+    "runtimeUiVerification": "root-owned pending"
+  },
+  "tests": {
+    "command": "node --test tests/NodeCad/*.test.cjs",
+    "pass": 5,
+    "fail": 0,
+    "scope": "synthetic real ASCII DXF lines/circle/label; library-generated DWG2018 decoding; PNG visible content/SHA/input immutability; malformed/budget/cancel; SVG attacks"
+  },
+  "knownLimits": [
+    "Preview is raster, not CAD editing/export or dimensional verification.",
+    "External real-company DWG/DXF and fonts/layout are not independently approved.",
+    "Generated DWG positive is this library writer-reader compatibility, not AutoCAD proof.",
+    "Unsupported/corrupt files fail explicitly; binary DXF is not supported by the ASCII-DXF header gate.",
+    "Synchronous CAD parse/raster cannot be interrupted inside that call; worker process timeout/hard cancel remains required.",
+    "Original NASJI renderer algorithm is retained; this is Hybrid JS runtime plus native WinForms viewer, not pure C# CAD engine."
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false
+}

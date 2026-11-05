@@ -1,0 +1,8 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),legacy=require('./fixtures/legacy-font.cjs'),{canonicalLegacyNames,recordsOf,checksum}=require('./font-name60-tools.cjs');
+test('name-encoding diagnostic changes only zero-extended Windows encoding5 strings, retaining Unicode names, glyphs, metrics and embedding flags',async()=>{
+ const {unicodeAccessibleFont,sfntTables,missingFontGlyphs,editableFontEmbeddingFlags}=await import('../../src/Jindan.Report.Worker/engine/src/services/report/sfntFonts.js'),{pdfEmbeddedFontProfile}=await import('../../src/Jindan.Report.Worker/engine/src/services/report/pdfFonts.js'),before=unicodeAccessibleFont(legacy(),{family:'LegacyUnit',nameEncoding:5}).bytes,out=await canonicalLegacyNames(before);
+ assert.ok(out.changes.length>0);assert.equal(checksum(out.bytes),0xb1b0afba);assert.equal(out.bytes.length,before.length);assert.equal(pdfEmbeddedFontProfile(out.bytes).family,'LegacyUnit');assert.equal(missingFontGlyphs(out.bytes,'A가').length,0);assert.deepEqual(editableFontEmbeddingFlags(out.bytes),editableFontEmbeddingFlags(before));
+ const old=sfntTables(before),next=sfntTables(out.bytes);for(const [tag,bytes]of old)if(!['name','head'].includes(tag))assert.deepEqual(next.get(tag),bytes);
+ const a=recordsOf(old.get('name')).records,b=recordsOf(next.get('name')).records;assert.equal(a.length,b.length);for(const r of a.filter(r=>r.platform===3&&r.encoding===1))assert.deepEqual(b[r.index].bytes,r.bytes);
+ const again=await canonicalLegacyNames(out.bytes);assert.equal(again.changes.length,0); // a shorter, valid record is never reinterpreted as zero-extended
+});

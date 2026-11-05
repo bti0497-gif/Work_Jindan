@@ -1,0 +1,1273 @@
+{
+  "schema": "jindan-migration-source-map/1",
+  "sourceRoot": "F:/jindan",
+  "engineSingleSource": "src/Jindan.Report.Worker/engine",
+  "files": [
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\applicationData.js",
+      "originSha256": "33a22d3e153c721bc3a3e0613d147159b29123593b594a0fd8a7830a554b4580",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/applicationData.js",
+      "migratedSha256": "33a22d3e153c721bc3a3e0613d147159b29123593b594a0fd8a7830a554b4580",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "33a22d3e153c721bc3a3e0613d147159b29123593b594a0fd8a7830a554b4580"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\assets\\hwpxBase.json",
+      "originSha256": "1a751345839af479c04092b4cbf5d4662d30198a1d00ad1a33e1c00fd3862379",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/assets/hwpxBase.json",
+      "migratedSha256": "1a751345839af479c04092b4cbf5d4662d30198a1d00ad1a33e1c00fd3862379",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "1a751345839af479c04092b4cbf5d4662d30198a1d00ad1a33e1c00fd3862379"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\chapterConversion.js",
+      "originSha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/chapterConversion.js",
+      "migratedSha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\collectionForms.js",
+      "originSha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/collectionForms.js",
+      "migratedSha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\collectionIntroStyle.js",
+      "originSha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/collectionIntroStyle.js",
+      "migratedSha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\draftCollection.js",
+      "originSha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/draftCollection.js",
+      "migratedSha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\draftPreparation.js",
+      "originSha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/draftPreparation.js",
+      "migratedSha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\draftRetention.js",
+      "originSha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/draftRetention.js",
+      "migratedSha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\draftSourceBindings.js",
+      "originSha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/draftSourceBindings.js",
+      "migratedSha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\draftWriter.js",
+      "originSha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/draftWriter.js",
+      "migratedSha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\electricalPreparation.js",
+      "originSha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/electricalPreparation.js",
+      "migratedSha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\engineContract.js",
+      "originSha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/engineContract.js",
+      "migratedSha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\engineFacade.js",
+      "originSha256": "b60a870f51e8563ba11dcf3994f4d53a4934e4460fef048b3fc7890e16840e38",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/engineFacade.js",
+      "migratedSha256": "2bc642b5bb0b8b55cbc736087110644e5ed95dcaca819e1f1d2cea3854428a10",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "b60a870f51e8563ba11dcf3994f4d53a4934e4460fef048b3fc7890e16840e38",
+      "repair66": "Exception normalization or duplicate/raw-path ZIP rejection; original file unchanged",
+      "currentChange": "ROADMAP66 new-tree repair/integration; initial imported and origin hashes retained. See engine repair tests and final source checkpoint."
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\engineRecovery.js",
+      "originSha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/engineRecovery.js",
+      "migratedSha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\generatedHwpxValidation.js",
+      "originSha256": "53ede1048c75a1fde48d8bc69a2559bf19633e4f0b53fd3bc8ed8f622af15e26",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/generatedHwpxValidation.js",
+      "migratedSha256": "53ede1048c75a1fde48d8bc69a2559bf19633e4f0b53fd3bc8ed8f622af15e26",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "53ede1048c75a1fde48d8bc69a2559bf19633e4f0b53fd3bc8ed8f622af15e26"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\hwpxPackage.js",
+      "originSha256": "fbc6fe28bc3726d5275f0c53939ebaa7d93d8e1aa9887102dbb708bb0b7a7cb6",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/hwpxPackage.js",
+      "migratedSha256": "800c92689b807b07343f392f8536d2e0fde8194e118bc38ef584cd8f86989000",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "fbc6fe28bc3726d5275f0c53939ebaa7d93d8e1aa9887102dbb708bb0b7a7cb6",
+      "repair66": "Exception normalization or duplicate/raw-path ZIP rejection; original file unchanged",
+      "currentChange": "ROADMAP66 new-tree repair/integration; initial imported and origin hashes retained. See engine repair tests and final source checkpoint."
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\nativeCollection.js",
+      "originSha256": "5bcd1f04eea7f3a78dfd6fa96ed2b5269813b5a0311cb1e86f7afd7ca56f739b",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/nativeCollection.js",
+      "migratedSha256": "5bcd1f04eea7f3a78dfd6fa96ed2b5269813b5a0311cb1e86f7afd7ca56f739b",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "5bcd1f04eea7f3a78dfd6fa96ed2b5269813b5a0311cb1e86f7afd7ca56f739b"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\nativePreview.js",
+      "originSha256": "200aefe2c3dbca81a863b698ecaafeb28256b9217adeabe8b64af242f3341804",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/nativePreview.js",
+      "migratedSha256": "200aefe2c3dbca81a863b698ecaafeb28256b9217adeabe8b64af242f3341804",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "200aefe2c3dbca81a863b698ecaafeb28256b9217adeabe8b64af242f3341804"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\nativeSaveAudit.js",
+      "originSha256": "06f3229813f1c004156957db8c425d06c7dc45b2cf2acaa3f82e0591c5a66ebe",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/nativeSaveAudit.js",
+      "migratedSha256": "06f3229813f1c004156957db8c425d06c7dc45b2cf2acaa3f82e0591c5a66ebe",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "06f3229813f1c004156957db8c425d06c7dc45b2cf2acaa3f82e0591c5a66ebe"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\nativeWriter.js",
+      "originSha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/nativeWriter.js",
+      "migratedSha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pageNumberDecoration.js",
+      "originSha256": "73096c5991a4dfe4435efb4d7ed84706d51fa45d8450df0e3f5ed689ade92f44",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pageNumberDecoration.js",
+      "migratedSha256": "73096c5991a4dfe4435efb4d7ed84706d51fa45d8450df0e3f5ed689ade92f44",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "73096c5991a4dfe4435efb4d7ed84706d51fa45d8450df0e3f5ed689ade92f44"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pageReproduction.js",
+      "originSha256": "6a149156bd1d5d4571d1ff8beebc9c03acf4c3932a38eedd559711b884f53a81",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pageReproduction.js",
+      "migratedSha256": "6a149156bd1d5d4571d1ff8beebc9c03acf4c3932a38eedd559711b884f53a81",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "6a149156bd1d5d4571d1ff8beebc9c03acf4c3932a38eedd559711b884f53a81"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pairedCellFormatting.js",
+      "originSha256": "9a4bfb4d0df39aa132d050633ac119e9737b616c84030bf6c82b92ceafd4b104",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pairedCellFormatting.js",
+      "migratedSha256": "9a4bfb4d0df39aa132d050633ac119e9737b616c84030bf6c82b92ceafd4b104",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "9a4bfb4d0df39aa132d050633ac119e9737b616c84030bf6c82b92ceafd4b104"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pairedParagraphStyle.js",
+      "originSha256": "239cb87c5a2bd4e442fd1460924340700c06dd7e4ae50a4bd3727c3785ce9af3",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pairedParagraphStyle.js",
+      "migratedSha256": "239cb87c5a2bd4e442fd1460924340700c06dd7e4ae50a4bd3727c3785ce9af3",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "239cb87c5a2bd4e442fd1460924340700c06dd7e4ae50a4bd3727c3785ce9af3"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pairedReferenceLearning.js",
+      "originSha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pairedReferenceLearning.js",
+      "migratedSha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pairedTableMargins.js",
+      "originSha256": "63c69cea4c2bd2d79526d9f7f93c138d985c42816a247780cd49bd7f0730fdb2",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pairedTableMargins.js",
+      "migratedSha256": "63c69cea4c2bd2d79526d9f7f93c138d985c42816a247780cd49bd7f0730fdb2",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "63c69cea4c2bd2d79526d9f7f93c138d985c42816a247780cd49bd7f0730fdb2"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pairedTextReview.js",
+      "originSha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pairedTextReview.js",
+      "migratedSha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\paragraphFormatting.js",
+      "originSha256": "0bb2e3b5fff2f7cb5ba269bb4f9644fbab7133fb765b0ff99a64c7fa3a1e728c",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/paragraphFormatting.js",
+      "migratedSha256": "0bb2e3b5fff2f7cb5ba269bb4f9644fbab7133fb765b0ff99a64c7fa3a1e728c",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "0bb2e3b5fff2f7cb5ba269bb4f9644fbab7133fb765b0ff99a64c7fa3a1e728c"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\paragraphRole.js",
+      "originSha256": "7727b6a9f36eb1690256ae724d122b01f86e0c25062a8122550f30c1c1c692a0",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/paragraphRole.js",
+      "migratedSha256": "7727b6a9f36eb1690256ae724d122b01f86e0c25062a8122550f30c1c1c692a0",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "7727b6a9f36eb1690256ae724d122b01f86e0c25062a8122550f30c1c1c692a0"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfAnalysis.js",
+      "originSha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfAnalysis.js",
+      "migratedSha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfAppearance.js",
+      "originSha256": "06f6be8e2162a58b090553292e274014de71c775b750be2da6d8168204308b5f",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfAppearance.js",
+      "migratedSha256": "06f6be8e2162a58b090553292e274014de71c775b750be2da6d8168204308b5f",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "06f6be8e2162a58b090553292e274014de71c775b750be2da6d8168204308b5f"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfCellLayout.js",
+      "originSha256": "61b8f3df8e593885c016bb5f3aebb15c3032ff82f647228009d8c9623962ec9d",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfCellLayout.js",
+      "migratedSha256": "61b8f3df8e593885c016bb5f3aebb15c3032ff82f647228009d8c9623962ec9d",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "61b8f3df8e593885c016bb5f3aebb15c3032ff82f647228009d8c9623962ec9d"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfEmbeddedFonts.js",
+      "originSha256": "d4ba776df984f871aecba151449654f42c2d319406cbd8a2e2813f5f7132b7e3",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfEmbeddedFonts.js",
+      "migratedSha256": "d4ba776df984f871aecba151449654f42c2d319406cbd8a2e2813f5f7132b7e3",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "d4ba776df984f871aecba151449654f42c2d319406cbd8a2e2813f5f7132b7e3"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfFonts.js",
+      "originSha256": "71e6a0cd3f27447e7fab632a46ceb92ba1fc5b3263379eff2b6d0504927909b9",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfFonts.js",
+      "migratedSha256": "71e6a0cd3f27447e7fab632a46ceb92ba1fc5b3263379eff2b6d0504927909b9",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "71e6a0cd3f27447e7fab632a46ceb92ba1fc5b3263379eff2b6d0504927909b9"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfFurnitureCoordinates.js",
+      "originSha256": "7bbe0a732ba645b93dd01c457b420d4212c4dbbf954a564633f01c28d8900d02",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfFurnitureCoordinates.js",
+      "migratedSha256": "7bbe0a732ba645b93dd01c457b420d4212c4dbbf954a564633f01c28d8900d02",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "7bbe0a732ba645b93dd01c457b420d4212c4dbbf954a564633f01c28d8900d02"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfGlyphGeometry.js",
+      "originSha256": "cdac4215f4d662d6d44c0a8f1b1d722d1abc501c292ea55376c16405aadc137d",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfGlyphGeometry.js",
+      "migratedSha256": "cdac4215f4d662d6d44c0a8f1b1d722d1abc501c292ea55376c16405aadc137d",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "cdac4215f4d662d6d44c0a8f1b1d722d1abc501c292ea55376c16405aadc137d"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfHwpxShapes.js",
+      "originSha256": "88701aef134a6b158302be8fa6a68177c67beb105063bcbe3a26be63a62879e9",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfHwpxShapes.js",
+      "migratedSha256": "88701aef134a6b158302be8fa6a68177c67beb105063bcbe3a26be63a62879e9",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "88701aef134a6b158302be8fa6a68177c67beb105063bcbe3a26be63a62879e9"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfHwpxWriter.js",
+      "originSha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfHwpxWriter.js",
+      "migratedSha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfImageLimits.js",
+      "originSha256": "6d7864ebe320025e09b43842a73ae7897a525a922bfdeb6f733e1c1151e3529c",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfImageLimits.js",
+      "migratedSha256": "6d7864ebe320025e09b43842a73ae7897a525a922bfdeb6f733e1c1151e3529c",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "6d7864ebe320025e09b43842a73ae7897a525a922bfdeb6f733e1c1151e3529c"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfImagePixels.js",
+      "originSha256": "cb38cf9dd852e7478fe086d87afc6f97d581a42849a0c1e43ca27ce46f61b6d3",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfImagePixels.js",
+      "migratedSha256": "cb38cf9dd852e7478fe086d87afc6f97d581a42849a0c1e43ca27ce46f61b6d3",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "cb38cf9dd852e7478fe086d87afc6f97d581a42849a0c1e43ca27ce46f61b6d3"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfOcr.js",
+      "originSha256": "a62b0a402035bf3d74c90ee24de4b4385eedd2a28a20129494d93deb94ce66f5",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfOcr.js",
+      "migratedSha256": "a62b0a402035bf3d74c90ee24de4b4385eedd2a28a20129494d93deb94ce66f5",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "a62b0a402035bf3d74c90ee24de4b4385eedd2a28a20129494d93deb94ce66f5"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfOriginalFonts.js",
+      "originSha256": "36fb0ab8c83ea36f9417795cca577c6b2445716fa316fb0b8d639986bd16b0b9",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfOriginalFonts.js",
+      "migratedSha256": "36fb0ab8c83ea36f9417795cca577c6b2445716fa316fb0b8d639986bd16b0b9",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "36fb0ab8c83ea36f9417795cca577c6b2445716fa316fb0b8d639986bd16b0b9"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfProvenance.js",
+      "originSha256": "9a4c83dc2cac3e3f4d9a0dd25327b3ab11d2e99231d3905078e67090f1f8686e",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfProvenance.js",
+      "migratedSha256": "9a4c83dc2cac3e3f4d9a0dd25327b3ab11d2e99231d3905078e67090f1f8686e",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "9a4c83dc2cac3e3f4d9a0dd25327b3ab11d2e99231d3905078e67090f1f8686e"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfRestoration.js",
+      "originSha256": "dc6302f3ad255350afe4ffed6ead20b247e46189ca8d27a06ced04385a11364f",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfRestoration.js",
+      "migratedSha256": "dc6302f3ad255350afe4ffed6ead20b247e46189ca8d27a06ced04385a11364f",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "dc6302f3ad255350afe4ffed6ead20b247e46189ca8d27a06ced04385a11364f"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfStructure.js",
+      "originSha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfStructure.js",
+      "migratedSha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfTextFrame.js",
+      "originSha256": "7fda3d9e1ed00814e48a48407a7f6653e4bab05e2109cd3b9a21c398298153d2",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfTextFrame.js",
+      "migratedSha256": "7fda3d9e1ed00814e48a48407a7f6653e4bab05e2109cd3b9a21c398298153d2",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "7fda3d9e1ed00814e48a48407a7f6653e4bab05e2109cd3b9a21c398298153d2"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\pdfWhitespaceTracking.js",
+      "originSha256": "141053ae7a1c487cc9593246f0f5ec1b98f62c1feb5cdf1ecaeae40e1b0a40e1",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/pdfWhitespaceTracking.js",
+      "migratedSha256": "141053ae7a1c487cc9593246f0f5ec1b98f62c1feb5cdf1ecaeae40e1b0a40e1",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "141053ae7a1c487cc9593246f0f5ec1b98f62c1feb5cdf1ecaeae40e1b0a40e1"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\portableEngine.js",
+      "originSha256": "20e38618b8f4b98303ef9f03319a6b188066aa029a9b4b79984bec7fb9c216a0",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/portableEngine.js",
+      "migratedSha256": "20e38618b8f4b98303ef9f03319a6b188066aa029a9b4b79984bec7fb9c216a0",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "20e38618b8f4b98303ef9f03319a6b188066aa029a9b4b79984bec7fb9c216a0"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\powerView.js",
+      "originSha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/powerView.js",
+      "migratedSha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\projectArchive.js",
+      "originSha256": "694aa12a3432810413efa1c4ef7b7448a6a595342eb3eaef445f3102e7bc31c4",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/projectArchive.js",
+      "migratedSha256": "00fe41e39afd8d87c8ad105a38d31f3941d3299ff61fddac465ea17854444d00",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "694aa12a3432810413efa1c4ef7b7448a6a595342eb3eaef445f3102e7bc31c4",
+      "repair66": "Exception normalization or duplicate/raw-path ZIP rejection; original file unchanged",
+      "currentChange": "ROADMAP66 new-tree repair/integration; initial imported and origin hashes retained. See engine repair tests and final source checkpoint."
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\recoveredDraftSession.js",
+      "originSha256": "7ac2ed3ed3fce75afa107adee715884165698918b1e6ba9a8fd23839df094326",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/recoveredDraftSession.js",
+      "migratedSha256": "9263eb29c54095ece2cce7336c7b9d47e42c91a46c55651f0b1f658e2356818a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "7ac2ed3ed3fce75afa107adee715884165698918b1e6ba9a8fd23839df094326",
+      "repair66": "Exception normalization or duplicate/raw-path ZIP rejection; original file unchanged",
+      "currentChange": "ROADMAP66 new-tree repair/integration; initial imported and origin hashes retained. See engine repair tests and final source checkpoint."
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\referenceAnalyzer.js",
+      "originSha256": "fb210448fa34dfa63fca336b6c7fce4b3cdb75ac2541157b13b0905213151bed",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/referenceAnalyzer.js",
+      "migratedSha256": "fb210448fa34dfa63fca336b6c7fce4b3cdb75ac2541157b13b0905213151bed",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "fb210448fa34dfa63fca336b6c7fce4b3cdb75ac2541157b13b0905213151bed"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\referenceLearning.js",
+      "originSha256": "851785649ef77e214d1235d29ed1430f0c1f46c1e0803d631e286fc91c9ff94d",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/referenceLearning.js",
+      "migratedSha256": "851785649ef77e214d1235d29ed1430f0c1f46c1e0803d631e286fc91c9ff94d",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "851785649ef77e214d1235d29ed1430f0c1f46c1e0803d631e286fc91c9ff94d"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\referenceProjects.js",
+      "originSha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/referenceProjects.js",
+      "migratedSha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportAnalyzer.js",
+      "originSha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportAnalyzer.js",
+      "migratedSha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportEngine.js",
+      "originSha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportEngine.js",
+      "migratedSha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportInterpreter.js",
+      "originSha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportInterpreter.js",
+      "migratedSha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportLibrary.js",
+      "originSha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportLibrary.js",
+      "migratedSha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportList.js",
+      "originSha256": "83ad5b0f05aec20ea145253b0bf4cf6224026c66827b7dbe5bafa32f500e0226",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportList.js",
+      "migratedSha256": "83ad5b0f05aec20ea145253b0bf4cf6224026c66827b7dbe5bafa32f500e0226",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "83ad5b0f05aec20ea145253b0bf4cf6224026c66827b7dbe5bafa32f500e0226"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportNumbering.js",
+      "originSha256": "14a5131a22b9d72b0e13fc2eecb618a8ead4487a0c310bf00ef197b0de9d0255",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportNumbering.js",
+      "migratedSha256": "14a5131a22b9d72b0e13fc2eecb618a8ead4487a0c310bf00ef197b0de9d0255",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "14a5131a22b9d72b0e13fc2eecb618a8ead4487a0c310bf00ef197b0de9d0255"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportSections.js",
+      "originSha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportSections.js",
+      "migratedSha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportSpecification.js",
+      "originSha256": "9275bfd56c4af034575511bda58cb9eae1afb89be5e0a224128ba3b6130d1220",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportSpecification.js",
+      "migratedSha256": "9275bfd56c4af034575511bda58cb9eae1afb89be5e0a224128ba3b6130d1220",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "9275bfd56c4af034575511bda58cb9eae1afb89be5e0a224128ba3b6130d1220"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportStore.js",
+      "originSha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportStore.js",
+      "migratedSha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reportWorkflow.js",
+      "originSha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reportWorkflow.js",
+      "migratedSha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\reproductionReview.js",
+      "originSha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/reproductionReview.js",
+      "migratedSha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\restoration.js",
+      "originSha256": "bc54bdfc24a8df7cd57a2012d72b48b4a2ad44a4b91d5ea2161259b4b742682a",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/restoration.js",
+      "migratedSha256": "bc54bdfc24a8df7cd57a2012d72b48b4a2ad44a4b91d5ea2161259b4b742682a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "bc54bdfc24a8df7cd57a2012d72b48b4a2ad44a4b91d5ea2161259b4b742682a"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\sfntFonts.js",
+      "originSha256": "3478b6bf04d6aaf0a309ee8bb49b308e3dc2da31c718869084be5aae7c8fc25a",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/sfntFonts.js",
+      "migratedSha256": "3478b6bf04d6aaf0a309ee8bb49b308e3dc2da31c718869084be5aae7c8fc25a",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "3478b6bf04d6aaf0a309ee8bb49b308e3dc2da31c718869084be5aae7c8fc25a"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\sourceParser.js",
+      "originSha256": "398e66a3fc91c8e9d4ada846f9bba7c480e31e722fa9b035a562ecbee39f94ea",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/sourceParser.js",
+      "migratedSha256": "fd353e5e7a63fda08c97232426e44652a2c962845cd9024d7d7333764a69e52c",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "398e66a3fc91c8e9d4ada846f9bba7c480e31e722fa9b035a562ecbee39f94ea",
+      "repair66": "Exception normalization or duplicate/raw-path ZIP rejection; original file unchanged",
+      "currentChange": "ROADMAP66 new-tree repair/integration; initial imported and origin hashes retained. See engine repair tests and final source checkpoint."
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\studioProjects.js",
+      "originSha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/studioProjects.js",
+      "migratedSha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\styledTextReplacement.js",
+      "originSha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/styledTextReplacement.js",
+      "migratedSha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\thermalBmt.js",
+      "originSha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/thermalBmt.js",
+      "migratedSha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\thermalDelivery.js",
+      "originSha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/thermalDelivery.js",
+      "migratedSha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092"
+    },
+    {
+      "origin": "F:\\jindan\\src\\services\\report\\workflowAnalysis.js",
+      "originSha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418",
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/workflowAnalysis.js",
+      "migratedSha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418",
+      "transformation": "UTF8 BOM normalization only",
+      "category": "engine-source",
+      "initialImportedSha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\body-stroke28-regression.test.cjs",
+      "originSha256": "b89add1094789444795aac7c7b515c05efa285ee9d4eea3421ed7b4d66cbfb48",
+      "destination": "tests/LegacyEngine/body-stroke28-regression.test.cjs",
+      "migratedSha256": "30c8df44319015bc932c4654315bc01ec3339bafc177ea493c54d47b54b0085a",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "30c8df44319015bc932c4654315bc01ec3339bafc177ea493c54d47b54b0085a"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\chapter-conversion.test.cjs",
+      "originSha256": "2b5bcaca4c687b23528d81276d14d5a6fc6ea5dab1e4e3b9172bdd5cf894aa06",
+      "destination": "tests/LegacyEngine/chapter-conversion.test.cjs",
+      "migratedSha256": "3a7b1dbb04639e939b51431062613eee904851d8fc00a9f42df2ffa4f8e12adb",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "3a7b1dbb04639e939b51431062613eee904851d8fc00a9f42df2ffa4f8e12adb"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\collection-intro-style.test.cjs",
+      "originSha256": "3db198231aa9cec493e8e7961b0e4f28dc171d945422b2c1c69bfb4ca7d470d6",
+      "destination": "tests/LegacyEngine/collection-intro-style.test.cjs",
+      "migratedSha256": "51845c96abfc60a43f149d7697eec6b13ff8b7b51b091f829f70f1d3faed2dd6",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "51845c96abfc60a43f149d7697eec6b13ff8b7b51b091f829f70f1d3faed2dd6"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\draft-preparation.test.cjs",
+      "originSha256": "6434b8a9d9639dcd4e1595d53dbded0dc37f4cf9476d2d8d6e0c1809ff5f6d1e",
+      "destination": "tests/LegacyEngine/draft-preparation.test.cjs",
+      "migratedSha256": "face13f29882af059baee6533315f156b7934046c31fca0c45e84f547029f3ba",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "face13f29882af059baee6533315f156b7934046c31fca0c45e84f547029f3ba"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\electrical-preparation.test.cjs",
+      "originSha256": "109fd5acdb2521ad9dd15c92713f147ea7db422163e8ed524ef954581e91fb14",
+      "destination": "tests/LegacyEngine/electrical-preparation.test.cjs",
+      "migratedSha256": "1e9190cf4ec87ef9de326ac3a5e1fc53d6b0a73d2fcd0502bfe3050c1e06ef9b",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "1e9190cf4ec87ef9de326ac3a5e1fc53d6b0a73d2fcd0502bfe3050c1e06ef9b"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\empty-furniture-probe.test.cjs",
+      "originSha256": "b15b88e3008ea1c17bb4530c15a6caa8332b92d6696296f75fa590c9fae099ec",
+      "destination": "tests/LegacyEngine/empty-furniture-probe.test.cjs",
+      "migratedSha256": "34ad2e6da917005eb8f55a6918a5309958f0666ee98769cf418a49646977a3bc",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "34ad2e6da917005eb8f55a6918a5309958f0666ee98769cf418a49646977a3bc"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\engine-facade.test.cjs",
+      "originSha256": "a7379df3b40cd5d3c7cad764581c7090396d4cee83f5515e3dd8f6b68cfa1621",
+      "destination": "tests/LegacyEngine/engine-facade.test.cjs",
+      "migratedSha256": "6c0ad580c195045e11ab42b4464fa1a0468241e557372d1e8aef331dad260772",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "6c0ad580c195045e11ab42b4464fa1a0468241e557372d1e8aef331dad260772"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\engine-recovery.test.cjs",
+      "originSha256": "3935e0fedad6c02ff92f985dd93f10a6639ddf5092b630b4d5a750cbc070f841",
+      "destination": "tests/LegacyEngine/engine-recovery.test.cjs",
+      "migratedSha256": "a7a9eca06f9914f4c1c65d60fca7d5565cb92200b5e24d19cc349c403b710f57",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "a7a9eca06f9914f4c1c65d60fca7d5565cb92200b5e24d19cc349c403b710f57"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\fixtures\\legacy-font.cjs",
+      "originSha256": "b88207dada9dd559d7b2eb02b97726b3e49c89dc263a3f2e268de560dd577c3f",
+      "destination": "tests/LegacyEngine/fixtures/legacy-font.cjs",
+      "migratedSha256": "b88207dada9dd559d7b2eb02b97726b3e49c89dc263a3f2e268de560dd577c3f",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "b88207dada9dd559d7b2eb02b97726b3e49c89dc263a3f2e268de560dd577c3f"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\fixtures\\thermal-bmt.cjs",
+      "originSha256": "f2f0d45c8ee6305f6f6ca7d76b01364bc264fec07f2c1f4c14124f59c3d87154",
+      "destination": "tests/LegacyEngine/fixtures/thermal-bmt.cjs",
+      "migratedSha256": "f2f0d45c8ee6305f6f6ca7d76b01364bc264fec07f2c1f4c14124f59c3d87154",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "f2f0d45c8ee6305f6f6ca7d76b01364bc264fec07f2c1f4c14124f59c3d87154"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\font-name60-tools.cjs",
+      "originSha256": "c31177df1794b0471dd6229a6de0d7357df616f27b2a69d7edd5d7c82b4671d3",
+      "destination": "tests/LegacyEngine/font-name60-tools.cjs",
+      "migratedSha256": "6c6f59f86043248e0a76d6ff27e356b79f8e23f7552abe8aba7a6a09c2a727f7",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "6c6f59f86043248e0a76d6ff27e356b79f8e23f7552abe8aba7a6a09c2a727f7"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\font-name60.test.cjs",
+      "originSha256": "e90f74cea6630b6eb2da107af82cf9a00eb314140075ed0b4c79f99c95779f88",
+      "destination": "tests/LegacyEngine/font-name60.test.cjs",
+      "migratedSha256": "011912f00a6ba100f558c76386215c1ae8e65fb00684e6ff07cd803ae9c20495",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "011912f00a6ba100f558c76386215c1ae8e65fb00684e6ff07cd803ae9c20495"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\furniture-origin.test.cjs",
+      "originSha256": "6ef692e45afc8ee1de8b9035b7d36969d354af2329d4e35c3a90d51db39a3d8c",
+      "destination": "tests/LegacyEngine/furniture-origin.test.cjs",
+      "migratedSha256": "390581a807141b9051e8562d660b2ca960f67935f5e4294aec245a18910f1133",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "390581a807141b9051e8562d660b2ca960f67935f5e4294aec245a18910f1133"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\glyph-overprint38-regression.test.cjs",
+      "originSha256": "b1b6d87eda7a28eb667494f8e18e315b1327f5e83099a3a3a250e3b3cb291937",
+      "destination": "tests/LegacyEngine/glyph-overprint38-regression.test.cjs",
+      "migratedSha256": "5b7014b78d2b416f33643c201367fc56b2e3cb8501b5d37fd85068b54605a684",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "5b7014b78d2b416f33643c201367fc56b2e3cb8501b5d37fd85068b54605a684"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\hwpx-restoration-fidelity.test.cjs",
+      "originSha256": "b6538e4951883c61a61b4c861606b5f8fcbdbc13f06c0ffa479b916e75d7f47e",
+      "destination": "tests/LegacyEngine/hwpx-restoration-fidelity.test.cjs",
+      "migratedSha256": "cde6085e36d714884314c50d58247204a54aebfa50e309c74ef703cae810412e",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "cde6085e36d714884314c50d58247204a54aebfa50e309c74ef703cae810412e"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-font28-regression.test.cjs",
+      "originSha256": "ca27eeea90aaa6d6bbe9e189f918afc5a67f8d570c827c2dd6cc4a21a175dbcd",
+      "destination": "tests/LegacyEngine/native-font28-regression.test.cjs",
+      "migratedSha256": "b33d156287c50051314c321afb79860476221810267704e7fbd6dda45a2ece36",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "b33d156287c50051314c321afb79860476221810267704e7fbd6dda45a2ece36"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-paragraph-flow27.test.cjs",
+      "originSha256": "760f1888adac831a77ebc7fb256f3a64f445aa380bdd21d37ffeaedf38b3716e",
+      "destination": "tests/LegacyEngine/native-paragraph-flow27.test.cjs",
+      "migratedSha256": "d035ff294e6334776e0fbff5b144cb79000cb159ed47179c903e814664561d84",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "d035ff294e6334776e0fbff5b144cb79000cb159ed47179c903e814664561d84"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-pdf19-regression.test.cjs",
+      "originSha256": "ecea41803acc0f8e71d80bba27d72207b45f0f28404973dcbe032d14e3f3a019",
+      "destination": "tests/LegacyEngine/native-pdf19-regression.test.cjs",
+      "migratedSha256": "acab9e18431ef440083d88638635bb9815430c4580976154002c108a9faa30d0",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "acab9e18431ef440083d88638635bb9815430c4580976154002c108a9faa30d0"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-pdf25-regression.test.cjs",
+      "originSha256": "c071e5baf5ee6fb374a39902cf30b22c64ca1032ff73bd6456bd9612ffc45098",
+      "destination": "tests/LegacyEngine/native-pdf25-regression.test.cjs",
+      "migratedSha256": "55b6c612403265697e500e566e6c46fbfa373487f39a5363157bd99bfea8b543",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "55b6c612403265697e500e566e6c46fbfa373487f39a5363157bd99bfea8b543"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-preview.test.cjs",
+      "originSha256": "3be4c6ba813dd70820f05a858e951e58db036bca0c7c740610f6552032f7d103",
+      "destination": "tests/LegacyEngine/native-preview.test.cjs",
+      "migratedSha256": "e727fbc8c32554fd85e6864bc3ff4ed490edfc363afc2343034a1473300c80c8",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "e727fbc8c32554fd85e6864bc3ff4ed490edfc363afc2343034a1473300c80c8"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\native-save-audit57.test.cjs",
+      "originSha256": "fffa9b90a9c4549bbeecb4051765a7e7cbf4102077ea44e997a730e0f5b065da",
+      "destination": "tests/LegacyEngine/native-save-audit57.test.cjs",
+      "migratedSha256": "1ab3de428b5ea6b8ed0a52d203bf6c8c8a90ab9b44d83c911d109f5851de2097",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "1ab3de428b5ea6b8ed0a52d203bf6c8c8a90ab9b44d83c911d109f5851de2097"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\page-decoration.test.cjs",
+      "originSha256": "56dd636afcb1242d26af85a2a7de2a119337f705da68276d72e8da57e7ca727a",
+      "destination": "tests/LegacyEngine/page-decoration.test.cjs",
+      "migratedSha256": "526aabca558f85ef118c3939dc783b48854fd53466287efb7f52f47a2a1735dc",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "526aabca558f85ef118c3939dc783b48854fd53466287efb7f52f47a2a1735dc"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\paired-cell-formatting.test.cjs",
+      "originSha256": "431d2bf62a208fbaa9eb58fd0329b97c6c98465430ddf3956d51392d652de96b",
+      "destination": "tests/LegacyEngine/paired-cell-formatting.test.cjs",
+      "migratedSha256": "6d449ee6a4cf9df11b5e0c5fa2de384d88bb2feb4b5b6b52aaed7df1c8365bd6",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "6d449ee6a4cf9df11b5e0c5fa2de384d88bb2feb4b5b6b52aaed7df1c8365bd6"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\paired-table-margins.test.cjs",
+      "originSha256": "4d8c26d43ea9fdd0d69799ae5f6a39242f08f90a32fd01ce2e4f7d199037ef24",
+      "destination": "tests/LegacyEngine/paired-table-margins.test.cjs",
+      "migratedSha256": "8a78eaf79ffaaf80254a65ecbf729ec342ae3f564011817e6dbdcd01aa043ce1",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "8a78eaf79ffaaf80254a65ecbf729ec342ae3f564011817e6dbdcd01aa043ce1"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\paragraph-formatting.test.cjs",
+      "originSha256": "edd2422890a1fd2fad529ac5c958281a04b4f87ba99454d9b1e944128c311f18",
+      "destination": "tests/LegacyEngine/paragraph-formatting.test.cjs",
+      "migratedSha256": "52587a0c76e8b19a7d73dabfa72cf5bfa8e92e32246b222f5c442b835028d91d",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "52587a0c76e8b19a7d73dabfa72cf5bfa8e92e32246b222f5c442b835028d91d"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\patch-empty-furniture-probe.cjs",
+      "originSha256": "6c888537c3ea5d077e9e5c8c6c9eb73c2788b1f228a86099fe571df174976ee1",
+      "destination": "tests/LegacyEngine/patch-empty-furniture-probe.cjs",
+      "migratedSha256": "27a656a91ae0b048404e0920ad863dc9a191a4e3e8d333a1ebc503759e2eb865",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "27a656a91ae0b048404e0920ad863dc9a191a4e3e8d333a1ebc503759e2eb865"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-fidelity.test.cjs",
+      "originSha256": "f7d213ee582809de8bc937a0c8a3acf33c1ee1b4e255e61900ec6199226115ff",
+      "destination": "tests/LegacyEngine/pdf-fidelity.test.cjs",
+      "migratedSha256": "4345a2999e54efd7d892a5e8040fa01e24991b268cd0ddc0c3e4bdf55fb425fc",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "4345a2999e54efd7d892a5e8040fa01e24991b268cd0ddc0c3e4bdf55fb425fc"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-font-space55-regression.test.cjs",
+      "originSha256": "8c5daaf6985c6cef674c0cb4192f1fbb72c655813671127bcc8797a9e7cd70cf",
+      "destination": "tests/LegacyEngine/pdf-font-space55-regression.test.cjs",
+      "migratedSha256": "0ca1c5f7b690cdc48b6aa5ef55c9960780e674f94dbaef4907a9c8dc8cd144ac",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "0ca1c5f7b690cdc48b6aa5ef55c9960780e674f94dbaef4907a9c8dc8cd144ac"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-furniture-coordinates.test.cjs",
+      "originSha256": "fff95230b1c4d33529bb773d2dd5d5e6ea1fb62537aa93e08aac38b090ba668d",
+      "destination": "tests/LegacyEngine/pdf-furniture-coordinates.test.cjs",
+      "migratedSha256": "17834a77f50e73001c958596202ac749ae2c47e2c7fe5c44efec67936f90d651",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "17834a77f50e73001c958596202ac749ae2c47e2c7fe5c44efec67936f90d651"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-native24-regression.test.cjs",
+      "originSha256": "c02d7eb440d724f5e3fb7319d85d5dd97c07cf3b09387c56ee04ff1320edea48",
+      "destination": "tests/LegacyEngine/pdf-native24-regression.test.cjs",
+      "migratedSha256": "526e4ddea270e6717de167876da659d5843d64442af0fc2c1a15320f4ad036a2",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "526e4ddea270e6717de167876da659d5843d64442af0fc2c1a15320f4ad036a2"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-operator-boundary41-regression.test.cjs",
+      "originSha256": "b56e99c77968c5f1b2995cc7692b964521d1f8187b20adef56a5bf21e6dedfdc",
+      "destination": "tests/LegacyEngine/pdf-operator-boundary41-regression.test.cjs",
+      "migratedSha256": "3672a65030d6081862cb63dadb90070a9aa45bbaa5628a2f06de68d92f8f8eec",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "3672a65030d6081862cb63dadb90070a9aa45bbaa5628a2f06de68d92f8f8eec"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-report.test.cjs",
+      "originSha256": "c294f07d53b703e8aa4d2d250f807011a23e46f47ac2f038388357626c47e19d",
+      "destination": "tests/LegacyEngine/pdf-report.test.cjs",
+      "migratedSha256": "5d3ce43aa49fbc68ec2c092ba89cea99cc5df2edf3a1a4b79d7bfc3d884c3b59",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "5d3ce43aa49fbc68ec2c092ba89cea99cc5df2edf3a1a4b79d7bfc3d884c3b59"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-text-frame38-regression.test.cjs",
+      "originSha256": "512df9f37209561b4a8a15b746d78faa1446023a5e8927459f6f754d22027f71",
+      "destination": "tests/LegacyEngine/pdf-text-frame38-regression.test.cjs",
+      "migratedSha256": "72e79768a3f6260140c24704b7f0d896ab10e46571d99e00b2301ae5ef6e7253",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "72e79768a3f6260140c24704b7f0d896ab10e46571d99e00b2301ae5ef6e7253"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-tracking33-regression.test.cjs",
+      "originSha256": "913b55b85603ac7df0bb0df448613978a63afba976b796454629690c2063de1c",
+      "destination": "tests/LegacyEngine/pdf-tracking33-regression.test.cjs",
+      "migratedSha256": "2baefe2e51b858c838252e9f6915fd0db1d414bed35bcb610055b95ef265db53",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "2baefe2e51b858c838252e9f6915fd0db1d414bed35bcb610055b95ef265db53"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\pdf-whitespace38-regression.test.cjs",
+      "originSha256": "069ac49058681b0c7e87a1e393ddba87bd64e999b1da01ef96d4c69c3ec63280",
+      "destination": "tests/LegacyEngine/pdf-whitespace38-regression.test.cjs",
+      "migratedSha256": "dc7854819f29ef4cfb0210b49241a9e25e6a9207937f9d2aad574584a8dcd546",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "dc7854819f29ef4cfb0210b49241a9e25e6a9207937f9d2aad574584a8dcd546"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\png-density57.test.cjs",
+      "originSha256": "cbde5340d0af9e4fdca6f80b2cce282f23733afe2fc88628b9abbe617c5395d0",
+      "destination": "tests/LegacyEngine/png-density57.test.cjs",
+      "migratedSha256": "cbde5340d0af9e4fdca6f80b2cce282f23733afe2fc88628b9abbe617c5395d0",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "cbde5340d0af9e4fdca6f80b2cce282f23733afe2fc88628b9abbe617c5395d0"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\powerview.test.cjs",
+      "originSha256": "ec48efad2b8ed7021d606b4cf9b2c5420f4a52ba368f0ba302ebff5a7d810a8d",
+      "destination": "tests/LegacyEngine/powerview.test.cjs",
+      "migratedSha256": "b2ba957373ff63226a2b3c27b50225eb1b7fa76705119d2d1798cba4f8adc989",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "b2ba957373ff63226a2b3c27b50225eb1b7fa76705119d2d1798cba4f8adc989"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\prepare-continuous-page-probe.cjs",
+      "originSha256": "98a0e70f8a17a6d687c6f7eed3410c17b017e3a60269be4a7971f26385866d61",
+      "destination": "tests/LegacyEngine/prepare-continuous-page-probe.cjs",
+      "migratedSha256": "1a70d635122426b99f45c938fdc4ebadc9446b400003f9f89cc2cf50d545d092",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "1a70d635122426b99f45c938fdc4ebadc9446b400003f9f89cc2cf50d545d092"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\prepare-furniture-origin-probes.cjs",
+      "originSha256": "aad07fb936390dd4f3e9b959ee6dbbfb02c5647f1e0cddbe2de214fca4e27810",
+      "destination": "tests/LegacyEngine/prepare-furniture-origin-probes.cjs",
+      "migratedSha256": "466c5e16b39d5faf22ae9bad7429e97e91bae6f794ef266a5b318ed90db7491e",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "466c5e16b39d5faf22ae9bad7429e97e91bae6f794ef266a5b318ed90db7491e"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\prepare-preservation57-probes.cjs",
+      "originSha256": "fa0c507920b439d095ce0614c534c69605fea6b8487ec6f13e2b35098654607d",
+      "destination": "tests/LegacyEngine/prepare-preservation57-probes.cjs",
+      "migratedSha256": "9af9974a10868ea9b84f595282c9863eede00a2ce19721b0cd1d8216f7f5fef7",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "9af9974a10868ea9b84f595282c9863eede00a2ce19721b0cd1d8216f7f5fef7"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\project-workbench.test.cjs",
+      "originSha256": "3465886f2ed2aad4a06034e18995475c7cc6dc55e2b188dbb3e8b3632063fe1c",
+      "destination": "tests/LegacyEngine/project-workbench.test.cjs",
+      "migratedSha256": "e7d58fdccdc4258facacf5e9d8bd53ca3268b0b581e9adca6fca43b8080cb9f4",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "e7d58fdccdc4258facacf5e9d8bd53ca3268b0b581e9adca6fca43b8080cb9f4"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\recovery-draft60.test.cjs",
+      "originSha256": "9a4be8a9b266bb035e9c2524f9e542b74974bd8050b845e3cc190a870acb70f3",
+      "destination": "tests/LegacyEngine/recovery-draft60.test.cjs",
+      "migratedSha256": "e8b088b58d2ee770c65d3157531dd7a0ed11e172b9e25949406d2c31b43d0490",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "e8b088b58d2ee770c65d3157531dd7a0ed11e172b9e25949406d2c31b43d0490"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\reference-analyzer.test.cjs",
+      "originSha256": "194a3a0f2670441200169e1ff09861eafed5558cd15e626b584e6f9a0d1c54b5",
+      "destination": "tests/LegacyEngine/reference-analyzer.test.cjs",
+      "migratedSha256": "74c27b4a73a1d5ec0f527344939eee9adce42ada649f37d0abcc157c9a5fdad1",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "74c27b4a73a1d5ec0f527344939eee9adce42ada649f37d0abcc157c9a5fdad1"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-engine.test.cjs",
+      "originSha256": "0272bed18c797574ffac7f32eb9e6c2ff151fa5aa10356b719d7ce217b71f5a6",
+      "destination": "tests/LegacyEngine/report-engine.test.cjs",
+      "migratedSha256": "f85bb53f8453d0f24a5b8c6c05ba5f8c75e0c09bf17f82d0e3c1dd1a6f6d7cad",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "f85bb53f8453d0f24a5b8c6c05ba5f8c75e0c09bf17f82d0e3c1dd1a6f6d7cad"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-list.test.cjs",
+      "originSha256": "afc895ab2bf8e3533f945bdb8ff743fd499a55b0f3384c80e16ad0cba1e1c6ee",
+      "destination": "tests/LegacyEngine/report-list.test.cjs",
+      "migratedSha256": "4a619a85f49e34f233b144851e98e1bc7abe7496bb5228c08fd8d72bf3ddb93e",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "4a619a85f49e34f233b144851e98e1bc7abe7496bb5228c08fd8d72bf3ddb93e"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-native-collection.test.cjs",
+      "originSha256": "af779f0296f7782bebd263ac09caae9efd77535b5704e199ccd3a19baebf09a9",
+      "destination": "tests/LegacyEngine/report-native-collection.test.cjs",
+      "migratedSha256": "bbcf8f3dcc7a6180a004f4d80cfd01b2be99e54acf3e44d2ed46978de2251e91",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "bbcf8f3dcc7a6180a004f4d80cfd01b2be99e54acf3e44d2ed46978de2251e91"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-numbering.test.cjs",
+      "originSha256": "e376c348c98a7059212b87648e3d7d1ff4c19958149318359bf83d31115d94c3",
+      "destination": "tests/LegacyEngine/report-numbering.test.cjs",
+      "migratedSha256": "33c3760e0a0263659c5daeb39c931765b0859c9721c3f60d96295a091f1b66d9",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "33c3760e0a0263659c5daeb39c931765b0859c9721c3f60d96295a091f1b66d9"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-pipeline.test.cjs",
+      "originSha256": "a27ee143f4c5f7a50dd9f51f3439476ada5042d57f5baf9f121b9f2590b5396e",
+      "destination": "tests/LegacyEngine/report-pipeline.test.cjs",
+      "migratedSha256": "8c3a0fd3813db9a4aab11fc12b209748b97051e8fd89814641697257955295d6",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "8c3a0fd3813db9a4aab11fc12b209748b97051e8fd89814641697257955295d6"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\report-reference-projects.test.cjs",
+      "originSha256": "45b75f2d853f0fa6f7254cd3bfbc99b9e64bedea90a78480ba377308093ef974",
+      "destination": "tests/LegacyEngine/report-reference-projects.test.cjs",
+      "migratedSha256": "ed2cf2743b00a06b78c1b5090fdea90bb5044ae9a51a71789edeacb3fbc50036",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "ed2cf2743b00a06b78c1b5090fdea90bb5044ae9a51a71789edeacb3fbc50036"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\restoration.test.cjs",
+      "originSha256": "49961076aa93bbc8171f5996609ab09246f620db81526ceed1bb2633d0eac3b4",
+      "destination": "tests/LegacyEngine/restoration.test.cjs",
+      "migratedSha256": "f72531e52593d3102692b95ec757053cb0e5f9a327c9ceeb8e843f74bf8a0059",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "f72531e52593d3102692b95ec757053cb0e5f9a327c9ceeb8e843f74bf8a0059"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\section-bisection.test.cjs",
+      "originSha256": "696756e94adcfc3f56f8599353712c27657e0727563a12e23f853fb12da1f9e4",
+      "destination": "tests/LegacyEngine/section-bisection.test.cjs",
+      "migratedSha256": "371d2c10e7458a04d0bdf29a5cf8484697abd346577ecd8346c4dc970199c511",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "371d2c10e7458a04d0bdf29a5cf8484697abd346577ecd8346c4dc970199c511"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\split-hwpx-section-probes.cjs",
+      "originSha256": "44b2df9305f70fc884b45fdaebf5aa5a4cba7e0d408aef5cb845c8c77ec38f0b",
+      "destination": "tests/LegacyEngine/split-hwpx-section-probes.cjs",
+      "migratedSha256": "329a6e8a3aa7c85eea396bb043165bb1da53494f1322ae9ef9dfe71a5b371b91",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "329a6e8a3aa7c85eea396bb043165bb1da53494f1322ae9ef9dfe71a5b371b91"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\studio-supervision-regression.test.cjs",
+      "originSha256": "bd3403054cee9b151115d464f355726829548e7810bc3c2e93de303663bc79d2",
+      "destination": "tests/LegacyEngine/studio-supervision-regression.test.cjs",
+      "migratedSha256": "101d70c4bdfc7516d6b6c7153358a6704fc59200338aa8bc37c4bb353c1a3d9e",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "101d70c4bdfc7516d6b6c7153358a6704fc59200338aa8bc37c4bb353c1a3d9e"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\thermal-bmt.test.cjs",
+      "originSha256": "3ad9966b29f30b5b6db471000b9c017487848e7479e8ab96d1a9733ac356ed37",
+      "destination": "tests/LegacyEngine/thermal-bmt.test.cjs",
+      "migratedSha256": "72dcbd928c8cb12cb5db1882556763d7a0bd8a8f0adf3f0108a7b9982831702c",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "72dcbd928c8cb12cb5db1882556763d7a0bd8a8f0adf3f0108a7b9982831702c"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\thermal-delivery.test.cjs",
+      "originSha256": "013e9a305bf54fcf4b001cc6735c23833e8dac2f9083842caa9340ed08abca52",
+      "destination": "tests/LegacyEngine/thermal-delivery.test.cjs",
+      "migratedSha256": "1673a64db83fa9f388fd35847e228e64d47e326ea5f40b12a0860889b1300c93",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "1673a64db83fa9f388fd35847e228e64d47e326ea5f40b12a0860889b1300c93"
+    },
+    {
+      "origin": "F:\\jindan\\scripts\\workflow-analysis.test.cjs",
+      "originSha256": "7fd33ac1fef4f320a50f8f1169e6c192533df787de794045a03e80ceaf2ba9da",
+      "destination": "tests/LegacyEngine/workflow-analysis.test.cjs",
+      "migratedSha256": "f5da49878278f3999fc4c24041d6ad6e6ac9113b39945bd88ec2f4ba3a46566c",
+      "transformation": "test relative engine path only",
+      "category": "legacy-test",
+      "initialImportedSha256": "f5da49878278f3999fc4c24041d6ad6e6ac9113b39945bd88ec2f4ba3a46566c"
+    },
+    {
+      "origin": null,
+      "originSha256": null,
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/engineFailure.js",
+      "migratedSha256": "92ba71a7012cba82424724459d46f94bc8d4932241c8c2809cd6ffe3e06f1722",
+      "initialImportedSha256": null,
+      "category": "new-engine-boundary",
+      "transformation": "Authored in isolated ROADMAP66 repair; not copied from old workspace."
+    },
+    {
+      "origin": null,
+      "originSha256": null,
+      "destination": "src/Jindan.Report.Worker/engine/src/services/report/zipBoundary.js",
+      "migratedSha256": "ca50b17762be65a2e168fe13657175a13fdc350faf5111dd43f56aac13892cd1",
+      "initialImportedSha256": null,
+      "category": "new-engine-boundary",
+      "transformation": "Authored in isolated ROADMAP66 repair; not copied from old workspace."
+    },
+    {
+      "origin": null,
+      "originSha256": null,
+      "destination": "src/Jindan.Report.Worker/engine/src/services/cadRender.js",
+      "migratedSha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660",
+      "initialImportedSha256": null,
+      "category": "new-engine-boundary",
+      "transformation": "Authored in isolated ROADMAP66 repair; not copied from old workspace."
+    }
+  ],
+  "testFiles": [
+    "body-stroke28-regression.test.cjs",
+    "chapter-conversion.test.cjs",
+    "collection-intro-style.test.cjs",
+    "draft-preparation.test.cjs",
+    "electrical-preparation.test.cjs",
+    "empty-furniture-probe.test.cjs",
+    "engine-facade.test.cjs",
+    "engine-recovery.test.cjs",
+    "font-name60.test.cjs",
+    "furniture-origin.test.cjs",
+    "glyph-overprint38-regression.test.cjs",
+    "hwpx-restoration-fidelity.test.cjs",
+    "native-font28-regression.test.cjs",
+    "native-paragraph-flow27.test.cjs",
+    "native-pdf19-regression.test.cjs",
+    "native-pdf25-regression.test.cjs",
+    "native-preview.test.cjs",
+    "native-save-audit57.test.cjs",
+    "page-decoration.test.cjs",
+    "paired-cell-formatting.test.cjs",
+    "paired-table-margins.test.cjs",
+    "paragraph-formatting.test.cjs",
+    "pdf-fidelity.test.cjs",
+    "pdf-font-space55-regression.test.cjs",
+    "pdf-furniture-coordinates.test.cjs",
+    "pdf-native24-regression.test.cjs",
+    "pdf-operator-boundary41-regression.test.cjs",
+    "pdf-report.test.cjs",
+    "pdf-text-frame38-regression.test.cjs",
+    "pdf-tracking33-regression.test.cjs",
+    "pdf-whitespace38-regression.test.cjs",
+    "png-density57.test.cjs",
+    "powerview.test.cjs",
+    "project-workbench.test.cjs",
+    "recovery-draft60.test.cjs",
+    "reference-analyzer.test.cjs",
+    "report-engine.test.cjs",
+    "report-list.test.cjs",
+    "report-native-collection.test.cjs",
+    "report-numbering.test.cjs",
+    "report-pipeline.test.cjs",
+    "report-reference-projects.test.cjs",
+    "restoration.test.cjs",
+    "section-bisection.test.cjs",
+    "studio-supervision-regression.test.cjs",
+    "thermal-bmt.test.cjs",
+    "thermal-delivery.test.cjs",
+    "workflow-analysis.test.cjs"
+  ],
+  "excludedTests": {
+    "page-reproduction.test.cjs": "External skill/desktop launcher or AI boundary; not core engine repair",
+    "report-ai.test.cjs": "External skill/desktop launcher or AI boundary; not core engine repair",
+    "report-skill.test.cjs": "External skill/desktop launcher or AI boundary; not core engine repair"
+  },
+  "externalPackages": [
+    "@rhwp/core",
+    "cfb",
+    "crypto",
+    "fast-xml-parser",
+    "fflate",
+    "pdf-lib",
+    "pdfjs-dist",
+    "tesseract.js"
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "refreshedAt": "2026-11-04T22:56:20.393Z"
+}

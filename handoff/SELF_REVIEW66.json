@@ -1,0 +1,92 @@
+{
+  "schema": "jindan-targeted-self-review66/1",
+  "reviewedAt": "2026-11-05T00:19:32.330Z",
+  "scope": "Targeted source/contract/evidence review by implementation owner; static dependency scanning and named regressions are not a complete security audit or independent acceptance.",
+  "files": [
+    {
+      "path": "src/Jindan.Infrastructure/LocalIdentity.cs",
+      "sha256": "1225f93c78e6beab7b580865fd46f4aa2a5513bde4133ca343c478abb60e60ca"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalWorkspace.cs",
+      "sha256": "e0ce4f79d122fff3a3111da592c0b76da1c7ff486c7b5971c35bb6bec9d55782"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalAssets.cs",
+      "sha256": "f3901de8b8d816128cf174ff485c74d4db76355310e84ae7d8b97cc3da91d8f7"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/ReportService.cs",
+      "sha256": "8ef90206d40ced19285e92a6f188470165e1b97b698a6d32705115e7ffb92ddd"
+    },
+    {
+      "path": "src/Jindan.ModuleHost/Modules.cs",
+      "sha256": "79763610e9f4ba957ef6e261d30d49118f19fa023f222fc837ebf02507d979aa"
+    },
+    {
+      "path": "src/Jindan.Update/UpdateCoordinator.cs",
+      "sha256": "efe1ab10cea6d8c91b2ebb8f93f719ff1a8c8e9162809b7b68745cc1ad3f7429"
+    },
+    {
+      "path": "src/Jindan.Update/WorkspaceLocation.cs",
+      "sha256": "06a55ec84a8331d60ecde255bfe34b4c8475fa889ad07f82736dcc78b74daaf0"
+    },
+    {
+      "path": "src/Jindan.Desktop/Program.cs",
+      "sha256": "72e1bc6be7277d9effb9b05d11b3b7cb4e9a7174e7ca2a1d1840296fd42fe6d3"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/RecordDocument.cs",
+      "sha256": "40897c65f209244b3c769a9fabcca148d23750bf8eb426e6df74ff393fe33eb0"
+    },
+    {
+      "path": "tools/verify-review66.mjs",
+      "sha256": "0f676d283e1ca4924cbd18d78a05897025e9a59e8d339ccd0d561963e0c93c32"
+    },
+    {
+      "path": "tools/source-checkpoint66.mjs",
+      "sha256": "af1c6a87d97db46b9a2bcf8de372694b2032ffeb4c6690b28aeae1c14b28dc86"
+    }
+  ],
+  "areas": [
+    {
+      "area": "Authority and data isolation",
+      "finding": "Local session reference and persisted role/project/owner/revision are enforced below UI; explicit new-workspace bootstrap, no imported credentials.",
+      "evidence": "Headless final Domain22 and exact native identity/project context checks."
+    },
+    {
+      "area": "Report stale and current-data boundaries",
+      "finding": "Request generations, source/bundle/review hashes, fresh reanalysis after recovery and persisted host authorization remain required. Program acknowledgement is not human approval.",
+      "evidence": "Headless final Adapter41, offline260 including inherited negative binding tests, exact ReportUI60."
+    },
+    {
+      "area": "Worker lifecycle",
+      "finding": "Owned Node processes only, bounded input/output/staging, cancellation/disposal and stale-success rejection; no global process-name kill.",
+      "evidence": "Headless final Adapter41 and exact ReportUI60 CPU/dispose checks."
+    },
+    {
+      "area": "Package and patch trust",
+      "finding": "Explicit hashed inventory and local allowlist; declared resources/dependencies. Not publisher authentication or a sandbox. Schema downgrade rejects later data.",
+      "evidence": "Headless final Package37; exact product patch gate is recorded separately after completion."
+    },
+    {
+      "area": "Native UI layout and lifecycle",
+      "finding": "Real captures exposed earlier hidden captions and calendar clipping despite semantic passes. FinalR4 adds actual client-geometry/nativeSaturday checks. Physical150/200 remains unverified; controlled scaling is separate.",
+      "evidence": "ExactR4 native39; final native captures inspected by root."
+    },
+    {
+      "area": "Original and output preservation",
+      "finding": "Originals are read-only and outputs new-only; returned Hancom files require exact context/JDF binding. Old picture preservation depended on supervisor-owned save settings; fonts/sourceJSON/tabs/current-company approval remain HOLD.",
+      "evidence": "preservation66/RESULT.json and docs/preservation-contract66.md."
+    }
+  ],
+  "environmentDeviation": "First local SDK build emitted automatic ASP.NET development certificate installation message; no explicit trust/store-edit/removal, no independent certificate-store audit. Later process flags prevent generation. See docs/sdk-first-run-observation66.md.",
+  "unresolved": [
+    "Production cloud/paid AI integration and publisher signing are not configured.",
+    "Complex PDF/HWPX rendering remains hybrid, not pure C#.",
+    "Exact new native Hancom fidelity, original font/metadata/tab retention and current-company data approval need independent review.",
+    "Direct Aside delivery failed without typing/sending; manual handoff remains required."
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false
+}

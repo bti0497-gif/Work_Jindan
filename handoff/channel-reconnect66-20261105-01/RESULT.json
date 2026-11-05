@@ -1,0 +1,30 @@
+{
+  "schema": "jindan-report-channel-reconnect66/1",
+  "observedAt": "2026-11-05T01:36:54.469Z",
+  "timezone": "Asia/Seoul",
+  "targetTitle": "안티그래비티 소프트 개발계획과 AI 부서 구성 검토 ⋅ Chats - Aside",
+  "targetWindowId": 3868518,
+  "targetTaskId": "uBvKmVC9OBAMiYhj",
+  "userRequestedRetryAfterPlatformRestart": true,
+  "transport": [
+    "Computer Use sky",
+    "cua native fallback"
+  ],
+  "windowActivationSucceeded": true,
+  "accessibilityAvailable": false,
+  "browserHostAvailable": false,
+  "requestedEvent": "LINK66-DIRECT-20261105",
+  "requestedTextInputAttempted": true,
+  "requestedTextVisible": false,
+  "keyboardTabFocusedEmptyComposer": true,
+  "otherDraftSubsequentlyObserved": true,
+  "otherDraftOverwritten": false,
+  "sendInvoked": false,
+  "deliveryVerified": false,
+  "supervisorAcknowledged": false,
+  "state": "waiting_for_user_empty_composer",
+  "reason": "Coordinate/native input did not show the requested text. Keyboard Tab visibly focused the composer. A later composer frame showed different in-progress text; stopped without submitting or overwriting. No delivery claim.",
+  "productOrSourceChanged": false,
+  "reportReady": false,
+  "supervisorAccepted": false
+}

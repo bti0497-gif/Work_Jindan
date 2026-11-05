@@ -1,0 +1,20 @@
+using Jindan.Contracts;
+using Jindan.Desktop.Contracts;
+namespace Jindan.Modules.Files;
+
+public sealed class Module : RecordModule
+{
+    public override string ModuleId => "files";
+    public override string DisplayName => "파일·자료 관리";
+    public override RecordSchema Schema => new("files", DisplayName, [new("title", "자료명", Required: true), new("assetId", "원본 자산 식별자", "readonly", true), new("sha256", "원본 SHA256", "readonly"), new("size", "바이트", "readonly"), new("category", "분류", Choices: ["일반", "보고서", "계측", "설계", "사진", "CAD"]), new("folderId", "로컬 폴더 식별자"), new("content", "설명", "multiline")]);
+    public override void Initialize(IWorkspaceServices services) { base.Initialize(services); services.Data.RegisterSchema(new("file-folders", "로컬 자료 폴더", [new("title", "폴더명", Required: true), new("parentId", "상위 폴더")], true)); }
+    public override IWorkspaceDocument CreateDocument(DocumentContext context) => new FileDocument(Services, Schema, context);
+}
+public sealed partial class FileDocument : RecordDocument
+{
+    public FileDocument(IWorkspaceServices services, RecordSchema schema, DocumentContext context) : base(services, schema, context) { AddAction("로컬 파일 가져오기", ImportAsync); AddAction("원본 내보내기", ExportAsync); AddAction("로컬 내용 보기", PreviewAsync); InitializeFolders(); }
+    public async Task<WorkRecord> ImportPathAsync(string file, CancellationToken ct = default) { if (IsDirty) throw new InvalidOperationException("변경 내용을 먼저 저장하세요."); if (Context.ProjectId is null) throw new InvalidOperationException("프로젝트를 선택하세요."); var asset = await Services.Assets.ImportAsync(Services.Actor, Context.ProjectId, file, ct); var current = await Services.Data.ListAsync(Services.Actor, new("files", Context.ProjectId), ct); var duplicate = current.FirstOrDefault(r => r.Fields.GetValueOrDefault("title") == asset.OriginalName && r.Fields.GetValueOrDefault("folderId", "") == currentFolder); if (duplicate is not null) { if (duplicate.Fields.GetValueOrDefault("assetId") == asset.Id) return duplicate; throw new InvalidOperationException("같은 이름의 다른 자료가 있습니다. 별도 이름의 사본으로 가져오세요."); } return await Services.Data.SaveAsync(Services.Actor, new(null, Schema.Kind, Context.ProjectId, 0, new() { { "title", asset.OriginalName }, { "assetId", asset.Id }, { "sha256", asset.Sha256 }, { "size", asset.Size.ToString() }, { "category", "일반" }, { "folderId", currentFolder } }), ct); }
+    private async Task ImportAsync() { using var dialog = new OpenFileDialog() { Multiselect = true, Title = "원본은 보존하고 새 저장소로 복사" }; if (dialog.ShowDialog(this) != DialogResult.OK) return; foreach (var file in dialog.FileNames) await ImportPathAsync(file); await RefreshAsync(); }
+    private async Task ExportAsync() { var id = Values.GetValueOrDefault("assetId"); if (string.IsNullOrWhiteSpace(id)) return; var asset = await Services.Assets.GetAsync(Services.Actor, id); using var d = new SaveFileDialog() { FileName = asset.OriginalName, InitialDirectory = Path.Combine(Services.DataRoot, "exports"), OverwritePrompt = true }; if (d.ShowDialog(this) == DialogResult.OK) await Services.Assets.ExportAsync(Services.Actor, id, d.FileName); }
+    private async Task PreviewAsync() { var id = Values.GetValueOrDefault("assetId"); if (string.IsNullOrWhiteSpace(id)) return; var asset = await Services.Assets.GetAsync(Services.Actor, id); var extension = Path.GetExtension(asset.OriginalName).ToLowerInvariant(); if (extension is ".dwg" or ".dxf") { await CadPreviewWindow.ShowAsync(Services, Context, asset); return; } if (extension is ".pdf" or ".hwpx" or ".hwp") { if (!Services.TryOpenDocument("report-studio", Context.ProjectId, asset.StoredPath)) Notice.Text = "보고서 스튜디오 모듈을 확인하세요."; return; } if (asset.Size > 1024 * 1024 || extension is not (".txt" or ".csv" or ".json" or ".xml")) { Notice.Text = "본문 미리보기는 1MB 이하 텍스트·CSV·JSON·XML에서 지원합니다."; return; } var text = await File.ReadAllTextAsync(asset.StoredPath); var view = new Form() { Text = asset.OriginalName, Width = 900, Height = 700 }; view.Controls.Add(new RichTextBox() { Dock = DockStyle.Fill, ReadOnly = true, Text = text, WordWrap = false }); view.Show(this); }
+}

@@ -1,0 +1,518 @@
+{
+  "schema": "jindan-final-handoff-files66/1",
+  "createdAt": "2026-11-05T01:36:54.535Z",
+  "root": "F:/jindan-dotnet",
+  "selectedReview": "artifacts/ready-for-review/final66-r4",
+  "scope": "These handoff documents, selected receipts/logs/captures and patch candidate bytes. The outer artifact manifest covers all3226 immutable payload files; SOURCE66 covers all332 new source/test/tool/doc files. Mutable synthetic workspace data are deliberately excluded. This manifest excludes its own bytes to avoid a circular hash.",
+  "files": [
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/RESULT.json",
+      "size": 10241,
+      "sha256": "564a20c2a688d06ea246bd02daffa0b30ba14384b87fe46b21780cc14c82b64e"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/architecture.log",
+      "size": 49,
+      "sha256": "07e91da6a94ad65babcd4add5d54401cd241e1df26b18f1fa7b9abb78425eb1e"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/build-release.log",
+      "size": 3105,
+      "sha256": "2a73da9d50e9d6b6b4bb3eef68cae1adc3d8949b527f98b5d54cdd17162cea9c"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/clean-release.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/domain.log",
+      "size": 1815,
+      "sha256": "f72cfee734f8ca8cb5927bc42c675e833d0d769f3309a42dead08804a3df9133"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/legacy-work-import.log",
+      "size": 1004,
+      "sha256": "17d0c817af6ef7c55228a0b78cbd9a9a3a25bbc4725c815e469b2a9861833059"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/module-package.log",
+      "size": 4556,
+      "sha256": "bb6787f47f84f375d87e3d1fac82e5e35f6f64c6e51130b5c813f8951fe27703"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/native-engine.log",
+      "size": 1153,
+      "sha256": "dbf611cc3b21c02f1199a44c546bdac26d60466aec29ae9419dc99516ee5b064"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/offline-node-regressions.log",
+      "size": 66882,
+      "sha256": "1c9a231cdac09d440a85de4ba41542ca8cd9044486590206b55897ddcff118ae"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/preservation.log",
+      "size": 87,
+      "sha256": "c0e7367932a9d92ee8cc2786155826539cae683ce532b249ec76cda387219e59"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/report-adapter.log",
+      "size": 2098,
+      "sha256": "298d1277efb058fe514c1cb9064a90185867bacf364899ef7b80277d684357d3"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/shared-js-native-goldens.log",
+      "size": 84,
+      "sha256": "85e993035aabdf2a275628590a0c69a5d656d1c0b0002477420ba2820d0a3aff"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T00-03-06-633Z/sync.log",
+      "size": 1857,
+      "sha256": "d0204ac1ec5ab472aefc4122f665b06280c76ee89de21a27237c2e1af592fc52"
+    },
+    {
+      "path": "artifacts/final-r4-actual-entry66.log",
+      "size": 1388,
+      "sha256": "405b30a9de5a7cbe92f1511bd29a104eebe3f6369b81c40f378ab31f7d8e7530"
+    },
+    {
+      "path": "artifacts/final-r4-actual-entry66/RESULT.json",
+      "size": 773,
+      "sha256": "46a836a0eac747d1eeae44fa1475e0f64823a556ce942b5491fb581f5699380f"
+    },
+    {
+      "path": "artifacts/final-r4-cad66.log",
+      "size": 2552,
+      "sha256": "2ebba3392a95f5f7e806b868dbec67dac9c0fbd482bda066282f945b314a4821"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-controlled-150-window.png",
+      "size": 57939,
+      "sha256": "4ae94402e64e5767b007c949f92bae481e0afffed40bbe65d734db233a0ca4bc"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-controlled-200-window.png",
+      "size": 59366,
+      "sha256": "44d2100c09958b51e1e42a0463976e861b57903cb0e37657582edec3f0662b62"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-initial-fit-window.png",
+      "size": 44295,
+      "sha256": "53825757731186abab1f0bcf35e3d1eb3e729c11c5831a782842cab353612883"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-native-__._DISPLAY1-window.png",
+      "size": 58160,
+      "sha256": "a71615186a70bd9bc9e5326555cf8131e8906ad378dd3d50b5334c81d305edba"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-native-__._DISPLAY2-window.png",
+      "size": 44628,
+      "sha256": "4a49fb18252a20a5c4caf6e77e9de7ed1aaccd96b52f4ce77ff8f4e598985782"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-post-dpi-state-__._DISPLAY1-window.png",
+      "size": 58023,
+      "sha256": "5fff595c0bbc30b6776eddb6f18808a4a4fd68e4407c0860f60e7932beb43a62"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/calendar-post-dpi-state-__._DISPLAY2-window.png",
+      "size": 44628,
+      "sha256": "4a49fb18252a20a5c4caf6e77e9de7ed1aaccd96b52f4ce77ff8f4e598985782"
+    },
+    {
+      "path": "artifacts/final-r4-calendar66-01/ui-result.json",
+      "size": 18057,
+      "sha256": "c9abb1cee26419e5837493dfaca6d715f9154a114cabe74aa3b32b7f91f74cf4"
+    },
+    {
+      "path": "artifacts/final-r4-completed-verification66.json",
+      "size": 868,
+      "sha256": "e5665b541e95ccba55f78c374742871956340236916c2bd3d6cee40532424e46"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/00-local-bootstrap-consent-rejected-window.png",
+      "size": 9534,
+      "sha256": "546696ca2b5bcb1052c7ebc4ded10a6e242b449ef7933fc94d1d0f4a3d379ec3"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/01-photo-native-preview-window.png",
+      "size": 43563,
+      "sha256": "e2a9d79aee0e169572c17f546339aae6525158a7bea7979bb563f6d408bf1e14"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/02-tabs-context-window.png",
+      "size": 38127,
+      "sha256": "6183a123034b5a3369e10530b02d35f5e71c051aa4b79f469063ca37438bdbbf"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/03-floating-inspector-window.png",
+      "size": 8459,
+      "sha256": "03290e973b42d024c5ad7d15d7d041f55c9523827cf69c05d0af603df4a8ebf6"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-controlled-scale-150-window.png",
+      "size": 49819,
+      "sha256": "a5a9404986f7a272588faea1706222da29855b4a6744cafbae1fc4a7ec1f0240"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-controlled-scale-200-window.png",
+      "size": 51372,
+      "sha256": "55d8896d2566d5e9d3a977d4013a6781aa02be4c896f014e1f4eccb86b933c75"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-native-floating-monitor-0-window.png",
+      "size": 9621,
+      "sha256": "d6eefcc9a089965b93f857ff8bf49867b32b89a126e49ea2c4d06645f0c5225f"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-native-floating-monitor-1-window.png",
+      "size": 7799,
+      "sha256": "a2ab3ba1209538c202bf29145e1e5e698df255001c303a0fe6ddbd2a8a7d9666"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-native-workbench-monitor-0-window.png",
+      "size": 51159,
+      "sha256": "9cd7a235c1cab2d9cf37e56d32aa7a3e767a2182261bf331224052816eaf0227"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/04-native-workbench-monitor-1-window.png",
+      "size": 37414,
+      "sha256": "55879bb634d6664f3aed47055bdeca6c4e8baebfafc348d0d76a8e9e68e85424"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/05-layout-persisted-window.png",
+      "size": 39200,
+      "sha256": "fc5ed87bfb09aee4cd6b740eb60c21b22d315776cbf48598bbf68a17b0eee58b"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/06-fresh-floating-window.png",
+      "size": 5563,
+      "sha256": "2988923f36121e53df319306aaacff5e41498c2dd5ad77d36a283038053272c7"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/06-fresh-process-photo-window.png",
+      "size": 25369,
+      "sha256": "531486047946a225ec9a64f808d2d39bef51fba5ea4c874e7c7732219cc241f6"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/08-missing-projects-native-window.png",
+      "size": 41800,
+      "sha256": "c1e732ce33c5fd3108ddf61c9e67d441517fc6fd3cd4a2512abbd4094de1951a"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/09-task-visible-calendar-headers-window.png",
+      "size": 45867,
+      "sha256": "349db1b4e310f25974ed54387976450afc698e6907a6cc7dce55c7f5e1dca669"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+      "size": 14592,
+      "sha256": "8964698ba0c3e10d79274976247959d94acf25050ca97010beaea6bf2f56fee0"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/ui-reopen-result.json",
+      "size": 6513,
+      "sha256": "9daedd4f31e399c1b61e795a203522cca6af66f7fbd8b924505a6e46d7b6da2d"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-01/ui-result.json",
+      "size": 29761,
+      "sha256": "50196ecf07fd029fa02da4771f8b6b8344bbcae8e6af0f4b78597fa93f24de9d"
+    },
+    {
+      "path": "artifacts/final-r4-desktop-ui66-build.log",
+      "size": 432,
+      "sha256": "150f59fadb2c01427a876b87a2fd073f609d3dd79b2a8627fb96f18673c94578"
+    },
+    {
+      "path": "artifacts/final-r4-healthcheck66.json",
+      "size": 655,
+      "sha256": "a3ea1daba38704b319844a5099d12daa91f9b9b7ed61bc3c481c844417b6e2e9"
+    },
+    {
+      "path": "artifacts/final-r4-healthcheck66.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66.log",
+      "size": 2124,
+      "sha256": "ba358358900fa34af7c63fc91062db635ba353b3ad1142f9e255e550d4817426"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66/RESULT.json",
+      "size": 1963,
+      "sha256": "5ad908c63f80b670c9270e2e11384d1a495b24b91ced71fca41322e13b01aead"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66/board-native-window.png",
+      "size": 16508,
+      "sha256": "42904604ebcecd31c32818445afa2d61cddfda0fd9ede520e7cd17e44f680a88"
+    },
+    {
+      "path": "artifacts/final-r4-local-modules66/files-tiles-native-window.png",
+      "size": 18319,
+      "sha256": "d792503a07cca0d7b675b97a6807eb7655309acbddfba5f773db2e73a5b90005"
+    },
+    {
+      "path": "artifacts/final-r4-localmodules-build.log",
+      "size": 488,
+      "sha256": "90ab9c086bc949482c52faf75373d153c481240255f0f0476ebff7410e6e6523"
+    },
+    {
+      "path": "artifacts/final-r4-patch-build.log",
+      "size": 488,
+      "sha256": "6b86cd9a748c09f6b401afbf688152ab45f7a980e4d77a23f975cabaa5ce102f"
+    },
+    {
+      "path": "artifacts/final-r4-photo-thumbnails66-01/07-visible-row-photo-thumbnails-window.png",
+      "size": 37371,
+      "sha256": "93db611ec714b6ad55172b1628e366c4f31567ac07301c8b33ca5af4e4247085"
+    },
+    {
+      "path": "artifacts/final-r4-photo-thumbnails66-01/08-photo-visible-headers-window.png",
+      "size": 37166,
+      "sha256": "16362f76e8c7b75f0077d46a6d4d8c275f786d7aef3a450b4ebcd34908afd552"
+    },
+    {
+      "path": "artifacts/final-r4-photo-thumbnails66-01/ui-result.json",
+      "size": 8343,
+      "sha256": "a5740f7ef175f4b95da6756eac035dc07d731542a0938e3681b5b1ead2489ab7"
+    },
+    {
+      "path": "artifacts/final-r4-product-patch66.log",
+      "size": 2704,
+      "sha256": "9b2826795d17ae2ae9f48f30107de3b129c0aaf1b3b075d0ccf3d6d819fc6b57"
+    },
+    {
+      "path": "artifacts/final-r4-source-map66.json",
+      "size": 322,
+      "sha256": "6df5f41b600d213446f9b4dbaa5b97f2820693418203d90baa869a6da471d020"
+    },
+    {
+      "path": "artifacts/fixed-engine66.zip",
+      "size": 469443,
+      "sha256": "85f53f0444ae6b9d4a1ee03e8081debbd8821afdfd650d8ef8162d497ed05334"
+    },
+    {
+      "path": "artifacts/fixed-engine66/MANIFEST.json",
+      "size": 7143,
+      "sha256": "6ea41111f4a03d1733af06dded71ea932cb4afdedcb429604c28cfa33dc034ad"
+    },
+    {
+      "path": "artifacts/packaging66/FINAL_R4_VERIFICATION.json",
+      "size": 10020,
+      "sha256": "046c22e35a97ea93530c145468880cc659ba27d6cc263af88b64e7754d6889d6"
+    },
+    {
+      "path": "artifacts/patches66/projects-v2-final66-r4/Jindan.Core.dll",
+      "size": 68608,
+      "sha256": "b0c11998a20fff6078eea8c56accfd5ab07473a3dac2fda830c838c6c35cb9c9"
+    },
+    {
+      "path": "artifacts/patches66/projects-v2-final66-r4/Jindan.Modules.Projects.dll",
+      "size": 13824,
+      "sha256": "ada2db98eaa7be82fded638e2dff0d054996fed0723e6da943d7425a04614954"
+    },
+    {
+      "path": "artifacts/patches66/projects-v2-final66-r4/module.json",
+      "size": 615,
+      "sha256": "1918cf1e00f255e9801471b0e333ad4ceef0903dd35c6ca910ca42b8c02ed541"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/COPY_RESULT.json",
+      "size": 728627,
+      "sha256": "5a49d77f42ae103d33ca823f88040f088adb63819b500ca009e11478128e209c"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/RESULT.json",
+      "size": 503606,
+      "sha256": "daa4f8ede0c716986d6099ecfe0dad70f80b5c6748a6650a7b231dc56eec6739"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v1-initial-ui.log",
+      "size": 211,
+      "sha256": "281c8bcab4d25601478f16c3404f88b6cbbf1afcf19eb213c1cd358161e9fccb"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v1-initial.png",
+      "size": 36418,
+      "sha256": "932933b44635fb66e6719a88897eedfc12fe2062df72a9a155fc731d3d0f0d2e"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v1-restored-ui.log",
+      "size": 211,
+      "sha256": "281c8bcab4d25601478f16c3404f88b6cbbf1afcf19eb213c1cd358161e9fccb"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v1-restored.png",
+      "size": 35848,
+      "sha256": "75d94ad1d1ecf8a3caf36c97364c414cd071311d0b0add91f578c0debbb218b8"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v2-restored-ui.log",
+      "size": 257,
+      "sha256": "dde4366f83e708470a1d679e6390b7dafbda4a018f19f2407939263fae00ce44"
+    },
+    {
+      "path": "artifacts/product-patch66-r4/run-r4/v2-restored.png",
+      "size": 35679,
+      "sha256": "2336cae1ae2844faf0aa8490905b584055fabe91a7c90f49ce353503f34d4501"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r4/PREPARATION_RESULT.json",
+      "size": 700,
+      "sha256": "1e9e9d1a2a89b2831e9b0e74c2497ce2c1eeb7c7a6f686493d226e3aa7af0494"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r4/artifact-manifest.json",
+      "size": 730323,
+      "sha256": "8b816b99814d21779f85a843c3c2f991856759d2ce144957cd1b154887ab6fb2"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r4/reusable-engine/native/MANIFEST.json",
+      "size": 3352,
+      "sha256": "e67d33c18292f49d8d1fd24af5700ee3e40612bf969fece9933dae1cc6962e8c"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r4/source-checkpoint.json",
+      "size": 32907,
+      "sha256": "bea660cb04a49cbc671054c7c5ea26123469310cda2a8033f91fd26798274e58"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4.log",
+      "size": 8350,
+      "sha256": "8152c19d92e3385f92a7d065e445f94076f34873427c8a99e938cc3189bc6ba9"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/RESULT.json",
+      "size": 2851,
+      "sha256": "55905e34883e612e09ec4c7a682a0ca6e3edcbda16acf047a0bd9300854d921d"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/report-flow-native-controls.png",
+      "size": 87650,
+      "sha256": "1127ddef46d84b76b8a4c8e5a183c9054c7f3e768eb0737b1bbc1f252ac2f0a6"
+    },
+    {
+      "path": "docs/feature-parity66.md",
+      "size": 13231,
+      "sha256": "eaaa0eba808c33bf047b315554a35f5ee59a2bbf4084d9e920bed5c187f28beb"
+    },
+    {
+      "path": "docs/preservation-contract66.md",
+      "size": 3659,
+      "sha256": "77cba7ada1f675f1ba55cce9c0b606897c2977635de06106e3807090fccb82b8"
+    },
+    {
+      "path": "docs/report-parity66.md",
+      "size": 7021,
+      "sha256": "49bf150e5df882fd0ee8361b87496dd51aa6fa1a5c5dbbbc00c69c50e564515b"
+    },
+    {
+      "path": "docs/run-review66.md",
+      "size": 11881,
+      "sha256": "1f4eb9243a42e167e6e62dd898c5c9b7491b1aafb5cc877b9499caca4eb7b093"
+    },
+    {
+      "path": "docs/sdk-first-run-observation66.md",
+      "size": 1006,
+      "sha256": "30771228e777b9e1a7aa263ea72b09343d46c41d131fe1e053fa49c9bc5aea99"
+    },
+    {
+      "path": "handoff/FINAL66.md",
+      "size": 12157,
+      "sha256": "85ae9d8ea076aaddd43f5e4ceedd972e0976e2fb4698ea00347c9551450ac21f"
+    },
+    {
+      "path": "handoff/PRESERVATION66.json",
+      "size": 1394,
+      "sha256": "cc09873bc29a1a8ddffdd1cf2ee2a45cc76f45a8e539e1b4438acbac1fae3c80"
+    },
+    {
+      "path": "handoff/SELF_REVIEW66.json",
+      "size": 4839,
+      "sha256": "7e1241dcb77e600013e1aa4dc4d4f9435852532aa8acdc8bb7cf8499fec28c51"
+    },
+    {
+      "path": "handoff/SOURCE66.json",
+      "size": 60422,
+      "sha256": "abb7fb5b82809fc7377b77cab5c7921d6230cd404faaa9f72f084b19c06a5c46"
+    },
+    {
+      "path": "handoff/STATUS66.json",
+      "size": 30554,
+      "sha256": "aa4bd6186008cb6f6c19806b7b7ea95706446b926af28eb4906d18953ba910b3"
+    },
+    {
+      "path": "handoff/SUPERVISOR_MESSAGE66.txt",
+      "size": 1280,
+      "sha256": "9166d51de41ec26ab0035b54b73e12d1e12b4cdf97f8dc203b60297882fa979f"
+    },
+    {
+      "path": "handoff/SUPERVISOR_REPORT_CHANNEL66.md",
+      "size": 3512,
+      "sha256": "78e6b3e74afb77d7873cfc94abf134690d4a3674d68ed18f68ed041c1937632b"
+    },
+    {
+      "path": "handoff/VALIDATION66.json",
+      "size": 17543,
+      "sha256": "8ae3d645de28b56eb3a22217d8276e84e558a4b8e5912177e709bf440712cfe1"
+    },
+    {
+      "path": "handoff/VISUAL66.json",
+      "size": 2624,
+      "sha256": "e005ceab682ac68ee53aa6b7c88b99e8d4e1163fe7a336ad3756fcb2c05e530e"
+    },
+    {
+      "path": "migration/baseline66.json",
+      "size": 119620,
+      "sha256": "9d5ed2b3ec9c5b1bd3166db37cd20a382cd128d15ac6ec2e2e17e1b155aff102"
+    },
+    {
+      "path": "migration/feature-inventory66.json",
+      "size": 63648,
+      "sha256": "ea60143fbe8ce2e2be64575a64d0ff688f89e8761af6adcd32c1995286bbc73b"
+    },
+    {
+      "path": "migration/parity66.json",
+      "size": 67142,
+      "sha256": "93ff5c23b906508994bc4a5256d42d3fb04fa1afe4ff5b8d6db09d696037ee6a"
+    },
+    {
+      "path": "migration/report-parity66.json",
+      "size": 38274,
+      "sha256": "96e641dd99e1fb75e262a59d6cdb48a8779150773e06eccb4598d999fa5f4dc4"
+    },
+    {
+      "path": "migration/source-map.json",
+      "size": 74772,
+      "sha256": "95ffb131cced4cc270f0fd5397904b80a773db9c535637ef17db65afa529b1a0"
+    },
+    {
+      "path": "handoff/channel-reconnect66-20261105-01/STATUS66.before.json",
+      "size": 29149,
+      "sha256": "f587c71c68e38b822dc37148c36c2726631fc404512d81657437cffc53b1e72f"
+    },
+    {
+      "path": "handoff/channel-reconnect66-20261105-01/FILES66.before.json",
+      "size": 18765,
+      "sha256": "a017bb4d7d92e0e3c53416d330bee1b17681e182075263bb0b2ea205c1a5229b"
+    },
+    {
+      "path": "handoff/channel-reconnect66-20261105-01/RESULT.json",
+      "size": 1223,
+      "sha256": "936aac566cee0983e0832dbabcbc52bf0a7c2cba3efa0c9c2de2633804a0bb7b"
+    }
+  ],
+  "sourceFilesReverified": 332,
+  "sourceAggregateSha256": "2b656876dd03954c0c821d4399ae95dcaec6286d16e5682c063979e65618bbae",
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "channelOnlyRevision": {
+    "previousManifest": "handoff/channel-reconnect66-20261105-01/FILES66.before.json",
+    "previousStatus": "handoff/channel-reconnect66-20261105-01/STATUS66.before.json",
+    "scope": "Only mutable report channel status and additive reconnect evidence changed; frozen source/product unchanged."
+  }
+}

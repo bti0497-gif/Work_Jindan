@@ -1,0 +1,576 @@
+{
+  "schema": "jindan-handoff-files69/1",
+  "createdAt": "2026-11-05T02:56:13.338Z",
+  "selectedPackage": "artifacts/ready-for-review/final66-r6",
+  "scope": "Final69 immutable handoff, selected receipt/log/capture/binding references. Full distribution via artifact-manifest; complete source via SOURCE69. Excludes this manifest itself, mutable STATUS66 and uncited scratch/test-data trees.",
+  "files": [
+    {
+      "path": "artifacts/checks66/2026-11-05T02-19-00-861Z/RESULT.json",
+      "size": 9325,
+      "sha256": "466ac8f17daf760fa2cf8a4fea04a17ebc17851d6f94b67ac273f676347d99e5"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-19-00-861Z/report-adapter.log",
+      "size": 2255,
+      "sha256": "2342411c84aedebf41d9f84a983956ff968cf2e75dacb7fdb43468aef8483d7e"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+      "size": 10241,
+      "sha256": "3e8045cf65dc23400707742aed52cac9dc37816aeb7c0698a71090c77db23266"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/architecture.log",
+      "size": 49,
+      "sha256": "07e91da6a94ad65babcd4add5d54401cd241e1df26b18f1fa7b9abb78425eb1e"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/build-release.log",
+      "size": 3590,
+      "sha256": "3a20cebfff5ed69444af7a62056df40dd02c453042f8aa4cecea86248658f39b"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/clean-release.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/domain.log",
+      "size": 1815,
+      "sha256": "05e7a40324b841cd29abaac603540624e661bee3865be285105e24a2301c8728"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/legacy-work-import.log",
+      "size": 1004,
+      "sha256": "557225213f7499b98d6ff622145ef42c2a1ee889f727fc912cbeeac669c333f0"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/module-package.log",
+      "size": 8026,
+      "sha256": "50e987d1a3b8cc631e273c19ce246ca92f26c43fb7cb82cea2641cb778543e11"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/native-engine.log",
+      "size": 1153,
+      "sha256": "dbf611cc3b21c02f1199a44c546bdac26d60466aec29ae9419dc99516ee5b064"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/offline-node-regressions.log",
+      "size": 66889,
+      "sha256": "4cc95b2a41df3d26bc863da784d77fbb32169734d871f88191eaa8f1765f1d68"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/preservation.log",
+      "size": 87,
+      "sha256": "c0e7367932a9d92ee8cc2786155826539cae683ce532b249ec76cda387219e59"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/report-adapter.log",
+      "size": 2326,
+      "sha256": "ae6c778401c2d15cd5a3ceb74ab5913ba8219b97bc0ae11a6d1a72698f4c3c4e"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/shared-js-native-goldens.log",
+      "size": 84,
+      "sha256": "85e993035aabdf2a275628590a0c69a5d656d1c0b0002477420ba2820d0a3aff"
+    },
+    {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/sync.log",
+      "size": 1857,
+      "sha256": "3ace6b9a089bb51ce9fab216e4cb060bb34a86d5c79fdff534a867f0e0fa3ff7"
+    },
+    {
+      "path": "artifacts/final-r5-desktop-ui66-01/ui-result.json",
+      "size": 31660,
+      "sha256": "f41d7351e80772541115a15e4809bf29799bbf7275a4561b36eb0098cfa7c5fa"
+    },
+    {
+      "path": "artifacts/final-r6-actual-entry66.COMMAND.json",
+      "size": 1135,
+      "sha256": "fd1069a493f454433418c40962153c26a8878c98d39ad2acf1de41f7b64ddfc9"
+    },
+    {
+      "path": "artifacts/final-r6-actual-entry66/RESULT.json",
+      "size": 772,
+      "sha256": "94735afff7bc735174897732c68443234923b0fcfbd489628829c005ab7d35b8"
+    },
+    {
+      "path": "artifacts/final-r6-bundled69.json",
+      "size": 1425,
+      "sha256": "bfe8cfa6a0527778607c62ed2f58f8d2e53da0ca064ec3391ba646b1219f753e"
+    },
+    {
+      "path": "artifacts/final-r6-cad69.log",
+      "size": 1239,
+      "sha256": "93ed47ae0a96519e82b2478b28fd11402770abe02c0808cd0c9b2c7da2a60e53"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-controlled-150-window.png",
+      "size": 63577,
+      "sha256": "4307097349da58ae432bfac52916c0cb9740ca3a272d152d5e985348800de6d5"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-controlled-200-window.png",
+      "size": 62070,
+      "sha256": "726539f332c3475c410b992952e274c8612100eed9307fd4972ddf0c7153ba6d"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-initial-fit-window.png",
+      "size": 50584,
+      "sha256": "1e84c12f5afd85dc449734e490468b15bd31d32152ada4d74979960718e7a1f9"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-native-__._DISPLAY1-window.png",
+      "size": 65724,
+      "sha256": "0d1269590f9c22bd3d316952d7c708fcc0590df8ea6929cb58eae7673da48161"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-native-__._DISPLAY2-window.png",
+      "size": 51200,
+      "sha256": "5b1660cbe242b8904eadaec7b6dd271e5b28bec6f0b1be6de5ee24644b45461a"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-post-dpi-state-__._DISPLAY1-window.png",
+      "size": 65672,
+      "sha256": "c6afbedbdb278813045da490b7877e21e8f3affd1a606b99b47de111fd1eec98"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-post-dpi-state-__._DISPLAY2-window.png",
+      "size": 51200,
+      "sha256": "5b1660cbe242b8904eadaec7b6dd271e5b28bec6f0b1be6de5ee24644b45461a"
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/ui-result.json",
+      "size": 18059,
+      "sha256": "373e8665117da099ff5daa11eb152195906ab9e5fc02bb84432605f821692c37"
+    },
+    {
+      "path": "artifacts/final-r6-completed-verification69-02.json",
+      "size": 868,
+      "sha256": "5dbd1485221cc9866bee7f851eb01f7e78578b477f6012f7ab26968d63209dda"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/00-local-bootstrap-consent-rejected-window.png",
+      "size": 9534,
+      "sha256": "546696ca2b5bcb1052c7ebc4ded10a6e242b449ef7933fc94d1d0f4a3d379ec3"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/01-photo-native-preview-window.png",
+      "size": 44554,
+      "sha256": "efb2b1a39e4913c4be4a74526d26a3be231854ae9fbec60f45181bd0034b347d"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/02-tabs-context-window.png",
+      "size": 39332,
+      "sha256": "68ea350868e8b798b148e78c9c2edf6d9bddfc43bdcd82d91ff7596d9dd9a553"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/03-floating-inspector-window.png",
+      "size": 8459,
+      "sha256": "03290e973b42d024c5ad7d15d7d041f55c9523827cf69c05d0af603df4a8ebf6"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-controlled-scale-150-window.png",
+      "size": 50152,
+      "sha256": "0a66f76c9022a2421746c473c43bb2809701996dad9cbb1c6c57b6306408bb35"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-controlled-scale-200-window.png",
+      "size": 51787,
+      "sha256": "6702d9be02064d35c2efb96fe30faf31cfc4ea4c44c691d7cca10f061280e481"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-native-floating-monitor-0-window.png",
+      "size": 9621,
+      "sha256": "d6eefcc9a089965b93f857ff8bf49867b32b89a126e49ea2c4d06645f0c5225f"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-native-floating-monitor-1-window.png",
+      "size": 7799,
+      "sha256": "a2ab3ba1209538c202bf29145e1e5e698df255001c303a0fe6ddbd2a8a7d9666"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-native-workbench-monitor-0-window.png",
+      "size": 51452,
+      "sha256": "e9ea5a51f54bce468c872ef819fee109f3cb92dbad472d155d6377a251ff7c64"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/04-native-workbench-monitor-1-window.png",
+      "size": 38607,
+      "sha256": "7677738e60b26137b9a3c3689f27d6095a5ce7fbfa1d982c575bde56f7090296"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/05-layout-persisted-window.png",
+      "size": 40130,
+      "sha256": "c7e7301a5e96d488f9bebd0aa46becd5b2672027f87b2a6eba13b030ac09555d"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/06-fresh-floating-window.png",
+      "size": 7407,
+      "sha256": "c11fe88021f63cd78bb25139eb2c823fb595306b42fc20c883d4516b3799d604"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/06-fresh-process-photo-window.png",
+      "size": 33086,
+      "sha256": "5a01505181e86c91c73d44dac6846e9342061f55b306d019f9d255e26303d22a"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/08-missing-projects-native-window.png",
+      "size": 42127,
+      "sha256": "cd9325088c8258dc2817f1d867671b9c9094248614e11d89f00ab23ad0d9508b"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/09-task-visible-calendar-headers-window.png",
+      "size": 45988,
+      "sha256": "a4299786d8090c8e8dc5493387344c05944e71269df10bb7f281a68a54cb8b2e"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+      "size": 20690,
+      "sha256": "c525a53bea138b9a4c2935be9c7f950e71f893b411af354a9d7cad9b848b9a10"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-reopen-result.json",
+      "size": 6511,
+      "sha256": "1a7be3548a41fa490889238780366b6f6a3ea751c8fd2bb9a74124a131be5362"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-result.json",
+      "size": 29913,
+      "sha256": "24fad30dc07019ecf8f76e1e6292132b094cc29d4beee51364a7b1e5dcaa0c21"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-build.log",
+      "size": 432,
+      "sha256": "4fb3c2758b2589f479398d89a24a306774b9f7a9313a728ec8ffbea238c613cc"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-build/Jindan.Desktop.UiTests.deps.json",
+      "size": 3518,
+      "sha256": "65b30b9604d7668d312ef509ce726840fd3665c55c35e69873b6b60583fbc71a"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-build/Jindan.Desktop.UiTests.dll",
+      "size": 259072,
+      "sha256": "94c6203fd22ed0d055b5afdf4ce4980530356388f3464f28d17e98f1febef2ee"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-build/Jindan.Desktop.UiTests.exe",
+      "size": 162304,
+      "sha256": "873b2271d2b7ad5fdeb395c76b06268409f345ffba5f6ee641dfab986798e51f"
+    },
+    {
+      "path": "artifacts/final-r6-desktop-ui66-build/Jindan.Desktop.UiTests.runtimeconfig.json",
+      "size": 519,
+      "sha256": "96bc2946dff8790400d652ec7f8de7bb043e954980d59470c112788b68a1fbd3"
+    },
+    {
+      "path": "artifacts/final-r6-healthcheck69.json",
+      "size": 864,
+      "sha256": "6cf9089dba1302667193a131a496ccbe3e106b3bdee8ad131ba8449c657056c5"
+    },
+    {
+      "path": "artifacts/final-r6-local-build02/Jindan.LocalModules.Tests.dll",
+      "size": 58880,
+      "sha256": "bddc26d186759001490e5ba411289dc87ae86911155230181e256687b570abec"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-02/RESULT.json",
+      "size": 3225,
+      "sha256": "17f877a2d86a774043afee4f1dbe77db39e4cf139bb8eaefd44728c4addcb3c1"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03.COMMAND.json",
+      "size": 1186,
+      "sha256": "a9b66a2628307ab163a2f6bf1b2c6cc118074cd9bf4feaed4e9c74044abdaf33"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03/RESULT.json",
+      "size": 1963,
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03/board-native-window.png",
+      "size": 21969,
+      "sha256": "b1658e2f46d59b275ed93d7b9b3137ea44a40b723dd63f3985c4c8ea84e98f2c"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03/files-list-native-window.png",
+      "size": 27920,
+      "sha256": "e4d34b7963170cfbb4c5bfe924dee5293190b304745429e2ee2accdd9f636881"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66/RESULT.json",
+      "size": 1963,
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e"
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66/files-list-native-window.png",
+      "size": 4695,
+      "sha256": "397d2d5fb0fd5a5f14bb04bf6021197620cb6d3183125f51720d9594ea487c7a"
+    },
+    {
+      "path": "artifacts/final-r6-photo-thumbnails66-01/07-visible-row-photo-thumbnails-window.png",
+      "size": 50288,
+      "sha256": "8cdccb2ad2be07b1cc1e0bb3d7f549c814c4be1efef165e74fd7fe122cb74ad7"
+    },
+    {
+      "path": "artifacts/final-r6-photo-thumbnails66-01/08-photo-visible-headers-window.png",
+      "size": 50124,
+      "sha256": "805303d8fe9d573e266994a68de28f4042b55c63f6e63fe557af5bf1c0321421"
+    },
+    {
+      "path": "artifacts/final-r6-photo-thumbnails66-01/ui-result.json",
+      "size": 8343,
+      "sha256": "3bcf507741e869467054ef5b825512023dec7f4e93af0036302f8b9d83623725"
+    },
+    {
+      "path": "artifacts/final-r6-row-order69-ui01/row-order-245f7868e7d7448db99e8e2f42c349c4-window.png",
+      "size": 43422,
+      "sha256": "6015f5923eb3c6ea3e1a87c875ef5d5e752e87b3966b9cd3867f0095a07df29c"
+    },
+    {
+      "path": "artifacts/final-r6-row-order69-ui01/row-order-5e9b99b883e64d8982302de0504fa06d-window.png",
+      "size": 43438,
+      "sha256": "359f0f1170f97e74c15f58e530456028a55bfa12b28d512956b42359b6ccf3e2"
+    },
+    {
+      "path": "artifacts/final-r6-row-order69-ui01/ui-result.json",
+      "size": 12814,
+      "sha256": "d6272f7fbdf4187c2a602e46b640f57aabcea2361792d2f2845d6ae8cc8504d0"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-first-single-photo-bound-window.png",
+      "size": 47623,
+      "sha256": "3548335fb302280b5daf1254a644381552e2055769a76184a49ed76d1e8e2c29"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-fresh-photo-bound-window.png",
+      "size": 47718,
+      "sha256": "f811915c014afa2dcb17ee2fc9fca62271a9b95ed8c5c37e549bcb7ad33ec792"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-project-bar-before-save-window.png",
+      "size": 40771,
+      "sha256": "aaf87d310af2278f20755c099a21d20789db98d53214964678eafaf6a677cee2"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-readable-report-project-title-window.png",
+      "size": 60356,
+      "sha256": "6d60e1f161d6c4b954b766073d0a68caecdda4903677a72841a26089fb085d7a"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-reopen-result.json",
+      "size": 5113,
+      "sha256": "50a88dec364cfc7a74787d6130266967f08b5ca2440ac3c0f37bd380f6a11d1c"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-visible-project-bar-window.png",
+      "size": 40313,
+      "sha256": "6a3d215fbf171dc85008dcd4cb4d746bfd170107bd4571714e692455b587853c"
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/ui-result.json",
+      "size": 9801,
+      "sha256": "a22d1d1680965cbb4433a42f724b41ed4393775d9bc2d8a6a1d4102843fbc88f"
+    },
+    {
+      "path": "artifacts/package-tests/20261105T023741-c9b7c99ffa5f4f19a4a2084da3e7b05f/RESULT.json",
+      "size": 11576,
+      "sha256": "2ee366f567a368e40e67ca7b1f60b359a956bec5a3b84e368ee660148855e7d2"
+    },
+    {
+      "path": "artifacts/packaging66/FINAL_R6_VERIFICATION.json",
+      "size": 8588,
+      "sha256": "4e4427e2d0308b7a994701d74367f473b0a5e260294899a501a39e895202df59"
+    },
+    {
+      "path": "artifacts/packaging66/R6_CURRENT_VERIFICATION.json",
+      "size": 868,
+      "sha256": "a521c5effab3c1342deae62295c20c623effebf06d822f18813d9114b72c02b3"
+    },
+    {
+      "path": "artifacts/packaging66/R6_PREPACK_CLEAN.json",
+      "size": 726,
+      "sha256": "744bd9c133275564e593817e96791779140e2ac0afd4b666738f3c5d09a6cd2b"
+    },
+    {
+      "path": "artifacts/packaging66/R6_PREPACK_CLEAN.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/product-patch66-r6/run-r6.COMMAND.json",
+      "size": 1199,
+      "sha256": "3b17a5b5ce3f9066ea1c948c482bd2262edc1a1c898a7017f6ad9fee32b252ba"
+    },
+    {
+      "path": "artifacts/product-patch66-r6/run-r6/RESULT.json",
+      "size": 506197,
+      "sha256": "f1a91780ec0a1d22025810b0f54af73462e850e8f8eee4f5e0d919c8895650d0"
+    },
+    {
+      "path": "artifacts/product-patch66-r6/run-r6/v2-restored.png",
+      "size": 42880,
+      "sha256": "672b0f5f326c756817a2cf7307ffcab838f6f829404ed273a419c99ddd74cdcd"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r6/application/.runtime/dotnet.exe",
+      "size": 167208,
+      "sha256": "1e881ec1786c31ba712d052258b4ad4202ac155df5965794030037878abb822f"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r6/artifact-manifest.json",
+      "size": 730324,
+      "sha256": "18ee3ca05967d16315d7d5648b744628f1773d00b1142babbd0e64409711c69d"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r6/reusable-engine/native/MANIFEST.json",
+      "size": 3352,
+      "sha256": "27ae6eec5b7fc9543910fe902926d0831511083d5bccc8f9a204650fd6295dbe"
+    },
+    {
+      "path": "artifacts/ready-for-review/final66-r6/source-checkpoint.json",
+      "size": 33251,
+      "sha256": "6ad2e9573ee5450a1ac4edfee244e9cbc38f03b6ea56603953ffcf77f7e4b20f"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/RESULT.json",
+      "size": 2851,
+      "sha256": "b7d4cf88f44466ebd47e7cf0b4427537a55e1126f2f56189d970aff4bccfd34c"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-flow-native-controls.png",
+      "size": 87664,
+      "sha256": "9afaa499f6233f7d3efc7a83ed6891051e374fcb59f87856ea58bf7d712f5a24"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-preview-native-controls.png",
+      "size": 55082,
+      "sha256": "baedaa391f17c7d1eac1a8e8c1da1905fb0c9202b4561e2426e6e5e2b94b7794"
+    },
+    {
+      "path": "artifacts/review69-adapter-race-final01/DISPOSE_RACE69.json",
+      "size": 1018,
+      "sha256": "ffb5c6c98c7372694ac0a35a8a2c15a8e983fbfd37e8e46a3a2ecdcebc67cef0"
+    },
+    {
+      "path": "artifacts/review69-adapter-race-final01/RESULT.json",
+      "size": 1630,
+      "sha256": "b142750583ecbddef1f1f40daa2bb877693bc7a741a2e5b0eee2e85e12aac763"
+    },
+    {
+      "path": "artifacts/review69-legacy-ab01/RESULT.json",
+      "size": 4849,
+      "sha256": "f29c37c64b88e544cc9415004956a03d74b786836d6d86ef13b73ba97a66851f"
+    },
+    {
+      "path": "artifacts/review69-r4-before-ui01/R4_BEFORE_HANDOFF.json",
+      "size": 4373,
+      "sha256": "895df229309c991c8251036bd0809b2cbab6ae7f2b395cae2444ec1f0eb6145a"
+    },
+    {
+      "path": "artifacts/review69-r5-snapshot-binding01.json",
+      "size": 2550,
+      "sha256": "002058f74e7bfb19c9ae642eec54e6127f1dcfd273f0d98fec98c82d7cdbf0d7"
+    },
+    {
+      "path": "artifacts/review69-r6-snapshot-tests01/RESULT.json",
+      "size": 1993,
+      "sha256": "8e701dc7a1cf1c4b7b4a66406d3a6d362a0e65b1321a534222ada2911cd2fa13"
+    },
+    {
+      "path": "artifacts/review69-r6-snapshot-tests01/build.log",
+      "size": 333,
+      "sha256": "2721193598de17278c6cb9e8fca2c05af3410ec2846610d0285f67d3ee5d4187"
+    },
+    {
+      "path": "artifacts/review69-r6-snapshot-tests01/harness/Jindan.Package.Tests.dll",
+      "size": 127488,
+      "sha256": "e406c9e1bd1ca1a474ff577433cf5b633a958d87d573341a9b38846d55f619f7"
+    },
+    {
+      "path": "artifacts/review69-r6-snapshot-tests01/snapshot-regressions.log",
+      "size": 8122,
+      "sha256": "1636c9728877f73775ad859cf82f230534f7a41a4954441a222dba5f54a32c6a"
+    },
+    {
+      "path": "artifacts/review69-row-fixed-main01/PERSISTED_PROOF.json",
+      "size": 416,
+      "sha256": "32f24e5c01cfa46175a9e0dfeef90b8b7ad1e27c4933e640616b2f13558878ee"
+    },
+    {
+      "path": "artifacts/review69-row-fixed-main01/ROW_BINDING_HANDOFF.json",
+      "size": 4566,
+      "sha256": "45d672ce02048929f3306b881c27e8a47ea944cbda808279ac669840692b1120"
+    },
+    {
+      "path": "artifacts/review69-row-fixed-ui01/ui-result.json",
+      "size": 9525,
+      "sha256": "92a242bd00f1828d1f97c5bf7fd5a5609377103f6f49adcdc7760fb100fa553b"
+    },
+    {
+      "path": "artifacts/review69-row-r5-ui02/ui-result.json",
+      "size": 7121,
+      "sha256": "365d018d0956db1ab73eab5759b836c35a77724d0ce0c613ab6925345fa2e4a0"
+    },
+    {
+      "path": "artifacts/review69-selection-ui04/SELECTION69_HANDOFF.json",
+      "size": 9125,
+      "sha256": "37ff9ea002c8f04a093094799538bb3fc2ab9b3afdd7bbdb66fcb2d0c257977d"
+    },
+    {
+      "path": "handoff/FINAL69.md",
+      "size": 13464,
+      "sha256": "93d1662308803eb20f4298b1b77a8e27c0d08d7647b9e65bb45044926f95a06a"
+    },
+    {
+      "path": "handoff/PRESERVATION69.json",
+      "size": 1394,
+      "sha256": "f0e8af329e077fcb135e20b8610b953cecad41ff6e5c0924bb38f2bf35e83e49"
+    },
+    {
+      "path": "handoff/SELF_REVIEW69.json",
+      "size": 20047,
+      "sha256": "d6de89c49326183406ea9ab1537430b35b28a8560847047d1b45dbcd972f2d22"
+    },
+    {
+      "path": "handoff/SOURCE69.json",
+      "size": 63230,
+      "sha256": "5cce2f28e7703ad146483d629f33c921f8eb3c7020a9d47bc50cf8fbe3f92ca4"
+    },
+    {
+      "path": "handoff/STATUS69.json",
+      "size": 45480,
+      "sha256": "9b53170da56d1ecc46e65aecc02c9302e895c25119cec058d439ea24b2bb9497"
+    },
+    {
+      "path": "handoff/SUPERVISOR_MESSAGE69.txt",
+      "size": 2066,
+      "sha256": "6abcc26942a8c441acd70ad1ad9f26538f3b2698e0d8d32296efa9851913ef3c"
+    },
+    {
+      "path": "handoff/VALIDATION69.json",
+      "size": 26937,
+      "sha256": "82ed7fc4d3323808af3ca41e77c9d61d4314f4b663b4da9a25fb68785ace964c"
+    },
+    {
+      "path": "handoff/VISUAL69.json",
+      "size": 6350,
+      "sha256": "1516ed11cb100d729378e78d56428179a16585ed8398c175d67247ee91de8ce4"
+    },
+    {
+      "path": "handoff/review69/ACK.json",
+      "size": 631,
+      "sha256": "c1651fb58f979f3a6a92b2f08e9657131a49495f69c2420afcc585a8c5e8edd5"
+    },
+    {
+      "path": "handoff/review69/CHANNEL_RETRY69.json",
+      "size": 1179,
+      "sha256": "d057e478bb8746ae1ef3c2f79b2c95a9e69f6e20e5b29427fd68d2c7a9249d67"
+    }
+  ],
+  "aggregateSha256": "65b9793cf3d55d658aa28a078b282f738cede6d436911a6f2037791b81f214c9",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

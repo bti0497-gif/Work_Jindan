@@ -1,0 +1,968 @@
+{
+  "schema": "jindan-report-parity/66",
+  "baselineReadOnlyRoot": "F:/jindan",
+  "newRoot": "F:/jindan-dotnet",
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "scope": "10 report groups plus report-ai; local implementation versus exact native/company/live-service approval are separate",
+  "features": [
+    {
+      "id": "report-platform",
+      "title": "현행 스튜디오 문서/분석/자료·패널",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Native source preview/analysis tabs",
+        "Report/chapter selection; selected chapter restore enablement",
+        "Table/picture/data filters and source-location return",
+        "Shared host left/right panel context and persisted layout",
+        "Current-project scoped existing .blob viewer preview/analyze; per-profile optimistic SHA/lease and dirty context guards"
+      ],
+      "workerOperations": [
+        "preview",
+        "analyze",
+        "locate"
+      ],
+      "sourcePaths": [
+        "src/components/ReportStudio.jsx",
+        "src/components/ReportPlatform.jsx",
+        "src/components/StudioLayoutControls.jsx",
+        "src/components/StudioFitPage.jsx",
+        "src/components/ReportAnalysisWorkspace.jsx",
+        "src/components/ReportChapterInspector.jsx"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Native PDF and HWP/HWPX bytes directly rendered; no paired-PDF fallback",
+        "HWPX page match is independent-renderer text evidence, not Hancom pagination"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-library",
+      "title": "원본·금회자료 보관·해시·유형",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Local file/folder import with SHA dedup and max50 report folder batch",
+        "Title/type/facility/template-group/notes metadata",
+        "Original source byte-copy export",
+        "Unlink report or unused material without deleting originals",
+        "New-only guarded exports; full readonly native workstate recovery plus accessible historical evidence/candidate copies"
+      ],
+      "workerOperations": [
+        "analyze",
+        "inspectMaterial"
+      ],
+      "sourcePaths": [
+        "src/services/report/reportLibrary.js",
+        "src/services/report/studioProjects.js",
+        "src/services/report/referenceProjects.js",
+        "src/components/ReportDrivePicker.jsx"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Drive real import/service permission remains a separate gated adapter",
+        "Reference-folder metadata is local; old Drive/IndexedDB identities are not reused"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-analysis-restore",
+      "title": "PDF 복원분석·HWPX 작성분석·장별 재현",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "PDF restoration analysis versus native authoring analysis",
+        "Bound original HWPX/PDF pair learning",
+        "Selected chapter separate HWPX candidate registered in source list",
+        "Local original PDF image/font extraction; no OCR"
+      ],
+      "workerOperations": [
+        "analyze",
+        "pairReference",
+        "restore",
+        "specification"
+      ],
+      "sourcePaths": [
+        "src/services/report/sourceParser.js",
+        "src/services/report/pdfAnalysis.js",
+        "src/services/report/pdfStructure.js",
+        "src/services/report/workflowAnalysis.js",
+        "src/services/report/chapterConversion.js",
+        "src/services/report/pdfHwpxWriter.js",
+        "src/services/report/pairedReferenceLearning.js",
+        "src/services/report/pairedTextReview.js",
+        "src/services/report/reproductionReview.js"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Paired original fonts/geometry are static evidence, not actual Hancom font-use approval",
+        "Optional paired-text-review file contract exists in adapter; automated text rewriting is not enabled"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-review-draft",
+      "title": "내용역할 검토·근거바인딩·금회/빈초안",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Per-slot role/keep/replace/rewrite/exclude/retention/clear/evidence editor",
+        "Fresh exact source/fingerprint/context-byte acknowledgment gate",
+        "Prepare blockers and separate blank/current-evidence HWPX candidates",
+        "Actual source slot/evidence SHA and stale result checks"
+      ],
+      "workerOperations": [
+        "prepareDraft",
+        "writeDraft"
+      ],
+      "sourcePaths": [
+        "src/services/report/draftPreparation.js",
+        "src/services/report/draftWriter.js",
+        "src/services/report/draftRetention.js",
+        "src/services/report/draftSourceBindings.js",
+        "src/services/report/draftCollection.js",
+        "src/components/ReportDraftPreparation.jsx",
+        "src/components/ReportReproductionReview.jsx"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Program acknowledgment never means human engineering/native-layout approval",
+        "Formatting candidate keeps past content and is not a current draft",
+        "Current company measurements/judgments remain absent; no old values silently promoted"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-collection",
+      "title": "조사양식 내려받기·한글저장반환·빈칸 적용",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Blank source-bound HWPX collection export",
+        "JDF target/context return validation and warning refusal",
+        "Explicit empty-input confirmation and immutable return receipt binding",
+        "Fresh review required after return mapping"
+      ],
+      "workerOperations": [
+        "exportCollection",
+        "importCollection"
+      ],
+      "sourcePaths": [
+        "src/services/report/draftCollection.js",
+        "src/services/report/collectionIntroStyle.js",
+        "src/components/ReportPlatform.jsx",
+        "src/services/report/styledTextReplacement.js"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Synthetic native UI flow only; exact new company/Hancom-SaveAs documents remain unapproved",
+        "Selected inputs do not approve a company-wide complete form"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-archive-recovery",
+      "title": "프로젝트아카이브·회수·fresh review 경계",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Portable engine manifest/sidecar archive export/recovery",
+        "Recovery never restores executable analysis or acknowledgment",
+        "Legacy .jindanproj verify/preview/explicit current-project copy import",
+        "Old title/chapters become read-only historical context; imported measurements stay historical",
+        "New-only guarded exports; full readonly native workstate recovery plus accessible historical evidence/candidate copies"
+      ],
+      "workerOperations": [
+        "createRecovery",
+        "recover",
+        "inspectLegacyProject"
+      ],
+      "sourcePaths": [
+        "src/services/report/projectArchive.js",
+        "src/services/report/engineRecovery.js",
+        "src/services/report/recoveredDraftSession.js",
+        "src/services/report/engineFacade.js",
+        "src/services/report/engineContract.js"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "160MiB input/512MiB aggregate transport is intentionally narrower than maximum legacy512MiB ZIP",
+        "Old identities/permissions/review/current-values are not adopted",
+        "Actual company project recovery and SaveAs preservation remain independent gates"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-discipline-workspace",
+      "title": "분야별 양식·계산·진단문구·백업",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Process/mechanical/electrical field, schema, numeric-rule/criterion/unit editor",
+        "Explicit current values and deterministic sum/mean/spread/ratio/ratioPercent/maxDeviationPercent",
+        "Manual notes review, new/previous run, selected-schema summary",
+        "Blank JSON collection and exact version/source return"
+      ],
+      "workerOperations": [
+        "discipline"
+      ],
+      "sourcePaths": [
+        "src/components/ReportWorkspace.jsx",
+        "src/services/report/reportEngine.js",
+        "src/services/report/reportStore.js",
+        "src/services/report/collectionForms.js",
+        "src/services/report/nativeWriter.js",
+        "src/services/report/reportSections.js",
+        "src/services/report/reportWorkflow.js"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "No past source-cell number is copied into a current input",
+        "Unchecked old nativeWriter whole-document route is deliberately not enabled; native drafts use strict full-review path",
+        "Manual engineering/AI/company approval remains separate"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "electrical-inputs",
+      "title": "전기분야 자료·범위·개선협의 준비",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Eight actual source input groups and hash-bound links",
+        "KEPCO scope include/exclude reason and period bounds",
+        "Conditions/diagnosis/consultation/agreement notes",
+        "Modified BMT/final image/result-sheet bundle and confirmations"
+      ],
+      "workerOperations": [
+        "electrical",
+        "inspectMaterial"
+      ],
+      "sourcePaths": [
+        "src/components/ElectricalReportPreparation.jsx",
+        "src/services/report/electricalPreparation.js",
+        "src/components/ThermalDeliveries.jsx",
+        "src/services/report/thermalDelivery.js"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Keyword classification is a review candidate, not a diagnosis",
+        "Historical imported files cannot implicitly become current electrical evidence",
+        "No live KEPCO fetch/service integration or invented measurements"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "thermal",
+      "title": "Testo BMT 메타데이터·그림·열화상결과 묶음",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Actual bounded Testo BMT metadata/raw detector/scale/camera-points parser",
+        "Original embedded preview/visible image display when safely supported",
+        "BMT/image/optional-sheet delivery linkage with hash/confirmation reset"
+      ],
+      "workerOperations": [
+        "inspectMaterial",
+        "readThermalBmt",
+        "electrical"
+      ],
+      "sourcePaths": [
+        "src/services/report/thermalBmt.js",
+        "src/components/ThermalBmtPreview.jsx",
+        "src/services/report/thermalDelivery.js",
+        "src/components/ThermalDeliveries.jsx"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Raw grid temperatureC stays null and unit unverified",
+        "Camera metadata is not final IRSoft edited-point verification",
+        "Calibration/checksum/timezone/engineering review remains unresolved"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "power-quality",
+      "title": "PowerView PWV 측정자료 검사",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "implemented-hybrid-local",
+      "nativeUI": true,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Actual bounded PowerView XML/base64/gzip parser",
+        "Instrument/site/record selection and channel search",
+        "Raw count/finite/missing/min/max/data type and detailed preview"
+      ],
+      "workerOperations": [
+        "inspectMaterial",
+        "readPowerView"
+      ],
+      "sourcePaths": [
+        "src/services/report/powerView.js",
+        "src/components/PowerViewPreview.jsx"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "tests/WorkerProtocol/transport66.test.cjs",
+        "tests/Jindan.Report.Tests/Program.cs",
+        "tests/Jindan.Report.Tests/GuiSmoke.cs"
+      ],
+      "localLimitationsAndExternalGates": [
+        "No PWV editing/device acquisition or automatic engineering judgment",
+        "Units/CT-PT/time axis/period/statistics require actual domain review"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    },
+    {
+      "id": "report-ai",
+      "title": "선택적 AI 분석·자료추출·진단초안",
+      "module": "Jindan.Modules.ReportStudio",
+      "status": "external-provider-gated",
+      "nativeUI": false,
+      "engineLanguage": "JavaScript reused behind owned local Node worker; C# contracts/transport/WinForms",
+      "implementedCommands": [
+        "Manual reviewed notes and deterministic calculations remain usable offline",
+        "Existing engine request/response validators remain in the copied source baseline"
+      ],
+      "workerOperations": [],
+      "sourcePaths": [
+        "src/components/ReportAiSettings.jsx",
+        "src/services/report/reportAiClient.js",
+        "src/services/report/reportAnalyzer.js",
+        "src/services/report/reportInterpreter.js",
+        "src/services/report/reportCollection.js",
+        "report-ai.cjs"
+      ],
+      "newSourcePaths": [
+        "src/Modules/ReportStudio",
+        "src/Jindan.Report.Adapter",
+        "src/Jindan.Report.Worker/worker.mjs"
+      ],
+      "verification": [
+        "Existing copied engine validators only; no provider request executed"
+      ],
+      "localLimitationsAndExternalGates": [
+        "Live provider configuration/model list/key reuse/paid requests are not invoked or copied",
+        "No native UI AI-provider execution is claimed",
+        "Real provider adapter, credentials, model availability and paid integration are separate forbidden/gated actions"
+      ],
+      "liveIntegration": "not-run",
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false,
+      "reportReady": false
+    }
+  ],
+  "verification": {
+    "workerProtocol": {
+      "pass": 20,
+      "fail": 0,
+      "log": "artifacts/report-worker66-final.log",
+      "scope": "Actual owned Node processes, isolated synthetic source/transport/format/location/legacy guards; final run on current code"
+    },
+    "adapterConsole": {
+      "pass": 41,
+      "fail": 0,
+      "log": "artifacts/report-adapter66-final.log",
+      "syntheticOnly": true
+    },
+    "nativeUI": {
+      "pass": 53,
+      "fail": 0,
+      "log": "artifacts/report-ui66-final.log",
+      "artifact": "artifacts/report-ui66/RESULT.json",
+      "syntheticOnly": true,
+      "scope": "Actual new STA WinForms controls with real LocalWorkspace, asset, adapter and worker; source/format/pair/review/blank/collection/recovery/legacy import/fresh reopen; new-only exports/protected/UNC/reparse paths; two-document stale-save/lease/dirty/corrupt/16MiB guards; scoped viewer .blob read; full read-only recovery; actual STA owned-process drain",
+      "note": "Actual final source regression including preservation/export/profile/recovery/viewer and STA shutdown guards; exact packaged assembly run is recorded separately.",
+      "testedWorkerSha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459",
+      "testedAdapterDebugSha256": "8e06d575c99dcd7e193c2d4955faf2298453443cf88a9fc2918172412b129969"
+    },
+    "packagedUI": {
+      "pass": 60,
+      "fail": 0,
+      "syntheticOnly": true,
+      "package": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application",
+      "log": "artifacts/report-ui66-packaged-r6.log",
+      "artifact": "artifacts/report-ui66-packaged-r6/RESULT.json",
+      "buildLog": "artifacts/report-ui66-packaged-r6-build.log",
+      "buildWarnings": 0,
+      "buildErrors": 0,
+      "scope": "Actual exact R6 package6loaded DLL hashes + bundled Node/worker +53 native flow/preservation/ownership checks; all form/process ownership closed normally. REVIEW69 snapshot/common selection are separately validated by their owners.",
+      "assemblies": [
+        {
+          "name": "Jindan.Contracts",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\Jindan.Contracts.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Contracts.dll",
+          "sha256": "9383a3d72b4d724b36a7e108ef604fd5ac88a8ebc8009f0b7e978ecb6f6e4112"
+        },
+        {
+          "name": "Jindan.Core",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\Jindan.Core.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Core.dll",
+          "sha256": "b0c11998a20fff6078eea8c56accfd5ab07473a3dac2fda830c838c6c35cb9c9"
+        },
+        {
+          "name": "Jindan.Desktop.Contracts",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\Jindan.Desktop.Contracts.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Desktop.Contracts.dll",
+          "sha256": "49c4dfda42a25d4454bb5c3444effcfbfa4b94ffd1c2130f9f83830012efb4ec"
+        },
+        {
+          "name": "Jindan.Infrastructure",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\Jindan.Infrastructure.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Infrastructure.dll",
+          "sha256": "072d2ff031dbb182f99f6de9eb1a90c73a456ed4762fd8ac239087a08ff0141f"
+        },
+        {
+          "name": "Jindan.Report.Adapter",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\Jindan.Report.Adapter.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Report.Adapter.dll",
+          "sha256": "26c10573e67d9bfb755b44037675fcc08d50b4b6b28f98aaeef3b29d75182c28"
+        },
+        {
+          "name": "Jindan.Modules.ReportStudio",
+          "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\modules/report-studio/Jindan.Modules.ReportStudio.dll",
+          "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r6-harness\\Jindan.Modules.ReportStudio.dll",
+          "sha256": "811947c7f3688b280a03692b24b9d74eea73259a6e1984501a1e159fe3489e2b"
+        }
+      ],
+      "workerPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\modules/report-studio/worker\\worker.mjs",
+      "workerSha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459",
+      "nodePath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\modules/report-studio/worker\\node.exe",
+      "nodeSha256": "b3b117a08ee61efee09e6fd523ab33c0c018da1b570bde08e4fd914dc1170ed6",
+      "reportReady": false,
+      "supervisorAccepted": false
+    },
+    "previousPackagedUI": [
+      {
+        "pass": 60,
+        "fail": 0,
+        "syntheticOnly": true,
+        "package": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application",
+        "log": "artifacts/report-ui66-packaged-r2.log",
+        "artifact": "artifacts/report-ui66-packaged/RESULT.json",
+        "buildLog": "artifacts/report-ui66-packaged-r2-build.log",
+        "buildWarnings": 0,
+        "buildErrors": 0,
+        "scope": "Actual exact R2 package6loaded DLL hashes + bundled Node/worker +53 native flow/preservation/ownership checks; all form/process ownership closed normally",
+        "assemblies": [
+          {
+            "name": "Jindan.Contracts",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\Jindan.Contracts.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Contracts.dll",
+            "sha256": "9383a3d72b4d724b36a7e108ef604fd5ac88a8ebc8009f0b7e978ecb6f6e4112"
+          },
+          {
+            "name": "Jindan.Core",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\Jindan.Core.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Core.dll",
+            "sha256": "b0c11998a20fff6078eea8c56accfd5ab07473a3dac2fda830c838c6c35cb9c9"
+          },
+          {
+            "name": "Jindan.Desktop.Contracts",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\Jindan.Desktop.Contracts.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Desktop.Contracts.dll",
+            "sha256": "184db11a7b2c798de74fc4e5a26c2aa37a4430025cb23a945667dede4f391f58"
+          },
+          {
+            "name": "Jindan.Infrastructure",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\Jindan.Infrastructure.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Infrastructure.dll",
+            "sha256": "072d2ff031dbb182f99f6de9eb1a90c73a456ed4762fd8ac239087a08ff0141f"
+          },
+          {
+            "name": "Jindan.Report.Adapter",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\Jindan.Report.Adapter.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Report.Adapter.dll",
+            "sha256": "e2f62c6b5ea64ec16e8b215b8ec49a0d4bcc21aa9451ccde2d66f5a467254cd5"
+          },
+          {
+            "name": "Jindan.Modules.ReportStudio",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\modules/report-studio/Jindan.Modules.ReportStudio.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r2-harness\\Jindan.Modules.ReportStudio.dll",
+            "sha256": "9e0e233c593d0d2bc29aaf5d48090429982c7b5ea3a9cff6fbe801e97dd77e4c"
+          }
+        ],
+        "workerPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\modules/report-studio/worker\\worker.mjs",
+        "workerSha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459",
+        "nodePath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r2\\application\\modules/report-studio/worker\\node.exe",
+        "nodeSha256": "b3b117a08ee61efee09e6fd523ab33c0c018da1b570bde08e4fd914dc1170ed6",
+        "reportReady": false,
+        "supervisorAccepted": false
+      },
+      {
+        "pass": 60,
+        "fail": 0,
+        "syntheticOnly": true,
+        "package": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application",
+        "log": "artifacts/report-ui66-packaged-r4.log",
+        "artifact": "artifacts/report-ui66-packaged-r4/RESULT.json",
+        "buildLog": "artifacts/report-ui66-packaged-r4-build.log",
+        "buildWarnings": 0,
+        "buildErrors": 0,
+        "scope": "Actual exact R4 package6loaded DLL hashes + bundled Node/worker +53 native flow/preservation/ownership checks; all form/process ownership closed normally",
+        "assemblies": [
+          {
+            "name": "Jindan.Contracts",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\Jindan.Contracts.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Contracts.dll",
+            "sha256": "9383a3d72b4d724b36a7e108ef604fd5ac88a8ebc8009f0b7e978ecb6f6e4112"
+          },
+          {
+            "name": "Jindan.Core",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\Jindan.Core.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Core.dll",
+            "sha256": "b0c11998a20fff6078eea8c56accfd5ab07473a3dac2fda830c838c6c35cb9c9"
+          },
+          {
+            "name": "Jindan.Desktop.Contracts",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\Jindan.Desktop.Contracts.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Desktop.Contracts.dll",
+            "sha256": "95bfbdd36e5950c5f6681f1c5bb1d08ad9be4bf352c46f2e08a207c76b4f52da"
+          },
+          {
+            "name": "Jindan.Infrastructure",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\Jindan.Infrastructure.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Infrastructure.dll",
+            "sha256": "072d2ff031dbb182f99f6de9eb1a90c73a456ed4762fd8ac239087a08ff0141f"
+          },
+          {
+            "name": "Jindan.Report.Adapter",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\Jindan.Report.Adapter.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Report.Adapter.dll",
+            "sha256": "e2f62c6b5ea64ec16e8b215b8ec49a0d4bcc21aa9451ccde2d66f5a467254cd5"
+          },
+          {
+            "name": "Jindan.Modules.ReportStudio",
+            "packagedPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\modules/report-studio/Jindan.Modules.ReportStudio.dll",
+            "loadedPath": "F:\\jindan-dotnet\\artifacts\\report-ui66-packaged-r4-harness\\Jindan.Modules.ReportStudio.dll",
+            "sha256": "33701639eb6a01d471505cf2bd08c5e13438b1a135f1e3ae46d76aa4e064f55d"
+          }
+        ],
+        "workerPath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\modules/report-studio/worker\\worker.mjs",
+        "workerSha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459",
+        "nodePath": "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r4\\application\\modules/report-studio/worker\\node.exe",
+        "nodeSha256": "b3b117a08ee61efee09e6fd523ab33c0c018da1b570bde08e4fd914dc1170ed6",
+        "reportReady": false,
+        "supervisorAccepted": false
+      }
+    ],
+    "heldWithoutReportExecution": [
+      {
+        "package": "final66-r3",
+        "reason": "Root-held for Tasks/calendar fix; no Report GUI run or inferred pass"
+      },
+      {
+        "package": "final66-r5",
+        "reason": "Root-held for exact SDK selection-order failure; no Report GUI run or inferred pass"
+      }
+    ]
+  },
+  "sourceFiles": [
+    {
+      "path": "docs/report-adapter66.md",
+      "bytes": 17297,
+      "sha256": "dc7cdda1c70ff08f942cc0f25e8cf2052dea7ad7fcf2e4b72e608f91b6f72636"
+    },
+    {
+      "path": "docs/report-parity66.md",
+      "bytes": 7249,
+      "sha256": "dde10fc50218177e262f7f4cea666079ba3d3061c790ed35026d8018e7c23131"
+    },
+    {
+      "path": "docs/worker-protocol66.md",
+      "bytes": 14676,
+      "sha256": "54ac7733a5f4fad6d2d193f5a1d7f10018a74a45d74eb01212dbbe00822c52ae"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/IReportWorkspaceAccess.cs",
+      "bytes": 640,
+      "sha256": "23c772c70e3a1a461a75e803b42219fc85ed865ebe567885e104321fd9340cc8"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/ISourceDocument.cs",
+      "bytes": 280,
+      "sha256": "a18e5497541db860529c0075ab2adfd85334ca3998727b6cf9840610b5c0c60c"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/Jindan.Report.Adapter.csproj",
+      "bytes": 145,
+      "sha256": "950e502ac26943b207581f76f985ca25fdf3897b0af68ec8cd9e2b75603558c6"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/ReportService.cs",
+      "bytes": 25638,
+      "sha256": "5f24b341963c7e2fc4c1730c670c75da9bf21f4a63d49cf47cfc971b802febe2"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/worker-client.mjs",
+      "bytes": 4928,
+      "sha256": "9c71d57719dbd57449da093ad85e0bdfba2921615940bd545664fde6ecf1f141"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/worker.mjs",
+      "bytes": 35158,
+      "sha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459"
+    },
+    {
+      "path": "src/Modules/ReportStudio/Jindan.Modules.ReportStudio.csproj",
+      "bytes": 314,
+      "sha256": "02f1afb781ef0c56cbccd3d3e72bedd8c6129d56f54e7a0c671508e441b0d060"
+    },
+    {
+      "path": "src/Modules/ReportStudio/Module.cs",
+      "bytes": 958,
+      "sha256": "eacf2f9ff306e41ff995a99f23ea30dd18fc57b01e29bf0ea1492dfcb97c1a4d"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportDisciplineView.cs",
+      "bytes": 18005,
+      "sha256": "fef03d7e38deed3ab6b07d222607435ab3fe8cd3f1b8d3819fe6238304fa9749"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportDocument.cs",
+      "bytes": 52040,
+      "sha256": "f918b19061c5d0da8363347984adba5742f25ef2cd468b05b3f4a9e726b39803"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportElectricalView.cs",
+      "bytes": 12922,
+      "sha256": "f92c08b1abc7295e6ca8014388ab159a2f80e86e58e76ebcf44c46c931267c99"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportFormattingView.cs",
+      "bytes": 16985,
+      "sha256": "49c4261e86208fb0b8212ed276aeb5072c200363fa6de5a34211ab2b5b6ba8c0"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportLegacyArchive.cs",
+      "bytes": 7393,
+      "sha256": "63f834afe03f537e3206b83d2709da62628b9f27083c5b1b25fa95098023e56e"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportLibraryView.cs",
+      "bytes": 11925,
+      "sha256": "c156b02e8630e0f836a9397fe719d4e5055b6ac74d6d6656f0e2ea25b8c93a84"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportMaterialsView.cs",
+      "bytes": 8821,
+      "sha256": "6ab9a7aecf55a8b56518c8d53692424c44d381189be24288ff8d5b098fea011c"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportPersistence.cs",
+      "bytes": 8866,
+      "sha256": "b98a5b2df9018c3fe265d83c6c8986f9b3b33803730f6989cc89b2c2ba303ed8"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportRecoveryView.cs",
+      "bytes": 8578,
+      "sha256": "1e12d68ab164871d5bfc8a7a57a51fd5047c57d90917088452ebd3f87c43ea76"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Directory.Build.props",
+      "bytes": 292,
+      "sha256": "1d3fa31e0fadec80178efbd46ee2c1d229c305cad0fd1e1aa985e39c2ba8bb89"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/GuiSmoke.cs",
+      "bytes": 30160,
+      "sha256": "73f526bf4eeae740228db1e66b6f7ed61a628d67e1427069620d6c94657463f0"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Jindan.Report.Tests.csproj",
+      "bytes": 342,
+      "sha256": "c17c36beb3570a76e487ef148109840b80b94b8713534510243375324f95db50"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Program.cs",
+      "bytes": 14555,
+      "sha256": "2ddb6096abd5cdf37d8eb7fd53277aed53cbdc7cb3baa89ad3caac4c19b41974"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Report.GuiSmoke.csproj",
+      "bytes": 1885,
+      "sha256": "fe35774567a43cf4211ba91455ac42dc7be06f15ed78bfb03c545c022bbf0ec8"
+    },
+    {
+      "path": "tests/WorkerProtocol/transport66.test.cjs",
+      "bytes": 31124,
+      "sha256": "0188221f33671fd83b96998635d8189c55aac975945e05aeb1f452c89ab8a9d6"
+    }
+  ],
+  "preservationGates": [
+    "Actual original font selection and embedded-font SaveAs survival unapproved",
+    "Custom jindan-source.json SaveAs loss and three tab attributes remain separate boundaries",
+    "Original image save preservation depends on exact reviewed SHA and supervisor-controlled save-resize setting; not inherited by new app",
+    "No actual company current data/whole numerical-cell-meaning/full-object-editability approval",
+    "No paid API/cloud write/native Hancom/settings/font/COM/OLE action performed by these tests"
+  ],
+  "testEvidenceFiles": [
+    {
+      "path": "artifacts/report-adapter66-final.log",
+      "bytes": 4198,
+      "sha256": "dfa6d1f60766015d343eda9cc14fc453d81e7b3bafd927d84b066895313589ce"
+    },
+    {
+      "path": "artifacts/report-ui66-final.log",
+      "bytes": 7540,
+      "sha256": "5c84f214df63125065039643427af8b8cdac00d739f10282bdd225716a9e5f41"
+    },
+    {
+      "path": "artifacts/report-ui66/RESULT.json",
+      "bytes": 350,
+      "sha256": "ff98faaba6b4db870cc96656c3f0341a876fbd15ee46a4065a1751a0f58d0afd"
+    },
+    {
+      "path": "artifacts/report-ui66/report-flow-native-controls.png",
+      "bytes": 87616,
+      "sha256": "4049827f581c2a8980d666a0658bab0d06ca55f320ffdfaae89fcabdd298b8b8"
+    },
+    {
+      "path": "artifacts/report-ui66/report-preview-native-controls.png",
+      "bytes": 55039,
+      "sha256": "925679f88e81d7dea51c4a46a6d42bab7a51b7f691941f64fae3e9b162028ce3"
+    },
+    {
+      "path": "artifacts/report-worker66-final.log",
+      "bytes": 10796,
+      "sha256": "c1a59eba298e54a6c2eb893a32e87aa2c006b7f266ee628e956dc7599effdf22"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r2.log",
+      "bytes": 8350,
+      "sha256": "8152c19d92e3385f92a7d065e445f94076f34873427c8a99e938cc3189bc6ba9"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r2-build.log",
+      "bytes": 112,
+      "sha256": "b81d62cbcd6505075ff8855e7255ee5008d8ee616d7af034a5f9d8c1a8231793"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged/RESULT.json",
+      "bytes": 2851,
+      "sha256": "cccf7d37e5c790cc796f4448faf0b3046f547610168c50e4d87472a09dc00978"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged/report-flow-native-controls.png",
+      "bytes": 87713,
+      "sha256": "a06e970c160d7db64979996a28e134fb473809f7caa334bb177a594c5599da60"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged/report-preview-native-controls.png",
+      "bytes": 55047,
+      "sha256": "15f58b00e1815a71f4606c1b0bb14c1bedb1e9077bc5b30cbbf38c1902ad1f72"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4.log",
+      "bytes": 8350,
+      "sha256": "8152c19d92e3385f92a7d065e445f94076f34873427c8a99e938cc3189bc6ba9"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4-build.log",
+      "bytes": 112,
+      "sha256": "81fca5fd0e10a33190f52055ec157b4bd1b43ec09d77c956da781c3777e535fd"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/RESULT.json",
+      "bytes": 2851,
+      "sha256": "55905e34883e612e09ec4c7a682a0ca6e3edcbda16acf047a0bd9300854d921d"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/report-flow-native-controls.png",
+      "bytes": 87650,
+      "sha256": "1127ddef46d84b76b8a4c8e5a183c9054c7f3e768eb0737b1bbc1f252ac2f0a6"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r4/report-preview-native-controls.png",
+      "bytes": 55017,
+      "sha256": "158dc06fb146ae5bd3bafd09f741edc6847e28d41343e6762f90d63e382dcc5f"
+    },
+    {
+      "path": "artifacts/report-ui66-output-refusal.log",
+      "bytes": 1188,
+      "sha256": "2d74b78d7d3c17a4196565330d582473c7854ab5724dad6a336fe2dbab48ff69"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6.log",
+      "bytes": 8350,
+      "sha256": "8152c19d92e3385f92a7d065e445f94076f34873427c8a99e938cc3189bc6ba9"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6-build.log",
+      "bytes": 112,
+      "sha256": "448038107f38a1791f4456ee9110587f325eacbd1565b7e088bdb03df6c09a81"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/RESULT.json",
+      "bytes": 2851,
+      "sha256": "b7d4cf88f44466ebd47e7cf0b4427537a55e1126f2f56189d970aff4bccfd34c"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-flow-native-controls.png",
+      "bytes": 87664,
+      "sha256": "9afaa499f6233f7d3efc7a83ed6891051e374fcb59f87856ea58bf7d712f5a24"
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-preview-native-controls.png",
+      "bytes": 55082,
+      "sha256": "baedaa391f17c7d1eac1a8e8c1da1905fb0c9202b4561e2426e6e5e2b94b7794"
+    }
+  ],
+  "baselineInventoryVerification": {
+    "sourceCount": 102,
+    "missing": [],
+    "shaMismatches": [],
+    "meaning": "Read-only static source records still match; not a whole-original-tree preservation claim"
+  },
+  "transportLimits": {
+    "binaryInputBytes": 167772160,
+    "binaryOutputBytes": 167772160,
+    "analysisResultJsonBytes": 201326592,
+    "aggregateInputBytes": 536870912,
+    "testOnlySmallLimit": "test:binary-limit requires JINDAN_WORKER_TEST=1; cannot configure production limit"
+  },
+  "workspacePersistence": {
+    "profileMaxBytes": 16777216,
+    "concurrency": "owned per-path semaphore + exclusive file lease + exact loaded-byte SHA CAS; stale save preserves both latest bytes and stale document dirty state",
+    "invalidLoad": "corrupt/oversized profile never becomes valid overwrite baseline",
+    "authorization": "actual current actor/project role; existing asset id/path/SHA scoped to current project; viewer read/analyze is volatile",
+    "exports": "CreateNew owned temp + no-replace rename; existing targets/protected roots/UNC/reparse ancestors denied",
+    "recovery": "all native workstate retained as readonly historical sidecar; evidence historical; candidate copies accessible; fresh source analysis/ACK required",
+    "processDisposal": "closed admission; kill/wait only actual owned Process references; single/concurrent CPU + STA tested"
+  }
+}

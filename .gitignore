@@ -1,0 +1,17 @@
+.tools/
+node_modules/
+**/bin/
+**/obj/
+artifacts/
+/data/
+/workspace/
+**/.updates/
+**/workspace-location.json
+**/.jindan.application.lock
+**/workspace.json*
+**/__pycache__/
+.env*
+*.user
+*.suo
+*.dmp
+*.log

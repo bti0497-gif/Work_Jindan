@@ -1,0 +1,104 @@
+{
+  "schema": "jindan-scoped-visual69/1",
+  "recordedAt": "2026-11-05T02:52:48.531Z",
+  "selectedPackage": "artifacts/ready-for-review/final66-r6",
+  "reviewedCurrentImages": 10,
+  "nativeImagesReviewed": 8,
+  "controlledRendersReviewed": 2,
+  "images": [
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-first-single-photo-bound-window.png",
+      "sha256": "3548335fb302280b5daf1254a644381552e2055769a76184a49ed76d1e8e2c29",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "One imported synthetic teal photo: selected row, matching title/asset/SHA and large preview are visible."
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-fresh-photo-bound-window.png",
+      "sha256": "f811915c014afa2dcb17ee2fc9fca62271a9b95ed8c5c37e549bcb7ad33ec792",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "New-process single-photo project has matching selected row, nonempty fields and teal preview."
+    },
+    {
+      "path": "artifacts/final-r6-selection69-ui01/selection69-readable-report-project-title-window.png",
+      "sha256": "6d60e1f161d6c4b954b766073d0a68caecdda4903677a72841a26089fb085d7a",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Project selector is on its own visible line; report tab/title show the human project title rather than its GUID. Empty source project is intentional."
+    },
+    {
+      "path": "artifacts/final-r6-photo-thumbnails66-01/08-photo-visible-headers-window.png",
+      "sha256": "805303d8fe9d573e266994a68de28f4042b55c63f6e63fe557af5bf1c0321421",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Photo column captions remain below toolbar; visible selected thumbnail, large preview and read-only source fields are populated. Dense columns use truncation/wrapping."
+    },
+    {
+      "path": "artifacts/final-r6-calendar66-01/calendar-native-__._DISPLAY1-window.png",
+      "sha256": "0d1269590f9c22bd3d316952d7c708fcc0590df8ea6929cb58eae7673da48161",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Single month with complete Saturday column and selected date is visible outside the task toolbar. This is the observed physical-DPI run, not controlled150/200 proof."
+    },
+    {
+      "path": "artifacts/product-patch66-r6/run-r6/v2-restored.png",
+      "sha256": "672b0f5f326c756817a2cf7307ffcab838f6f829404ed273a419c99ddd74cdcd",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Actual v2 feature button and one in-progress filtered row visible. No highlighted row/blank properties after filtering are not treated as first-row binding proof; persistence/rollback has separate assertions. Filename restored means existing synthetic data in the v2 phase."
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03/files-list-native-window.png",
+      "sha256": "e4d34b7963170cfbb4c5bfe924dee5293190b304745429e2ee2accdd9f636881",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Visible empty Files fixture: column captions below toolbar, search/folder navigation and status separated. Later import/move/export assertions are in its result, not inferred from this empty screenshot."
+    },
+    {
+      "path": "artifacts/final-r6-local-modules66-03/board-native-window.png",
+      "sha256": "b1658e2f46d59b275ed93d7b9b3137ea44a40b723dd63f3985c4c8ea84e98f2c",
+      "method": "PrintWindow",
+      "observedBy": "root using view_image",
+      "observation": "Visible empty Board fixture: column captions and thread surface are below toolbar and above notice. Later attachment/reply assertions are separate."
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-flow-native-controls.png",
+      "sha256": "9afaa499f6233f7d3efc7a83ed6891051e374fcb59f87856ea58bf7d712f5a24",
+      "method": "DrawToBitmap controlled render",
+      "observedBy": "root using view_image",
+      "observation": "Synthetic source analysis, evidence/decision controls and blank-draft return workflow controls are visible. Not an actual native-window capture or company approval."
+    },
+    {
+      "path": "artifacts/report-ui66-packaged-r6/report-preview-native-controls.png",
+      "sha256": "baedaa391f17c7d1eac1a8e8c1da1905fb0c9202b4561e2426e6e5e2b94b7794",
+      "method": "DrawToBitmap controlled render",
+      "observedBy": "root using view_image",
+      "observation": "Synthetic selected HWPX preview page/table rendered from selected bytes through bundled WASM. Not Hancom, not PDF substitution and not original-font/layout approval."
+    }
+  ],
+  "rejectedCapture": {
+    "path": "artifacts/final-r6-local-modules66/files-list-native-window.png",
+    "sha256": "397d2d5fb0fd5a5f14bb04bf6021197620cb6d3183125f51720d9594ea487c7a",
+    "observation": "Uniform black even though PrintWindow returned success. Original14 functional checks remain distinct from unusable visual output."
+  },
+  "captureCorrection": {
+    "before": "artifacts/final-r6-local-modules66-02/RESULT.json",
+    "beforePass": 12,
+    "beforeFail": 2,
+    "after": "artifacts/final-r6-local-modules66-03/RESULT.json",
+    "afterPass": 14,
+    "afterFail": 0,
+    "sameHarnessSha256": "bddc26d186759001490e5ba411289dc87ae86911155230181e256687b570abec",
+    "changedVariable": "Owned GUI harness launcher windowsHide true to false. Earlier test-only250ms await did not fix hidden startup. New capture guard rejects uniform images; no DrawToBitmap fallback.",
+    "productChanged": false
+  },
+  "sdkCaptureScope": "SDK receipt records32 successful capture calls/31 distinct files. Root manually reviewed only the selected files above, not every capture. Method return alone is not image-quality approval.",
+  "limitations": [
+    "Dense DataGridView captions/values may truncate or wrap; not all UI combinations or accessibility/usability are reviewed.",
+    "Observed physical96/120 DPI and controlled150/200 layout stress differ; no physical150/200 claim.",
+    "No native Hancom window, source-font retention, every report object, company data or current-company workflow approval."
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false
+}

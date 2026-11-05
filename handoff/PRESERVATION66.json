@@ -1,0 +1,40 @@
+{
+  "schema": "jindan-preservation66/1",
+  "checkedAt": "2026-11-05T00:18:41.297Z",
+  "legacyFileCount": 626,
+  "headMatches": true,
+  "dirtyStatusMatches": true,
+  "originalChecks": [
+    {
+      "id": "seonam-pdf",
+      "expected": "d12201c4a424afef500aee4cc182bea7604c2c98964b0d9bcfb9d3096e9f9346",
+      "actual": "d12201c4a424afef500aee4cc182bea7604c2c98964b0d9bcfb9d3096e9f9346",
+      "size": 383904,
+      "ok": true
+    },
+    {
+      "id": "seonam-hwpx",
+      "expected": "da88560943552884e44864182d5f8abcea03e287586d41b407906ca70aa8898e",
+      "actual": "da88560943552884e44864182d5f8abcea03e287586d41b407906ca70aa8898e",
+      "size": 773761,
+      "ok": true
+    },
+    {
+      "id": "daecheong-pdf",
+      "expected": "521e5659e143c9bc45d04c6b2cdf9d5cae2fbbd711663ce75ee81b556527ab01",
+      "actual": "521e5659e143c9bc45d04c6b2cdf9d5cae2fbbd711663ce75ee81b556527ab01",
+      "size": 17609988,
+      "ok": true
+    }
+  ],
+  "frozen63Zip": {
+    "expected": "b83e94b8575d34d80c1846837e599e15cc11b3e0a0dcb3519bb6b926dc63877b",
+    "actual": "b83e94b8575d34d80c1846837e599e15cc11b3e0a0dcb3519bb6b926dc63877b",
+    "ok": true
+  },
+  "problems": [],
+  "ok": true,
+  "scope": "Tracked/nonignored untracked baseline files, git head/status, three originals, frozen63 ZIP. Not a claim that every ignored output was inventoried.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

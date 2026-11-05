@@ -1,0 +1,20 @@
+import {spawn} from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),version=process.argv[2]??'r6';
+if(!/^r[6-9][0-9]{0,2}$/.test(version))throw Error('Known fresh review suffix required');
+const review=path.join(root,`artifacts/ready-for-review/final66-${version}`),app=path.join(review,'application'),worker=path.join(app,'modules/report-studio/worker');
+const health=path.join(root,`artifacts/final-${version}-healthcheck69.json`),cad=path.join(root,`artifacts/final-${version}-cad69.log`),receipt=path.join(root,`artifacts/final-${version}-bundled69.json`);
+for(const p of[health,cad,receipt])if(fs.existsSync(p))throw Error('Fresh evidence paths required');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const env={...process.env,DOTNET_ROOT:path.join(app,'.runtime'),DOTNET_ROOT_X64:path.join(app,'.runtime'),DOTNET_GENERATE_ASPNET_CERTIFICATE:'false',DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1',JINDAN_TEST_PACKAGED_WORKER:worker};
+async function run(exe,args){const startedAt=new Date().toISOString();let output='',overflow=false;const p=spawn(exe,args,{cwd:root,env,windowsHide:true,stdio:['ignore','pipe','pipe']});for(const s of[p.stdout,p.stderr])s.on('data',b=>{if(output.length<16*1024*1024)output+=b.toString('utf8');else overflow=true;});const exit=await new Promise((resolve,reject)=>{p.on('error',reject);p.on('close',resolve);});return{command:[exe,...args],startedAt,endedAt:new Date().toISOString(),pid:p.pid,exit,overflow,output};}
+const results=await Promise.all([run('powershell.exe',['-NoProfile','-NonInteractive','-File',path.join(review,'Run.ps1'),'-HealthCheck']),run(path.join(worker,'node.exe'),['--require','./tools/offline-tests.cjs','--test','tests/NodeCad/node-cad.test.cjs'])]);
+const [h,c]=results;fs.writeFileSync(cad,c.output,{flag:'wx'});
+const approved={reportReady:false,supervisorAccepted:false},base={selectedPackage:review,artifactManifestSha256:hash(path.join(review,'artifact-manifest.json')),hostSha256:hash(path.join(app,'Jindan.Desktop.dll')),...approved};
+const healthResult={schema:'jindan-launcher-health69/1',...base,...h,pass:h.exit===0&&!h.overflow?1:0,fail:h.exit===0&&!h.overflow?0:1,scope:'Actual immutable Run.ps1 -HealthCheck and bundled runtime; read-only module verification, not login or company workflow.'};
+fs.writeFileSync(health,JSON.stringify(healthResult,null,2)+'\n',{flag:'wx'});
+const cadPassed=c.exit===0&&!c.overflow&&/# pass 5\b/.test(c.output)&&/# fail 0\b/.test(c.output);
+fs.writeFileSync(receipt,JSON.stringify({schema:'jindan-bundled-gates69/1',...base,health:{path:health,sha256:hash(health)},cad:{...c,output:undefined,log:cad,sha256:hash(cad),worker,nodeSha256:hash(path.join(worker,'node.exe')),pass:cadPassed?5:0,fail:cadPassed?0:1,scope:'Synthetic bundled CAD worker test overlaps source Node260.'},passed:healthResult.pass===1&&cadPassed},null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({healthPass:healthResult.pass,cadPass:cadPassed?5:0,receipt}));process.exitCode=healthResult.pass===1&&cadPassed?0:1;

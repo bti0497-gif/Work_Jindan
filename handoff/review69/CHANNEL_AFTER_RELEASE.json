@@ -1,0 +1,18 @@
+{
+  "schema": "jindan-review69-channel-release/1",
+  "observedAt": "2026-11-05T02:04:18.058Z",
+  "userReleasedDesktop": true,
+  "userClearedComposer": true,
+  "targetWindowId": 3868518,
+  "windowActivationSucceeded": true,
+  "emptyComposerObserved": true,
+  "inputAttempted": true,
+  "requestedEvent": "LINK66-DIRECT-20261105",
+  "requestedTextVisible": false,
+  "submitInvoked": false,
+  "deliveryVerified": false,
+  "state": "blocked_native_input",
+  "reason": "Native input returned but did not show the requested text. Secondary capture origin and local window-coordinate mismatch were observed; root cause is unconfirmed. No blind submit or security/settings changes. Resume implementation/exact tests; retry channel only when safe.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

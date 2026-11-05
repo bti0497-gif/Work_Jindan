@@ -1,0 +1,1670 @@
+{
+  "schema": "jindan-source-checkpoint66/1",
+  "createdAt": "2026-11-05T00:23:25.669Z",
+  "scope": "All new product, tests, fixtures, tools, docs, migration and root config. Mutable handoff/status and generated output are excluded to avoid circular hashes.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "size": 202,
+      "sha256": "0a690bf9e33fdf39c6d29989d6ece7321653a566907025b3996f3e6589922969"
+    },
+    {
+      "path": ".npmrc",
+      "size": 84,
+      "sha256": "69dd4e64e094abfcd54093037a216175ae80ece721bdfd7d80541cda39054b4f"
+    },
+    {
+      "path": "AGENTS.md",
+      "size": 510,
+      "sha256": "01211aecec4078c4e8ebab2d3a9426ac5058f1d1ce443806ccdecc1e3ea9c2af"
+    },
+    {
+      "path": "Directory.Build.props",
+      "size": 479,
+      "sha256": "a85d6b05d5ed8fe04fb2ae7be071b7c6a400d4a786d074ee409e1f3a9b45ae0b"
+    },
+    {
+      "path": "Jindan.sln",
+      "size": 26505,
+      "sha256": "1e46b0be2a1951444eb1951dc446fa8e497dd14d3db09fa207c69d4710fff4fa"
+    },
+    {
+      "path": "NuGet.Config",
+      "size": 113,
+      "sha256": "2142cfb2dfa2c7feefbe40fabcc68b0dfecadafa99a1db9b70239d977cf2a7ef"
+    },
+    {
+      "path": "README.md",
+      "size": 2924,
+      "sha256": "bbaff014065f840945a4b7bfc9f5b06e52cb685ef110fb6a1f7a66dfd6f1aa5a"
+    },
+    {
+      "path": "docs/adr66.md",
+      "size": 5410,
+      "sha256": "0713c8f0cf23965186757d2e55c507d4f1c5966f54d975452984f77bb0657206"
+    },
+    {
+      "path": "docs/architecture66.md",
+      "size": 10837,
+      "sha256": "cd630b237c55410e29d09bae143e936b91dcd3dbd77dd31a800e85abaaf757d5"
+    },
+    {
+      "path": "docs/calendar-native-layout66.md",
+      "size": 2916,
+      "sha256": "e7d66a2711bb8c7e8c9eef8d5dd607567a8afc2241d1aa5b5ff3c4dc30e72f32"
+    },
+    {
+      "path": "docs/engine-reuse66.md",
+      "size": 4615,
+      "sha256": "1961d14e1400e779dd52b44706a2466590ea2da598f8e5266322ff53bd6aa58b"
+    },
+    {
+      "path": "docs/feature-inventory66.md",
+      "size": 33713,
+      "sha256": "227c1fadd523d196db337b3e4a56fc1163cf5e7fe790ce89ce1b0f12cb2937d6"
+    },
+    {
+      "path": "docs/feature-parity66.md",
+      "size": 13231,
+      "sha256": "eaaa0eba808c33bf047b315554a35f5ee59a2bbf4084d9e920bed5c187f28beb"
+    },
+    {
+      "path": "docs/local-data66.md",
+      "size": 6269,
+      "sha256": "9fc369cbebb48cea18f2d7bdda75c944793df680c69382722f3625ad1572e5f9"
+    },
+    {
+      "path": "docs/migration66.md",
+      "size": 6778,
+      "sha256": "ebb676ed8d1701f14a2ca691f84d14d08b1a3a2f26970766295ee8d50fb46b7c"
+    },
+    {
+      "path": "docs/module-package66-spec.md",
+      "size": 10813,
+      "sha256": "ac8db6e89ba391574f602dcdba7a497c8d9356891d1a0a9ac5b26acc0d8e6e12"
+    },
+    {
+      "path": "docs/module-patch66.md",
+      "size": 5592,
+      "sha256": "5378a0ab03734f13716b7981df4d85190719b6a76ad8a7dd023736b2ab4c2c12"
+    },
+    {
+      "path": "docs/node-picture-adapter66.md",
+      "size": 3290,
+      "sha256": "5fe6e65ebd3fa335791045b43a7bd79fc2bcd9104d65503e2f9f24cf116247f4"
+    },
+    {
+      "path": "docs/preservation-contract66.md",
+      "size": 3659,
+      "sha256": "77cba7ada1f675f1ba55cce9c0b606897c2977635de06106e3807090fccb82b8"
+    },
+    {
+      "path": "docs/report-adapter66.md",
+      "size": 16662,
+      "sha256": "64ad1306d7b6097a9b1a4c7d53a3e9b2b64cb09c753c1fa50fda21e5904f74bf"
+    },
+    {
+      "path": "docs/report-parity66.md",
+      "size": 7021,
+      "sha256": "49bf150e5df882fd0ee8361b87496dd51aa6fa1a5c5dbbbc00c69c50e564515b"
+    },
+    {
+      "path": "docs/run-review66.md",
+      "size": 11881,
+      "sha256": "1f4eb9243a42e167e6e62dd898c5c9b7491b1aafb5cc877b9499caca4eb7b093"
+    },
+    {
+      "path": "docs/sdk-first-run-observation66.md",
+      "size": 1006,
+      "sha256": "30771228e777b9e1a7aa263ea72b09343d46c41d131fe1e053fa49c9bc5aea99"
+    },
+    {
+      "path": "docs/sdk66.md",
+      "size": 2847,
+      "sha256": "49e5552ec78c8fb1ec0e93bbf95c2afeb8d4856ba3b1b8d657e3cabd301b13a4"
+    },
+    {
+      "path": "docs/sync66.md",
+      "size": 7807,
+      "sha256": "a1a4ebc6b65c6fc2de08135658e79d6f291b100073c3b402a8a09702e369bff3"
+    },
+    {
+      "path": "docs/worker-protocol66.md",
+      "size": 14676,
+      "sha256": "54ac7733a5f4fad6d2d193f5a1d7f10018a74a45d74eb01212dbbe00822c52ae"
+    },
+    {
+      "path": "global.json",
+      "size": 55,
+      "sha256": "37014080b001eedd3486cd6ffaa789626901f22c0434949318493d8462fc1ada"
+    },
+    {
+      "path": "migration/baseline66.json",
+      "size": 119620,
+      "sha256": "9d5ed2b3ec9c5b1bd3166db37cd20a382cd128d15ac6ec2e2e17e1b155aff102"
+    },
+    {
+      "path": "migration/cad-source-map66.json",
+      "size": 3216,
+      "sha256": "bc93d0dd4c51b3ffad7b103d74623640a3b53dfc77af6b5c88c1af96f8f4f0a4"
+    },
+    {
+      "path": "migration/feature-inventory66.json",
+      "size": 63648,
+      "sha256": "ea60143fbe8ce2e2be64575a64d0ff688f89e8761af6adcd32c1995286bbc73b"
+    },
+    {
+      "path": "migration/parity66.json",
+      "size": 67142,
+      "sha256": "93ff5c23b906508994bc4a5256d42d3fb04fa1afe4ff5b8d6db09d696037ee6a"
+    },
+    {
+      "path": "migration/report-parity66.json",
+      "size": 38274,
+      "sha256": "96e641dd99e1fb75e262a59d6cdb48a8779150773e06eccb4598d999fa5f4dc4"
+    },
+    {
+      "path": "migration/source-map.json",
+      "size": 74772,
+      "sha256": "95ffb131cced4cc270f0fd5397904b80a773db9c535637ef17db65afa529b1a0"
+    },
+    {
+      "path": "package-lock.json",
+      "size": 37467,
+      "sha256": "19e83c3c42cd963f0d17074984c920c510feb1ff415dbcc12e3e92d5f66ecd56"
+    },
+    {
+      "path": "package.json",
+      "size": 645,
+      "sha256": "fe589be8428a6d10e91742bd9ebad9b3731548e7df5f2ec8c24a34bf02e87524"
+    },
+    {
+      "path": "src/Engines/Jindan.Engine.Package/Jindan.Engine.Package.csproj",
+      "size": 121,
+      "sha256": "54adda601d06c584cfa9861a74dc4a4d52ad2aba44837f031b01d99eac393204"
+    },
+    {
+      "path": "src/Engines/Jindan.Engine.Package/NativePackage.cs",
+      "size": 14961,
+      "sha256": "dbe438cd32b63fb1cec3dd976a559f71d4b2856bff685bc68d44608bcc7f0d71"
+    },
+    {
+      "path": "src/Engines/Jindan.Engine.Package/README.md",
+      "size": 3514,
+      "sha256": "b4a52ae23f1ca7b7b8c8c45072ce5f683b1c9f0fa5c0063eba5355d9e5d8f09e"
+    },
+    {
+      "path": "src/Engines/Jindan.Engine.Package/packages.lock.json",
+      "size": 66,
+      "sha256": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75"
+    },
+    {
+      "path": "src/Jindan.Contracts/Contracts.cs",
+      "size": 6191,
+      "sha256": "94d361a94100efc5ce03dd45123289fb16c6d2d1e0e5aa560860e770e5ae4e8c"
+    },
+    {
+      "path": "src/Jindan.Contracts/Jindan.Contracts.csproj",
+      "size": 117,
+      "sha256": "91275edd3790c4f0cb484653195ccd8ad6af2f1a0a69b84fdb26b88c0b52407f"
+    },
+    {
+      "path": "src/Jindan.Contracts/packages.lock.json",
+      "size": 66,
+      "sha256": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75"
+    },
+    {
+      "path": "src/Jindan.Core/DomainRules.cs",
+      "size": 4749,
+      "sha256": "015acd8c39b50d8dd49d507f0152e19288aaa681dbe6d2e4cb6030a3047081b8"
+    },
+    {
+      "path": "src/Jindan.Core/Jindan.Core.csproj",
+      "size": 218,
+      "sha256": "6ffdf0380f8fa294d59bb18708af674e7d0c2cea049791ebdd83462ce482bc55"
+    },
+    {
+      "path": "src/Jindan.Core/Schedule.cs",
+      "size": 2171,
+      "sha256": "21418c013192bd289a21e39789c68bc7c592521c68473304cf2d645722b71ec5"
+    },
+    {
+      "path": "src/Jindan.Core/SyncContracts.cs",
+      "size": 4053,
+      "sha256": "1adef416fa9bbc1379c61695f7df3393c76dd7f8505f262fbe475f353ee36603"
+    },
+    {
+      "path": "src/Jindan.Core/SyncCoordinator.cs",
+      "size": 9220,
+      "sha256": "602f57f6db260cf78068b419358a358c233a99dbfb6a8f260859ce0a6cac97a9"
+    },
+    {
+      "path": "src/Jindan.Core/SyncStore.cs",
+      "size": 11434,
+      "sha256": "151ae9d82717c59415d0b7bc7604eb32473fb03d2430794090bcfaee847db1b2"
+    },
+    {
+      "path": "src/Jindan.Core/packages.lock.json",
+      "size": 137,
+      "sha256": "7a0ac179f28b780b40d9e6b51a88a9b3d6c2930e9398b3c9e07a81a58138ced7"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/DesktopContracts.cs",
+      "size": 2002,
+      "sha256": "a5c6a853a7ba6d902cafb70502eed7d258633214bbda723e15ad37d1e52de6ee"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/IReportWorkspaceAccess.cs",
+      "size": 640,
+      "sha256": "23c772c70e3a1a461a75e803b42219fc85ed865ebe567885e104321fd9340cc8"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/ISourceDocument.cs",
+      "size": 280,
+      "sha256": "a18e5497541db860529c0075ab2adfd85334ca3998727b6cf9840610b5c0c60c"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/Jindan.Desktop.Contracts.csproj",
+      "size": 211,
+      "sha256": "ce2252dd4a854380266d56de30094bd102e50191962dad16306618d11b2602dc"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/RecordDocument.cs",
+      "size": 9643,
+      "sha256": "40897c65f209244b3c769a9fabcca148d23750bf8eb426e6df74ff393fe33eb0"
+    },
+    {
+      "path": "src/Jindan.Desktop.Contracts/packages.lock.json",
+      "size": 148,
+      "sha256": "38bd4bf5f3b6acbe366fb7a7d85be7ffaa5388ae718e65fcdc0badbd034ad3b4"
+    },
+    {
+      "path": "src/Jindan.Desktop/DocumentForm.cs",
+      "size": 2178,
+      "sha256": "2e7ba5d528399c131602f635256730904d11c311ced9aa48de85982cc7de54cd"
+    },
+    {
+      "path": "src/Jindan.Desktop/Jindan.Desktop.csproj",
+      "size": 606,
+      "sha256": "8c5b85cea092cb47c2689967eda97f9348b5da043e2d2a15531e291f4a6a96f3"
+    },
+    {
+      "path": "src/Jindan.Desktop/LoginDialog.cs",
+      "size": 2145,
+      "sha256": "b47fd46c9df1c4173185fa1849864577dce37a673ccd639d79baf91a2c97a2c0"
+    },
+    {
+      "path": "src/Jindan.Desktop/Program.cs",
+      "size": 7669,
+      "sha256": "72e1bc6be7277d9effb9b05d11b3b7cb4e9a7174e7ca2a1d1840296fd42fe6d3"
+    },
+    {
+      "path": "src/Jindan.Desktop/WorkbenchForm.cs",
+      "size": 21436,
+      "sha256": "e0f6bda5d4a7215d051a08c7251578f8be84ac7e234e27c6524524b0429e9a64"
+    },
+    {
+      "path": "src/Jindan.Desktop/packages.lock.json",
+      "size": 1005,
+      "sha256": "b925d18aa9b4c0cea1d96430d134dc9bf524ee7b42202c9cfbdea197c6de2c30"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/Jindan.Infrastructure.csproj",
+      "size": 282,
+      "sha256": "54104a75b84230429cf4383476ff8e78d557f8c2a3da5a70ebcfa0e8d1182b32"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LegacyWorkImport.cs",
+      "size": 12748,
+      "sha256": "b55d5bfc63c6bcc21d71b3cf0c207e152575ba79e36fda2d1ff798e77a27c243"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalAssets.cs",
+      "size": 6296,
+      "sha256": "f3901de8b8d816128cf174ff485c74d4db76355310e84ae7d8b97cc3da91d8f7"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalIdentity.cs",
+      "size": 6032,
+      "sha256": "1225f93c78e6beab7b580865fd46f4aa2a5513bde4133ca343c478abb60e60ca"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalRelations.cs",
+      "size": 4622,
+      "sha256": "b9a13c5ae64aabc05c93e14846265217e93724d1c6110aed9d49fc30725d4b7c"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalTransfer.cs",
+      "size": 12673,
+      "sha256": "58a5ff1cca0600df08672572f51eef10758a67f72c5075db990c2de3a89a8035"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/LocalWorkspace.cs",
+      "size": 16154,
+      "sha256": "e0ce4f79d122fff3a3111da592c0b76da1c7ff486c7b5971c35bb6bec9d55782"
+    },
+    {
+      "path": "src/Jindan.Infrastructure/packages.lock.json",
+      "size": 280,
+      "sha256": "4aedfb81c3736e68b735af2b55587f622f3e71b7452fad6093df81cdd0f78ee4"
+    },
+    {
+      "path": "src/Jindan.ModuleHost/Jindan.ModuleHost.csproj",
+      "size": 121,
+      "sha256": "54adda601d06c584cfa9861a74dc4a4d52ad2aba44837f031b01d99eac393204"
+    },
+    {
+      "path": "src/Jindan.ModuleHost/Modules.cs",
+      "size": 12832,
+      "sha256": "79763610e9f4ba957ef6e261d30d49118f19fa023f222fc837ebf02507d979aa"
+    },
+    {
+      "path": "src/Jindan.ModuleHost/packages.lock.json",
+      "size": 66,
+      "sha256": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/Jindan.Report.Adapter.csproj",
+      "size": 145,
+      "sha256": "950e502ac26943b207581f76f985ca25fdf3897b0af68ec8cd9e2b75603558c6"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/ReportService.cs",
+      "size": 24725,
+      "sha256": "8ef90206d40ced19285e92a6f188470165e1b97b698a6d32705115e7ffb92ddd"
+    },
+    {
+      "path": "src/Jindan.Report.Adapter/packages.lock.json",
+      "size": 148,
+      "sha256": "38bd4bf5f3b6acbe366fb7a7d85be7ffaa5388ae718e65fcdc0badbd034ad3b4"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/cadRender.js",
+      "size": 1310,
+      "sha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/applicationData.js",
+      "size": 5239,
+      "sha256": "33a22d3e153c721bc3a3e0613d147159b29123593b594a0fd8a7830a554b4580"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/assets/hwpxBase.json",
+      "size": 49747,
+      "sha256": "1a751345839af479c04092b4cbf5d4662d30198a1d00ad1a33e1c00fd3862379"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/chapterConversion.js",
+      "size": 2255,
+      "sha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/collectionForms.js",
+      "size": 9398,
+      "sha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/collectionIntroStyle.js",
+      "size": 4385,
+      "sha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/draftCollection.js",
+      "size": 3471,
+      "sha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/draftPreparation.js",
+      "size": 8319,
+      "sha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/draftRetention.js",
+      "size": 2106,
+      "sha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/draftSourceBindings.js",
+      "size": 1080,
+      "sha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/draftWriter.js",
+      "size": 3826,
+      "sha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/electricalPreparation.js",
+      "size": 8444,
+      "sha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/engineContract.js",
+      "size": 2614,
+      "sha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/engineFacade.js",
+      "size": 10190,
+      "sha256": "2bc642b5bb0b8b55cbc736087110644e5ed95dcaca819e1f1d2cea3854428a10"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/engineFailure.js",
+      "size": 853,
+      "sha256": "92ba71a7012cba82424724459d46f94bc8d4932241c8c2809cd6ffe3e06f1722"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/engineRecovery.js",
+      "size": 6048,
+      "sha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/generatedHwpxValidation.js",
+      "size": 4974,
+      "sha256": "53ede1048c75a1fde48d8bc69a2559bf19633e4f0b53fd3bc8ed8f622af15e26"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/hwpxPackage.js",
+      "size": 12889,
+      "sha256": "800c92689b807b07343f392f8536d2e0fde8194e118bc38ef584cd8f86989000"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/nativeCollection.js",
+      "size": 21235,
+      "sha256": "5bcd1f04eea7f3a78dfd6fa96ed2b5269813b5a0311cb1e86f7afd7ca56f739b"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/nativePreview.js",
+      "size": 2120,
+      "sha256": "200aefe2c3dbca81a863b698ecaafeb28256b9217adeabe8b64af242f3341804"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/nativeSaveAudit.js",
+      "size": 5780,
+      "sha256": "06f3229813f1c004156957db8c425d06c7dc45b2cf2acaa3f82e0591c5a66ebe"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/nativeWriter.js",
+      "size": 6721,
+      "sha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pageNumberDecoration.js",
+      "size": 1627,
+      "sha256": "73096c5991a4dfe4435efb4d7ed84706d51fa45d8450df0e3f5ed689ade92f44"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pageReproduction.js",
+      "size": 6874,
+      "sha256": "6a149156bd1d5d4571d1ff8beebc9c03acf4c3932a38eedd559711b884f53a81"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pairedCellFormatting.js",
+      "size": 2907,
+      "sha256": "9a4bfb4d0df39aa132d050633ac119e9737b616c84030bf6c82b92ceafd4b104"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pairedParagraphStyle.js",
+      "size": 2994,
+      "sha256": "239cb87c5a2bd4e442fd1460924340700c06dd7e4ae50a4bd3727c3785ce9af3"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pairedReferenceLearning.js",
+      "size": 10974,
+      "sha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pairedTableMargins.js",
+      "size": 6048,
+      "sha256": "63c69cea4c2bd2d79526d9f7f93c138d985c42816a247780cd49bd7f0730fdb2"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pairedTextReview.js",
+      "size": 3865,
+      "sha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/paragraphFormatting.js",
+      "size": 2159,
+      "sha256": "0bb2e3b5fff2f7cb5ba269bb4f9644fbab7133fb765b0ff99a64c7fa3a1e728c"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/paragraphRole.js",
+      "size": 424,
+      "sha256": "7727b6a9f36eb1690256ae724d122b01f86e0c25062a8122550f30c1c1c692a0"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfAnalysis.js",
+      "size": 5265,
+      "sha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfAppearance.js",
+      "size": 5024,
+      "sha256": "06f6be8e2162a58b090553292e274014de71c775b750be2da6d8168204308b5f"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfCellLayout.js",
+      "size": 4584,
+      "sha256": "61b8f3df8e593885c016bb5f3aebb15c3032ff82f647228009d8c9623962ec9d"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfEmbeddedFonts.js",
+      "size": 5064,
+      "sha256": "d4ba776df984f871aecba151449654f42c2d319406cbd8a2e2813f5f7132b7e3"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfFonts.js",
+      "size": 3065,
+      "sha256": "71e6a0cd3f27447e7fab632a46ceb92ba1fc5b3263379eff2b6d0504927909b9"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfFurnitureCoordinates.js",
+      "size": 6883,
+      "sha256": "7bbe0a732ba645b93dd01c457b420d4212c4dbbf954a564633f01c28d8900d02"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfGlyphGeometry.js",
+      "size": 3297,
+      "sha256": "cdac4215f4d662d6d44c0a8f1b1d722d1abc501c292ea55376c16405aadc137d"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfHwpxShapes.js",
+      "size": 3843,
+      "sha256": "88701aef134a6b158302be8fa6a68177c67beb105063bcbe3a26be63a62879e9"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfHwpxWriter.js",
+      "size": 61542,
+      "sha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfImageLimits.js",
+      "size": 140,
+      "sha256": "6d7864ebe320025e09b43842a73ae7897a525a922bfdeb6f733e1c1151e3529c"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfImagePixels.js",
+      "size": 1853,
+      "sha256": "cb38cf9dd852e7478fe086d87afc6f97d581a42849a0c1e43ca27ce46f61b6d3"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfOcr.js",
+      "size": 9967,
+      "sha256": "a62b0a402035bf3d74c90ee24de4b4385eedd2a28a20129494d93deb94ce66f5"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfOriginalFonts.js",
+      "size": 3130,
+      "sha256": "36fb0ab8c83ea36f9417795cca577c6b2445716fa316fb0b8d639986bd16b0b9"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfProvenance.js",
+      "size": 2294,
+      "sha256": "9a4c83dc2cac3e3f4d9a0dd25327b3ab11d2e99231d3905078e67090f1f8686e"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfRestoration.js",
+      "size": 3493,
+      "sha256": "dc6302f3ad255350afe4ffed6ead20b247e46189ca8d27a06ced04385a11364f"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfStructure.js",
+      "size": 25472,
+      "sha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfTextFrame.js",
+      "size": 1178,
+      "sha256": "7fda3d9e1ed00814e48a48407a7f6653e4bab05e2109cd3b9a21c398298153d2"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/pdfWhitespaceTracking.js",
+      "size": 6811,
+      "sha256": "141053ae7a1c487cc9593246f0f5ec1b98f62c1feb5cdf1ecaeae40e1b0a40e1"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/portableEngine.js",
+      "size": 437,
+      "sha256": "20e38618b8f4b98303ef9f03319a6b188066aa029a9b4b79984bec7fb9c216a0"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/powerView.js",
+      "size": 9627,
+      "sha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/projectArchive.js",
+      "size": 17765,
+      "sha256": "00fe41e39afd8d87c8ad105a38d31f3941d3299ff61fddac465ea17854444d00"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/recoveredDraftSession.js",
+      "size": 5583,
+      "sha256": "9263eb29c54095ece2cce7336c7b9d47e42c91a46c55651f0b1f658e2356818a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/referenceAnalyzer.js",
+      "size": 12379,
+      "sha256": "fb210448fa34dfa63fca336b6c7fce4b3cdb75ac2541157b13b0905213151bed"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/referenceLearning.js",
+      "size": 5362,
+      "sha256": "851785649ef77e214d1235d29ed1430f0c1f46c1e0803d631e286fc91c9ff94d"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/referenceProjects.js",
+      "size": 17332,
+      "sha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportAnalyzer.js",
+      "size": 8163,
+      "sha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportEngine.js",
+      "size": 22578,
+      "sha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportInterpreter.js",
+      "size": 4762,
+      "sha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportLibrary.js",
+      "size": 13969,
+      "sha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportList.js",
+      "size": 1551,
+      "sha256": "83ad5b0f05aec20ea145253b0bf4cf6224026c66827b7dbe5bafa32f500e0226"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportNumbering.js",
+      "size": 20309,
+      "sha256": "14a5131a22b9d72b0e13fc2eecb618a8ead4487a0c310bf00ef197b0de9d0255"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportSections.js",
+      "size": 1587,
+      "sha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportSpecification.js",
+      "size": 6718,
+      "sha256": "9275bfd56c4af034575511bda58cb9eae1afb89be5e0a224128ba3b6130d1220"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportStore.js",
+      "size": 12997,
+      "sha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reportWorkflow.js",
+      "size": 5252,
+      "sha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/reproductionReview.js",
+      "size": 2399,
+      "sha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/restoration.js",
+      "size": 28416,
+      "sha256": "bc54bdfc24a8df7cd57a2012d72b48b4a2ad44a4b91d5ea2161259b4b742682a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/sfntFonts.js",
+      "size": 12416,
+      "sha256": "3478b6bf04d6aaf0a309ee8bb49b308e3dc2da31c718869084be5aae7c8fc25a"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/sourceParser.js",
+      "size": 18245,
+      "sha256": "fd353e5e7a63fda08c97232426e44652a2c962845cd9024d7d7333764a69e52c"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/studioProjects.js",
+      "size": 1141,
+      "sha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/styledTextReplacement.js",
+      "size": 2650,
+      "sha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/thermalBmt.js",
+      "size": 11687,
+      "sha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/thermalDelivery.js",
+      "size": 1358,
+      "sha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/workflowAnalysis.js",
+      "size": 11181,
+      "sha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/engine/src/services/report/zipBoundary.js",
+      "size": 888,
+      "sha256": "ca50b17762be65a2e168fe13657175a13fdc350faf5111dd43f56aac13892cd1"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/node-cad.mjs",
+      "size": 6984,
+      "sha256": "52a4d60f52bfabea789f5cc1244e7ecb92c6bc38bdd19e38d53915c9a0a134c5"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/node-pictures.mjs",
+      "size": 8636,
+      "sha256": "494e8f6812fa0eff0c87b5429441ca03dbdc9886910192db4170422c8bcbba91"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/worker-client.mjs",
+      "size": 4928,
+      "sha256": "9c71d57719dbd57449da093ad85e0bdfba2921615940bd545664fde6ecf1f141"
+    },
+    {
+      "path": "src/Jindan.Report.Worker/worker.mjs",
+      "size": 35158,
+      "sha256": "b6de8d7b2de0d83fb97df8b208293675079491e06f1e7c6405dd455b34493459"
+    },
+    {
+      "path": "src/Jindan.Update.Tool/Jindan.Update.Tool.csproj",
+      "size": 240,
+      "sha256": "16193f54b8b573092f06383af4c932ce041d8b5ab340caada5050e3856780e93"
+    },
+    {
+      "path": "src/Jindan.Update.Tool/Program.cs",
+      "size": 12567,
+      "sha256": "6b5a0f6d8fd1381d86c72a2826605f7c1acf08893ecba5f3047f24fe31aa84f7"
+    },
+    {
+      "path": "src/Jindan.Update.Tool/packages.lock.json",
+      "size": 284,
+      "sha256": "f1b578f0fbd938ca6d3505a3b63bdf15a42462a64cb2cb6ba978a93190f7fc4c"
+    },
+    {
+      "path": "src/Jindan.Update/Jindan.Update.csproj",
+      "size": 220,
+      "sha256": "407b6e9a8d05ab68df0ba3f52939b07e7f674ae4b26b7f52ca86c2947ef96e21"
+    },
+    {
+      "path": "src/Jindan.Update/UpdateCoordinator.cs",
+      "size": 18128,
+      "sha256": "efe1ab10cea6d8c91b2ebb8f93f719ff1a8c8e9162809b7b68745cc1ad3f7429"
+    },
+    {
+      "path": "src/Jindan.Update/WorkspaceLocation.cs",
+      "size": 4729,
+      "sha256": "06a55ec84a8331d60ecde255bfe34b4c8475fa889ad07f82736dcc78b74daaf0"
+    },
+    {
+      "path": "src/Jindan.Update/packages.lock.json",
+      "size": 138,
+      "sha256": "ba580fcd420748020606bb15b1ff61c97f2ffc2d32a67edafdc09b65a65dcf8a"
+    },
+    {
+      "path": "src/Modules/Board/Jindan.Modules.Board.csproj",
+      "size": 280,
+      "sha256": "57d2c661227e803df3745f028160f1330fd76428943940a21e9485134af2094f"
+    },
+    {
+      "path": "src/Modules/Board/LocalAttachments.cs",
+      "size": 3274,
+      "sha256": "122ecd3302fd656d2811dc7e8045dd4ca687ca2ade060fb162e16d5a785637d4"
+    },
+    {
+      "path": "src/Modules/Board/Module.cs",
+      "size": 3416,
+      "sha256": "9fde4e6c97de8015552c1a1e2d9e2bec2f34599291b0ec87e960f11a62a3adfe"
+    },
+    {
+      "path": "src/Modules/Board/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "src/Modules/Dashboard/Jindan.Modules.Dashboard.csproj",
+      "size": 350,
+      "sha256": "887a7b76f95ea9a05eaf39c53105ebef258ff3ab42b27b448a2a2c444b8a7a73"
+    },
+    {
+      "path": "src/Modules/Dashboard/Module.cs",
+      "size": 6054,
+      "sha256": "02547868d78f38a2c4d85c9b861fd7823af03dfd25c34f4acc81b059d5d373bd"
+    },
+    {
+      "path": "src/Modules/Dashboard/packages.lock.json",
+      "size": 447,
+      "sha256": "85760645698bd913b636e48a358b834c502ec1b6881ac16bcaa0da6417151f34"
+    },
+    {
+      "path": "src/Modules/Files/CadPreviewWindow.cs",
+      "size": 6661,
+      "sha256": "2f0d04e870f724fa00fc5e094d09000be8967c522627438b6b1351c6b071532b"
+    },
+    {
+      "path": "src/Modules/Files/Jindan.Modules.Files.csproj",
+      "size": 280,
+      "sha256": "015d3875a15c25c52aa2349acc5f64c10c979dd11856d6c8ae754eb6a5c1d940"
+    },
+    {
+      "path": "src/Modules/Files/LocalFolders.cs",
+      "size": 11198,
+      "sha256": "e13efbed5670e02ccc900e1e47fc8f5630bc825ee724d5b027e265a4fec958dd"
+    },
+    {
+      "path": "src/Modules/Files/Module.cs",
+      "size": 4474,
+      "sha256": "5c8608278448029373cf445c67a1946bd395d9c2939f9f9e2f1d09d38838355b"
+    },
+    {
+      "path": "src/Modules/Files/NavigationGestures.cs",
+      "size": 7609,
+      "sha256": "e287f91f3c1757e675b2efa74c34b07874a1153160bfbbbe1907a6e6060fe41c"
+    },
+    {
+      "path": "src/Modules/Files/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "src/Modules/Members/Jindan.Modules.Members.csproj",
+      "size": 282,
+      "sha256": "2e82d0339368a37dbae9456e11267362412cec4587fca52711c8b2c6d7a40c94"
+    },
+    {
+      "path": "src/Modules/Members/Module.cs",
+      "size": 5897,
+      "sha256": "680c270a1a43f8347dd71fb160cb40d628e0ab9e522ca667f856333590ebe545"
+    },
+    {
+      "path": "src/Modules/Members/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "src/Modules/Photos/Jindan.Modules.Photos.csproj",
+      "size": 281,
+      "sha256": "6a4b037a1492e083f58d6091289bc1d86e66347241fe3f78eb32a4c11aaf72c3"
+    },
+    {
+      "path": "src/Modules/Photos/Module.cs",
+      "size": 9687,
+      "sha256": "99a08391338347dfd9be862a1bdef1b537034d4afc489d6436f831e862e2484b"
+    },
+    {
+      "path": "src/Modules/Photos/PhotoThumbnails.cs",
+      "size": 8044,
+      "sha256": "b77d149e0b6246068f130c71902c2eac5449cdd3ac4b706baef4d05d2891cc21"
+    },
+    {
+      "path": "src/Modules/Photos/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "src/Modules/Processes/Jindan.Modules.Processes.csproj",
+      "size": 350,
+      "sha256": "6d9d85bd23d60512ac0a3593cb83ecda5dd58608bbc009d87ccf6a70389d3ea4"
+    },
+    {
+      "path": "src/Modules/Processes/Module.cs",
+      "size": 2746,
+      "sha256": "cfb50a27fcd7cedf520915623cd6bdc8c6e9bfd553ce57d04382500c9e892937"
+    },
+    {
+      "path": "src/Modules/Processes/packages.lock.json",
+      "size": 447,
+      "sha256": "85760645698bd913b636e48a358b834c502ec1b6881ac16bcaa0da6417151f34"
+    },
+    {
+      "path": "src/Modules/Projects/Jindan.Modules.Projects.csproj",
+      "size": 349,
+      "sha256": "5c6b4dee57a753ea2c6b8ffe5db4675755549664bd71ffd88513a798ba872aca"
+    },
+    {
+      "path": "src/Modules/Projects/Module.cs",
+      "size": 2448,
+      "sha256": "dfa00638ee290e0f2b217b9728b9be1297bba02f698ef29ed03be30b8f586b52"
+    },
+    {
+      "path": "src/Modules/Projects/packages.lock.json",
+      "size": 447,
+      "sha256": "85760645698bd913b636e48a358b834c502ec1b6881ac16bcaa0da6417151f34"
+    },
+    {
+      "path": "src/Modules/ReportStudio/Jindan.Modules.ReportStudio.csproj",
+      "size": 314,
+      "sha256": "02f1afb781ef0c56cbccd3d3e72bedd8c6129d56f54e7a0c671508e441b0d060"
+    },
+    {
+      "path": "src/Modules/ReportStudio/Module.cs",
+      "size": 958,
+      "sha256": "eacf2f9ff306e41ff995a99f23ea30dd18fc57b01e29bf0ea1492dfcb97c1a4d"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportDisciplineView.cs",
+      "size": 18005,
+      "sha256": "fef03d7e38deed3ab6b07d222607435ab3fe8cd3f1b8d3819fe6238304fa9749"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportDocument.cs",
+      "size": 51438,
+      "sha256": "760eb145de8203f085babd9d039c6fd58571a5d6a46e76a31c6f76c7b702ae3d"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportElectricalView.cs",
+      "size": 12922,
+      "sha256": "f92c08b1abc7295e6ca8014388ab159a2f80e86e58e76ebcf44c46c931267c99"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportFormattingView.cs",
+      "size": 16985,
+      "sha256": "49c4261e86208fb0b8212ed276aeb5072c200363fa6de5a34211ab2b5b6ba8c0"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportLegacyArchive.cs",
+      "size": 7393,
+      "sha256": "63f834afe03f537e3206b83d2709da62628b9f27083c5b1b25fa95098023e56e"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportLibraryView.cs",
+      "size": 11894,
+      "sha256": "d01c890f142e2f2c27c6af1e926e64197a4c417d32749ff43343ea27a0e341ee"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportMaterialsView.cs",
+      "size": 8821,
+      "sha256": "6ab9a7aecf55a8b56518c8d53692424c44d381189be24288ff8d5b098fea011c"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportPersistence.cs",
+      "size": 8866,
+      "sha256": "b98a5b2df9018c3fe265d83c6c8986f9b3b33803730f6989cc89b2c2ba303ed8"
+    },
+    {
+      "path": "src/Modules/ReportStudio/ReportRecoveryView.cs",
+      "size": 8578,
+      "sha256": "1e12d68ab164871d5bfc8a7a57a51fd5047c57d90917088452ebd3f87c43ea76"
+    },
+    {
+      "path": "src/Modules/ReportStudio/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "src/Modules/Tasks/Jindan.Modules.Tasks.csproj",
+      "size": 280,
+      "sha256": "8877f41630a199ad9840fafcd571484d40a6101ba53596a4ea8a472407500da2"
+    },
+    {
+      "path": "src/Modules/Tasks/Module.cs",
+      "size": 6185,
+      "sha256": "1e83c5fe6f03359a60cfb0a5c04f7abaa3949ae82b70b9040cd677fd02275188"
+    },
+    {
+      "path": "src/Modules/Tasks/packages.lock.json",
+      "size": 304,
+      "sha256": "82d733096cd4ac810449806478fbb6c05417fce560527b8a5e208466f3f0406c"
+    },
+    {
+      "path": "tests/EngineRepair/audit65-reproduce.cjs",
+      "size": 4332,
+      "sha256": "94640788fae8ea95dfc01e869c8e9f325f357696b42b2df8dde76bbbfd800fa8"
+    },
+    {
+      "path": "tests/EngineRepair/repair66.test.cjs",
+      "size": 4225,
+      "sha256": "5bbd53c3ccb5fd356111187a6477bc80e23281b10ccde40ed1fbde6cef3b737d"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV1/Module.cs",
+      "size": 125,
+      "sha256": "588ec39d4747ebec46a0313fd57a3f01455d2682cbd593fc66aea1134d088ace"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV1/ModuleV1.csproj",
+      "size": 172,
+      "sha256": "b49225cbeb97dd6968b1e064a0f715d90d8f9594102dc4d0f36101e1c5278705"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV1/packages.lock.json",
+      "size": 66,
+      "sha256": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV2/Module.cs",
+      "size": 138,
+      "sha256": "6468dc6493a86db0c189b49ad8cdb2524a9b425b415ae40dcc81fec1b66e4561"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV2/ModuleV2.csproj",
+      "size": 172,
+      "sha256": "b49225cbeb97dd6968b1e064a0f715d90d8f9594102dc4d0f36101e1c5278705"
+    },
+    {
+      "path": "tests/Fixtures/ModuleV2/packages.lock.json",
+      "size": 66,
+      "sha256": "a4364d81a6de2707d66fbced18fbbc926c882ab96e1d1aebbb17e871285b9d75"
+    },
+    {
+      "path": "tests/Fixtures/schedule66/golden.json",
+      "size": 4414,
+      "sha256": "b2b1ce1735e8def9c76d353b2b959bfba65f689140c5df4cb0e0126df517afa3"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/CalendarProbeTests.cs",
+      "size": 7440,
+      "sha256": "041bab087a60db9355bffafbd3ac277d0a1d42cd340910009093d6742ab68c88"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/DockLayoutTests.cs",
+      "size": 3626,
+      "sha256": "30e2adc0d25fe7bb2fcebf0d8b6357b54b2cda71732669fe5c4ce2bb79f57232"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj",
+      "size": 1821,
+      "sha256": "105d8c692cdd9038fae5addc070bfddf21d7cd525cb4f05d1ba50bec04935151"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/MissingModuleTests.cs",
+      "size": 4048,
+      "sha256": "08a68bb94b9e550dc3b3fb2c70d72f5b8a5187ff353452e540a640c02deed9ea"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/OwnedLifecycleTests.cs",
+      "size": 10873,
+      "sha256": "822f6b35b8dc36f9c1acd4485890b9996854a0e2e1ac9cbb13e13eb9e2c2d79c"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/Program.cs",
+      "size": 44225,
+      "sha256": "b5643b6da8f90282a80ff121a40145b001c129a5267c82b2a9ed352592db9f8b"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/README.md",
+      "size": 16117,
+      "sha256": "bf0de3a2d31c37f71aa9df06a77e3864c224d850dfcd897856602a6f1072c9ba"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/packages.lock.json",
+      "size": 1343,
+      "sha256": "e0c185370ff9b41f859641ff3c58580ac32317e6338ca462088997c14485cb1f"
+    },
+    {
+      "path": "tests/Jindan.Desktop.UiTests/prepare-ui-fixture.ps1",
+      "size": 3186,
+      "sha256": "30f4a61b7bdb95ee28f99538190657318932877b9b8cc45e6c0321b30e2bd862"
+    },
+    {
+      "path": "tests/Jindan.Domain.Tests/Jindan.Domain.Tests.csproj",
+      "size": 263,
+      "sha256": "fcb806965c86a2e5fd376cddae7aecf8ca807cb6a5a3af53d2b1556b7b72a2fd"
+    },
+    {
+      "path": "tests/Jindan.Domain.Tests/Program.cs",
+      "size": 21679,
+      "sha256": "b5a78a370492140035372b82775743157d0cbd2577cbdb7182d4da4016d4fb2b"
+    },
+    {
+      "path": "tests/Jindan.Domain.Tests/packages.lock.json",
+      "size": 472,
+      "sha256": "b003ce1d36e6788724d9b40d2215f657360f5fd05135f9632439d61c416173b9"
+    },
+    {
+      "path": "tests/Jindan.Launch.Tests/Jindan.Launch.Tests.csproj",
+      "size": 142,
+      "sha256": "718dfd40c3df160120120cbfcb5f12314726ecbbd7710971bdd605ce3d30c5a4"
+    },
+    {
+      "path": "tests/Jindan.Launch.Tests/Program.cs",
+      "size": 3277,
+      "sha256": "1d92645634e224e74e690fc58a6dae04ea7ec3f1542f471cb66daf24c5d97182"
+    },
+    {
+      "path": "tests/Jindan.Launch.Tests/packages.lock.json",
+      "size": 77,
+      "sha256": "531d4cf71e5420c1c03da4c06778ba2a212c7058a3882e7a3a873ae2f811511e"
+    },
+    {
+      "path": "tests/Jindan.LegacyImport.Tests/Jindan.LegacyImport.Tests.csproj",
+      "size": 263,
+      "sha256": "fcb806965c86a2e5fd376cddae7aecf8ca807cb6a5a3af53d2b1556b7b72a2fd"
+    },
+    {
+      "path": "tests/Jindan.LegacyImport.Tests/Program.cs",
+      "size": 11262,
+      "sha256": "5d7856f245e3a05573a12a43e9ec5abe24441f658bf82e36fee377df95b754d8"
+    },
+    {
+      "path": "tests/Jindan.LegacyImport.Tests/packages.lock.json",
+      "size": 472,
+      "sha256": "b003ce1d36e6788724d9b40d2215f657360f5fd05135f9632439d61c416173b9"
+    },
+    {
+      "path": "tests/Jindan.LocalModules.Tests/Jindan.LocalModules.Tests.csproj",
+      "size": 1568,
+      "sha256": "9395e21be9e9237bfdd4e045c2b33e771feb02099fafd5cbaeb87f38ce6da56b"
+    },
+    {
+      "path": "tests/Jindan.LocalModules.Tests/Program.cs",
+      "size": 16001,
+      "sha256": "ea06287fce3766f656191e3b084b18c5842a69db388c28eff7874ab8892e6966"
+    },
+    {
+      "path": "tests/Jindan.LocalModules.Tests/packages.lock.json",
+      "size": 959,
+      "sha256": "8a7bff5cfa18f7897cf7e99e083187bf38aa5a96fbd3fecfad8d777683b9176d"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/Jindan.NativeEngine.Tests.csproj",
+      "size": 339,
+      "sha256": "2f00d1c7792411e7c03814e61042891ad46d59f9ad0cc60555d08fcd76193fdd"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/Program.cs",
+      "size": 9604,
+      "sha256": "653c4ba4fb06fcb64a75fd8e20f63b7e4879d1917a4265b1e08bc2e60a5d603e"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/dtd.hwpx",
+      "size": 8807,
+      "sha256": "920f7361f98bd60285d32cce04e7250cfd00794943f4e0c775accc5ba0aa2484"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/duplicate.hwpx",
+      "size": 11107,
+      "sha256": "fbc0e2f9e7cb999cddf57f44aeec3be9688b3dbb6f22b3b1eb8dbc054d2d788b"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/malformed.hwpx",
+      "size": 18,
+      "sha256": "f7d1e03cef764b0f3b724b967c5411f26d8fa960d966e77ddb54839aeab35293"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/manifest.json",
+      "size": 4934,
+      "sha256": "1b4b69e008738f6c225d5f7de7848bee0ffa2a9bdfb9a03710d1587826879a76"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/normal.hwpx",
+      "size": 11176,
+      "sha256": "0cd7891eef11d6c5e3c6b4814908459b81458e0f0e9019eea9ce7a43f8538e48"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/path.hwpx",
+      "size": 11212,
+      "sha256": "f91c33c12d114be37c509d5647be833a84a87da6ae19d3f9cefa5a88b2bac5ae"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/goldens/recovery.zip",
+      "size": 21699,
+      "sha256": "235b009d9d435d2ddc8352d4b48e53e00ae95c3d159c083e7ae239e0b9854102"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/packages.lock.json",
+      "size": 142,
+      "sha256": "f4cd423f17f61766043f0a212c9a430e4981efb45fa9436497f50d42a3ade743"
+    },
+    {
+      "path": "tests/Jindan.NativeEngine.Tests/shared-goldens.mjs",
+      "size": 6108,
+      "sha256": "73c20ef7c31a432f7e54096f974d0f0c8c2d5ecb2c6c4c2a94ec526d3e9676d1"
+    },
+    {
+      "path": "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+      "size": 610,
+      "sha256": "95e0c8da778abaa7181e58ee12624671e605973beb21fbe28c6f9f5fadd3ea30"
+    },
+    {
+      "path": "tests/Jindan.Package.Tests/Program.cs",
+      "size": 33638,
+      "sha256": "7ffa43bb96bdd93d10c08717d3a2b66591ab98494a49534e086d939b49d86b4b"
+    },
+    {
+      "path": "tests/Jindan.Package.Tests/packages.lock.json",
+      "size": 431,
+      "sha256": "cfddc7d201606076ae8028ab3480624e2721ee58edc185851a7e011d1da4beed"
+    },
+    {
+      "path": "tests/Jindan.Patch.ProductTests/Jindan.Patch.ProductTests.csproj",
+      "size": 1128,
+      "sha256": "9ed6942d448efe9c7c5690baee700e350712af513e54b3fb7420cefdf7d165ae"
+    },
+    {
+      "path": "tests/Jindan.Patch.ProductTests/Program.cs",
+      "size": 10731,
+      "sha256": "07980cd761ff101fee7a7097eddd564437a16de85d56b96f5098afc94ca85ceb"
+    },
+    {
+      "path": "tests/Jindan.Patch.ProductTests/packages.lock.json",
+      "size": 77,
+      "sha256": "531d4cf71e5420c1c03da4c06778ba2a212c7058a3882e7a3a873ae2f811511e"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Directory.Build.props",
+      "size": 292,
+      "sha256": "1d3fa31e0fadec80178efbd46ee2c1d229c305cad0fd1e1aa985e39c2ba8bb89"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/GuiSmoke.cs",
+      "size": 30160,
+      "sha256": "73f526bf4eeae740228db1e66b6f7ed61a628d67e1427069620d6c94657463f0"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Jindan.Report.Tests.csproj",
+      "size": 342,
+      "sha256": "c17c36beb3570a76e487ef148109840b80b94b8713534510243375324f95db50"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Program.cs",
+      "size": 13199,
+      "sha256": "a8d44dda7abb2086f9ebdb1f0d4a5c58930ee9ae4f8c6ce9074c976df63f8c7f"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/Report.GuiSmoke.csproj",
+      "size": 1885,
+      "sha256": "fe35774567a43cf4211ba91455ac42dc7be06f15ed78bfb03c545c022bbf0ec8"
+    },
+    {
+      "path": "tests/Jindan.Report.Tests/packages.lock.json",
+      "size": 1003,
+      "sha256": "de149e616fd301092fd31705f3ae09c92992f3025ddce3b75ae0e754747fef99"
+    },
+    {
+      "path": "tests/Jindan.Sync.Tests/Jindan.Sync.Tests.csproj",
+      "size": 243,
+      "sha256": "8a19be32448a90a20482694437db8672cb0d462fa1d290aa1a77d1f3ed9cbdf6"
+    },
+    {
+      "path": "tests/Jindan.Sync.Tests/Program.cs",
+      "size": 17999,
+      "sha256": "d3057446a87e3c588ebbdc7a9cd0762723643e991c8570f0c45c7b6adb724fed"
+    },
+    {
+      "path": "tests/Jindan.Sync.Tests/packages.lock.json",
+      "size": 280,
+      "sha256": "4aedfb81c3736e68b735af2b55587f622f3e71b7452fad6093df81cdd0f78ee4"
+    },
+    {
+      "path": "tests/LegacyEngine/body-stroke28-regression.test.cjs",
+      "size": 1939,
+      "sha256": "30c8df44319015bc932c4654315bc01ec3339bafc177ea493c54d47b54b0085a"
+    },
+    {
+      "path": "tests/LegacyEngine/chapter-conversion.test.cjs",
+      "size": 4934,
+      "sha256": "3a7b1dbb04639e939b51431062613eee904851d8fc00a9f42df2ffa4f8e12adb"
+    },
+    {
+      "path": "tests/LegacyEngine/collection-intro-style.test.cjs",
+      "size": 1473,
+      "sha256": "51845c96abfc60a43f149d7697eec6b13ff8b7b51b091f829f70f1d3faed2dd6"
+    },
+    {
+      "path": "tests/LegacyEngine/draft-preparation.test.cjs",
+      "size": 16316,
+      "sha256": "face13f29882af059baee6533315f156b7934046c31fca0c45e84f547029f3ba"
+    },
+    {
+      "path": "tests/LegacyEngine/electrical-preparation.test.cjs",
+      "size": 4087,
+      "sha256": "1e9190cf4ec87ef9de326ac3a5e1fc53d6b0a73d2fcd0502bfe3050c1e06ef9b"
+    },
+    {
+      "path": "tests/LegacyEngine/empty-furniture-probe.test.cjs",
+      "size": 6925,
+      "sha256": "34ad2e6da917005eb8f55a6918a5309958f0666ee98769cf418a49646977a3bc"
+    },
+    {
+      "path": "tests/LegacyEngine/engine-facade.test.cjs",
+      "size": 9487,
+      "sha256": "6c0ad580c195045e11ab42b4464fa1a0468241e557372d1e8aef331dad260772"
+    },
+    {
+      "path": "tests/LegacyEngine/engine-recovery.test.cjs",
+      "size": 3741,
+      "sha256": "a7a9eca06f9914f4c1c65d60fca7d5565cb92200b5e24d19cc349c403b710f57"
+    },
+    {
+      "path": "tests/LegacyEngine/fixtures/legacy-font.cjs",
+      "size": 1179,
+      "sha256": "b88207dada9dd559d7b2eb02b97726b3e49c89dc263a3f2e268de560dd577c3f"
+    },
+    {
+      "path": "tests/LegacyEngine/fixtures/thermal-bmt.cjs",
+      "size": 3490,
+      "sha256": "f2f0d45c8ee6305f6f6ca7d76b01364bc264fec07f2c1f4c14124f59c3d87154"
+    },
+    {
+      "path": "tests/LegacyEngine/font-name60-tools.cjs",
+      "size": 3693,
+      "sha256": "6c6f59f86043248e0a76d6ff27e356b79f8e23f7552abe8aba7a6a09c2a727f7"
+    },
+    {
+      "path": "tests/LegacyEngine/font-name60.test.cjs",
+      "size": 1636,
+      "sha256": "011912f00a6ba100f558c76386215c1ae8e65fb00684e6ff07cd803ae9c20495"
+    },
+    {
+      "path": "tests/LegacyEngine/furniture-origin.test.cjs",
+      "size": 1727,
+      "sha256": "390581a807141b9051e8562d660b2ca960f67935f5e4294aec245a18910f1133"
+    },
+    {
+      "path": "tests/LegacyEngine/glyph-overprint38-regression.test.cjs",
+      "size": 2649,
+      "sha256": "5b7014b78d2b416f33643c201367fc56b2e3cb8501b5d37fd85068b54605a684"
+    },
+    {
+      "path": "tests/LegacyEngine/hwpx-restoration-fidelity.test.cjs",
+      "size": 17205,
+      "sha256": "cde6085e36d714884314c50d58247204a54aebfa50e309c74ef703cae810412e"
+    },
+    {
+      "path": "tests/LegacyEngine/native-font28-regression.test.cjs",
+      "size": 6261,
+      "sha256": "b33d156287c50051314c321afb79860476221810267704e7fbd6dda45a2ece36"
+    },
+    {
+      "path": "tests/LegacyEngine/native-paragraph-flow27.test.cjs",
+      "size": 6507,
+      "sha256": "d035ff294e6334776e0fbff5b144cb79000cb159ed47179c903e814664561d84"
+    },
+    {
+      "path": "tests/LegacyEngine/native-pdf19-regression.test.cjs",
+      "size": 12051,
+      "sha256": "acab9e18431ef440083d88638635bb9815430c4580976154002c108a9faa30d0"
+    },
+    {
+      "path": "tests/LegacyEngine/native-pdf25-regression.test.cjs",
+      "size": 2287,
+      "sha256": "55b6c612403265697e500e566e6c46fbfa373487f39a5363157bd99bfea8b543"
+    },
+    {
+      "path": "tests/LegacyEngine/native-preview.test.cjs",
+      "size": 4204,
+      "sha256": "e727fbc8c32554fd85e6864bc3ff4ed490edfc363afc2343034a1473300c80c8"
+    },
+    {
+      "path": "tests/LegacyEngine/native-save-audit57.test.cjs",
+      "size": 2293,
+      "sha256": "1ab3de428b5ea6b8ed0a52d203bf6c8c8a90ab9b44d83c911d109f5851de2097"
+    },
+    {
+      "path": "tests/LegacyEngine/page-decoration.test.cjs",
+      "size": 2400,
+      "sha256": "526aabca558f85ef118c3939dc783b48854fd53466287efb7f52f47a2a1735dc"
+    },
+    {
+      "path": "tests/LegacyEngine/paired-cell-formatting.test.cjs",
+      "size": 9487,
+      "sha256": "6d449ee6a4cf9df11b5e0c5fa2de384d88bb2feb4b5b6b52aaed7df1c8365bd6"
+    },
+    {
+      "path": "tests/LegacyEngine/paired-table-margins.test.cjs",
+      "size": 5237,
+      "sha256": "8a78eaf79ffaaf80254a65ecbf729ec342ae3f564011817e6dbdcd01aa043ce1"
+    },
+    {
+      "path": "tests/LegacyEngine/paragraph-formatting.test.cjs",
+      "size": 4928,
+      "sha256": "52587a0c76e8b19a7d73dabfa72cf5bfa8e92e32246b222f5c442b835028d91d"
+    },
+    {
+      "path": "tests/LegacyEngine/patch-empty-furniture-probe.cjs",
+      "size": 5827,
+      "sha256": "27a656a91ae0b048404e0920ad863dc9a191a4e3e8d333a1ebc503759e2eb865"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-fidelity.test.cjs",
+      "size": 6930,
+      "sha256": "4345a2999e54efd7d892a5e8040fa01e24991b268cd0ddc0c3e4bdf55fb425fc"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-font-space55-regression.test.cjs",
+      "size": 6458,
+      "sha256": "0ca1c5f7b690cdc48b6aa5ef55c9960780e674f94dbaef4907a9c8dc8cd144ac"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-furniture-coordinates.test.cjs",
+      "size": 3465,
+      "sha256": "17834a77f50e73001c958596202ac749ae2c47e2c7fe5c44efec67936f90d651"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-native24-regression.test.cjs",
+      "size": 8475,
+      "sha256": "526e4ddea270e6717de167876da659d5843d64442af0fc2c1a15320f4ad036a2"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-operator-boundary41-regression.test.cjs",
+      "size": 3115,
+      "sha256": "3672a65030d6081862cb63dadb90070a9aa45bbaa5628a2f06de68d92f8f8eec"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-report.test.cjs",
+      "size": 8946,
+      "sha256": "5d3ce43aa49fbc68ec2c092ba89cea99cc5df2edf3a1a4b79d7bfc3d884c3b59"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-text-frame38-regression.test.cjs",
+      "size": 2335,
+      "sha256": "72e79768a3f6260140c24704b7f0d896ab10e46571d99e00b2301ae5ef6e7253"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-tracking33-regression.test.cjs",
+      "size": 4245,
+      "sha256": "2baefe2e51b858c838252e9f6915fd0db1d414bed35bcb610055b95ef265db53"
+    },
+    {
+      "path": "tests/LegacyEngine/pdf-whitespace38-regression.test.cjs",
+      "size": 6347,
+      "sha256": "dc7854819f29ef4cfb0210b49241a9e25e6a9207937f9d2aad574584a8dcd546"
+    },
+    {
+      "path": "tests/LegacyEngine/png-density57.test.cjs",
+      "size": 787,
+      "sha256": "cbde5340d0af9e4fdca6f80b2cce282f23733afe2fc88628b9abbe617c5395d0"
+    },
+    {
+      "path": "tests/LegacyEngine/powerview.test.cjs",
+      "size": 4584,
+      "sha256": "b2ba957373ff63226a2b3c27b50225eb1b7fa76705119d2d1798cba4f8adc989"
+    },
+    {
+      "path": "tests/LegacyEngine/prepare-continuous-page-probe.cjs",
+      "size": 4380,
+      "sha256": "1a70d635122426b99f45c938fdc4ebadc9446b400003f9f89cc2cf50d545d092"
+    },
+    {
+      "path": "tests/LegacyEngine/prepare-furniture-origin-probes.cjs",
+      "size": 4956,
+      "sha256": "466c5e16b39d5faf22ae9bad7429e97e91bae6f794ef266a5b318ed90db7491e"
+    },
+    {
+      "path": "tests/LegacyEngine/prepare-preservation57-probes.cjs",
+      "size": 5120,
+      "sha256": "9af9974a10868ea9b84f595282c9863eede00a2ce19721b0cd1d8216f7f5fef7"
+    },
+    {
+      "path": "tests/LegacyEngine/project-workbench.test.cjs",
+      "size": 5802,
+      "sha256": "e7d58fdccdc4258facacf5e9d8bd53ca3268b0b581e9adca6fca43b8080cb9f4"
+    },
+    {
+      "path": "tests/LegacyEngine/recovery-draft60.test.cjs",
+      "size": 9780,
+      "sha256": "e8b088b58d2ee770c65d3157531dd7a0ed11e172b9e25949406d2c31b43d0490"
+    },
+    {
+      "path": "tests/LegacyEngine/reference-analyzer.test.cjs",
+      "size": 4647,
+      "sha256": "74c27b4a73a1d5ec0f527344939eee9adce42ada649f37d0abcc157c9a5fdad1"
+    },
+    {
+      "path": "tests/LegacyEngine/report-engine.test.cjs",
+      "size": 15103,
+      "sha256": "f85bb53f8453d0f24a5b8c6c05ba5f8c75e0c09bf17f82d0e3c1dd1a6f6d7cad"
+    },
+    {
+      "path": "tests/LegacyEngine/report-list.test.cjs",
+      "size": 2674,
+      "sha256": "4a619a85f49e34f233b144851e98e1bc7abe7496bb5228c08fd8d72bf3ddb93e"
+    },
+    {
+      "path": "tests/LegacyEngine/report-native-collection.test.cjs",
+      "size": 17422,
+      "sha256": "bbcf8f3dcc7a6180a004f4d80cfd01b2be99e54acf3e44d2ed46978de2251e91"
+    },
+    {
+      "path": "tests/LegacyEngine/report-numbering.test.cjs",
+      "size": 14771,
+      "sha256": "33c3760e0a0263659c5daeb39c931765b0859c9721c3f60d96295a091f1b66d9"
+    },
+    {
+      "path": "tests/LegacyEngine/report-pipeline.test.cjs",
+      "size": 23988,
+      "sha256": "8c3a0fd3813db9a4aab11fc12b209748b97051e8fd89814641697257955295d6"
+    },
+    {
+      "path": "tests/LegacyEngine/report-reference-projects.test.cjs",
+      "size": 5968,
+      "sha256": "ed2cf2743b00a06b78c1b5090fdea90bb5044ae9a51a71789edeacb3fbc50036"
+    },
+    {
+      "path": "tests/LegacyEngine/restoration.test.cjs",
+      "size": 15771,
+      "sha256": "f72531e52593d3102692b95ec757053cb0e5f9a327c9ceeb8e843f74bf8a0059"
+    },
+    {
+      "path": "tests/LegacyEngine/section-bisection.test.cjs",
+      "size": 3426,
+      "sha256": "371d2c10e7458a04d0bdf29a5cf8484697abd346577ecd8346c4dc970199c511"
+    },
+    {
+      "path": "tests/LegacyEngine/split-hwpx-section-probes.cjs",
+      "size": 9599,
+      "sha256": "329a6e8a3aa7c85eea396bb043165bb1da53494f1322ae9ef9dfe71a5b371b91"
+    },
+    {
+      "path": "tests/LegacyEngine/studio-supervision-regression.test.cjs",
+      "size": 36859,
+      "sha256": "101d70c4bdfc7516d6b6c7153358a6704fc59200338aa8bc37c4bb353c1a3d9e"
+    },
+    {
+      "path": "tests/LegacyEngine/thermal-bmt.test.cjs",
+      "size": 2746,
+      "sha256": "72dcbd928c8cb12cb5db1882556763d7a0bd8a8f0adf3f0108a7b9982831702c"
+    },
+    {
+      "path": "tests/LegacyEngine/thermal-delivery.test.cjs",
+      "size": 1381,
+      "sha256": "1673a64db83fa9f388fd35847e228e64d47e326ea5f40b12a0860889b1300c93"
+    },
+    {
+      "path": "tests/LegacyEngine/workflow-analysis.test.cjs",
+      "size": 3962,
+      "sha256": "f5da49878278f3999fc4c24041d6ad6e6ac9113b39945bd88ec2f4ba3a46566c"
+    },
+    {
+      "path": "tests/NodeCad/node-cad.test.cjs",
+      "size": 4916,
+      "sha256": "ac2a12cf781aab71b09895886d9ae85eac3341207478b652f61439921171bc95"
+    },
+    {
+      "path": "tests/NodePictures/node-pictures.test.cjs",
+      "size": 5629,
+      "sha256": "fbe737d09fd1805d53a1e3cd7de485e73c4122ed0a39f41bca4ed4c471d89fc0"
+    },
+    {
+      "path": "tests/WorkerProtocol/transport66.test.cjs",
+      "size": 31124,
+      "sha256": "0188221f33671fd83b96998635d8189c55aac975945e05aeb1f452c89ab8a9d6"
+    },
+    {
+      "path": "tools/check-architecture66.mjs",
+      "size": 2965,
+      "sha256": "404329cefa60c9d8ea8a390a1c7519209bf5fd1b1bfbad17294327add92dda62"
+    },
+    {
+      "path": "tools/check-preservation66.mjs",
+      "size": 3592,
+      "sha256": "88730f93a5e5a80212c25fb64afee7fdbc05df299f1266640a1564966053bad0"
+    },
+    {
+      "path": "tools/create-schedule-goldens66.mjs",
+      "size": 1882,
+      "sha256": "8ec3fdba4aaaf62d28ec3f1153a645c9d2259334a441ff1e2309938b53529370"
+    },
+    {
+      "path": "tools/dotnet.ps1",
+      "size": 373,
+      "sha256": "df9a5f2b0343c0b90fe1424dbf332f6b146973e29e35db4e99ada5851a2516ba"
+    },
+    {
+      "path": "tools/finalize-validation66.mjs",
+      "size": 5326,
+      "sha256": "d51c34632faa246c1c827561653718c04204d9c63301919135b95bb0f004c98c"
+    },
+    {
+      "path": "tools/offline-tests.cjs",
+      "size": 391,
+      "sha256": "e7cc9f9077fcb98aa7d8db5cb1294683c995f5161165b180a94c73dca121dea2"
+    },
+    {
+      "path": "tools/package-fixed-engine66.mjs",
+      "size": 4456,
+      "sha256": "60054b97e1589da8551db453d89cf2f2772d03915dd4dd9d74490ebce27f2357"
+    },
+    {
+      "path": "tools/prepare-legacy66.py",
+      "size": 3331,
+      "sha256": "1bcdef5c651320e7e66733ddf380cc1c17a60f593c215b65ce55dfa52000c725"
+    },
+    {
+      "path": "tools/prepare-product-clone66.mjs",
+      "size": 4771,
+      "sha256": "3f097529a7e1c519fdbfe76447b52ff91d38b888bc7f21a7bd034f5d01a4448d"
+    },
+    {
+      "path": "tools/prepare-review66.mjs",
+      "size": 18942,
+      "sha256": "4f055f67b62995f709ff5ce1f19e3092efe03391df6fabbf440fa31b5d3511be"
+    },
+    {
+      "path": "tools/refresh-source-map66.mjs",
+      "size": 1953,
+      "sha256": "62be487148fe331e9f4cdb95a3c10b1c1d825f494fbfbdb655f7684190b8108a"
+    },
+    {
+      "path": "tools/run-checks66.mjs",
+      "size": 4626,
+      "sha256": "2a45111aaffed6c4c57be326d49657c750cd879b6c0e4e839cf8c5a9e4d3f623"
+    },
+    {
+      "path": "tools/source-checkpoint66.mjs",
+      "size": 3009,
+      "sha256": "af1c6a87d97db46b9a2bcf8de372694b2032ffeb4c6690b28aeae1c14b28dc86"
+    },
+    {
+      "path": "tools/verify-review66.mjs",
+      "size": 3555,
+      "sha256": "0f676d283e1ca4924cbd18d78a05897025e9a59e8d339ccd0d561963e0c93c32"
+    }
+  ],
+  "aggregateSha256": "2b656876dd03954c0c821d4399ae95dcaec6286d16e5682c063979e65618bbae",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

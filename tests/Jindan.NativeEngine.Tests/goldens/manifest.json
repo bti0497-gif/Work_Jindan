@@ -1,0 +1,144 @@
+{
+  "schema": "jindan-native-goldens/1",
+  "syntheticOnly": true,
+  "projectId": "project:native-golden66",
+  "cases": [
+    {
+      "name": "normal.hwpx",
+      "sha256": "0cd7891eef11d6c5e3c6b4814908459b81458e0f0e9019eea9ce7a43f8538e48",
+      "jsAccepted": true,
+      "expected": {
+        "sha256": "0cd7891eef11d6c5e3c6b4814908459b81458e0f0e9019eea9ce7a43f8538e48",
+        "entries": [
+          {
+            "name": "BinData/image0.png",
+            "size": 107,
+            "sha256": "3ebb970faa868547bc5288c733f84224262ec97d35be09f94057224256826c9e"
+          },
+          {
+            "name": "Contents/content.hpf",
+            "size": 956,
+            "sha256": "74ee8ee4dcddb15e3b4f306c662c5d019d8e6e2ace482b778355499b72c6bf79"
+          },
+          {
+            "name": "Contents/header.xml",
+            "size": 55994,
+            "sha256": "7c447ec66d41afb42895628752c0120e0f24f8ff7b86d33002b5b66ee2a70655"
+          },
+          {
+            "name": "Contents/jindan-source.json",
+            "size": 2223,
+            "sha256": "57054d0c8a89b652a5cbddc3caf97621b2739817f64f0f028dfe1f37bb49bfb2"
+          },
+          {
+            "name": "Contents/section0.xml",
+            "size": 10404,
+            "sha256": "79d0fe921882e8736f814dee351acd3fa460bbfd2fbe759b5fb694f56eed1966"
+          },
+          {
+            "name": "Contents/section1.xml",
+            "size": 5922,
+            "sha256": "15b3055d5cb0d8491312b69bd9787b86b74ab7890fae181b2a37eb0cd53e420a"
+          },
+          {
+            "name": "META-INF/container.xml",
+            "size": 251,
+            "sha256": "b92ccea4df015a9e6890be481335d43665968e92de0c9f8c7e33c0eec0f18372"
+          },
+          {
+            "name": "META-INF/manifest.xml",
+            "size": 116,
+            "sha256": "a86b806562f050a1f092372f645654e41ead479ce6f0be004f51a0ee013e6fea"
+          },
+          {
+            "name": "Preview/PrvText.txt",
+            "size": 45,
+            "sha256": "f1ed4565b6bf5299bbd6ea192590cd4349a8cc766470ba9050ac8af375de422d"
+          },
+          {
+            "name": "mimetype",
+            "size": 19,
+            "sha256": "5ab5230b5af04f78947736bf8dd1a269aa684e234f7f4a392efb85289d1655c2"
+          },
+          {
+            "name": "version.xml",
+            "size": 261,
+            "sha256": "f984f5acbb2ea9f89db9fd3efac23bd679f933b6b6ac042a31e4cca153078052"
+          }
+        ],
+        "sections": [
+          {
+            "name": "Contents/section0.xml",
+            "paragraphs": 8,
+            "textSlots": 8,
+            "cells": 4,
+            "pictures": 1,
+            "slotTextSha256": "51679406fb5596b3966165f79c3c8915887b1f260e8c6d759ab430e3bdd70ab6"
+          },
+          {
+            "name": "Contents/section1.xml",
+            "paragraphs": 4,
+            "textSlots": 4,
+            "cells": 0,
+            "pictures": 0,
+            "slotTextSha256": "8e32d00c1c3115909dc72a6de556dc7f2e87d95836955647853a6033a9f3c988"
+          }
+        ]
+      }
+    },
+    {
+      "name": "duplicate.hwpx",
+      "sha256": "fbc0e2f9e7cb999cddf57f44aeec3be9688b3dbb6f22b3b1eb8dbc054d2d788b",
+      "jsAccepted": false
+    },
+    {
+      "name": "path.hwpx",
+      "sha256": "f91c33c12d114be37c509d5647be833a84a87da6ae19d3f9cefa5a88b2bac5ae",
+      "jsAccepted": false
+    },
+    {
+      "name": "malformed.hwpx",
+      "sha256": "f7d1e03cef764b0f3b724b967c5411f26d8fa960d966e77ddb54839aeab35293",
+      "jsAccepted": false
+    },
+    {
+      "name": "dtd.hwpx",
+      "sha256": "920f7361f98bd60285d32cce04e7250cfd00794943f4e0c775accc5ba0aa2484",
+      "jsAccepted": false
+    }
+  ],
+  "recovery": {
+    "name": "recovery.zip",
+    "sha256": "235b009d9d435d2ddc8352d4b48e53e00ae95c3d159c083e7ae239e0b9854102",
+    "files": [
+      {
+        "id": "source",
+        "role": "source",
+        "filename": "synthetic.hwpx",
+        "sha256": "0cd7891eef11d6c5e3c6b4814908459b81458e0f0e9019eea9ce7a43f8538e48",
+        "size": 11176,
+        "entry": "files/0cd7891eef11d6c5e3c6b4814908459b81458e0f0e9019eea9ce7a43f8538e48.bin",
+        "parentIds": [],
+        "requiresReanalysis": false
+      },
+      {
+        "id": "saved",
+        "role": "native-saved",
+        "filename": "synthetic-saved.hwpx",
+        "sha256": "618521818dd724a2c1dfc44e9db2636ed9a88e74660487fbc9efb4beb2149e8a",
+        "size": 11177,
+        "entry": "files/618521818dd724a2c1dfc44e9db2636ed9a88e74660487fbc9efb4beb2149e8a.bin",
+        "parentIds": [
+          "source"
+        ],
+        "requiresReanalysis": true
+      }
+    ]
+  },
+  "sourceHashes": {
+    "hwpxPackage.js": "800c92689b807b07343f392f8536d2e0fde8194e118bc38ef584cd8f86989000",
+    "zipBoundary.js": "ca50b17762be65a2e168fe13657175a13fdc350faf5111dd43f56aac13892cd1",
+    "engineRecovery.js": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2",
+    "pdfHwpxWriter.js": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154"
+  }
+}

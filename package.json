@@ -1,0 +1,24 @@
+{
+  "name": "jindan-dotnet-worker",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Isolated ROADMAP66 local worker; no cloud or credential integration",
+  "dependencies": {
+    "@rhwp/core": "0.8.7",
+    "cfb": "1.2.2",
+    "fast-xml-parser": "5.11.2",
+    "fflate": "0.8.3",
+    "nasjidwg": "0.18.0",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "5.4.624",
+    "tesseract.js": "7.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.27.3"
+  },
+  "scripts": {
+    "test:legacy": "node --test tests/LegacyEngine/*.test.cjs",
+    "test:repair": "node --test tests/EngineRepair/*.test.cjs"
+  }
+}

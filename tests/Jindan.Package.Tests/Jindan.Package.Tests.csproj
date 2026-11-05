@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' == ''">
+    <ProjectReference Include="../../src/Jindan.ModuleHost/Jindan.ModuleHost.csproj"/>
+    <ProjectReference Include="../../src/Jindan.Update/Jindan.Update.csproj"/>
+    <ProjectReference Include="../../src/Jindan.Update.Tool/Jindan.Update.Tool.csproj"/>
+    <ProjectReference Include="../Fixtures/ModuleV1/ModuleV1.csproj" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="../Fixtures/ModuleV2/ModuleV2.csproj" ReferenceOutputAssembly="false"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' != ''">
+    <Reference Include="Jindan.ModuleHost"><HintPath>$(InstallationRoot)/Jindan.ModuleHost.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Update"><HintPath>$(InstallationRoot)/update-tool/Jindan.Update.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Update.Tool"><HintPath>$(InstallationRoot)/update-tool/Jindan.Update.Tool.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+  <Target Name="RequireExactPackage" BeforeTargets="ResolveReferences" Condition="'$(InstallationRoot)' != ''">
+    <Error Condition="!Exists('$(InstallationRoot)/update-tool/Jindan.Update.Tool.dll')" Text="Exact review package missing."/>
+  </Target>
+</Project>

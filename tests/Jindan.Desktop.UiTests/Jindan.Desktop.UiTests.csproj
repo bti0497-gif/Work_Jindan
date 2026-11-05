@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><UseWindowsForms>true</UseWindowsForms><PlatformTarget>x64</PlatformTarget></PropertyGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' == ''"><ProjectReference Include="../../src/Jindan.Desktop/Jindan.Desktop.csproj" /></ItemGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' != ''">
+    <Reference Include="Jindan.Contracts"><HintPath>$(InstallationRoot)/Jindan.Contracts.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Core"><HintPath>$(InstallationRoot)/Jindan.Core.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Desktop.Contracts"><HintPath>$(InstallationRoot)/Jindan.Desktop.Contracts.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Desktop"><HintPath>$(InstallationRoot)/Jindan.Desktop.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Infrastructure"><HintPath>$(InstallationRoot)/Jindan.Infrastructure.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.ModuleHost"><HintPath>$(InstallationRoot)/Jindan.ModuleHost.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Report.Adapter"><HintPath>$(InstallationRoot)/Jindan.Report.Adapter.dll</HintPath><Private>true</Private></Reference>
+    <Reference Include="Jindan.Update"><HintPath>$(InstallationRoot)/Jindan.Update.dll</HintPath><Private>true</Private></Reference>
+  </ItemGroup>
+  <Target Name="RequireExactInstallation" BeforeTargets="ResolveReferences" Condition="'$(InstallationRoot)' != ''">
+    <Error Condition="!Exists('$(InstallationRoot)/Jindan.Desktop.dll')" Text="InstallationRoot must point at the exact packaged application root." />
+  </Target>
+</Project>

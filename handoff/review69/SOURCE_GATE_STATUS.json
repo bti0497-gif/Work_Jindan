@@ -1,0 +1,32 @@
+{
+  "receivedAt": "2026-11-05T01:43:29.508Z",
+  "userMarker": "REVIEW69-RESUME-20261105",
+  "instruction": "handoff/SUPERVISOR_R4_REVIEW69.md",
+  "requiredA": "incomplete snapshot rollback data loss",
+  "requiredB": "visual first-row selection differs from bound model/editors/preview",
+  "requiredC": "visible project selector/autorefresh/readable report tab",
+  "r4Immutable": true,
+  "r5ApprovalPending": true,
+  "guiOwner": "free until exactR5 ready; SDK then inventory serialized",
+  "snapshotBoundary": "R4/SOURCE66 and FILES66 are historical checkpoints; current source is under authorized revision for new R5.",
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "headless": {
+    "path": "artifacts/checks66/2026-11-05T01-58-45-761Z/RESULT.json",
+    "passed": true,
+    "packageTests": 81,
+    "offlineNode": 260,
+    "adapter": 41,
+    "buildWarnings": 0,
+    "buildErrors": 0
+  },
+  "beforeAB": "artifacts/review69-legacy-ab01/RESULT.json",
+  "beforePhoto": "artifacts/review69-r4-before-ui01/R4_BEFORE_HANDOFF.json",
+  "selectionSource": {
+    "path": "artifacts/review69-selection-ui04/SELECTION69_HANDOFF.json",
+    "pass": 10,
+    "fail": 0,
+    "sourceFixtureOnly": true
+  },
+  "r5": "artifacts/ready-for-review/final66-r5"
+}

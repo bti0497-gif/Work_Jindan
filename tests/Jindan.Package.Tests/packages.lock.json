@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0": {
+      "jindan.modulehost": {
+        "type": "Project"
+      },
+      "jindan.update": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.ModuleHost": "[1.0.0, )"
+        }
+      },
+      "jindan.update.tool": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Update": "[1.0.0, )"
+        }
+      }
+    }
+  }
+}

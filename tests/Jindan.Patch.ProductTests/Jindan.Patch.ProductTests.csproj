@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>Exe</OutputType><UseWindowsForms>true</UseWindowsForms><InstallationRoot Condition="'$(InstallationRoot)'==''">$(MSBuildProjectDirectory)/../../artifacts/integration-review66/application</InstallationRoot></PropertyGroup>
+ <ItemGroup>
+  <Reference Include="Jindan.Desktop"><HintPath>$(InstallationRoot)/Jindan.Desktop.dll</HintPath></Reference>
+  <Reference Include="Jindan.Contracts"><HintPath>$(InstallationRoot)/Jindan.Contracts.dll</HintPath></Reference>
+  <Reference Include="Jindan.Desktop.Contracts"><HintPath>$(InstallationRoot)/Jindan.Desktop.Contracts.dll</HintPath></Reference>
+  <Reference Include="Jindan.Infrastructure"><HintPath>$(InstallationRoot)/Jindan.Infrastructure.dll</HintPath></Reference>
+  <Reference Include="Jindan.Core"><HintPath>$(InstallationRoot)/Jindan.Core.dll</HintPath></Reference>
+  <Reference Include="Jindan.ModuleHost"><HintPath>$(InstallationRoot)/Jindan.ModuleHost.dll</HintPath></Reference>
+  <Reference Include="Jindan.Update"><HintPath>$(InstallationRoot)/Jindan.Update.dll</HintPath></Reference>
+ </ItemGroup>
+</Project>

@@ -1,0 +1,1252 @@
+{
+  "roadmap": "66",
+  "state": "local-synthetic-independent-review-passed-awaiting-real-report-review",
+  "startedAt": "2026-11-05T06:25:10.262211+09:00",
+  "updatedAt": "2026-11-05T08:29:08.531Z",
+  "currentMilestone": "R6 independent scoped review received: restore4, native UI, Projects patch/rollback passed; company/production gates remain open",
+  "completedMilestones": [
+    "M0",
+    "M1",
+    "M2",
+    "M3",
+    "M4-local-synthetic",
+    "M5-local-with-explicit-external-gates",
+    "M6-exact-product-patch-and-rollback",
+    "M7-native-boundary-hybrid-layout",
+    "M8-local-self-validation"
+  ],
+  "nextAction": "Preserve frozen69 and R4/R5/R6 evidence; await separately instructed company-document review. User authorized source checkpoint commit/push on dedicated dotnet/roadmap66-r6 branch; no product change, rebuild, repackaging or desktop retry.",
+  "engineRepairPassed": true,
+  "nativeModules": [
+    "projects",
+    "processes",
+    "photos",
+    "files-local",
+    "tasks",
+    "board",
+    "members",
+    "dashboard"
+  ],
+  "hybridModules": [
+    "report-studio: native controls/contracts plus isolated JS/WASM engine",
+    "files-cad: native file view plus isolated Node DWG/DXF preview"
+  ],
+  "missingFeatures": [
+    "native Hancom source fonts/embedded-font retention",
+    "source JSON/company metadata and tab-property preservation",
+    "every object editability and all numerical/cell semantics",
+    "actual current-company measurement/judgment/report workflow",
+    "live Firebase/Drive/paid AI and production signing/distribution",
+    "physical150/200 DPI or arbitrary monitor arrangements"
+  ],
+  "tests": [
+    {
+      "name": "clean-release",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "clean",
+        "Jindan.sln",
+        "-c",
+        "Release",
+        "-v",
+        "minimal"
+      ],
+      "startedAt": "2026-11-05T02:26:32.225Z",
+      "endedAt": "2026-11-05T02:26:37.783Z",
+      "exit": 0,
+      "pass": null,
+      "fail": null,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/clean-release.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "build-release",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "build",
+        "Jindan.sln",
+        "-c",
+        "Release",
+        "-v",
+        "minimal"
+      ],
+      "startedAt": "2026-11-05T02:26:37.797Z",
+      "endedAt": "2026-11-05T02:26:49.748Z",
+      "exit": 0,
+      "pass": null,
+      "fail": null,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/build-release.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "offline-node-regressions",
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.exe",
+        "--require",
+        "./tools/offline-tests.cjs",
+        "--test",
+        "--test-concurrency=4",
+        "tests/EngineRepair/repair66.test.cjs",
+        "tests/LegacyEngine/body-stroke28-regression.test.cjs",
+        "tests/LegacyEngine/chapter-conversion.test.cjs",
+        "tests/LegacyEngine/collection-intro-style.test.cjs",
+        "tests/LegacyEngine/draft-preparation.test.cjs",
+        "tests/LegacyEngine/electrical-preparation.test.cjs",
+        "tests/LegacyEngine/empty-furniture-probe.test.cjs",
+        "tests/LegacyEngine/engine-facade.test.cjs",
+        "tests/LegacyEngine/engine-recovery.test.cjs",
+        "tests/LegacyEngine/font-name60.test.cjs",
+        "tests/LegacyEngine/furniture-origin.test.cjs",
+        "tests/LegacyEngine/glyph-overprint38-regression.test.cjs",
+        "tests/LegacyEngine/hwpx-restoration-fidelity.test.cjs",
+        "tests/LegacyEngine/native-font28-regression.test.cjs",
+        "tests/LegacyEngine/native-paragraph-flow27.test.cjs",
+        "tests/LegacyEngine/native-pdf19-regression.test.cjs",
+        "tests/LegacyEngine/native-pdf25-regression.test.cjs",
+        "tests/LegacyEngine/native-preview.test.cjs",
+        "tests/LegacyEngine/native-save-audit57.test.cjs",
+        "tests/LegacyEngine/page-decoration.test.cjs",
+        "tests/LegacyEngine/paired-cell-formatting.test.cjs",
+        "tests/LegacyEngine/paired-table-margins.test.cjs",
+        "tests/LegacyEngine/paragraph-formatting.test.cjs",
+        "tests/LegacyEngine/pdf-fidelity.test.cjs",
+        "tests/LegacyEngine/pdf-font-space55-regression.test.cjs",
+        "tests/LegacyEngine/pdf-furniture-coordinates.test.cjs",
+        "tests/LegacyEngine/pdf-native24-regression.test.cjs",
+        "tests/LegacyEngine/pdf-operator-boundary41-regression.test.cjs",
+        "tests/LegacyEngine/pdf-report.test.cjs",
+        "tests/LegacyEngine/pdf-text-frame38-regression.test.cjs",
+        "tests/LegacyEngine/pdf-tracking33-regression.test.cjs",
+        "tests/LegacyEngine/pdf-whitespace38-regression.test.cjs",
+        "tests/LegacyEngine/png-density57.test.cjs",
+        "tests/LegacyEngine/powerview.test.cjs",
+        "tests/LegacyEngine/project-workbench.test.cjs",
+        "tests/LegacyEngine/recovery-draft60.test.cjs",
+        "tests/LegacyEngine/reference-analyzer.test.cjs",
+        "tests/LegacyEngine/report-engine.test.cjs",
+        "tests/LegacyEngine/report-list.test.cjs",
+        "tests/LegacyEngine/report-native-collection.test.cjs",
+        "tests/LegacyEngine/report-numbering.test.cjs",
+        "tests/LegacyEngine/report-pipeline.test.cjs",
+        "tests/LegacyEngine/report-reference-projects.test.cjs",
+        "tests/LegacyEngine/restoration.test.cjs",
+        "tests/LegacyEngine/section-bisection.test.cjs",
+        "tests/LegacyEngine/studio-supervision-regression.test.cjs",
+        "tests/LegacyEngine/thermal-bmt.test.cjs",
+        "tests/LegacyEngine/thermal-delivery.test.cjs",
+        "tests/LegacyEngine/workflow-analysis.test.cjs",
+        "tests/NodeCad/node-cad.test.cjs",
+        "tests/NodePictures/node-pictures.test.cjs",
+        "tests/WorkerProtocol/transport66.test.cjs"
+      ],
+      "startedAt": "2026-11-05T02:26:49.773Z",
+      "endedAt": "2026-11-05T02:27:30.352Z",
+      "exit": 0,
+      "pass": 260,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/offline-node-regressions.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "shared-js-native-goldens",
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.exe",
+        "--require",
+        "./tools/offline-tests.cjs",
+        "tests/Jindan.NativeEngine.Tests/shared-goldens.mjs"
+      ],
+      "startedAt": "2026-11-05T02:27:30.367Z",
+      "endedAt": "2026-11-05T02:27:31.052Z",
+      "exit": 0,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/shared-js-native-goldens.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "domain",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Domain.Tests/Jindan.Domain.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "startedAt": "2026-11-05T02:27:31.078Z",
+      "endedAt": "2026-11-05T02:27:42.813Z",
+      "exit": 0,
+      "pass": 22,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/domain.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "native-engine",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.NativeEngine.Tests/Jindan.NativeEngine.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "startedAt": "2026-11-05T02:27:42.828Z",
+      "endedAt": "2026-11-05T02:27:47.422Z",
+      "exit": 0,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/native-engine.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "module-package",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "startedAt": "2026-11-05T02:27:47.437Z",
+      "endedAt": "2026-11-05T02:29:41.539Z",
+      "exit": 0,
+      "pass": 81,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/module-package.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "sync",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Sync.Tests/Jindan.Sync.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "startedAt": "2026-11-05T02:29:41.558Z",
+      "endedAt": "2026-11-05T02:29:51.903Z",
+      "exit": 0,
+      "pass": 24,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/sync.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "legacy-work-import",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.LegacyImport.Tests/Jindan.LegacyImport.Tests.csproj",
+        "-c",
+        "Release"
+      ],
+      "startedAt": "2026-11-05T02:29:51.929Z",
+      "endedAt": "2026-11-05T02:29:59.898Z",
+      "exit": 0,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/legacy-work-import.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "report-adapter",
+      "command": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-File",
+        "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+        "run",
+        "--project",
+        "tests/Jindan.Report.Tests/Jindan.Report.Tests.csproj",
+        "-c",
+        "Release",
+        "--",
+        "F:\\jindan-dotnet",
+        "C:\\nvm4w\\nodejs\\node.exe"
+      ],
+      "startedAt": "2026-11-05T02:29:59.921Z",
+      "endedAt": "2026-11-05T02:30:14.157Z",
+      "exit": 0,
+      "pass": 42,
+      "fail": 0,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/report-adapter.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "preservation",
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.exe",
+        "tools/check-preservation66.mjs"
+      ],
+      "startedAt": "2026-11-05T02:30:14.174Z",
+      "endedAt": "2026-11-05T02:30:20.935Z",
+      "exit": 0,
+      "pass": null,
+      "fail": null,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/preservation.log",
+      "outputTruncated": false
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "C:\\nvm4w\\nodejs\\node.exe",
+        "tools/check-architecture66.mjs"
+      ],
+      "startedAt": "2026-11-05T02:30:20.953Z",
+      "endedAt": "2026-11-05T02:30:21.213Z",
+      "exit": 0,
+      "pass": null,
+      "fail": null,
+      "skipped": 0,
+      "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/architecture.log",
+      "outputTruncated": false
+    },
+    {
+      "kind": "native-main",
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-result.json",
+      "sha256": "24fad30dc07019ecf8f76e1e6292132b094cc29d4beee51364a7b1e5dcaa0c21",
+      "bytes": 29913,
+      "pass": 23,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:40:04.7700262+00:00",
+      "endedAt": "2026-11-05T02:41:29.4020996+00:00"
+    },
+    {
+      "kind": "native-fresh-process",
+      "path": "artifacts/final-r6-desktop-ui66-01/ui-reopen-result.json",
+      "sha256": "1a7be3548a41fa490889238780366b6f6a3ea751c8fd2bb9a74124a131be5362",
+      "bytes": 6511,
+      "pass": 4,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:41:40.0964206+00:00",
+      "endedAt": "2026-11-05T02:41:41.0870444+00:00"
+    },
+    {
+      "kind": "photo-thumbnails",
+      "path": "artifacts/final-r6-photo-thumbnails66-01/ui-result.json",
+      "sha256": "3bcf507741e869467054ef5b825512023dec7f4e93af0036302f8b9d83623725",
+      "bytes": 8343,
+      "pass": 8,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:42:02.4075085+00:00",
+      "endedAt": "2026-11-05T02:42:34.5346847+00:00"
+    },
+    {
+      "kind": "native-calendar",
+      "path": "artifacts/final-r6-calendar66-01/ui-result.json",
+      "sha256": "373e8665117da099ff5daa11eb152195906ab9e5fc02bb84432605f821692c37",
+      "bytes": 18059,
+      "pass": 4,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:42:53.3014435+00:00",
+      "endedAt": "2026-11-05T02:42:59.1301055+00:00"
+    },
+    {
+      "kind": "selection-import-refresh",
+      "path": "artifacts/final-r6-selection69-ui01/ui-result.json",
+      "sha256": "a22d1d1680965cbb4433a42f724b41ed4393775d9bc2d8a6a1d4102843fbc88f",
+      "bytes": 9801,
+      "pass": 8,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:43:39.791533+00:00",
+      "endedAt": "2026-11-05T02:43:49.7362594+00:00"
+    },
+    {
+      "kind": "selection-fresh-process",
+      "path": "artifacts/final-r6-selection69-ui01/selection69-reopen-result.json",
+      "sha256": "50a88dec364cfc7a74787d6130266967f08b5ca2440ac3c0f37bd380f6a11d1c",
+      "bytes": 5113,
+      "pass": 2,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:43:59.8900577+00:00",
+      "endedAt": "2026-11-05T02:44:00.8000652+00:00"
+    },
+    {
+      "kind": "native-row-event-order",
+      "path": "artifacts/final-r6-row-order69-ui01/ui-result.json",
+      "sha256": "d6272f7fbdf4187c2a602e46b640f57aabcea2361792d2f2845d6ae8cc8504d0",
+      "bytes": 12814,
+      "pass": 2,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:44:34.0386291+00:00",
+      "endedAt": "2026-11-05T02:44:35.3998125+00:00"
+    },
+    {
+      "kind": "report-ui",
+      "path": "artifacts/report-ui66-packaged-r6/RESULT.json",
+      "sha256": "b7d4cf88f44466ebd47e7cf0b4427537a55e1126f2f56189d970aff4bccfd34c",
+      "bytes": 2851,
+      "pass": 60,
+      "fail": 0,
+      "startedAt": null,
+      "endedAt": null
+    },
+    {
+      "kind": "actual-product-patch",
+      "path": "artifacts/product-patch66-r6/run-r6/RESULT.json",
+      "sha256": "f1a91780ec0a1d22025810b0f54af73462e850e8f8eee4f5e0d919c8895650d0",
+      "bytes": 506197,
+      "pass": 12,
+      "fail": 0,
+      "startedAt": null,
+      "endedAt": null
+    },
+    {
+      "kind": "files-board",
+      "path": "artifacts/final-r6-local-modules66-03/RESULT.json",
+      "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e",
+      "bytes": 1963,
+      "pass": 14,
+      "fail": 0,
+      "startedAt": null,
+      "endedAt": null
+    },
+    {
+      "kind": "actual-program-entry",
+      "path": "artifacts/final-r6-actual-entry66/RESULT.json",
+      "sha256": "94735afff7bc735174897732c68443234923b0fcfbd489628829c005ab7d35b8",
+      "bytes": 772,
+      "pass": 1,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:47:45.3897233+00:00",
+      "endedAt": "2026-11-05T02:47:46.1367649+00:00"
+    },
+    {
+      "kind": "launcher-health",
+      "path": "artifacts/final-r6-healthcheck69.json",
+      "sha256": "6cf9089dba1302667193a131a496ccbe3e106b3bdee8ad131ba8449c657056c5",
+      "bytes": 864,
+      "pass": 1,
+      "fail": 0,
+      "startedAt": "2026-11-05T02:41:06.077Z",
+      "endedAt": "2026-11-05T02:41:26.599Z"
+    },
+    {
+      "path": "artifacts/review69-r6-snapshot-tests01/RESULT.json",
+      "sha256": "8e701dc7a1cf1c4b7b4a66406d3a6d362a0e65b1321a534222ada2911cd2fa13",
+      "bytes": 1993,
+      "innerResult": {
+        "path": "artifacts/package-tests/20261105T023741-c9b7c99ffa5f4f19a4a2084da3e7b05f/RESULT.json",
+        "sha256": "2ee366f567a368e40e67ca7b1f60b359a956bec5a3b84e368ee660148855e7d2",
+        "bytes": 11576
+      },
+      "pass": 82,
+      "fail": 0,
+      "commands": [
+        {
+          "name": "build",
+          "command": [
+            "powershell.exe",
+            "-NoProfile",
+            "-NonInteractive",
+            "-File",
+            "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+            "build",
+            "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+            "-c",
+            "Release",
+            "-p:InstallationRoot=F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application",
+            "-p:OutputPath=F:\\jindan-dotnet\\artifacts\\review69-r6-snapshot-tests01\\harness\\"
+          ],
+          "startedAt": "2026-11-05T02:37:15.439Z",
+          "endedAt": "2026-11-05T02:37:41.624Z",
+          "exit": 0,
+          "overflow": false,
+          "log": "artifacts/review69-r6-snapshot-tests01/build.log"
+        },
+        {
+          "name": "snapshot-regressions",
+          "command": [
+            "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\.runtime\\dotnet.exe",
+            "F:\\jindan-dotnet\\artifacts\\review69-r6-snapshot-tests01\\harness\\Jindan.Package.Tests.dll",
+            "--packaged-root",
+            "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application"
+          ],
+          "startedAt": "2026-11-05T02:37:41.626Z",
+          "endedAt": "2026-11-05T02:40:28.585Z",
+          "exit": 0,
+          "overflow": false,
+          "log": "artifacts/review69-r6-snapshot-tests01/snapshot-regressions.log"
+        }
+      ],
+      "scope": "Actual exact-selected-package ApplyAsync/migration/corrupt snapshot/staging/swap/locked-file/child interruption/recovery tests. Packaged82 overlaps source81 and normal package cases; not82 unique business workflows."
+    }
+  ],
+  "blockers": [
+    "native Hancom source fonts/embedded-font retention",
+    "source JSON/company metadata and tab-property preservation",
+    "every object editability and all numerical/cell semantics",
+    "actual current-company measurement/judgment/report workflow",
+    "live Firebase/Drive/paid AI and production signing/distribution",
+    "physical150/200 DPI or arbitrary monitor arrangements",
+    "Aside direct native text input did not become visible; no submit or delivery success."
+  ],
+  "sourceBaselineUnchanged": true,
+  "sourceMapPath": "migration/source-map.json",
+  "packageManifestPath": "artifacts/ready-for-review/final66-r6/artifact-manifest.json",
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "engineArtifact": {
+    "path": "artifacts/fixed-engine66.zip",
+    "sha256": "85f53f0444ae6b9d4a1ee03e8081debbd8821afdfd650d8ef8162d497ed05334"
+  },
+  "nativeBoundary": "C# ZIP/manifest/hash/recovery guards: 16 native and 8 shared JS golden checks recorded; complex restoration remains hybrid",
+  "lastDomainRun": {
+    "pass": 22,
+    "fail": 0,
+    "evidence": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+    "scope": "Current selected product source run; historical ledger preserved separately."
+  },
+  "intermediatePackage": {
+    "path": "artifacts/integration-review66",
+    "sourceStable": false,
+    "reason": "Concurrent source changes during intermediate build are recorded; not final frozen-source evidence",
+    "manifestSha256": "c25633648752915170a041d5fc412c8419c72bce752259e3d50c2df5b895ed88"
+  },
+  "reportChannel": {
+    "attemptedAt": "2026-11-04T22:51:21.299Z",
+    "dedicatedToolFound": false,
+    "transport": "computer-use sky normal Aside window selection",
+    "targetTitle": "안티그래비티 소프트 개발계획과 AI 부서 구성 검토",
+    "targetWindowId": 3868518,
+    "deliveryFailed": true,
+    "deliveryVerified": false,
+    "typed": false,
+    "sent": false,
+    "reason": "Exact Aside conversation and empty composer observed. Native click/type returned but LINK text stayed absent; no submit. Cause unconfirmed. Public/file handoff is available; it is not proof of Aside delivery.",
+    "alternateReadOnlyBrowserInventory": {
+      "observedAt": "2026-11-05T00:11:46.499Z",
+      "tool": "cua.getState",
+      "browserCount": 0,
+      "error": "The browser access host is unavailable",
+      "targetAsideWindowId": 3868518,
+      "targetTitle": "안티그래비티 소프트 개발계획과 AI 부서 구성 검토",
+      "typed": false,
+      "sent": false
+    },
+    "previousAttemptsPreserved": "handoff/channel-reconnect66-20261105-01/STATUS66.before.json",
+    "latestAttempt": "handoff/review69/CHANNEL_RETRY69.json",
+    "requestedTextInputAttempted": true,
+    "eventId": "LINK66-DIRECT-20261105",
+    "state": "blocked_native_input",
+    "cause": "Fresh target/empty composer observed, click/type calls returned but requested text was not visible; no submit. Cause unconfirmed."
+  },
+  "headlessFinal": {
+    "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+    "sha256": "3e8045cf65dc23400707742aed52cac9dc37816aeb7c0698a71090c77db23266",
+    "bytes": 10241,
+    "complete": true,
+    "passed": true,
+    "commands": [
+      {
+        "name": "clean-release",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "clean",
+          "Jindan.sln",
+          "-c",
+          "Release",
+          "-v",
+          "minimal"
+        ],
+        "startedAt": "2026-11-05T02:26:32.225Z",
+        "endedAt": "2026-11-05T02:26:37.783Z",
+        "exit": 0,
+        "pass": null,
+        "fail": null,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/clean-release.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "build-release",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "build",
+          "Jindan.sln",
+          "-c",
+          "Release",
+          "-v",
+          "minimal"
+        ],
+        "startedAt": "2026-11-05T02:26:37.797Z",
+        "endedAt": "2026-11-05T02:26:49.748Z",
+        "exit": 0,
+        "pass": null,
+        "fail": null,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/build-release.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "offline-node-regressions",
+        "command": [
+          "C:\\nvm4w\\nodejs\\node.exe",
+          "--require",
+          "./tools/offline-tests.cjs",
+          "--test",
+          "--test-concurrency=4",
+          "tests/EngineRepair/repair66.test.cjs",
+          "tests/LegacyEngine/body-stroke28-regression.test.cjs",
+          "tests/LegacyEngine/chapter-conversion.test.cjs",
+          "tests/LegacyEngine/collection-intro-style.test.cjs",
+          "tests/LegacyEngine/draft-preparation.test.cjs",
+          "tests/LegacyEngine/electrical-preparation.test.cjs",
+          "tests/LegacyEngine/empty-furniture-probe.test.cjs",
+          "tests/LegacyEngine/engine-facade.test.cjs",
+          "tests/LegacyEngine/engine-recovery.test.cjs",
+          "tests/LegacyEngine/font-name60.test.cjs",
+          "tests/LegacyEngine/furniture-origin.test.cjs",
+          "tests/LegacyEngine/glyph-overprint38-regression.test.cjs",
+          "tests/LegacyEngine/hwpx-restoration-fidelity.test.cjs",
+          "tests/LegacyEngine/native-font28-regression.test.cjs",
+          "tests/LegacyEngine/native-paragraph-flow27.test.cjs",
+          "tests/LegacyEngine/native-pdf19-regression.test.cjs",
+          "tests/LegacyEngine/native-pdf25-regression.test.cjs",
+          "tests/LegacyEngine/native-preview.test.cjs",
+          "tests/LegacyEngine/native-save-audit57.test.cjs",
+          "tests/LegacyEngine/page-decoration.test.cjs",
+          "tests/LegacyEngine/paired-cell-formatting.test.cjs",
+          "tests/LegacyEngine/paired-table-margins.test.cjs",
+          "tests/LegacyEngine/paragraph-formatting.test.cjs",
+          "tests/LegacyEngine/pdf-fidelity.test.cjs",
+          "tests/LegacyEngine/pdf-font-space55-regression.test.cjs",
+          "tests/LegacyEngine/pdf-furniture-coordinates.test.cjs",
+          "tests/LegacyEngine/pdf-native24-regression.test.cjs",
+          "tests/LegacyEngine/pdf-operator-boundary41-regression.test.cjs",
+          "tests/LegacyEngine/pdf-report.test.cjs",
+          "tests/LegacyEngine/pdf-text-frame38-regression.test.cjs",
+          "tests/LegacyEngine/pdf-tracking33-regression.test.cjs",
+          "tests/LegacyEngine/pdf-whitespace38-regression.test.cjs",
+          "tests/LegacyEngine/png-density57.test.cjs",
+          "tests/LegacyEngine/powerview.test.cjs",
+          "tests/LegacyEngine/project-workbench.test.cjs",
+          "tests/LegacyEngine/recovery-draft60.test.cjs",
+          "tests/LegacyEngine/reference-analyzer.test.cjs",
+          "tests/LegacyEngine/report-engine.test.cjs",
+          "tests/LegacyEngine/report-list.test.cjs",
+          "tests/LegacyEngine/report-native-collection.test.cjs",
+          "tests/LegacyEngine/report-numbering.test.cjs",
+          "tests/LegacyEngine/report-pipeline.test.cjs",
+          "tests/LegacyEngine/report-reference-projects.test.cjs",
+          "tests/LegacyEngine/restoration.test.cjs",
+          "tests/LegacyEngine/section-bisection.test.cjs",
+          "tests/LegacyEngine/studio-supervision-regression.test.cjs",
+          "tests/LegacyEngine/thermal-bmt.test.cjs",
+          "tests/LegacyEngine/thermal-delivery.test.cjs",
+          "tests/LegacyEngine/workflow-analysis.test.cjs",
+          "tests/NodeCad/node-cad.test.cjs",
+          "tests/NodePictures/node-pictures.test.cjs",
+          "tests/WorkerProtocol/transport66.test.cjs"
+        ],
+        "startedAt": "2026-11-05T02:26:49.773Z",
+        "endedAt": "2026-11-05T02:27:30.352Z",
+        "exit": 0,
+        "pass": 260,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/offline-node-regressions.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "shared-js-native-goldens",
+        "command": [
+          "C:\\nvm4w\\nodejs\\node.exe",
+          "--require",
+          "./tools/offline-tests.cjs",
+          "tests/Jindan.NativeEngine.Tests/shared-goldens.mjs"
+        ],
+        "startedAt": "2026-11-05T02:27:30.367Z",
+        "endedAt": "2026-11-05T02:27:31.052Z",
+        "exit": 0,
+        "pass": 8,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/shared-js-native-goldens.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "domain",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.Domain.Tests/Jindan.Domain.Tests.csproj",
+          "-c",
+          "Release"
+        ],
+        "startedAt": "2026-11-05T02:27:31.078Z",
+        "endedAt": "2026-11-05T02:27:42.813Z",
+        "exit": 0,
+        "pass": 22,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/domain.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "native-engine",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.NativeEngine.Tests/Jindan.NativeEngine.Tests.csproj",
+          "-c",
+          "Release"
+        ],
+        "startedAt": "2026-11-05T02:27:42.828Z",
+        "endedAt": "2026-11-05T02:27:47.422Z",
+        "exit": 0,
+        "pass": 16,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/native-engine.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "module-package",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+          "-c",
+          "Release"
+        ],
+        "startedAt": "2026-11-05T02:27:47.437Z",
+        "endedAt": "2026-11-05T02:29:41.539Z",
+        "exit": 0,
+        "pass": 81,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/module-package.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "sync",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.Sync.Tests/Jindan.Sync.Tests.csproj",
+          "-c",
+          "Release"
+        ],
+        "startedAt": "2026-11-05T02:29:41.558Z",
+        "endedAt": "2026-11-05T02:29:51.903Z",
+        "exit": 0,
+        "pass": 24,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/sync.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "legacy-work-import",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.LegacyImport.Tests/Jindan.LegacyImport.Tests.csproj",
+          "-c",
+          "Release"
+        ],
+        "startedAt": "2026-11-05T02:29:51.929Z",
+        "endedAt": "2026-11-05T02:29:59.898Z",
+        "exit": 0,
+        "pass": 11,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/legacy-work-import.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "report-adapter",
+        "command": [
+          "powershell.exe",
+          "-NoProfile",
+          "-NonInteractive",
+          "-File",
+          "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+          "run",
+          "--project",
+          "tests/Jindan.Report.Tests/Jindan.Report.Tests.csproj",
+          "-c",
+          "Release",
+          "--",
+          "F:\\jindan-dotnet",
+          "C:\\nvm4w\\nodejs\\node.exe"
+        ],
+        "startedAt": "2026-11-05T02:29:59.921Z",
+        "endedAt": "2026-11-05T02:30:14.157Z",
+        "exit": 0,
+        "pass": 42,
+        "fail": 0,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/report-adapter.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "preservation",
+        "command": [
+          "C:\\nvm4w\\nodejs\\node.exe",
+          "tools/check-preservation66.mjs"
+        ],
+        "startedAt": "2026-11-05T02:30:14.174Z",
+        "endedAt": "2026-11-05T02:30:20.935Z",
+        "exit": 0,
+        "pass": null,
+        "fail": null,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/preservation.log",
+        "outputTruncated": false
+      },
+      {
+        "name": "architecture",
+        "command": [
+          "C:\\nvm4w\\nodejs\\node.exe",
+          "tools/check-architecture66.mjs"
+        ],
+        "startedAt": "2026-11-05T02:30:20.953Z",
+        "endedAt": "2026-11-05T02:30:21.213Z",
+        "exit": 0,
+        "pass": null,
+        "fail": null,
+        "skipped": 0,
+        "logPath": "artifacts/checks66/2026-11-05T02-26-32-107Z/architecture.log",
+        "outputTruncated": false
+      }
+    ]
+  },
+  "packaging": {
+    "selectedPackage": "artifacts/ready-for-review/final66-r6",
+    "artifactManifestSha256": "18ee3ca05967d16315d7d5648b744628f1773d00b1142babbd0e64409711c69d",
+    "sourceCheckpointSha256": "6ad2e9573ee5450a1ac4edfee244e9cbc38f03b6ea56603953ffcf77f7e4b20f",
+    "hostSha256": "ae3bbaf5bce738ec98b29501027255293a1e8deeeeb6afe3c0967947bbf2bc47",
+    "artifactFiles": 3226,
+    "exactNativeAssertions": 51,
+    "exactReportAssertions": 60,
+    "exactSnapshotAssertions": 82,
+    "proof": "artifacts/packaging66/FINAL_R6_VERIFICATION.json"
+  },
+  "dpiFix": {
+    "proof": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+    "physicalDpi": [
+      96,
+      120
+    ],
+    "physical150And200Verified": false,
+    "scope": "Only actual observed monitors; controlled150/200 layout tests are separate."
+  },
+  "calendarFix": {
+    "proof": "artifacts/final-r6-calendar66-01/ui-result.json",
+    "pass": 4,
+    "fail": 0
+  },
+  "commonUxFix": {
+    "proof": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+    "pass": 51,
+    "fail": 0,
+    "scope": "Includes selection10 and row-order2; deliberately overlapping native assertions."
+  },
+  "completionScope": "Local modular .NET workbench, scoped hybrid engine, exact functional module patch/rollback and REVIEW69 self-validation. Not pure C# full renderer, supervisor acceptance or company operational report approval.",
+  "preservation": {
+    "path": "handoff/PRESERVATION69.json",
+    "sha256": "f0e8af329e077fcb135e20b8610b953cecad41ff6e5c0924bb38f2bf35e83e49",
+    "ok": true,
+    "scope": "Tracked/nonignored untracked baseline files, git head/status, three originals, frozen63 ZIP. Not a claim that every ignored output was inventoried."
+  },
+  "sourceMapVerification": "artifacts/final-r4-source-map66.json",
+  "finalSource": {
+    "path": "handoff/SOURCE69.json",
+    "fileCount": 349,
+    "aggregateSha256": "a5cee644e07a73cf476ec0ff73c622b667f5bb0ee151eb7f5fb990d26bfa5242",
+    "sha256": "5cce2f28e7703ad146483d629f33c921f8eb3c7020a9d47bc50cf8fbe3f92ca4"
+  },
+  "validation": {
+    "path": "handoff/VALIDATION69.json",
+    "sha256": "82ed7fc4d3323808af3ca41e77c9d61d4314f4b663b4da9a25fb68785ace964c"
+  },
+  "quota": {
+    "actualBlockObserved": false,
+    "quotaResetPerformed": false,
+    "billingOrPrivilegeSettingsChanged": false
+  },
+  "finalHandoffPath": "handoff/FINAL69.md",
+  "manualSupervisorMessage": "handoff/SUPERVISOR_MESSAGE69.txt",
+  "review69": {
+    "receivedAt": "2026-11-05T01:43:29.508Z",
+    "userMarker": "REVIEW69-RESUME-20261105",
+    "instruction": "handoff/SUPERVISOR_R4_REVIEW69.md",
+    "requiredA": "incomplete snapshot rollback data loss",
+    "requiredB": "visual first-row selection differs from bound model/editors/preview",
+    "requiredC": "visible project selector/autorefresh/readable report tab",
+    "r4Immutable": true,
+    "r5ApprovalPending": true,
+    "guiOwner": "free until exactR5 ready; SDK then inventory serialized",
+    "snapshotBoundary": "R4/SOURCE66 and FILES66 are historical checkpoints; current source is under authorized revision for new R5.",
+    "reportReady": false,
+    "supervisorAccepted": false,
+    "headless": {
+      "path": "artifacts/checks66/2026-11-05T01-58-45-761Z/RESULT.json",
+      "passed": true,
+      "packageTests": 81,
+      "offlineNode": 260,
+      "adapter": 41,
+      "buildWarnings": 0,
+      "buildErrors": 0
+    },
+    "beforeAB": "artifacts/review69-legacy-ab01/RESULT.json",
+    "beforePhoto": "artifacts/review69-r4-before-ui01/R4_BEFORE_HANDOFF.json",
+    "selectionSource": {
+      "path": "artifacts/review69-selection-ui04/SELECTION69_HANDOFF.json",
+      "pass": 10,
+      "fail": 0,
+      "sourceFixtureOnly": true
+    },
+    "r5": {
+      "path": "artifacts/ready-for-review/final66-r5",
+      "artifactManifestSha256": "d0a16bac5e8662fb69ae5e43636699e42b20fc02270029fb114090f844abc06a",
+      "immutable": true,
+      "accepted": false,
+      "desktopMain": {
+        "pass": 20,
+        "fail": 3,
+        "freshProcessStarted": false
+      },
+      "snapshot": {
+        "path": "artifacts/review69-r5-snapshot-tests01/RESULT.json",
+        "pass": 82,
+        "fail": 0
+      }
+    },
+    "rowCausal": {
+      "exactR5": "artifacts/review69-row-r5-ui02",
+      "before": {
+        "pass": 1,
+        "fail": 1
+      },
+      "singleCommonFix": "artifacts/review69-row-fixed-ui01",
+      "after": {
+        "pass": 2,
+        "fail": 0
+      },
+      "qualification": "Same R5 host/modules with two CurrentCellChanged subscription edits in RecordDocument. Not exactR6 acceptance."
+    },
+    "additionalFix": "RecordDocument subscribes and unsubscribes CurrentCellChanged using the existing guarded selection handler; no event optimization or weakened persistence assertion.",
+    "adapterRace": {
+      "failure": "artifacts/checks66/2026-11-05T02-19-00-861Z/RESULT.json",
+      "signature": "E_HANDLE 0x80070006 during service Dispose vs request finally",
+      "fix": "Cached PID and exact Process reference, serialized exit wait/release, sole request Process.Dispose ownership; repeated Dispose retries retained entries.",
+      "focused": {
+        "pass": 42,
+        "fail": 0,
+        "actualCpuRaceTrials": 12
+      },
+      "currentFullGate": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+      "scope": "Own-process lifecycle, no global app termination or security change.",
+      "finalProof": "artifacts/review69-adapter-race-final01/RESULT.json"
+    },
+    "finalSourceHeadless": {
+      "path": "artifacts/checks66/2026-11-05T02-26-32-107Z/RESULT.json",
+      "complete": true,
+      "passed": true,
+      "node260": true,
+      "package81": true,
+      "adapter42": true,
+      "originalPreservation": true
+    },
+    "pendingR6": "artifacts/ready-for-review/final66-r6",
+    "state": "local-synthetic-independent-review-passed-company-acceptance-pending",
+    "r6": {
+      "selectedPackage": "artifacts/ready-for-review/final66-r6",
+      "artifactManifestSha256": "18ee3ca05967d16315d7d5648b744628f1773d00b1142babbd0e64409711c69d",
+      "sourceCheckpointSha256": "6ad2e9573ee5450a1ac4edfee244e9cbc38f03b6ea56603953ffcf77f7e4b20f",
+      "validation": "handoff/VALIDATION69.json",
+      "native51Handoff": "artifacts/final-r6-desktop-ui66-01/FINAL_UI_HANDOFF.json",
+      "reportReady": false,
+      "supervisorAccepted": false,
+      "independentReview": {
+        "receivedAt": "2026-11-05T08:29:08.531Z",
+        "path": "handoff/SUPERVISOR_R6_REVIEW.md",
+        "scope": "Exact R6 independent restore4 scenarios, first-row/photo/context/restart UI, Projects1.0->1.1->1.0 and unrelated modules/business data preservation. Start/end hashes matched. Not all company reports/current data/all work/production acceptance.",
+        "result": "passed-within-local-synthetic-scope",
+        "companyAccepted": false,
+        "reportReady": false,
+        "supervisorAccepted": false,
+        "directAsideInputVerified": false,
+        "remainingGates": [
+          "company HWPX/PDF layout and original font/source JSON/tab preservation",
+          "all numerical and cell semantics and every object editability",
+          "actual current-company data and human operational approval",
+          "live service integration, publisher signing/distribution and physical150/200 DPI",
+          "exFAT power loss, hostile file mutation and forensic ACL preservation"
+        ]
+      }
+    },
+    "finalExactGates": [
+      {
+        "kind": "native-main",
+        "path": "artifacts/final-r6-desktop-ui66-01/ui-result.json",
+        "sha256": "24fad30dc07019ecf8f76e1e6292132b094cc29d4beee51364a7b1e5dcaa0c21",
+        "bytes": 29913,
+        "pass": 23,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:40:04.7700262+00:00",
+        "endedAt": "2026-11-05T02:41:29.4020996+00:00"
+      },
+      {
+        "kind": "native-fresh-process",
+        "path": "artifacts/final-r6-desktop-ui66-01/ui-reopen-result.json",
+        "sha256": "1a7be3548a41fa490889238780366b6f6a3ea751c8fd2bb9a74124a131be5362",
+        "bytes": 6511,
+        "pass": 4,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:41:40.0964206+00:00",
+        "endedAt": "2026-11-05T02:41:41.0870444+00:00"
+      },
+      {
+        "kind": "photo-thumbnails",
+        "path": "artifacts/final-r6-photo-thumbnails66-01/ui-result.json",
+        "sha256": "3bcf507741e869467054ef5b825512023dec7f4e93af0036302f8b9d83623725",
+        "bytes": 8343,
+        "pass": 8,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:42:02.4075085+00:00",
+        "endedAt": "2026-11-05T02:42:34.5346847+00:00"
+      },
+      {
+        "kind": "native-calendar",
+        "path": "artifacts/final-r6-calendar66-01/ui-result.json",
+        "sha256": "373e8665117da099ff5daa11eb152195906ab9e5fc02bb84432605f821692c37",
+        "bytes": 18059,
+        "pass": 4,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:42:53.3014435+00:00",
+        "endedAt": "2026-11-05T02:42:59.1301055+00:00"
+      },
+      {
+        "kind": "selection-import-refresh",
+        "path": "artifacts/final-r6-selection69-ui01/ui-result.json",
+        "sha256": "a22d1d1680965cbb4433a42f724b41ed4393775d9bc2d8a6a1d4102843fbc88f",
+        "bytes": 9801,
+        "pass": 8,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:43:39.791533+00:00",
+        "endedAt": "2026-11-05T02:43:49.7362594+00:00"
+      },
+      {
+        "kind": "selection-fresh-process",
+        "path": "artifacts/final-r6-selection69-ui01/selection69-reopen-result.json",
+        "sha256": "50a88dec364cfc7a74787d6130266967f08b5ca2440ac3c0f37bd380f6a11d1c",
+        "bytes": 5113,
+        "pass": 2,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:43:59.8900577+00:00",
+        "endedAt": "2026-11-05T02:44:00.8000652+00:00"
+      },
+      {
+        "kind": "native-row-event-order",
+        "path": "artifacts/final-r6-row-order69-ui01/ui-result.json",
+        "sha256": "d6272f7fbdf4187c2a602e46b640f57aabcea2361792d2f2845d6ae8cc8504d0",
+        "bytes": 12814,
+        "pass": 2,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:44:34.0386291+00:00",
+        "endedAt": "2026-11-05T02:44:35.3998125+00:00"
+      },
+      {
+        "kind": "report-ui",
+        "path": "artifacts/report-ui66-packaged-r6/RESULT.json",
+        "sha256": "b7d4cf88f44466ebd47e7cf0b4427537a55e1126f2f56189d970aff4bccfd34c",
+        "bytes": 2851,
+        "pass": 60,
+        "fail": 0,
+        "startedAt": null,
+        "endedAt": null
+      },
+      {
+        "kind": "actual-product-patch",
+        "path": "artifacts/product-patch66-r6/run-r6/RESULT.json",
+        "sha256": "f1a91780ec0a1d22025810b0f54af73462e850e8f8eee4f5e0d919c8895650d0",
+        "bytes": 506197,
+        "pass": 12,
+        "fail": 0,
+        "startedAt": null,
+        "endedAt": null
+      },
+      {
+        "kind": "files-board",
+        "path": "artifacts/final-r6-local-modules66-03/RESULT.json",
+        "sha256": "9f7fccf6c42a8e6a7832defce8449915064e21f0b138f21fc25039b8b2d8fb3e",
+        "bytes": 1963,
+        "pass": 14,
+        "fail": 0,
+        "startedAt": null,
+        "endedAt": null
+      },
+      {
+        "kind": "actual-program-entry",
+        "path": "artifacts/final-r6-actual-entry66/RESULT.json",
+        "sha256": "94735afff7bc735174897732c68443234923b0fcfbd489628829c005ab7d35b8",
+        "bytes": 772,
+        "pass": 1,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:47:45.3897233+00:00",
+        "endedAt": "2026-11-05T02:47:46.1367649+00:00"
+      },
+      {
+        "kind": "launcher-health",
+        "path": "artifacts/final-r6-healthcheck69.json",
+        "sha256": "6cf9089dba1302667193a131a496ccbe3e106b3bdee8ad131ba8449c657056c5",
+        "bytes": 864,
+        "pass": 1,
+        "fail": 0,
+        "startedAt": "2026-11-05T02:41:06.077Z",
+        "endedAt": "2026-11-05T02:41:26.599Z"
+      }
+    ],
+    "exactSnapshotGate": {
+      "path": "artifacts/review69-r6-snapshot-tests01/RESULT.json",
+      "sha256": "8e701dc7a1cf1c4b7b4a66406d3a6d362a0e65b1321a534222ada2911cd2fa13",
+      "bytes": 1993,
+      "innerResult": {
+        "path": "artifacts/package-tests/20261105T023741-c9b7c99ffa5f4f19a4a2084da3e7b05f/RESULT.json",
+        "sha256": "2ee366f567a368e40e67ca7b1f60b359a956bec5a3b84e368ee660148855e7d2",
+        "bytes": 11576
+      },
+      "pass": 82,
+      "fail": 0,
+      "commands": [
+        {
+          "name": "build",
+          "command": [
+            "powershell.exe",
+            "-NoProfile",
+            "-NonInteractive",
+            "-File",
+            "F:\\jindan-dotnet\\tools\\dotnet.ps1",
+            "build",
+            "tests/Jindan.Package.Tests/Jindan.Package.Tests.csproj",
+            "-c",
+            "Release",
+            "-p:InstallationRoot=F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application",
+            "-p:OutputPath=F:\\jindan-dotnet\\artifacts\\review69-r6-snapshot-tests01\\harness\\"
+          ],
+          "startedAt": "2026-11-05T02:37:15.439Z",
+          "endedAt": "2026-11-05T02:37:41.624Z",
+          "exit": 0,
+          "overflow": false,
+          "log": "artifacts/review69-r6-snapshot-tests01/build.log"
+        },
+        {
+          "name": "snapshot-regressions",
+          "command": [
+            "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application\\.runtime\\dotnet.exe",
+            "F:\\jindan-dotnet\\artifacts\\review69-r6-snapshot-tests01\\harness\\Jindan.Package.Tests.dll",
+            "--packaged-root",
+            "F:\\jindan-dotnet\\artifacts\\ready-for-review\\final66-r6\\application"
+          ],
+          "startedAt": "2026-11-05T02:37:41.626Z",
+          "endedAt": "2026-11-05T02:40:28.585Z",
+          "exit": 0,
+          "overflow": false,
+          "log": "artifacts/review69-r6-snapshot-tests01/snapshot-regressions.log"
+        }
+      ],
+      "scope": "Actual exact-selected-package ApplyAsync/migration/corrupt snapshot/staging/swap/locked-file/child interruption/recovery tests. Packaged82 overlaps source81 and normal package cases; not82 unique business workflows."
+    },
+    "adapterRaceProof": "artifacts/review69-adapter-race-final01/RESULT.json",
+    "preservedBeforeFinalStatus": "handoff/review69/STATUS66.before-final69.json",
+    "finalReadOnlyVerification": "handoff/review69/FINAL_VERIFY69.json"
+  },
+  "priorEvidenceLedger": "handoff/review69/STATUS66.before-final69.json",
+  "reusableNative": {
+    "path": "artifacts/ready-for-review/final66-r6/reusable-engine/native/MANIFEST.json",
+    "sha256": "27ae6eec5b7fc9543910fe902926d0831511083d5bccc8f9a204650fd6295dbe",
+    "scope": "Exact R6 native libraries/adapter/worker binding; complex layout remains hybrid."
+  },
+  "versionControl": {
+    "requestedAt": "2026-11-05T08:29:08.531Z",
+    "authorization": "Latest explicit user instruction to commit and push overrides earlier no-commit/push only for new workspace checkpoint",
+    "workspace": "F:/jindan-dotnet",
+    "remote": "https://github.com/bti0497-gif/Work_Jindan.git",
+    "branch": "dotnet/roadmap66-r6",
+    "scope": "New source/tests/docs/migration and handoff text/hash records only; ignored runtime/SDK/dependencies/build output/local data/.env excluded",
+    "originalWorkspaceReadOnly": true,
+    "productionDeployment": false
+  }
+}

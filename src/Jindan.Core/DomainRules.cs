@@ -1,0 +1,23 @@
+using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
+using Jindan.Contracts;
+namespace Jindan.Core;
+
+public sealed class WorkspaceException(string code, string message) : Exception(message) { public string Code { get; } = code; }
+public static class DomainRules
+{
+    public static void Require([DoesNotReturnIf(false)] bool condition, string code, string message) { if (!condition) throw new WorkspaceException(code, message); }
+    public static bool IsProject(string kind) => kind is "projects" or "project";
+    public static void ValidateSchema(RecordSchema schema) { Require(!string.IsNullOrWhiteSpace(schema.Kind) && schema.Kind.Length <= 80 && schema.Kind.All(c => char.IsAsciiLetterOrDigit(c) || c is '-' or '_'), "SCHEMA", "Invalid record kind."); Require(schema.Fields.Count <= 100 && schema.Fields.Select(f => f.Key).Distinct(StringComparer.Ordinal).Count() == schema.Fields.Count, "SCHEMA", "Invalid schema fields."); foreach (var f in schema.Fields) Require(!string.IsNullOrWhiteSpace(f.Key) && f.Key.Length <= 100, "SCHEMA", "Invalid field key."); }
+    public static Dictionary<string, string> ValidateFields(RecordSchema schema, Dictionary<string, string> fields)
+    {
+        Require(fields is not null && fields.Count <= 100, "VALIDATION", "Invalid field collection."); var copy = new Dictionary<string, string>(StringComparer.Ordinal); foreach (var (key, value) in fields!) { var spec = schema.Fields.FirstOrDefault(f => f.Key == key); Require(spec is not null, "VALIDATION", "Unregistered field."); Require(value is not null && value.Length <= (spec!.Type == "multiline" ? 600000 : 100000) && (spec.Type != "multiline" || System.Text.Encoding.UTF8.GetByteCount(value) <= 600000), "VALIDATION", "Field exceeds size limit."); copy[key] = value!; }
+        foreach (var spec in schema.Fields) { var value = copy.GetValueOrDefault(spec.Key, ""); Require(!spec.Required || !string.IsNullOrWhiteSpace(value), "VALIDATION", $"Required field: {spec.Label}."); if (value.Length == 0) continue; if (spec.Type == "date") Require(DateOnly.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _), "DATE", "Use yyyy-MM-dd for dates."); if (spec.Type == "number") Require(decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out _), "VALIDATION", "Invalid numeric field."); if (spec.Choices is { Length: > 0 }) Require(spec.Choices.Contains(value, StringComparer.Ordinal), "VALIDATION", "Field value is not an allowed choice."); }
+        if (copy.TryGetValue("title", out var title)) { if (schema.Kind is "projects" or "processes") Require(System.Text.Encoding.UTF8.GetByteCount(title) <= 300, "VALIDATION", "Work titles must fit300UTF8bytes."); if (schema.Kind == "board") Require(title.Length <= 300, "VALIDATION", "Board titles must fit300characters."); }
+        if (copy.TryGetValue("content", out var content)) { if (schema.Kind == "tasks") Require(System.Text.Encoding.UTF8.GetByteCount(content) <= 20000, "VALIDATION", "Task content exceeds20000UTF8bytes."); if (schema.Kind == "board" && copy.GetValueOrDefault("parentId", "").Length > 0) Require(content.Length <= 10000, "VALIDATION", "A board reply must fit10000characters."); }
+        if (copy.TryGetValue("progress", out var percentage) && percentage.Length > 0) Require(decimal.TryParse(percentage, NumberStyles.Number, CultureInfo.InvariantCulture, out var rate) && rate is >= 0 and <= 100, "VALIDATION", "Progress must be between0 and100.");
+        var starts = new[] { "startDate", "start", "beginDate", "periodStart" }; var ends = new[] { "endDate", "end", "finishDate", "periodEnd" }; for (int i = 0; i < starts.Length; i++) { if (copy.TryGetValue(starts[i], out var start) && copy.TryGetValue(ends[i], out var end) && DateOnly.TryParseExact(start, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var a) && DateOnly.TryParseExact(end, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var b)) Require(a <= b, "DATE", "End date precedes start date."); }
+        return copy;
+    }
+    public static void ValidateLayout(AppLayout l) { Require(l.LeftWidth is >= 120 and <= 1800 && l.RightWidth is >= 120 and <= 1800, "LAYOUT", "Panel width is outside the supported range."); Require(l.LeftSide is "left" or "right" && l.RightSide is "left" or "right", "LAYOUT", "Invalid panel side."); Require(l.Arrangement is "tabs" or "vertical" or "horizontal" or "cascade", "LAYOUT", "Invalid document arrangement."); if (l.FloatingBounds is not null) foreach (var (key, b) in l.FloatingBounds) Require(key.Length <= 100 && b is { Length: 4 } && b[2] is >= 100 and <= 10000 && b[3] is >= 100 and <= 10000, "LAYOUT", "Invalid floating bounds."); }
+}

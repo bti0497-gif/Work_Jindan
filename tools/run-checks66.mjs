@@ -1,0 +1,23 @@
+import {mkdir,writeFile,readdir,readFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawn} from 'node:child_process';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+const output=path.join(root,'artifacts','checks66',stamp);await mkdir(output,{recursive:true});
+const results=[];const environment={...process.env,DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_GENERATE_ASPNET_CERTIFICATE:'false',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1',DOTNET_NOLOGO:'1'};
+async function run(name,exe,args){const startedAt=new Date().toISOString();const chunks=[];let bytes=0;const child=spawn(exe,args,{cwd:root,env:environment,windowsHide:true,stdio:['ignore','pipe','pipe']});for(const stream of[child.stdout,child.stderr])stream.on('data',b=>{bytes+=b.length;if(bytes<=16*1024*1024)chunks.push(b);});const exit=await new Promise((resolve,reject)=>{child.on('error',reject);child.on('close',resolve);});const text=Buffer.concat(chunks).toString('utf8');const logPath=path.join(output,name+'.log');await writeFile(logPath,text);let pass=null,fail=null;const nodePass=/# pass (\d+)/.exec(text),nodeFail=/# fail (\d+)/.exec(text);if(nodePass){pass=+nodePass[1];fail=+(nodeFail?.[1]??0);}else{const matches=[...text.matchAll(/(?:pass|Pass|nativePackagePass|reportAdapterPass)=(\d+).*?fail=(\d+)/g)];if(matches.length){pass=+matches.at(-1)[1];fail=+matches.at(-1)[2];}}if(pass===null){for(const line of text.split(/\r?\n/)){try{const value=JSON.parse(line);if(Number.isInteger(value.pass)&&Number.isInteger(value.fail)){pass=value.pass;fail=value.fail;}}catch{}}}const record={name,command:[exe,...args],startedAt,endedAt:new Date().toISOString(),exit,pass,fail,skipped:Number(/# skipped (\d+)/.exec(text)?.[1]??0),logPath:path.relative(root,logPath).replaceAll('\\','/'),outputTruncated:bytes>16*1024*1024};results.push(record);console.log(JSON.stringify({name,exit,pass,fail,skipped:Number(/# skipped (\d+)/.exec(text)?.[1]??0),logPath:record.logPath}));await writeFile(path.join(output,'RESULT.json'),JSON.stringify({schema:'jindan-checks66/1',complete:false,results,reportReady:false,supervisorAccepted:false},null,2));if(exit!==0||record.outputTruncated)throw Error(name+' failed; inspect its bounded log');}
+const dotnet=(name,...args)=>run(name,'powershell.exe',['-NoProfile','-NonInteractive','-File',path.join(root,'tools/dotnet.ps1'),...args]);
+try{
+ await dotnet('clean-release','clean','Jindan.sln','-c','Release','-v','minimal');
+ await dotnet('build-release','build','Jindan.sln','-c','Release','-v','minimal');
+ const nodeTests=[];for(const dir of['LegacyEngine','EngineRepair','WorkerProtocol','NodePictures','NodeCad','NativeEngine']){try{for(const name of await readdir(path.join(root,'tests',dir)))if(/\.test\.cjs$/.test(name))nodeTests.push('tests/'+dir+'/'+name);}catch(e){if(e.code!=='ENOENT')throw e;}}
+ if(nodeTests.length<50)throw Error('Expected explicit migrated test inventory missing');
+ await run('offline-node-regressions',process.execPath,['--require','./tools/offline-tests.cjs','--test','--test-concurrency=4',...nodeTests.sort()]);
+ await run('shared-js-native-goldens',process.execPath,['--require','./tools/offline-tests.cjs','tests/Jindan.NativeEngine.Tests/shared-goldens.mjs']);
+ for(const [name,project]of[['domain','Jindan.Domain.Tests'],['native-engine','Jindan.NativeEngine.Tests'],['module-package','Jindan.Package.Tests'],['sync','Jindan.Sync.Tests'],['legacy-work-import','Jindan.LegacyImport.Tests'],['report-adapter','Jindan.Report.Tests']])await dotnet(name,'run','--project',`tests/${project}/${project}.csproj`,'-c','Release',...(name==='report-adapter'?['--',root,process.execPath]:[]));
+ await run('preservation',process.execPath,['tools/check-preservation66.mjs']);
+ await run('architecture',process.execPath,['tools/check-architecture66.mjs']);
+ await writeFile(path.join(output,'RESULT.json'),JSON.stringify({schema:'jindan-checks66/1',complete:true,passed:true,results,scope:'Headless clean build/regressions. Actual WinForms GUI, exact final package and product patch are separate named evidence.',reportReady:false,supervisorAccepted:false},null,2));
+ console.log('CHECKS66_COMPLETE '+path.relative(root,path.join(output,'RESULT.json')).replaceAll('\\','/'));
+}catch(error){await writeFile(path.join(output,'RESULT.json'),JSON.stringify({schema:'jindan-checks66/1',complete:false,passed:false,error:String(error),results,reportReady:false,supervisorAccepted:false},null,2));console.error(String(error));process.exitCode=1;}

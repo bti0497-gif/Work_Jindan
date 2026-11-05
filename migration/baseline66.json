@@ -1,0 +1,3139 @@
+{
+  "createdAt": "2026-11-05T06:25:10.262211+09:00",
+  "root": "F:/jindan",
+  "head": "48daf3e6208437bd0a4160777adf32357a197c98",
+  "gitStatus": " M backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.AssemblyInfo.cs\n M backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.AssemblyInfoInputs.cache\n M backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.GeneratedMSBuildEditorConfig.editorconfig\n M backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.assets.cache\n M backend/DeojonTechStudio.Api/obj/DeojonTechStudio.Api.csproj.nuget.dgspec.json\n M backend/DeojonTechStudio.Api/obj/project.assets.json\n M backend/DeojonTechStudio.Api/obj/project.nuget.cache\n M winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.AssemblyInfo.cs\n M winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.AssemblyInfoInputs.cache\n M winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.GeneratedMSBuildEditorConfig.editorconfig\n M winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.assets.cache\n M winforms/WorkJindan.WinForms/obj/WorkJindan.WinForms.csproj.nuget.dgspec.json\n M winforms/WorkJindan.WinForms/obj/project.assets.json\n M winforms/WorkJindan.WinForms/obj/project.nuget.cache\n?? build/recovery-boundary.config.js\n?? build/report-engine.config.js\n?? docs/font-package-investigation60.md\n?? docs/local-engine-handoff63.md\n?? docs/native-save-preservation61.md\n?? docs/preservation-contract63.md\n?? docs/recovered-draft-boundary.md\n?? docs/report-engine.md\n?? scripts/audit-native-package61.py\n?? scripts/check-engine-recovery57.cjs\n?? scripts/engine-facade.test.cjs\n?? scripts/engine-recovery.test.cjs\n?? scripts/font-name60-tools.cjs\n?? scripts/font-name60.test.cjs\n?? scripts/local-handoff63/package63.cjs\n?? scripts/local-handoff63/smoke63.mjs\n?? scripts/local-handoff63/test_verify63.py\n?? scripts/local-handoff63/verify63.py\n?? scripts/native-save-audit57.test.cjs\n?? scripts/package-engine57-handoff.cjs\n?? scripts/package-followup60-handoff.cjs\n?? scripts/png-density57.test.cjs\n?? scripts/prepare-font-name60-probes.cjs\n?? scripts/prepare-metadata57-probe.cjs\n?? scripts/prepare-preservation57-probes.cjs\n?? scripts/recovery-draft60.test.cjs\n?? scripts/test-native-package61.py\n?? scripts/verify-engine57.cjs\n?? scripts/verify-recovery60-real.cjs\n?? src/services/report/engineBrowser.js\n?? src/services/report/engineContract.js\n?? src/services/report/engineFacade.js\n?? src/services/report/engineRecovery.js\n?? src/services/report/nativeSaveAudit.js\n?? src/services/report/portableEngine.js\n?? src/services/report/recoveredDraftSession.js\n",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "068eabc63c71c1e34f4b343c6c93c41187aecaa97e94642ae92de31ee513c58a",
+      "bytes": 1125
+    },
+    {
+      "path": ".firebaserc",
+      "sha256": "c50fff1bca97506b92b57876f70118472b76af2f8448f12882a1b75d688704fd",
+      "bytes": 58
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "21af0cd26ad6a5dda27e87cd4a71d14e613e1d5b8f05b461fe494178ac8c0a41",
+      "bytes": 558
+    },
+    {
+      "path": ".npmrc",
+      "sha256": "6de8ecb9d225a43a05caa4439f3f9a8183f1015c0f9359ad31fd005b55a6ac13",
+      "bytes": 189
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "3ffee64f4fd67dab07da48f74d270fd1e680e56e25ef51e37bcc70137d713514",
+      "bytes": 916
+    },
+    {
+      "path": "App.tsx",
+      "sha256": "5986796bd925630086e38f2fa5c9c977e05fd76aee0fbcd83585009d82eb9e24",
+      "bytes": 13334
+    },
+    {
+      "path": "BUILD_GUIDE.md",
+      "sha256": "60dad1c8422c039ee228c00addaa31ac55b5784dce9a3eaa0e87b838da47f5bd",
+      "bytes": 3595
+    },
+    {
+      "path": "DEVELOPMENT_GUIDE.md",
+      "sha256": "ddf48972b24bd0f6d62ef5a241de4d13b9b1ca5bc571d51a32bdf9641cd50d3d",
+      "bytes": 6842
+    },
+    {
+      "path": "DOCS_SCHEMA.md",
+      "sha256": "001b05c74863914afb37eca7fb9a73eedca1f301524065c70bc4bf44251a5180",
+      "bytes": 4819
+    },
+    {
+      "path": "DOCS_SYNC_STRATEGY.md",
+      "sha256": "17f0ef609f2f4100484b27208164e97ba76279f92dc8ee4d65203954ccf01f0d",
+      "bytes": 2892
+    },
+    {
+      "path": "FIREBASE_BOARD_GUIDE.md",
+      "sha256": "cd31a600827c30117e85e9b8ccae26db6af58527e9a1f926c34847484e4e9383",
+      "bytes": 4369
+    },
+    {
+      "path": "INSTALL.md",
+      "sha256": "0745f0ec9989f61f4df766a8b42e63d3d1858a19885ae1b350d9885238e4addd",
+      "bytes": 2575
+    },
+    {
+      "path": "PROMPT.md",
+      "sha256": "197198d6211d14932549b5748156df0316e02ac84814ddb7a54accdc549e4963",
+      "bytes": 2679
+    },
+    {
+      "path": "README.md",
+      "sha256": "ca3fd3805c4d7aa148ad93209095031e5a64e5948631d9c478ae5505c9aed000",
+      "bytes": 2210
+    },
+    {
+      "path": "Thezone.ico",
+      "sha256": "ee67ea295f7ec7dfe687d0270df52b15563d28832ce3081724020f55dc2a29cd",
+      "bytes": 3626
+    },
+    {
+      "path": "WORKSPACE.md",
+      "sha256": "0c57d6d36a949ea7d5cd8e389bacae68bf81093e28e36709cd54606c7b3d6c77",
+      "bytes": 1505
+    },
+    {
+      "path": "assets/tz-logo.svg",
+      "sha256": "a38566716bae3519a466a29e70af3b996f2eef40c920acdf20d0e5dddfe577e2",
+      "bytes": 634
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Data/AppDbContext.cs",
+      "sha256": "79200d64c9f5a4c2fc1e460fa2e838305de5be197df170e3db55a33c3f186e2b",
+      "bytes": 4463
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/DeojonTechStudio.Api.csproj",
+      "sha256": "b7b24d143cae2b56b101a3a310cbbfb11d88337b036da89a9115ef2df7d7f40f",
+      "bytes": 1274
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/DeojonTechStudio.Api.http",
+      "sha256": "630c025c56f367b28152c269c50c3c3f159e55985664a4f043d1d61ada9212bb",
+      "bytes": 153
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Models/Contracts.cs",
+      "sha256": "b7ba15c51e5e79fd1f00b645a3f480acbe7e95f9c3c8f28cfbfc4515ad86652c",
+      "bytes": 4149
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Models/DatabaseSnapshotPayload.cs",
+      "sha256": "077eef1b18402c78483d4f3b739ac98526e46e43f4087cf11a77b759ff361030",
+      "bytes": 560
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Models/Entities.cs",
+      "sha256": "02214419a53d8e2eebbaf544f6d1e9c81037ab424fb6bccdf12c77a1c6c257ea",
+      "bytes": 3598
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Program.cs",
+      "sha256": "024c8e998ea3a705dda2a0868272a532d66b8189d1780bfd476cb97eaceb82c0",
+      "bytes": 40444
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Properties/launchSettings.json",
+      "sha256": "c771e36e83447f7a69a4f320849d928af7b58ab4c97f791019c21f062b8c0504",
+      "bytes": 1125
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Services/EmailService.cs",
+      "sha256": "83ff5be623a6a340719939a65dc38f6fdff79f192787358c32d0d1efa97ac676",
+      "bytes": 1533
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/Services/GoogleDriveService.cs",
+      "sha256": "79f1b4a142657dafad2212e99b805fba1931d9c8050c4228a2d3caab95bdcc57",
+      "bytes": 5181
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/appsettings.Development.json",
+      "sha256": "73f95f9e0ceb205fc1c4dc50c07697fcfa29d7087868c2aef1d504cb38c771ec",
+      "bytes": 127
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/appsettings.json",
+      "sha256": "3e6779b0849c019481a9778947825cf2cf74cf98ecb6cfef2439c1b24e994125",
+      "bytes": 369
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/BCrypt.Net-Next.dll",
+      "sha256": "115b9faff8b909a1a08b65b315058eb182c0c4c3a77c19fcd5f4da9da49d4a63",
+      "bytes": 23040
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/DotNetEnv.dll",
+      "sha256": "2a8d88d8b4339c560b446f9990b715c12e5e3d98fa722b230294b803817efdf4",
+      "bytes": 37888
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Google.Apis.Auth.dll",
+      "sha256": "ba646cefe49dae5b215dd3ef5e7a99907633bc4e8e7cd5c73b2e422d3bd4e683",
+      "bytes": 235008
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Google.Apis.Core.dll",
+      "sha256": "42cbb6e65e27a5ea087187a467bf62f6744ed6878c4055e41bfe7cb13de0221f",
+      "bytes": 86528
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Google.Apis.Drive.v3.dll",
+      "sha256": "6dbe449e982bbde2a5848debe03b749b213285786caaf36796dd4d04b0ef4aa5",
+      "bytes": 181248
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Google.Apis.dll",
+      "sha256": "698df35f1e93f9d592cfb1f6f51c119ac0ef27b8f3f980d0feb606991256467b",
+      "bytes": 84480
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Humanizer.dll",
+      "sha256": "d6853075547d7e303efd60354d911a2ff18edba582cda2fa59d91a2e5dcf9e98",
+      "bytes": 355944
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll",
+      "sha256": "718675eb9cb83f15ff551cbeb7f23c5e4c7e99a20c8e1362b795a75e77880bbc",
+      "bytes": 65840
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll",
+      "sha256": "5705d245072d3eb78400547b32147dbb6e2c8b02ba8bda76729798f5efdeaecb",
+      "bytes": 16000
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
+      "sha256": "2dbef507db770f04aded05f902f876783519c872ae4d6752a893dece5467aeba",
+      "bytes": 870048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll",
+      "sha256": "fb94f491a8956ec085a07b49d72d9673bf1e5d7efe2394f035a7661bef4a7b42",
+      "bytes": 6221488
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.CodeAnalysis.Workspaces.dll",
+      "sha256": "6c901ae660110c73e3eea730ff1258a24ed1fe3a30410143d1029b21d9a284bb",
+      "bytes": 3643568
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll",
+      "sha256": "7c7e74ace0ed79a6fd2e5c61c36d1d26ef3e7cd1eee930ccce04b31b031aebf4",
+      "bytes": 2856112
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
+      "sha256": "c76106ffa4603ec0ff2e2ce73b6494fc8d1ef4d65be363ae33d8ec28954db15f",
+      "bytes": 34848
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Design.dll",
+      "sha256": "6387b54ea255de848a08b7c8f158354706fefd6da51fc9d5463c0c9d77134c6e",
+      "bytes": 486432
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll",
+      "sha256": "645cd5929f91ccf719cb0ba9a7ea2aac8d6c961b87f855dfbf802a893c43efa1",
+      "bytes": 1995848
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll",
+      "sha256": "e8ab507d8ff6c50d049b51bb73c71ee52641e0f694fb04fca409bdecbee99687",
+      "bytes": 2534944
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.Caching.Memory.dll",
+      "sha256": "a6bc869c530a2ed7573575dd61e40f0a1079ef6074251afe9701f927c5355ca8",
+      "bytes": 45832
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "sha256": "67fa4325000db017dc0c35829b416f024f042d24efb868bcf17a895ee6500a93",
+      "bytes": 63768
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll",
+      "sha256": "158761ce778e799949f3a3060c461b1055bb35f1f5a65eff0e42397849f09ecd",
+      "bytes": 92952
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll",
+      "sha256": "d8ec4261597a4a119b5bd97770c605f668794a0155707c6a785c41405a7494dc",
+      "bytes": 79664
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll",
+      "sha256": "45c22524218541717e4a0ade36847c1cda4921f5945b4975a1c78ddfe023d0b1",
+      "bytes": 65320
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.dll",
+      "sha256": "b2cfba2e05ee89a91e9bc9cf112468a5f4fa05d1a77ea81c131ea656f3d133c2",
+      "bytes": 50976
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.Extensions.Options.dll",
+      "sha256": "5e01894cbc0661bacb8ca8f485a40d5ee4e02f28fef58007668a0276431b4693",
+      "bytes": 64776
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Microsoft.OpenApi.dll",
+      "sha256": "aeecfa60db32dbcfac06bceb835745951c88fcac194a84b2d0fe61893d1b7c07",
+      "bytes": 233408
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Mono.TextTemplating.dll",
+      "sha256": "e7b8a683954b5fec009e5f4e5696feb31b4c5d569d55a4633cf5adb0e6d06cec",
+      "bytes": 114688
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Newtonsoft.Json.dll",
+      "sha256": "22c649f75fce5be7c7ccda8880473b634ef69ecf33f5d1ab8ad892caf47d5a07",
+      "bytes": 712464
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll",
+      "sha256": "e0a329c94ca198007947d38e89b38fa7f332e65b8a63a2035d06143e759b7d3c",
+      "bytes": 623616
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Npgsql.dll",
+      "sha256": "0c3042974ae128bc31227dadfce24543078e978c7620b84e43a99669fa964811",
+      "bytes": 1406976
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Sprache.dll",
+      "sha256": "c73de1f5dba57105c5fd1b9f5e66b54c2cd257171531e5a656a5c83143ce41c6",
+      "bytes": 61952
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll",
+      "sha256": "5c5f8b453b40c37a13656fc7ea0641553b9fa72e80fc07046bd012c0334350ac",
+      "bytes": 17408
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll",
+      "sha256": "b3dd86d15e24f75b5246f69cf8cfff5038352ededd178979c7fcd7519cc201cc",
+      "bytes": 118784
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll",
+      "sha256": "d83f7e15a8c6c34e7bc4319e1b81e69f3856e692a076894a6e0efd7f27f34d1f",
+      "bytes": 2270720
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.CodeDom.dll",
+      "sha256": "4d33e2986a84d4460853e2b98d3a1ba9f8aa2950f7fa12ff6ad2e15a4bccfd18",
+      "bytes": 186496
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Composition.AttributedModel.dll",
+      "sha256": "e506dff4ea24163c90b6cac81c8f959efc316308da635e62adf17f610f93333c",
+      "bytes": 18536
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Composition.Convention.dll",
+      "sha256": "4a66481a3f9e0ab4c5c50123e7e141ab7028013e2f041941e746e546468544e1",
+      "bytes": 52840
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Composition.Hosting.dll",
+      "sha256": "998f268a7c0a16ad2a86158ffb86bfdc76a1bf6b3a9065d2bc67cbd603cfb0d5",
+      "bytes": 54376
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Composition.Runtime.dll",
+      "sha256": "ec300fa94e84746c8ca94ab049887ed7e7999ce26c721a82ebc0c97337fc35c5",
+      "bytes": 24680
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Composition.TypedParts.dll",
+      "sha256": "8ffa3f5472025de05f7ecacb46fb94b4514ac8fd4b608f33f01c5a5cc21ac556",
+      "bytes": 61032
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/System.Management.dll",
+      "sha256": "36056b240f488b7da63720585d84f93183cf7bd05da68d5340151ebdd85e4d88",
+      "bytes": 74352
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.deps.json",
+      "sha256": "9f677646868c574232e3c313fabceeb8e92626ac89e6f4ebb5f07eb21a677b06",
+      "bytes": 97606
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.dll",
+      "sha256": "eca975018be00feb92fd626bddfea89ccbb53cc53623b807af1c1d8626680428",
+      "bytes": 150528
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.exe",
+      "sha256": "c8cf78e53c93be34bf90928cf4f0b771c14ed4916c65ea2aee1bef78c33ffa6a",
+      "bytes": 152064
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.pdb",
+      "sha256": "691876efa9c49854b8260113d98519f6ca5ac302ab73dcec4fd0904c44abead7",
+      "bytes": 51908
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.runtimeconfig.json",
+      "sha256": "9e14550fe7808ec7e177c022bf4afc0280a448d191a14b8bb377b2bebde8aa40",
+      "bytes": 534
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ThezoneTechStudio.Api.staticwebassets.endpoints.json",
+      "sha256": "eb6525c892afda953a2560f151f9c5e5bc6e79ef6741d886488ac450262c91e3",
+      "bytes": 51
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/appsettings.Development.json",
+      "sha256": "73f95f9e0ceb205fc1c4dc50c07697fcfa29d7087868c2aef1d504cb38c771ec",
+      "bytes": 127
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/appsettings.json",
+      "sha256": "3e6779b0849c019481a9778947825cf2cf74cf98ecb6cfef2439c1b24e994125",
+      "bytes": 369
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "99dfdbf281fc4593da8a9d153503e3533424e3aba5fb849a890870f6c3b54705",
+      "bytes": 18048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "e1f4aee3636aaa1215d5ad758e224973d46731fd1868af5d61d482a4d97e3493",
+      "bytes": 395440
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "74f43c8a4c01555d9f8a648035de4d5658a0ed7dd5082dc2fd2745de89af48da",
+      "bytes": 47744
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "704b4569fe08135b853c96d512aca96988dc2fbc0905458c52b1d476a25caf9f",
+      "bytes": 45744
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "c1b52d04817d3600c1572bb28e537ef24783c3e93051de2bb37206538480bf5f",
+      "bytes": 18560
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "fd3161c30f43c239ef4e79c8d1c34a233392a9b2ac0763b79a3e0174ed313ea2",
+      "bytes": 425632
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "521a5a425899d261fe81ad629cd2b01a139dced3570e75dbfcc177bbb7ab25af",
+      "bytes": 49784
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "2a2916b72ad50fed003bb5b128c0d9d466fab48a855e223f0a7d56ef4ccbccd1",
+      "bytes": 47280
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "af4946010c0ccae6e47b536152cc202de5772d41b58cee6b8d96512b6e63e207",
+      "bytes": 18080
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "b86b19dc103a593d4acc79a475a16ff7d810912fd21c6927dc03c00c83ca8052",
+      "bytes": 415904
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "494572b94633159ac74fe7ef76a9849ee4291c3959fa6489edb7a3dc670bf04b",
+      "bytes": 49272
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "d31a8a601d930a30320fd4d0631cdbad1d7d5461bf1bfe9a160aaa209c734bbf",
+      "bytes": 47280
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "0a15f69e6204693ec7b86c4af4c8cd78718f5bf632030e921cf2fcc54f8de55d",
+      "bytes": 18080
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "6d89501c7add423b69809a23b228d5287459f2e6207cf256ac274486785ecebf",
+      "bytes": 425648
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "0d947707f514f5a34f135f722ed9aee7181ec6c8e3df307b76e16ebec92bbc00",
+      "bytes": 50320
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "06206b91ed177cfdfd4bd31228d953f8de66d7006cb485f2ec3141124bb882cf",
+      "bytes": 47792
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "b6d4bb59c95b0b54c91e1293dff706d5231685e12cf209033e5c2d92e3dc106b",
+      "bytes": 18040
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "717a24042e357855dbd4e7f03d55f6b6a6081c17dff7732a4189a6d9ae176735",
+      "bytes": 422576
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "0436afc188a0bb1a2d19f597f7da2299dfc5992a40c463802e1887f9e67be81f",
+      "bytes": 49792
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "7719d1d712dea856775ed147a283a94ac50dac37bc19bd12f85fc44e7e7f799e",
+      "bytes": 47792
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "0056f505dd7aebaae3fd66bbf95475a2b1be2960995b26fcedf3bc362d9cc770",
+      "bytes": 18592
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "328f9204029ac216522e7f750efeb2016945e401a832b3adf6005158375bdfe2",
+      "bytes": 465056
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "6ea92a82aa28574fda16605743a2b5a2f10903177ad9aa875b1f0494fc75c22e",
+      "bytes": 52856
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "481de132e968e92ce53be1c2c1b6170e24316de542e820ab227b0ae469f9e5de",
+      "bytes": 50864
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "ab44d19ab7d406c67febb1dc8129e771c2a567a6d547bdef42a5445f28f63aab",
+      "bytes": 18048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "5872cb6937cbfa9674de0676aae2ef73f035577e38ea854c7d9dde1eea642262",
+      "bytes": 427696
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "b8606a51e1f3b92f68b021d37eb7eceb99bec0945dc5bb0d06401cb007373423",
+      "bytes": 49784
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "e77468833883917fa8dad19c4b37e008636d7d2607e9d36bbcebb4685ba96f3f",
+      "bytes": 47776
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "0322f0e69431de2b16602c8363ab961d696cd9f213923b6a28759ca2a4825ec2",
+      "bytes": 18096
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "08734c211b3528bbd6113828fa5a9b0b4dbd2197b786938ac739c86eb03b1f46",
+      "bytes": 428208
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "16a0bfc3111fa0143ec486cc3b5affc90593ee76d6dfedf9ffb772623cee0308",
+      "bytes": 49808
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "d937f1cc3e59f54b087cfa718137fdb4e0929f459ee4f02554cdf18fb8f3b3d8",
+      "bytes": 47776
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "1e6df5310b4c029c92e789af9da8aa185b959f4d1447577ad0beb8775a63393a",
+      "bytes": 18048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "fc709a35670018d54f0b025484964740b0d829d03240be28a5049fa3f4dc8f8b",
+      "bytes": 408736
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "d5067f93308d23b5aa9a6e66a946dadea50f30bd1921e299af57de049841aac7",
+      "bytes": 49280
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "0521f300e01884bc5f75b132a8d2e84600d4a00008ab32d3cdb13625de7aa0dd",
+      "bytes": 46240
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "c5ec655e58c5ae9de6c26f8e74f2a944feb1b68cb65767483e03686d035f0570",
+      "bytes": 19072
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "87c0e775a1e7aaed7cc5d49c6f8222275fcd36503262525ff88e7fefd4e1fd43",
+      "bytes": 562336
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "c2b38587bb7e092773203d0195438b8f16768375876dd693ff1ce0bead05df86",
+      "bytes": 56976
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "ff50f7edd818acc2632ae7541a2af6566315ee9691b993ee8a90ca50e825ed33",
+      "bytes": 57008
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Management.dll",
+      "sha256": "979fee559e30cc0fc4af6f34548a225b6f08cae0a6c61d24a3e389b3f22dc9d1",
+      "bytes": 295600
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "c5a2e9b1b7aa3afb56eb81e59bec8a453f27eea846a56d8d51667a3197c2bb0a",
+      "bytes": 18048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "6b91e083795ce49fd38570481f73c0a7de23ded6eb93c1d1af3979414c340fb8",
+      "bytes": 405664
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "8809543d489da87c8c9f36bd2806cb7a8a7ffdb702f871141a7e58c765ff21ba",
+      "bytes": 48256
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "6490c590c44f19fc79d869ddb1328045984c4158798b5c8dbcbb63793099bffa",
+      "bytes": 45728
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "76a926e7e6e7756fab8769032868ccecb5d1dd9f33a381838dc2da90b7c66108",
+      "bytes": 18096
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "c4e5717ffd5fcd5aef44a3fa89646a2c188516188c2de82ca7c3713dc62cf250",
+      "bytes": 360624
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "2cc500ba71a15213b5d7ce01d1751aa4223a695cf000f477517cb5b7e0734af5",
+      "bytes": 45696
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "fc131e019c412de2a9ce5950534f65e2bd3f0dbe11a86c72204131bfb939c6fc",
+      "bytes": 43184
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
+      "sha256": "373c98100aeb79e85396c11f9c5a956617c2042d5af4dcccc304467a71638551",
+      "bytes": 18048
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "sha256": "1b89b36c51399bcda9ed915af656b5a46764c447cdbf27aee723d8ede4a68fdd",
+      "bytes": 360608
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
+      "sha256": "c576d5d1662c321b483ea3ae1733b6adeb1b63354023b15b5b3fb023d63763e1",
+      "bytes": 45712
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
+      "sha256": "750a60c5ae76f80045d07d1205ebe51d0c5bfe6851370659c1f393606a9cbea7",
+      "bytes": 43184
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e",
+      "bytes": 198
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTe.242B3445.Up2Date",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.AssemblyInfo.cs",
+      "sha256": "d67f0beaff3ff2206f6b11b8ec8cbcb6a5ea2a0f4c363f1091e4ae50464a0241",
+      "bytes": 1052
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.AssemblyInfoInputs.cache",
+      "sha256": "e984949b535203e4141c60f3dfa776d6b697648c0187d46711c77f38517ebd05",
+      "bytes": 66
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.GeneratedMSBuildEditorConfig.editorconfig",
+      "sha256": "0c457561b99a469bc490822d0034a59860be9ab32af3d1fde67a690f6b306888",
+      "bytes": 1028
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.GlobalUsings.g.cs",
+      "sha256": "1bc1691037c29525f4b104fe05a77bbef040a27cce2ab784ed28226f8c8b5e35",
+      "bytes": 770
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.assets.cache",
+      "sha256": "55528c4574b7a5adc639a7158aa5d57572914f0cdb1a5c6210fe4644ac06c27c",
+      "bytes": 81552
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.csproj.AssemblyReference.cache",
+      "sha256": "165a52ead98da32e7d082ac95728bdbb67ea986c3bc2f37ab09a99bf0bcbb930",
+      "bytes": 10871
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.csproj.CoreCompileInputs.cache",
+      "sha256": "8ad046724b1fc4dffd109ac78313ec13e446dc30fe1737943ebeb795d524b4cf",
+      "bytes": 66
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.csproj.FileListAbsolute.txt",
+      "sha256": "bccfda051217c2e1dc6c09ccd9d15820f9750baf68a9afe123d6540b3ba23f22",
+      "bytes": 12708
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.genruntimeconfig.cache",
+      "sha256": "9afabd559c6b7de14f100f8b9a29a5155405a44d189ae735afb89cd5dc1113c1",
+      "bytes": 66
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/DeojonTechStudio.Api.sourcelink.json",
+      "sha256": "36b2f970aa758a626c252663d9ae189911771e222c66f1a2df4f7cc1f4442161",
+      "bytes": 139
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/ThezoneTechStudio.Api.MvcApplicationPartsAssemblyInfo.cache",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/ThezoneTechStudio.Api.MvcApplicationPartsAssemblyInfo.cs",
+      "sha256": "470287792aa5d6a38811bdaa9e60b7d28a57ff3cafea7bd57ec211f5fcb22c07",
+      "bytes": 712
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/ThezoneTechStudio.Api.dll",
+      "sha256": "eca975018be00feb92fd626bddfea89ccbb53cc53623b807af1c1d8626680428",
+      "bytes": 150528
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/ThezoneTechStudio.Api.pdb",
+      "sha256": "691876efa9c49854b8260113d98519f6ca5ac302ab73dcec4fd0904c44abead7",
+      "bytes": 51908
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/apphost.exe",
+      "sha256": "c8cf78e53c93be34bf90928cf4f0b771c14ed4916c65ea2aee1bef78c33ffa6a",
+      "bytes": 152064
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/ref/ThezoneTechStudio.Api.dll",
+      "sha256": "a7287fcf2af5c9a843490bce5aa65669d5bd4864cda352b93a6ee5628554c642",
+      "bytes": 35328
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/refint/ThezoneTechStudio.Api.dll",
+      "sha256": "a7287fcf2af5c9a843490bce5aa65669d5bd4864cda352b93a6ee5628554c642",
+      "bytes": 35328
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/rjsmcshtml.dswa.cache.json",
+      "sha256": "bec9e64fcffb438bd97dc75a7acb6001c9c72c0460e3b8f684e86b96d400d758",
+      "bytes": 572
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/rjsmrazor.dswa.cache.json",
+      "sha256": "791daca6b25ec46cdfddb33cc2ec0ccddb6c2327180725674a3179aa58be1efb",
+      "bytes": 572
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/rpswa.dswa.cache.json",
+      "sha256": "bd8b88aec08568bbc92d64001e8fe8e16bfa184e237fba4395a51ca08640ec13",
+      "bytes": 374
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/staticwebassets.build.endpoints.json",
+      "sha256": "eb6525c892afda953a2560f151f9c5e5bc6e79ef6741d886488ac450262c91e3",
+      "bytes": 51
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/staticwebassets.build.json",
+      "sha256": "adc11af6e0a106f650c33dad9ce0052c10bfeb7e0fc77fe01f36bbcc939bf1dc",
+      "bytes": 271
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/Debug/net8.0/staticwebassets.build.json.cache",
+      "sha256": "8df16141db85eb3ecf56d8fe064d39a8cf5af18b65f2514026702ea2606ce5db",
+      "bytes": 44
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/DeojonTechStudio.Api.csproj.nuget.dgspec.json",
+      "sha256": "e496b6a9722404baf6422760de024c0d0434bc327bfd5654ca4476aaf4a5ca56",
+      "bytes": 4183
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/DeojonTechStudio.Api.csproj.nuget.g.props",
+      "sha256": "1f711d9a0a82a3ea88d48c6de46204e0898b2f5efc723f937996410e9841fe03",
+      "bytes": 3023
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/DeojonTechStudio.Api.csproj.nuget.g.targets",
+      "sha256": "54388bf9e5b29f06cb6a709a90d373ab32f6451808ea88630c508a84bcf3dd36",
+      "bytes": 1155
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/project.assets.json",
+      "sha256": "8597dd384cf893f2d75bb75e99f79b866394d31b3822945314ad403d339e5ff0",
+      "bytes": 342041
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/obj/project.nuget.cache",
+      "sha256": "b43444cae18e6478eed4acd6c0d6482be0d53cdaf598293d7b43c23ed5407d8f",
+      "bytes": 17754
+    },
+    {
+      "path": "backend/DeojonTechStudio.Api/thezone.db",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "backend_guide.md",
+      "sha256": "e92dd70dc71269ef32204c40f79ca34eddae3c97989db3b4756e917f095efe3c",
+      "bytes": 17563
+    },
+    {
+      "path": "boardguide.md",
+      "sha256": "e428b4580e3703246fa14561b1e588460b28078e9c1b55e47bb94e0346ba9644",
+      "bytes": 19591
+    },
+    {
+      "path": "build/icon.icns",
+      "sha256": "9b5839e147d2a30f88086e1048a64c32ae981af88f8651d26a8dcbdb58a0f6f7",
+      "bytes": 1689831
+    },
+    {
+      "path": "build/icon.ico",
+      "sha256": "2a9e7121f32d2638a7d97b87ca70d8b1a765f11982dc04052e1ec66d22139b0f",
+      "bytes": 361102
+    },
+    {
+      "path": "build/icon.png",
+      "sha256": "2432f2106c60fdfd0e0107ac2be77f7a292f2bad591a316dea481d22f7e964c0",
+      "bytes": 1033400
+    },
+    {
+      "path": "build/icon.svg",
+      "sha256": "894b56c6d8dedd2fe8b0ce619686f43c048d1791cd116e4947b0310baac0c706",
+      "bytes": 1395
+    },
+    {
+      "path": "build/icons/1024x1024.png",
+      "sha256": "4e3059ee854f0f8300406cbb104835bcfed30112cb4d6affc01170e030457431",
+      "bytes": 1115149
+    },
+    {
+      "path": "build/icons/128x128.png",
+      "sha256": "b3fd457f3127e9f97b2c5a41a63784934b8fe6638527bcbd5247922fde42963a",
+      "bytes": 10402
+    },
+    {
+      "path": "build/icons/16x16.png",
+      "sha256": "b89b66e1c86d6e10f757c8009575e71f00ec464b3fae23d1e8623de679324a45",
+      "bytes": 556
+    },
+    {
+      "path": "build/icons/24x24.png",
+      "sha256": "c97be71f7edc6541010018a5dfc7c4ae676fe0a6cd13903a8c66a779611a3925",
+      "bytes": 836
+    },
+    {
+      "path": "build/icons/256x256.png",
+      "sha256": "56ac651d2ef85f36c827b8013e21e6cd731309e071fe7801f7b0bab2fc59cc50",
+      "bytes": 48713
+    },
+    {
+      "path": "build/icons/32x32.png",
+      "sha256": "99ba763f03e56931a567f0d9f71e20bf00b3cda179148395e7c3ac4cf07bd2a7",
+      "bytes": 1229
+    },
+    {
+      "path": "build/icons/48x48.png",
+      "sha256": "a7e342c3bb70a170f8638c1148f8d5893c0690a377c309746665ee9d578cb25d",
+      "bytes": 2032
+    },
+    {
+      "path": "build/icons/512x512.png",
+      "sha256": "89c12ee10818f1146f8f882d71026c3c8607952e43d915b2b21e0639af6a7d38",
+      "bytes": 229409
+    },
+    {
+      "path": "build/icons/64x64.png",
+      "sha256": "9dec9d86398ac8c25e9a832d5bb21cd1af99031d2062c56b4abb1de878910ccf",
+      "bytes": 3143
+    },
+    {
+      "path": "build/icons/icon.icns",
+      "sha256": "9b5839e147d2a30f88086e1048a64c32ae981af88f8651d26a8dcbdb58a0f6f7",
+      "bytes": 1689831
+    },
+    {
+      "path": "build/icons/icon.ico",
+      "sha256": "2a9e7121f32d2638a7d97b87ca70d8b1a765f11982dc04052e1ec66d22139b0f",
+      "bytes": 361102
+    },
+    {
+      "path": "build/recovery-boundary.config.js",
+      "sha256": "33badaa16a207a82c705caafa2126fe2ea6ca03a00f65c7756f95302f5eb3ef1",
+      "bytes": 325
+    },
+    {
+      "path": "build/report-engine.config.js",
+      "sha256": "f4ff284140989c0fa9991d690d0accbdff4005fbfa981eb8e62bec87547227a7",
+      "bytes": 639
+    },
+    {
+      "path": "components/Auth/ForgotPassword.tsx",
+      "sha256": "e3fc25fe26dd10fe8f9ea9a1895b9001334e583d480e91bd50f8e8c2548ea899",
+      "bytes": 3194
+    },
+    {
+      "path": "components/Auth/Login.tsx",
+      "sha256": "6a226a3e75b6011df502dab647f9836e4164084b425efa006255f16710cce9bb",
+      "bytes": 8346
+    },
+    {
+      "path": "components/Auth/SignUp.tsx",
+      "sha256": "2e40e5e52d6e9d12825368e453da3347dea9e1094d49a84c69bc90c42a269403",
+      "bytes": 16090
+    },
+    {
+      "path": "components/BoardDetail.tsx",
+      "sha256": "12f7345cf8d7ce9f3d14923d0908930a178d3735f55d15cf333e93a4c7323556",
+      "bytes": 4187
+    },
+    {
+      "path": "components/BoardForm.tsx",
+      "sha256": "ba5d3a17be67299b3f6195c2bd4e7e0af94523ac6f4d42bc3e6336b3e23d421f",
+      "bytes": 5940
+    },
+    {
+      "path": "components/Dashboard.tsx",
+      "sha256": "3ed788b54d308e5d7ec015bc727a4fe5055f5c21d5c1215b79b9c5ca0ee3131e",
+      "bytes": 8045
+    },
+    {
+      "path": "components/FileManagement.tsx",
+      "sha256": "ccbaed4df883a3a890f91d97010c1115818660fdc94bee8f80836827957b833f",
+      "bytes": 13993
+    },
+    {
+      "path": "components/GeneralBoard.tsx",
+      "sha256": "499805eed03d341f63601f2bb42f187c0d40f4c0ef93894d0225b378711adb12",
+      "bytes": 13089
+    },
+    {
+      "path": "components/Header.tsx",
+      "sha256": "8017525f16b42b9e746a9568d34f782643cb189b7cfa3d5ac7faecd4377e0825",
+      "bytes": 4099
+    },
+    {
+      "path": "components/MainContent.tsx",
+      "sha256": "1e69afa5b103bc76b9f3fa436e3fdb906d83977833aa4da8a46cbaf4fe607d22",
+      "bytes": 7148
+    },
+    {
+      "path": "components/ProcessForm.tsx",
+      "sha256": "6859ce77d9fa5be4e562edbfecab8f3904cada8cd087d665015d434c19a29aae",
+      "bytes": 9193
+    },
+    {
+      "path": "components/ProcessManagement.tsx",
+      "sha256": "3be6818e0b77249e01f95a171a856a3068e69f177192014ecaf09f5ae3a5fb10",
+      "bytes": 12574
+    },
+    {
+      "path": "components/ProfileEdit.tsx",
+      "sha256": "c32a35bf66c0a4dab2af19f6f54fdbdbd440c6d56600fddd525e2dc2a9195066",
+      "bytes": 7266
+    },
+    {
+      "path": "components/ProjectCard.tsx",
+      "sha256": "431aee7a35967558014ce455c1f20b6a1176bb022cd2f78a5776c4bcfecaac43",
+      "bytes": 4178
+    },
+    {
+      "path": "components/ProjectDetail.tsx",
+      "sha256": "88e148f41c2714dde4cdc8ee61d893872266d4fd5edd2d6b772995c9ea6d794c",
+      "bytes": 10702
+    },
+    {
+      "path": "components/ProjectForm.tsx",
+      "sha256": "16c01546d886f41e3fa81810222045ebf85b706ce04f5627b214731515863318",
+      "bytes": 11713
+    },
+    {
+      "path": "components/SidebarLeft.tsx",
+      "sha256": "6803a833e85eb4a4750d4a81fff0533fe6241b2e0cd8f49ecfca9671bed30c4f",
+      "bytes": 7020
+    },
+    {
+      "path": "components/SidebarRight.tsx",
+      "sha256": "5025ae893139538ba91a9e1abec4d15ed9d84bb41ae2195b241c4bf67c828fe0",
+      "bytes": 8623
+    },
+    {
+      "path": "components/TaskDetail.tsx",
+      "sha256": "45f1c4436574fd65476506921b835afafe07ed8daca8e146e6fc7285c82ab52f",
+      "bytes": 7195
+    },
+    {
+      "path": "components/TaskForm.tsx",
+      "sha256": "ad7dd9adc1ae1cb2d72ad1c56887642ea70deacc390482cb8830fe3f0c84392e",
+      "bytes": 7849
+    },
+    {
+      "path": "components/TaskManager.tsx",
+      "sha256": "ea2fc2504963bf529f4ae32978cd25704ee3c7bc3b3bb9510a0dcabdc80ddeaf",
+      "bytes": 9135
+    },
+    {
+      "path": "docs/font-package-investigation60.md",
+      "sha256": "608820d78d02b1344431b7a596230ff5b081a25da0e9f08576b7ef2934db2615",
+      "bytes": 4622
+    },
+    {
+      "path": "docs/local-engine-handoff63.md",
+      "sha256": "a675fd2da57345b66b0fd2f11f6442a907baa6bfa69fcbdd4c5b271b2cabdf46",
+      "bytes": 6816
+    },
+    {
+      "path": "docs/native-save-preservation61.md",
+      "sha256": "46f96e5519600a63cbc597671fe059c1084b6775b67787f8fdcd0daac29ef59a",
+      "bytes": 8368
+    },
+    {
+      "path": "docs/preservation-contract63.md",
+      "sha256": "942be993c3d8518a3e7e9c638364deff293a0554481e917f6d2aadfc902266fa",
+      "bytes": 6202
+    },
+    {
+      "path": "docs/recovered-draft-boundary.md",
+      "sha256": "cd9f4dd9bc94f927a58ee714a89c13901bcd1a08115dffa4d73d7736a0117cb4",
+      "bytes": 4424
+    },
+    {
+      "path": "docs/report-engine.md",
+      "sha256": "ac8110b4b31d63fb324a7416ee34408be50dffd5eb4bc078704d49579f6bf2d0",
+      "bytes": 11539
+    },
+    {
+      "path": "drive-auth.cjs",
+      "sha256": "a7cc9e8c9cedf6828bcbd5739f062427f3e10ac2bd7d4d24b2a1f3f07af2c831",
+      "bytes": 4716
+    },
+    {
+      "path": "errors.txt",
+      "sha256": "1f5363bc17bedec37eef04ff7b05ce9cd2cba4fd86343349888ead765196123c",
+      "bytes": 788
+    },
+    {
+      "path": "eslint.config.js",
+      "sha256": "f6477b521c0d4c5ab0ac73d8cc8ce484795d23bece7cbbd0cd2a9f4301337532",
+      "bytes": 787
+    },
+    {
+      "path": "firebase.json",
+      "sha256": "dd32575de7fb5e514814e94a4dd2ed1a0b052635c7ea6e3285465fe488c353f2",
+      "bytes": 61
+    },
+    {
+      "path": "firestore.rules",
+      "sha256": "04386dd29d7f21f5766be6b7657e81ca66db3fc05ea7311720c9d0807a590f6c",
+      "bytes": 8546
+    },
+    {
+      "path": "hooks/useAuthViewModel.ts",
+      "sha256": "7f18aa4da2ed6d36357295778754d2b3e5244de8a9fffe8642673dfd94af8949",
+      "bytes": 3815
+    },
+    {
+      "path": "hooks/useBoardViewModel.ts",
+      "sha256": "8c2375fb06714d82c290df8a59fa9d70c597506f300144a066162d181ef9968a",
+      "bytes": 3654
+    },
+    {
+      "path": "hooks/useProjectViewModel.ts",
+      "sha256": "be10f7c17b0dd48931dbaadc191570533aa486489679e4b5daec20b9b81e27da",
+      "bytes": 3389
+    },
+    {
+      "path": "hooks/useTaskViewModel.ts",
+      "sha256": "df5b0501c1a963ec1fefff0aba7981b7537600aaa12f93db20f9cac758293fc4",
+      "bytes": 2029
+    },
+    {
+      "path": "index.css",
+      "sha256": "3f431906ec9042edfede14b563fe76684052b6f6020b6e73f252e25b1a471850",
+      "bytes": 1465
+    },
+    {
+      "path": "index.html",
+      "sha256": "6fce3338070b372ccc0eac7b07ea83c9aa8be92a99d07ca552e855b1ddd855a4",
+      "bytes": 2269
+    },
+    {
+      "path": "index.tsx",
+      "sha256": "b68a3618905f6926224e8ee143f3e172429706a0e2628ef73283d6c9681f1f6b",
+      "bytes": 388
+    },
+    {
+      "path": "main.cjs",
+      "sha256": "d269bf2beadf0597ef799670048ab6e987b28b385e8f91c9509574a5dc4ad1cf",
+      "bytes": 10739
+    },
+    {
+      "path": "manager.md",
+      "sha256": "c2874a6faaa881aa735b13e95a0e396efdaaddf3caddfc7f8529c52a99820c67",
+      "bytes": 1994
+    },
+    {
+      "path": "metadata.json",
+      "sha256": "a871a98f66accef8078a0c741e07433d249be1b929905e54cc220ffb26a3f052",
+      "bytes": 280
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "44d1b3ff431a9188fbb9d6d9289ad5023ddf0ddf0b037df5f39a70edd9c3230a",
+      "bytes": 332003
+    },
+    {
+      "path": "package.json",
+      "sha256": "13e4cdee0f7c88de58d9a4d49dbd85dd737c919a2fb8e580b91b7f41b0d06ce1",
+      "bytes": 3082
+    },
+    {
+      "path": "postcss.config.js",
+      "sha256": "374f669f08b18e67d0a7264fa45b71228017e604fe7f6db8a5c1bd5ba27e5c98",
+      "bytes": 86
+    },
+    {
+      "path": "preload.cjs",
+      "sha256": "fc2f3acf5a39f716366b4164b918b82b1b7d499fbf2c4402cbffe724bf40f302",
+      "bytes": 1357
+    },
+    {
+      "path": "public/icon.svg",
+      "sha256": "3f6402a95fb870469ac045cf70e0ffeafb2f07fe7e7e9c04356b5233224860be",
+      "bytes": 1425
+    },
+    {
+      "path": "public/report-ocr/LICENSE-tessdata.txt",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "bytes": 11560
+    },
+    {
+      "path": "public/report-ocr/NOTICE.txt",
+      "sha256": "c4baf485baac46aa2e79db2d4d3b197ddb718b43580ccbb3c130cb07135feebb",
+      "bytes": 792
+    },
+    {
+      "path": "public/report-ocr/eng.traineddata.gz",
+      "sha256": "5bb8fe0a952a20e45644291951782a2c3712eab4f64c33f20ec18bb6d787e470",
+      "bytes": 1961173
+    },
+    {
+      "path": "public/report-ocr/kor.traineddata.gz",
+      "sha256": "3be502eaa2b07348ff39bce11cb8b5fc661d04c3af6169dfc0f19ff2da51cc9d",
+      "bytes": 1108798
+    },
+    {
+      "path": "public/report-runtime/hwp/THIRD_PARTY_LICENSES.txt",
+      "sha256": "bb40fa5d0fa44bf2ff8b2b5dd7085562b58557a69eaa08b6bb5a4fc94252af88",
+      "bytes": 13162
+    },
+    {
+      "path": "public/vite.svg",
+      "sha256": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb",
+      "bytes": 1497
+    },
+    {
+      "path": "publish-build/BCrypt.Net-Next.dll",
+      "sha256": "1570fa2384cd0f7d52cc829f0a30238489f6a49414838a76da533c4f608e7eed",
+      "bytes": 53248
+    },
+    {
+      "path": "publish-build/DeojonTechStudio.Api.staticwebassets.endpoints.json",
+      "sha256": "c1686417e8d5c31bba969f12b6f3d2b35e6609adb5ca42f212261a3a02771aac",
+      "bytes": 53
+    },
+    {
+      "path": "publish-build/DotNetEnv.dll",
+      "sha256": "0c50d7bb3bd36a767a2deb8e53a03a3e2e2c4eed575a50767997031636adc7a1",
+      "bytes": 106496
+    },
+    {
+      "path": "publish-build/Google.Apis.Auth.dll",
+      "sha256": "9ebe3518ea0c01200cc85014fb7c4bfdc220ee198b2afcada9339c8bde52d5ec",
+      "bytes": 577536
+    },
+    {
+      "path": "publish-build/Google.Apis.Core.dll",
+      "sha256": "295eb7eed3d471191b2961c6d3acbd773f8f850b154bf7d5ea1b54fbf567b3ca",
+      "bytes": 212992
+    },
+    {
+      "path": "publish-build/Google.Apis.Drive.v3.dll",
+      "sha256": "aceec8ebc89c703803ec8978122ea62515cb628def06b7832787d268113d1455",
+      "bytes": 344064
+    },
+    {
+      "path": "publish-build/Google.Apis.dll",
+      "sha256": "5cc2a9f34ef5738e15de5a6af3089ad2045b61bc6c18cd8270dcaf91b4af39d2",
+      "bytes": 217088
+    },
+    {
+      "path": "publish-build/Microsoft.AspNetCore.OpenApi.dll",
+      "sha256": "4aae9333477faebb1b762039b03f17d337a8b8513b3f09161dde6a47fc24ff1f",
+      "bytes": 139264
+    },
+    {
+      "path": "publish-build/Microsoft.Data.Sqlite.dll",
+      "sha256": "4073d605823c29c6e80137275046ac4bf686f18ac263f0a6d67522ae63eb79a0",
+      "bytes": 442368
+    },
+    {
+      "path": "publish-build/Microsoft.EntityFrameworkCore.Abstractions.dll",
+      "sha256": "0e26cdbd950a3cfbc31aa4def6b5bcfe217ed1033fb719c1814486b0eae41880",
+      "bytes": 53248
+    },
+    {
+      "path": "publish-build/Microsoft.EntityFrameworkCore.Relational.dll",
+      "sha256": "6f04211a59690bafa6e6ccc397fe8c0c7bbeda888fe3b3761439e587418d801f",
+      "bytes": 5140480
+    },
+    {
+      "path": "publish-build/Microsoft.EntityFrameworkCore.Sqlite.dll",
+      "sha256": "abe7425f62050809aa6e10525a93f40c3362d2da837f84354e6e7f5234ffa5d9",
+      "bytes": 667648
+    },
+    {
+      "path": "publish-build/Microsoft.EntityFrameworkCore.dll",
+      "sha256": "81c7cf49a59dccc60b918c1f5f9b20a780d84d45c8429c026c063d3dc559eb39",
+      "bytes": 6361088
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.Caching.Memory.dll",
+      "sha256": "a6bc869c530a2ed7573575dd61e40f0a1079ef6074251afe9701f927c5355ca8",
+      "bytes": 45832
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "sha256": "67fa4325000db017dc0c35829b416f024f042d24efb868bcf17a895ee6500a93",
+      "bytes": 63768
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.DependencyInjection.dll",
+      "sha256": "158761ce778e799949f3a3060c461b1055bb35f1f5a65eff0e42397849f09ecd",
+      "bytes": 92952
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.DependencyModel.dll",
+      "sha256": "056bc03ee5018f70fcae16b13d248b80c86e4a47824ac1038f1452ce3545c1a3",
+      "bytes": 167936
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.Logging.Abstractions.dll",
+      "sha256": "45c22524218541717e4a0ade36847c1cda4921f5945b4975a1c78ddfe023d0b1",
+      "bytes": 65320
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.Logging.dll",
+      "sha256": "b2cfba2e05ee89a91e9bc9cf112468a5f4fa05d1a77ea81c131ea656f3d133c2",
+      "bytes": 50976
+    },
+    {
+      "path": "publish-build/Microsoft.Extensions.Options.dll",
+      "sha256": "5e01894cbc0661bacb8ca8f485a40d5ee4e02f28fef58007668a0276431b4693",
+      "bytes": 64776
+    },
+    {
+      "path": "publish-build/Microsoft.OpenApi.dll",
+      "sha256": "6f7a5a53086c284f25bc58c2adf910eaa5ead52c4ea71c7d18a2ec5b5057a6e4",
+      "bytes": 598016
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.Core.dll",
+      "sha256": "7765a659149efcea97bd5bdb4ebb1f12ab2ddc2fb6391ab65c176c575b2474cf",
+      "bytes": 1101824
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.Core.xml",
+      "sha256": "c1591a6b6dc86ede8b348a2eab053b9744116ef59319218e251a0235187e7f00",
+      "bytes": 630199
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.WinForms.dll",
+      "sha256": "e94100bfe2ea73f054761fc068b98a3bb46c9300eeb491196ad63845b079bc55",
+      "bytes": 65536
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.WinForms.xml",
+      "sha256": "4b40e49aec5dbda597224f997d57a16645ddc2eb00f31a6329204d1853a2245a",
+      "bytes": 41393
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.Wpf.dll",
+      "sha256": "550821d58e6cf9c91c1ec3441f4565852ebdd075a6dc5502dbaf6396fbdf81ad",
+      "bytes": 135168
+    },
+    {
+      "path": "publish-build/Microsoft.Web.WebView2.Wpf.xml",
+      "sha256": "9755a7ad501b107e7a3905d1bdaf5e062be5b4f04390ec61429e38dc7686d7fb",
+      "bytes": 143909
+    },
+    {
+      "path": "publish-build/Newtonsoft.Json.dll",
+      "sha256": "da2e16de576b3974f84c28e050520a5531cdf16bbade71f617faec5267ef3094",
+      "bytes": 1847296
+    },
+    {
+      "path": "publish-build/SQLitePCLRaw.batteries_v2.dll",
+      "sha256": "3d543dea04e3c7035b5c44a55e4f0998c52bc8a1bab8d89affe426f9d88b0c1b",
+      "bytes": 20480
+    },
+    {
+      "path": "publish-build/SQLitePCLRaw.core.dll",
+      "sha256": "e6790a57f6734753e21a85be377fffc155c6e83cecd515662b9a6e595bd2dc56",
+      "bytes": 110592
+    },
+    {
+      "path": "publish-build/SQLitePCLRaw.provider.e_sqlite3.dll",
+      "sha256": "de33589ba72dd59543fcd7bef9aedcc4ca61146ae02d5ec8b980fe06e0683c1b",
+      "bytes": 86016
+    },
+    {
+      "path": "publish-build/Sprache.dll",
+      "sha256": "d1540fef8bf348255869cdc6575365e324bfc9833dc479897753765052904c07",
+      "bytes": 176128
+    },
+    {
+      "path": "publish-build/Swashbuckle.AspNetCore.Swagger.dll",
+      "sha256": "874de3ee1a860c2ce28cd816be19e6cef62c89465d5c0520fd622c3ef6f20d05",
+      "bytes": 40960
+    },
+    {
+      "path": "publish-build/Swashbuckle.AspNetCore.SwaggerGen.dll",
+      "sha256": "4fb2117a0d3a5c69abbf1c80a4f18a040ffa0b32fdfa370e7872a78463250367",
+      "bytes": 303104
+    },
+    {
+      "path": "publish-build/Swashbuckle.AspNetCore.SwaggerUI.dll",
+      "sha256": "246c09b1020db22409771542ad4a06939808b1cd621eb15b1e96712c6973c8bb",
+      "bytes": 2355200
+    },
+    {
+      "path": "publish-build/System.CodeDom.dll",
+      "sha256": "f1c36de2b28af83e9ff464524ee928f51a1c4f3cba1dfcc7e18898aff5119cf5",
+      "bytes": 483328
+    },
+    {
+      "path": "publish-build/System.Management.dll",
+      "sha256": "b6289e852bbaca9b10a60a2b90503c6227d9c85ad14df749f2eaca9a349c2092",
+      "bytes": 815104
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.deps.json",
+      "sha256": "8d083bbe5430e939b5d8265eb3819a44f715e36a81873c4d37a87994ce21772c",
+      "bytes": 110172
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.dll",
+      "sha256": "f958f54f8d55d63df8e039fe1cdd8a3b087c8bf5dfedffb581b17e1c9da8e744",
+      "bytes": 262144
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.exe",
+      "sha256": "9a39021fef47766f4a79a220271dc5f3fea0956204ae5375c4146b3a9e345dbf",
+      "bytes": 151552
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.pdb",
+      "sha256": "0488a397da743aab6f0e0ed9bf97a4b7414e997183af3566d55f1a3ccfd3a400",
+      "bytes": 41380
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.runtimeconfig.json",
+      "sha256": "3af6e09ecb3c3290fd4ad622250ad66771f7793778b86452dac0456fb54127f8",
+      "bytes": 606
+    },
+    {
+      "path": "publish-build/ThezoneTechStudio.Api.staticwebassets.endpoints.json",
+      "sha256": "c1686417e8d5c31bba969f12b6f3d2b35e6609adb5ca42f212261a3a02771aac",
+      "bytes": 53
+    },
+    {
+      "path": "publish-build/WebView2Loader.dll",
+      "sha256": "462b36fd1be6ca9f7563466a89e57c41ef4a4def3e0a84fa885d203aea4a3aaf",
+      "bytes": 165968
+    },
+    {
+      "path": "publish-build/appsettings.Development.json",
+      "sha256": "73f95f9e0ceb205fc1c4dc50c07697fcfa29d7087868c2aef1d504cb38c771ec",
+      "bytes": 127
+    },
+    {
+      "path": "publish-build/appsettings.json",
+      "sha256": "8f734c9e3110c58cee640a3ac8cea9fb1e41cab3100fbc44cf93b8294c3e18b7",
+      "bytes": 224
+    },
+    {
+      "path": "publish-build/e_sqlite3.dll",
+      "sha256": "dccbabb2bc7e7d4302c44d9ce41b70721a7d0914fa4d289e2f340d39766ad102",
+      "bytes": 1691648
+    },
+    {
+      "path": "publish-build/thezone.ico",
+      "sha256": "ee67ea295f7ec7dfe687d0270df52b15563d28832ce3081724020f55dc2a29cd",
+      "bytes": 3626
+    },
+    {
+      "path": "publish-build/web.config",
+      "sha256": "ddb98cca1c1906f9270187ef9d55d8045e39ad3979b852dc531f291ce89652b5",
+      "bytes": 488
+    },
+    {
+      "path": "publish-build/\ub354\uc8e4\ud658\uacbd\uae30\uc220 \uae30\uc220\uc9c4\ub2e8\ud300 \ud611\uc5c5\uc2a4\ud29c\ub514\uc624.deps.json",
+      "sha256": "bcf5158455939775c72efdaf1fee46274fe969d23bc87d4a589a52e1e4fd0141",
+      "bytes": 2565
+    },
+    {
+      "path": "publish-build/\ub354\uc8e4\ud658\uacbd\uae30\uc220 \uae30\uc220\uc9c4\ub2e8\ud300 \ud611\uc5c5\uc2a4\ud29c\ub514\uc624.dll",
+      "sha256": "a60b454f1e97ea7b6fb2be510dfdf7bc7cfd4b9f8eaaf1d9947a38c3980c5501",
+      "bytes": 49152
+    },
+    {
+      "path": "publish-build/\ub354\uc8e4\ud658\uacbd\uae30\uc220 \uae30\uc220\uc9c4\ub2e8\ud300 \ud611\uc5c5\uc2a4\ud29c\ub514\uc624.exe",
+      "sha256": "6c8689cc285b2e2743d11dacc8f02be54bb1d0110d5d1a42d51c35cd95d2a9c2",
+      "bytes": 155648
+    },
+    {
+      "path": "publish-build/\ub354\uc8e4\ud658\uacbd\uae30\uc220 \uae30\uc220\uc9c4\ub2e8\ud300 \ud611\uc5c5\uc2a4\ud29c\ub514\uc624.pdb",
+      "sha256": "7faad85aef12f45388edbec20d77f58fd55f3aebaaffcd62024691476796c11b",
+      "bytes": 15028
+    },
+    {
+      "path": "publish-build/\ub354\uc8e4\ud658\uacbd\uae30\uc220 \uae30\uc220\uc9c4\ub2e8\ud300 \ud611\uc5c5\uc2a4\ud29c\ub514\uc624.runtimeconfig.json",
+      "sha256": "20442852737d2871655d05d90d6534da19c707dd6eca585d8b46f47e3a430670",
+      "bytes": 564
+    },
+    {
+      "path": "react-shim.d.ts",
+      "sha256": "ee23458dd68e605336cdd839410191a2d692eeddb6787762decc2b8e3e808d8b",
+      "bytes": 1179
+    },
+    {
+      "path": "report-ai.cjs",
+      "sha256": "ad7b2da06a30f79159e8fa535b3c7c3738c448396967cb487ab509ec159788ac",
+      "bytes": 14335
+    },
+    {
+      "path": "report-collector.cjs",
+      "sha256": "f7acb44e5d6c4d111dc8bc5769b27b1b1d1aefa16a8fab7eb7a8443e49dcdac7",
+      "bytes": 5251
+    },
+    {
+      "path": "report-page-export.cjs",
+      "sha256": "25d2bea4f9f680301ebdb1b978ed7811c4fdf90a947789fd1db9af4972f0fb5d",
+      "bytes": 1636
+    },
+    {
+      "path": "scripts/audit-native-package61.py",
+      "sha256": "75bd384abbcf64e63f8712f61996130dc26bec0eca3454d64013d24b8dcff168",
+      "bytes": 8887
+    },
+    {
+      "path": "scripts/backup-workspace.ps1",
+      "sha256": "f0ff465898c28eb4176955142d2e26a6f18c4d5fd59b9e69f448463ed4c84985",
+      "bytes": 1869
+    },
+    {
+      "path": "scripts/board-model.test.cjs",
+      "sha256": "52576203a98feb2797e36f890951455435bbb388c5b937f7f0d8f8b962bf40f2",
+      "bytes": 3654
+    },
+    {
+      "path": "scripts/body-stroke28-regression.test.cjs",
+      "sha256": "b89add1094789444795aac7c7b515c05efa285ee9d4eea3421ed7b4d66cbfb48",
+      "bytes": 1869
+    },
+    {
+      "path": "scripts/cad-engine.test.cjs",
+      "sha256": "c73a77471eeea9f48bde567323c3496c429823f78f566d694fe9079bda4c1388",
+      "bytes": 4409
+    },
+    {
+      "path": "scripts/cad-preview.browser.html",
+      "sha256": "d1a3cf5dc8b5ad577b77ae66a72bfade025f698d479cc8475c11edb4bd026676",
+      "bytes": 6184
+    },
+    {
+      "path": "scripts/cad-preview.test.cjs",
+      "sha256": "3a0c92c00ad77dd39fda4efa197f58d7e19690e8d9baca6de8e46ec61ecc56fe",
+      "bytes": 2150
+    },
+    {
+      "path": "scripts/chapter-conversion.test.cjs",
+      "sha256": "2b5bcaca4c687b23528d81276d14d5a6fc6ea5dab1e4e3b9172bdd5cf894aa06",
+      "bytes": 4654
+    },
+    {
+      "path": "scripts/check-engine-recovery57.cjs",
+      "sha256": "a13676d15db12ef1b82711c01fd0d0bab88023d1b38d77266f1bb239d6dc059d",
+      "bytes": 1804
+    },
+    {
+      "path": "scripts/check-release-secrets.mjs",
+      "sha256": "461ee62ce14858391b78eefef4949162b2e667fcf4875ff5a012854ada3c33c6",
+      "bytes": 2540
+    },
+    {
+      "path": "scripts/check-report-worker.cjs",
+      "sha256": "e87574afdd9c75e9999a407d8e3c14bad459ab43e087882e6bf329fd16d098ee",
+      "bytes": 5522
+    },
+    {
+      "path": "scripts/collection-intro-style.test.cjs",
+      "sha256": "3db198231aa9cec493e8e7961b0e4f28dc171d945422b2c1c69bfb4ca7d470d6",
+      "bytes": 1438
+    },
+    {
+      "path": "scripts/draft-preparation.test.cjs",
+      "sha256": "6434b8a9d9639dcd4e1595d53dbded0dc37f4cf9476d2d8d6e0c1809ff5f6d1e",
+      "bytes": 15336
+    },
+    {
+      "path": "scripts/drive-auth.test.cjs",
+      "sha256": "7bb3f830f691603a9de819bcba6f32d92fb580ca4fc249ad4ba1b071977b1d3a",
+      "bytes": 3718
+    },
+    {
+      "path": "scripts/electrical-preparation.test.cjs",
+      "sha256": "109fd5acdb2521ad9dd15c92713f147ea7db422163e8ed524ef954581e91fb14",
+      "bytes": 4052
+    },
+    {
+      "path": "scripts/empty-furniture-probe.test.cjs",
+      "sha256": "b15b88e3008ea1c17bb4530c15a6caa8332b92d6696296f75fa590c9fae099ec",
+      "bytes": 6645
+    },
+    {
+      "path": "scripts/engine-facade.test.cjs",
+      "sha256": "a7379df3b40cd5d3c7cad764581c7090396d4cee83f5515e3dd8f6b68cfa1621",
+      "bytes": 9137
+    },
+    {
+      "path": "scripts/engine-recovery.test.cjs",
+      "sha256": "3935e0fedad6c02ff92f985dd93f10a6639ddf5092b630b4d5a750cbc070f841",
+      "bytes": 3636
+    },
+    {
+      "path": "scripts/firebase-admin-api.mjs",
+      "sha256": "ebddabd4c74077971b4ed68769ae4fb1306484bbb8398c6856e34b497431200f",
+      "bytes": 934
+    },
+    {
+      "path": "scripts/firebase-board-deploy.mjs",
+      "sha256": "4fda9457717aeda996afbcc5ad251b41c8c50f4328b76f47e1387a44eebc4706",
+      "bytes": 1842
+    },
+    {
+      "path": "scripts/firebase-board-smoke.mjs",
+      "sha256": "8492e835d60cfc78598aea7d4e437758a917b904317870ad2b8948ddd16d7905",
+      "bytes": 12438
+    },
+    {
+      "path": "scripts/firebase-board-ui-account.mjs",
+      "sha256": "36392e5acb12c14024abc231384e8e326adfeb60f52fdd7766b50be0fa88ffc5",
+      "bytes": 3652
+    },
+    {
+      "path": "scripts/firebase-board.browser.html",
+      "sha256": "6eed6d84aa4fa040d109cbde95ff99c23482f85379a5d022c6c4c80a339cd1ae",
+      "bytes": 226
+    },
+    {
+      "path": "scripts/firebase-board.browser.jsx",
+      "sha256": "43787d824a2a326baf0efb41ce8d7dec397f11aa6b0caf07533a6b409a9cc97e",
+      "bytes": 4244
+    },
+    {
+      "path": "scripts/firebase-migrate-members.mjs",
+      "sha256": "851a3e11db15992dd0b3b2ea89ad39d0b2b160fa228d47fd3ac5560fe13046bc",
+      "bytes": 4132
+    },
+    {
+      "path": "scripts/firebase-work.test.cjs",
+      "sha256": "a5eab5ac3e734987d39d8278805f24ba628fc6f2ac8e59527cd095b8e4a086fe",
+      "bytes": 4370
+    },
+    {
+      "path": "scripts/fixtures/legacy-font.cjs",
+      "sha256": "b88207dada9dd559d7b2eb02b97726b3e49c89dc263a3f2e268de560dd577c3f",
+      "bytes": 1179
+    },
+    {
+      "path": "scripts/fixtures/studio-workflow-check.cjs",
+      "sha256": "7cdfbf14d281404795ed7937ade2bf5a424ab1508ed4fb2d662cc5a7ab693c47",
+      "bytes": 17640
+    },
+    {
+      "path": "scripts/fixtures/thermal-bmt.cjs",
+      "sha256": "f2f0d45c8ee6305f6f6ca7d76b01364bc264fec07f2c1f4c14124f59c3d87154",
+      "bytes": 3490
+    },
+    {
+      "path": "scripts/font-name60-tools.cjs",
+      "sha256": "c31177df1794b0471dd6229a6de0d7357df616f27b2a69d7edd5d7c82b4671d3",
+      "bytes": 3658
+    },
+    {
+      "path": "scripts/font-name60.test.cjs",
+      "sha256": "e90f74cea6630b6eb2da107af82cf9a00eb314140075ed0b4c79f99c95779f88",
+      "bytes": 1566
+    },
+    {
+      "path": "scripts/furniture-origin.test.cjs",
+      "sha256": "6ef692e45afc8ee1de8b9035b7d36969d354af2329d4e35c3a90d51db39a3d8c",
+      "bytes": 1657
+    },
+    {
+      "path": "scripts/glyph-overprint38-regression.test.cjs",
+      "sha256": "b1b6d87eda7a28eb667494f8e18e315b1327f5e83099a3a3a250e3b3cb291937",
+      "bytes": 2544
+    },
+    {
+      "path": "scripts/hwpx-restoration-fidelity.test.cjs",
+      "sha256": "b6538e4951883c61a61b4c861606b5f8fcbdbc13f06c0ffa479b916e75d7f47e",
+      "bytes": 16855
+    },
+    {
+      "path": "scripts/image-viewer.test.cjs",
+      "sha256": "910e34b496a466228d3d8660477c7f676538de94e67d76932867a38e1db74b97",
+      "bytes": 10916
+    },
+    {
+      "path": "scripts/legacy-members.mjs",
+      "sha256": "476352d03e1772919d7bfdd4b9cc598bd5b63cbb7fff487535e47029fbcf60eb",
+      "bytes": 2955
+    },
+    {
+      "path": "scripts/local-cache.test.cjs",
+      "sha256": "f6c43d367641a420e9552bfb4eefb48ae3ac83c640248481a0004c42e9b39199",
+      "bytes": 7080
+    },
+    {
+      "path": "scripts/local-handoff63/package63.cjs",
+      "sha256": "9272642ddf8fe26b2f1ad960c50f8e8c36781200ec916fb41a0cb50a94273992",
+      "bytes": 6446
+    },
+    {
+      "path": "scripts/local-handoff63/smoke63.mjs",
+      "sha256": "a23a35218e32d0dcfd60ebbabb95ea260a4bfd53564a4dec4377d17e3aefcded",
+      "bytes": 6626
+    },
+    {
+      "path": "scripts/local-handoff63/test_verify63.py",
+      "sha256": "55df1a7c2ed2f84e05b5a39119089cfb239772dc4db4775c77bb296d814c1694",
+      "bytes": 2234
+    },
+    {
+      "path": "scripts/local-handoff63/verify63.py",
+      "sha256": "d52865321cce6a50ac03057ef1e30a4589af7b821313297f830e817ca5e2df66",
+      "bytes": 4782
+    },
+    {
+      "path": "scripts/native-font28-regression.test.cjs",
+      "sha256": "ca27eeea90aaa6d6bbe9e189f918afc5a67f8d570c827c2dd6cc4a21a175dbcd",
+      "bytes": 5876
+    },
+    {
+      "path": "scripts/native-paragraph-flow27.test.cjs",
+      "sha256": "760f1888adac831a77ebc7fb256f3a64f445aa380bdd21d37ffeaedf38b3716e",
+      "bytes": 6087
+    },
+    {
+      "path": "scripts/native-pdf19-regression.test.cjs",
+      "sha256": "ecea41803acc0f8e71d80bba27d72207b45f0f28404973dcbe032d14e3f3a019",
+      "bytes": 11316
+    },
+    {
+      "path": "scripts/native-pdf25-regression.test.cjs",
+      "sha256": "c071e5baf5ee6fb374a39902cf30b22c64ca1032ff73bd6456bd9612ffc45098",
+      "bytes": 2182
+    },
+    {
+      "path": "scripts/native-preview.test.cjs",
+      "sha256": "3be4c6ba813dd70820f05a858e951e58db036bca0c7c740610f6552032f7d103",
+      "bytes": 4099
+    },
+    {
+      "path": "scripts/native-save-audit57.test.cjs",
+      "sha256": "fffa9b90a9c4549bbeecb4051765a7e7cbf4102077ea44e997a730e0f5b065da",
+      "bytes": 2223
+    },
+    {
+      "path": "scripts/package-engine57-handoff.cjs",
+      "sha256": "f9ba3be23f0cfb24f0bb19326e929d44d1bbc9636338c255a2a7adbf37532bf0",
+      "bytes": 5836
+    },
+    {
+      "path": "scripts/package-followup60-handoff.cjs",
+      "sha256": "09b1a09e1251171a32645b979efc3787eae5da4ed5e6429b6c607e9be2011b6f",
+      "bytes": 6767
+    },
+    {
+      "path": "scripts/page-decoration.test.cjs",
+      "sha256": "56dd636afcb1242d26af85a2a7de2a119337f705da68276d72e8da57e7ca727a",
+      "bytes": 2260
+    },
+    {
+      "path": "scripts/page-reproduction.test.cjs",
+      "sha256": "c3d2d787f4db1d31b058dc5e172e7759dc7c979f2527c0efd70462a4140e476f",
+      "bytes": 4039
+    },
+    {
+      "path": "scripts/paired-cell-formatting.test.cjs",
+      "sha256": "431d2bf62a208fbaa9eb58fd0329b97c6c98465430ddf3956d51392d652de96b",
+      "bytes": 8892
+    },
+    {
+      "path": "scripts/paired-table-margins.test.cjs",
+      "sha256": "4d8c26d43ea9fdd0d69799ae5f6a39242f08f90a32fd01ce2e4f7d199037ef24",
+      "bytes": 4922
+    },
+    {
+      "path": "scripts/paragraph-formatting.test.cjs",
+      "sha256": "edd2422890a1fd2fad529ac5c958281a04b4f87ba99454d9b1e944128c311f18",
+      "bytes": 4648
+    },
+    {
+      "path": "scripts/patch-empty-furniture-probe.cjs",
+      "sha256": "6c888537c3ea5d077e9e5c8c6c9eb73c2788b1f228a86099fe571df174976ee1",
+      "bytes": 5757
+    },
+    {
+      "path": "scripts/pdf-fidelity.test.cjs",
+      "sha256": "f7d213ee582809de8bc937a0c8a3acf33c1ee1b4e255e61900ec6199226115ff",
+      "bytes": 6685
+    },
+    {
+      "path": "scripts/pdf-font-space55-regression.test.cjs",
+      "sha256": "8c5daaf6985c6cef674c0cb4192f1fbb72c655813671127bcc8797a9e7cd70cf",
+      "bytes": 6108
+    },
+    {
+      "path": "scripts/pdf-furniture-coordinates.test.cjs",
+      "sha256": "fff95230b1c4d33529bb773d2dd5d5e6ea1fb62537aa93e08aac38b090ba668d",
+      "bytes": 3290
+    },
+    {
+      "path": "scripts/pdf-native24-regression.test.cjs",
+      "sha256": "c02d7eb440d724f5e3fb7319d85d5dd97c07cf3b09387c56ee04ff1320edea48",
+      "bytes": 8020
+    },
+    {
+      "path": "scripts/pdf-operator-boundary41-regression.test.cjs",
+      "sha256": "b56e99c77968c5f1b2995cc7692b964521d1f8187b20adef56a5bf21e6dedfdc",
+      "bytes": 2975
+    },
+    {
+      "path": "scripts/pdf-report.test.cjs",
+      "sha256": "c294f07d53b703e8aa4d2d250f807011a23e46f47ac2f038388357626c47e19d",
+      "bytes": 8561
+    },
+    {
+      "path": "scripts/pdf-text-frame38-regression.test.cjs",
+      "sha256": "512df9f37209561b4a8a15b746d78faa1446023a5e8927459f6f754d22027f71",
+      "bytes": 2230
+    },
+    {
+      "path": "scripts/pdf-tracking33-regression.test.cjs",
+      "sha256": "913b55b85603ac7df0bb0df448613978a63afba976b796454629690c2063de1c",
+      "bytes": 4070
+    },
+    {
+      "path": "scripts/pdf-whitespace38-regression.test.cjs",
+      "sha256": "069ac49058681b0c7e87a1e393ddba87bd64e999b1da01ef96d4c69c3ec63280",
+      "bytes": 6032
+    },
+    {
+      "path": "scripts/png-density57.test.cjs",
+      "sha256": "cbde5340d0af9e4fdca6f80b2cce282f23733afe2fc88628b9abbe617c5395d0",
+      "bytes": 787
+    },
+    {
+      "path": "scripts/powerview.test.cjs",
+      "sha256": "ec48efad2b8ed7021d606b4cf9b2c5420f4a52ba368f0ba302ebff5a7d810a8d",
+      "bytes": 4514
+    },
+    {
+      "path": "scripts/prepare-blank-intro-probes.cjs",
+      "sha256": "94ed68083db6161db654d1fb4f01a47d7373e6c6c741ee48c98cb675748d0ac3",
+      "bytes": 5830
+    },
+    {
+      "path": "scripts/prepare-boundary41-probes.cjs",
+      "sha256": "fbdb544f28adec2b4cbca2a3bf55b3c82c40292600fd2b4a278509d3fb6280eb",
+      "bytes": 2344
+    },
+    {
+      "path": "scripts/prepare-continuous-page-probe.cjs",
+      "sha256": "98a0e70f8a17a6d687c6f7eed3410c17b017e3a60269be4a7971f26385866d61",
+      "bytes": 4345
+    },
+    {
+      "path": "scripts/prepare-font-name60-probes.cjs",
+      "sha256": "64995fc35f2cd78d2eeac1b341fcaa181e0b1371d4de101b4fa4d3542fcf270e",
+      "bytes": 5346
+    },
+    {
+      "path": "scripts/prepare-font-selection33-probes.cjs",
+      "sha256": "a43e6f5c7457de22cb024167386e9db79062566e37038a7eebe4affdb45c35f3",
+      "bytes": 4754
+    },
+    {
+      "path": "scripts/prepare-font-space55-probes.cjs",
+      "sha256": "60be3f3edc69d8eafa6d5a09b4ffd32098b8ecd69cd6d79d61f32369de0852de",
+      "bytes": 6314
+    },
+    {
+      "path": "scripts/prepare-font-space55-scoped-probes.cjs",
+      "sha256": "f60a60496dabbea831d9e77ebc3f355f069db36447eb2a64bcefb4815f51e3cd",
+      "bytes": 6460
+    },
+    {
+      "path": "scripts/prepare-footer-rule-probes.cjs",
+      "sha256": "e35016300a09c0cc82179caae1fff67c6a085ce706ec5b53877f74b3d9911383",
+      "bytes": 4711
+    },
+    {
+      "path": "scripts/prepare-furniture-origin-probes.cjs",
+      "sha256": "aad07fb936390dd4f3e9b959ee6dbbfb02c5647f1e0cddbe2de214fca4e27810",
+      "bytes": 4886
+    },
+    {
+      "path": "scripts/prepare-hancom-open-probes.cjs",
+      "sha256": "0a6c8ef8f07a329b8d1cd88664f622fe2103401c7eb62f30b959dc00c7233c53",
+      "bytes": 8612
+    },
+    {
+      "path": "scripts/prepare-header-container-probe.cjs",
+      "sha256": "e170c680c7b647daa26a15b5b290522f74b5646a66167453a2b5e4502735e46f",
+      "bytes": 4830
+    },
+    {
+      "path": "scripts/prepare-metadata57-probe.cjs",
+      "sha256": "37e84b17008d902489b738d0d3631a0c52a75b0599749ea2805b8334220295ef",
+      "bytes": 2865
+    },
+    {
+      "path": "scripts/prepare-native-save41-probes.cjs",
+      "sha256": "7027c745b2139937acc04a4cb62666de70f3bb17826633b4fecbd1b537b0abec",
+      "bytes": 3863
+    },
+    {
+      "path": "scripts/prepare-native19-probes.cjs",
+      "sha256": "d4ff3a50785522110d807386253abbac88a2702bf063d48060efdb6dbd8c9adb",
+      "bytes": 4140
+    },
+    {
+      "path": "scripts/prepare-native38-probes.cjs",
+      "sha256": "77aa82719d5e221107c23088e3b15decdb60b1d53b5051c741183cd815f6e264",
+      "bytes": 5086
+    },
+    {
+      "path": "scripts/prepare-page-decoration-probes.cjs",
+      "sha256": "4beac51cf9133e8f37962d410ba67e39dd924fa3f3842636736eaddbf340e729",
+      "bytes": 3584
+    },
+    {
+      "path": "scripts/prepare-preservation57-probes.cjs",
+      "sha256": "fa0c507920b439d095ce0614c534c69605fea6b8487ec6f13e2b35098654607d",
+      "bytes": 5050
+    },
+    {
+      "path": "scripts/prepare-seonam-blank-native-review.cjs",
+      "sha256": "c50f61f438bb42a7142514624eb3c43a5a1ee1ea51e2899111253631c8e88019",
+      "bytes": 6606
+    },
+    {
+      "path": "scripts/preview-cache.test.cjs",
+      "sha256": "e669db5f37ec203cc44cc1fe2d1512662864a76934bb7e3f2c51de7d8aab13c4",
+      "bytes": 3415
+    },
+    {
+      "path": "scripts/project-workbench.test.cjs",
+      "sha256": "3465886f2ed2aad4a06034e18995475c7cc6dc55e2b188dbb3e8b3632063fe1c",
+      "bytes": 5592
+    },
+    {
+      "path": "scripts/rebuild-native-open-candidate.cjs",
+      "sha256": "dd80d03dc3f6d267e24e714aa29967bd5ae0429c3235c241e3605c3a1e14e904",
+      "bytes": 4507
+    },
+    {
+      "path": "scripts/recovery-draft60.test.cjs",
+      "sha256": "9a4be8a9b266bb035e9c2524f9e542b74974bd8050b845e3cc190a870acb70f3",
+      "bytes": 9570
+    },
+    {
+      "path": "scripts/reference-analyzer.test.cjs",
+      "sha256": "194a3a0f2670441200169e1ff09861eafed5558cd15e626b584e6f9a0d1c54b5",
+      "bytes": 4577
+    },
+    {
+      "path": "scripts/release-secrets.test.cjs",
+      "sha256": "995c8fbde3b62b47bf9df908fa30fd40abe40090096d8dd3f8976683f60cd061",
+      "bytes": 2780
+    },
+    {
+      "path": "scripts/render-hwpx-trial.cjs",
+      "sha256": "dab05ee8ccba8665deb82b5c688523f95a491362c90e2bccfc663b0f9139ae3b",
+      "bytes": 7252
+    },
+    {
+      "path": "scripts/render-page-trial.cjs",
+      "sha256": "96c0cfa4e009119eff4115fde6aba1bfcfb0aa5e432faefe26e85d692ba2777b",
+      "bytes": 1663
+    },
+    {
+      "path": "scripts/report-ai.test.cjs",
+      "sha256": "3914f1ddc7b689466547aff18fec86050075f24fde4a237509b23050486d4fd3",
+      "bytes": 12285
+    },
+    {
+      "path": "scripts/report-collector.test.cjs",
+      "sha256": "d934527544ee99c2ca0b336bfe14ded8f47c409e74d10743b999cb7940c10c12",
+      "bytes": 3998
+    },
+    {
+      "path": "scripts/report-engine.test.cjs",
+      "sha256": "0272bed18c797574ffac7f32eb9e6c2ff151fa5aa10356b719d7ce217b71f5a6",
+      "bytes": 14998
+    },
+    {
+      "path": "scripts/report-list.test.cjs",
+      "sha256": "afc895ab2bf8e3533f945bdb8ff743fd499a55b0f3384c80e16ad0cba1e1c6ee",
+      "bytes": 2534
+    },
+    {
+      "path": "scripts/report-native-collection.test.cjs",
+      "sha256": "af779f0296f7782bebd263ac09caae9efd77535b5704e199ccd3a19baebf09a9",
+      "bytes": 17212
+    },
+    {
+      "path": "scripts/report-numbering.test.cjs",
+      "sha256": "e376c348c98a7059212b87648e3d7d1ff4c19958149318359bf83d31115d94c3",
+      "bytes": 14631
+    },
+    {
+      "path": "scripts/report-pipeline.test.cjs",
+      "sha256": "a27ee143f4c5f7a50dd9f51f3439476ada5042d57f5baf9f121b9f2590b5396e",
+      "bytes": 23708
+    },
+    {
+      "path": "scripts/report-reference-projects.test.cjs",
+      "sha256": "45b75f2d853f0fa6f7254cd3bfbc99b9e64bedea90a78480ba377308093ef974",
+      "bytes": 5933
+    },
+    {
+      "path": "scripts/report-runtime-assets.mjs",
+      "sha256": "6e7097bf7b481e4571f028832e0815a58d9780c2008a9cf9a6467e90eabe2411",
+      "bytes": 1925
+    },
+    {
+      "path": "scripts/report-skill.test.cjs",
+      "sha256": "ffa739ea0ff0e9ad5b42c29097aa8f613f7d3a121b0817f83d0e2f78b0ca3f86",
+      "bytes": 9411
+    },
+    {
+      "path": "scripts/restoration.test.cjs",
+      "sha256": "49961076aa93bbc8171f5996609ab09246f620db81526ceed1bb2633d0eac3b4",
+      "bytes": 14896
+    },
+    {
+      "path": "scripts/schedule.test.cjs",
+      "sha256": "48eee9458ada82f3fcae0208aa6ae61cd8a7dd794f233ff0f203281175ed1fb4",
+      "bytes": 3309
+    },
+    {
+      "path": "scripts/section-bisection.test.cjs",
+      "sha256": "696756e94adcfc3f56f8599353712c27657e0727563a12e23f853fb12da1f9e4",
+      "bytes": 3391
+    },
+    {
+      "path": "scripts/setup_admin.cjs",
+      "sha256": "a336243561dc644757b9ed0ec8681887e773a874bb65245b8f0567f8be83e170",
+      "bytes": 5213
+    },
+    {
+      "path": "scripts/split-hwpx-section-probes.cjs",
+      "sha256": "44b2df9305f70fc884b45fdaebf5aa5a4cba7e0d408aef5cb845c8c77ec38f0b",
+      "bytes": 9459
+    },
+    {
+      "path": "scripts/studio-supervision-regression.test.cjs",
+      "sha256": "bd3403054cee9b151115d464f355726829548e7810bc3c2e93de303663bc79d2",
+      "bytes": 34864
+    },
+    {
+      "path": "scripts/sync-failure.test.cjs",
+      "sha256": "fafde2e57a77151b98785385e5a0a41127b4157c70ca8f88deabc66b994eb30c",
+      "bytes": 6389
+    },
+    {
+      "path": "scripts/test-file-manager.cjs",
+      "sha256": "6dc859669cda46bbcef9cecb9437f13a7ea3b73fce9813045cce610131c55f6e",
+      "bytes": 39043
+    },
+    {
+      "path": "scripts/test-native-package61.py",
+      "sha256": "9fa1b257ba5f84811af6bed9f1ad9e28304c4d7697ea458d4d35b8fcd0bba71e",
+      "bytes": 5289
+    },
+    {
+      "path": "scripts/test-pdf-workbench.cjs",
+      "sha256": "3d5cf53bd490dc1a8997a1feb9dba0721e0e19c66d9a187db06a5c9bf9716639",
+      "bytes": 14660
+    },
+    {
+      "path": "scripts/test-real-blank-platform.cjs",
+      "sha256": "3719fa3769ae43bdeee4df0c71f7c1dff357e226f3e707e9df48c29b0ef2bc66",
+      "bytes": 17025
+    },
+    {
+      "path": "scripts/test-report-platform.cjs",
+      "sha256": "5fcaf87cc7fa86f44450b29a1bab53594df61b7d2dfc5f0752790427734b3ad4",
+      "bytes": 63188
+    },
+    {
+      "path": "scripts/test-report-studio.cjs",
+      "sha256": "2db2c9d7e25123c7b4bb86aeb8680ffa212b88e86345d2877b09b41842f7e7f4",
+      "bytes": 71945
+    },
+    {
+      "path": "scripts/thermal-bmt.test.cjs",
+      "sha256": "3ad9966b29f30b5b6db471000b9c017487848e7479e8ab96d1a9733ac356ed37",
+      "bytes": 2711
+    },
+    {
+      "path": "scripts/thermal-delivery.test.cjs",
+      "sha256": "013e9a305bf54fcf4b001cc6735c23833e8dac2f9083842caa9340ed08abca52",
+      "bytes": 1346
+    },
+    {
+      "path": "scripts/verify-engine57.cjs",
+      "sha256": "f379505db9244fd6089d202ba47f0a97cd55a1c85d59e3ab435b92a241164648",
+      "bytes": 9478
+    },
+    {
+      "path": "scripts/verify-package.cjs",
+      "sha256": "17951712a108486d5595368639138c06f92e1bf28bcfbc2d7c50e9f57e1aa838",
+      "bytes": 1542
+    },
+    {
+      "path": "scripts/verify-recovery60-real.cjs",
+      "sha256": "dac792e848375e62e48c6a33acb2c7fe0b9506ac6e019853d7e04dd2e8349ce2",
+      "bytes": 6810
+    },
+    {
+      "path": "scripts/verify-report-corpus.cjs",
+      "sha256": "9b661500c4911e62911ffa33a974093c1173966f30f5dc6d3f9476bf794e83c4",
+      "bytes": 8639
+    },
+    {
+      "path": "scripts/workflow-analysis.test.cjs",
+      "sha256": "7fd33ac1fef4f320a50f8f1169e6c192533df787de794045a03e80ceaf2ba9da",
+      "bytes": 3822
+    },
+    {
+      "path": "services/apiClient.ts",
+      "sha256": "3e53b1ab47288c77ba25eed3388068364dfbae68fb6c8500afb5a46298af49b3",
+      "bytes": 2943
+    },
+    {
+      "path": "services/apiContract.ts",
+      "sha256": "87aa870fd336d6ec299ecd8951f26f312dfe4ec599e177d793016a715b189c9a",
+      "bytes": 1951
+    },
+    {
+      "path": "services/dbSchema.ts",
+      "sha256": "89d3732767154aa367f502a2762a0849292e009856dcc834ae487b97b5b1cb06",
+      "bytes": 4680
+    },
+    {
+      "path": "services/mockData.ts",
+      "sha256": "ab4216832dbd088a3de5a6ced85d855200e4f00e296ffe340cbb864103cd4ff9",
+      "bytes": 2776
+    },
+    {
+      "path": "services/syncService.ts",
+      "sha256": "adad0b09b069c7d3b56cd98ff6b2cb0208f8863451e2e40b29c9962427ce3556",
+      "bytes": 3024
+    },
+    {
+      "path": "services/updateService.ts",
+      "sha256": "6f4ac38a86d6b550ced11b54162cb17c8f4942910e6f1f19e9d24f057a54cd3b",
+      "bytes": 876
+    },
+    {
+      "path": "skills/technical-report-hwpx/SKILL.md",
+      "sha256": "7220b7d2c7e38b516a9a2d1bf7b7044b37dc31293eb63c7bc48d34232335d5f6",
+      "bytes": 11079
+    },
+    {
+      "path": "skills/technical-report-hwpx/agents/openai.yaml",
+      "sha256": "2d3291eb73ad2b1e650a1043d248f2276ad722c492092a2b4cbae90946a96c46",
+      "bytes": 349
+    },
+    {
+      "path": "skills/technical-report-hwpx/references/app-integration.md",
+      "sha256": "635fd7b40c8b0db3672c202e7381dab922b4beb0ebdae0a74129fdb5d2001b40",
+      "bytes": 63873
+    },
+    {
+      "path": "skills/technical-report-hwpx/references/learning-evidence.md",
+      "sha256": "df58a3c2a274a420c03ea0125cf81bb36bf357e0de5e51975bf56f027a114251",
+      "bytes": 30785
+    },
+    {
+      "path": "skills/technical-report-hwpx/references/reproduction-contract.md",
+      "sha256": "0bd3b12935a2d2530cc4f0eeb120cbb171b2b29e9eb0090d1b017321ab42efef",
+      "bytes": 7160
+    },
+    {
+      "path": "skills/technical-report-hwpx/references/studio-workflow.md",
+      "sha256": "a8686009772b2d7b44798637558abebf2279ffba762d316c73dbeb81297443be",
+      "bytes": 29545
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/.gitignore",
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+      "bytes": 13
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/analyze-project.mjs",
+      "sha256": "ef7dc7745d0b6cdbb950f503f00d14f959e839f7e2bc553b3727eefe02df66a3",
+      "bytes": 6557
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/compare-pages.py",
+      "sha256": "9adda8cef78208bf6aea1d41d8d5e8b74f9002cde955f24d23e6c9124763ed45",
+      "bytes": 7340
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/extract-page-trial.py",
+      "sha256": "d41da00099d19252325019747fa9c662ef39d5ea541bf35ab69480e26f1bdba7",
+      "bytes": 6490
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/inspect-pdf.py",
+      "sha256": "2d13ce8a6ee7687cdf2af7b552e583a2ac2c58bb0dc5018dcba9aff5056bacb1",
+      "bytes": 2238
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/normalize-trial-paper.py",
+      "sha256": "0820774334cfc206e591b5dce098b1fee987b9b29db6d06652a655d71f79e0c5",
+      "bytes": 1710
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/rebuild-template-page.py",
+      "sha256": "559d293aa245e07b756434580bf5c6b222f5ee16f14b30f3e803a0f1cf69961e",
+      "bytes": 12944
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/repo.mjs",
+      "sha256": "48ab09e370dcaabd25eba2b2d9a189d7792cdd3abb6e048a29c0c8f59854170a",
+      "bytes": 1481
+    },
+    {
+      "path": "skills/technical-report-hwpx/scripts/write-candidate.mjs",
+      "sha256": "65df454e7da6c7567d3620668b53c6c12e2645aa1d88278d8e0140bde9533507",
+      "bytes": 4812
+    },
+    {
+      "path": "src/App.css",
+      "sha256": "1b75716b5511ad178574cd3e3656e5e8dd94544456944b4ff1d253c9ecc614d4",
+      "bytes": 648
+    },
+    {
+      "path": "src/App.jsx",
+      "sha256": "8720360e2917c40cab73dc90819daa94149a87e0b9cc6d60c7c50fc2baa883ab",
+      "bytes": 18649
+    },
+    {
+      "path": "src/assets/react.svg",
+      "sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+      "bytes": 4126
+    },
+    {
+      "path": "src/components/BoardList.jsx",
+      "sha256": "960373ea8c9e832d7a00c71b08f32693737c5bf5c9c481d62c20d9a4dd0f088e",
+      "bytes": 8526
+    },
+    {
+      "path": "src/components/BoardView.jsx",
+      "sha256": "57d82488424bc372d53d4dba29bf42747c9e4b86410e2a644d1bb8b027253130",
+      "bytes": 14947
+    },
+    {
+      "path": "src/components/BoardWrite.jsx",
+      "sha256": "152cc8a81db28b941d4bf5e92c5c454f562f07613abfd7917293ce9d930c282f",
+      "bytes": 17451
+    },
+    {
+      "path": "src/components/ChangePassword.jsx",
+      "sha256": "8dacb078f52e6e41803672fd4b507a17e333a7558e042d139b467f39240640b4",
+      "bytes": 3017
+    },
+    {
+      "path": "src/components/Dashboard.jsx",
+      "sha256": "40fb07ac0bffdaecaa31c5576443788ef662337a6de90a9bc203b4daacaf2cfd",
+      "bytes": 18743
+    },
+    {
+      "path": "src/components/DashboardGallery.jsx",
+      "sha256": "3b0ea7c0c01e6c666d739793c9f49a17f7123e9bfe35e5625d7a59f780170fc5",
+      "bytes": 6778
+    },
+    {
+      "path": "src/components/ElectricalReportPreparation.jsx",
+      "sha256": "235a1658fec092a2fde25260692a9f0099a85b165a57265da2751b828f107df0",
+      "bytes": 19871
+    },
+    {
+      "path": "src/components/FileContextMenu.jsx",
+      "sha256": "13381bbe30ae738e5f2b9b5e885cc07f88ce2b450ed0bb6d1c97325589d4a2a7",
+      "bytes": 5084
+    },
+    {
+      "path": "src/components/FileManager.jsx",
+      "sha256": "31ad2ef6721bacf8fc6f104688efe1768a880ee3bb5c4c67794b3334dda9f226",
+      "bytes": 68826
+    },
+    {
+      "path": "src/components/ImageViewer.css",
+      "sha256": "a16e0b5f0b944f2c06d6eabb1044340ccb348cc2fd6f5eb6bb66fd9460b51e0a",
+      "bytes": 4908
+    },
+    {
+      "path": "src/components/ImageViewer.jsx",
+      "sha256": "b22129a9992c3a20cf2a85906b51e2693ebacc5656fcac42dbe5ef61212b40df",
+      "bytes": 10568
+    },
+    {
+      "path": "src/components/ImageViewerWindow.jsx",
+      "sha256": "916390540d54c813a7d5900331be055897a8cd4f7b596302af356defcb32386c",
+      "bytes": 2306
+    },
+    {
+      "path": "src/components/LeftSidebar.jsx",
+      "sha256": "4c0208bd8b058a095e8c2cd02d85814ef508aa28d61eb63d632909a9a9952509",
+      "bytes": 5689
+    },
+    {
+      "path": "src/components/Login.jsx",
+      "sha256": "cea85a5191b309fbf4ba5a0522ed7e95d79d216849e68a7784fc65d99a14b7c1",
+      "bytes": 7806
+    },
+    {
+      "path": "src/components/MemberList.jsx",
+      "sha256": "f97cb241e0bffb0375f422d5380e1a1a0981fbc74ef95f2679d587bd8db49949",
+      "bytes": 22349
+    },
+    {
+      "path": "src/components/NativeReportPreview.jsx",
+      "sha256": "427eb59e83e630e47d6730bdbc4918a50a152f684a9ebc97fd4c8adf3e64d5a4",
+      "bytes": 7326
+    },
+    {
+      "path": "src/components/PdfContinuousView.jsx",
+      "sha256": "1612656d1b80ae20708ade5fe4125a0864141c0bbdf650d1a76007891faa31d1",
+      "bytes": 9620
+    },
+    {
+      "path": "src/components/PdfOriginalPage.jsx",
+      "sha256": "328e91df8e99739425d55c4ed90ccd108e5e973dc0ca904e9ca01334d891a412",
+      "bytes": 3883
+    },
+    {
+      "path": "src/components/PdfReportWorkbench.jsx",
+      "sha256": "983ad9d7c5e18db4df99351b21b7f6eb9fc9c5dbfe6b0048fedbcd8eb83cc96f",
+      "bytes": 28629
+    },
+    {
+      "path": "src/components/PdfRestoredPage.jsx",
+      "sha256": "6d6e295a394e8b8ebe4e9ec1a1912aca8d21a1711928411c3746c8a0e852672e",
+      "bytes": 4397
+    },
+    {
+      "path": "src/components/PowerViewPreview.jsx",
+      "sha256": "4786768a8e46f3711f83bc0fb5376287720e9bc43aac040238f97aada0cab576",
+      "bytes": 4766
+    },
+    {
+      "path": "src/components/ProcessList.jsx",
+      "sha256": "be95822ca76f3f9c0ca93aa464ddb670e15083a9fabe14e1a899168db9d01949",
+      "bytes": 26606
+    },
+    {
+      "path": "src/components/ProjectList.jsx",
+      "sha256": "09c01ee76246c580bd9a7075ca8440f46359643f6309cb1dffad2a3936e303b3",
+      "bytes": 7513
+    },
+    {
+      "path": "src/components/ProjectView.jsx",
+      "sha256": "696480c3f9fbc2817b59eb41bd812c03ce2478989a42b1c167e852b9e1cd9f24",
+      "bytes": 5851
+    },
+    {
+      "path": "src/components/ProjectWrite.jsx",
+      "sha256": "49de9a278ac214679737312c6a482737ac793f33ac5e06694d7732fd8870710c",
+      "bytes": 9188
+    },
+    {
+      "path": "src/components/ReportAiSettings.jsx",
+      "sha256": "f15ab09df3f3267fad8dad56601fec1d4151c3e58daae1b200b387d81853fb62",
+      "bytes": 3609
+    },
+    {
+      "path": "src/components/ReportAnalysisWorkspace.jsx",
+      "sha256": "630f46f17b0d15cfd9a86e0f8f06df5f88d87ac2131c9ad66b18e2d7c3b9a6c2",
+      "bytes": 8087
+    },
+    {
+      "path": "src/components/ReportChapterInspector.jsx",
+      "sha256": "2039325bc01972f5de3072615247ffd4c5ff03c75dc16a78768cb8d4b80435c8",
+      "bytes": 5117
+    },
+    {
+      "path": "src/components/ReportChapterSummary.jsx",
+      "sha256": "ef6bfc1a7b808d8987a0241432fe871450dc5b12f82402d13e845715ff6defe0",
+      "bytes": 2705
+    },
+    {
+      "path": "src/components/ReportDataApplication.jsx",
+      "sha256": "1de31b5d3809500796bf312a5f2453ba0b148a816f381a3c667f8d2d32f70b74",
+      "bytes": 5877
+    },
+    {
+      "path": "src/components/ReportDocumentView.jsx",
+      "sha256": "547daf80325a215f5544f21576a1a0aa0c4fa94e7f0cda7a83748f8ad9eeb3a5",
+      "bytes": 3332
+    },
+    {
+      "path": "src/components/ReportDraftPreparation.jsx",
+      "sha256": "9d8baf93dac963f3fed56ee5b7b432b5ac607198ddd31ba23d7a55c177000596",
+      "bytes": 9621
+    },
+    {
+      "path": "src/components/ReportDrivePicker.jsx",
+      "sha256": "a2b854da709da4b9c123432a28440b7c43b04e90f500a96fee7cafe3b1b288b8",
+      "bytes": 4140
+    },
+    {
+      "path": "src/components/ReportFigurePreview.jsx",
+      "sha256": "3e374e96cb312955cf0a3d975c5b8e888244e4639f6105ec81b47d91f9a96760",
+      "bytes": 1581
+    },
+    {
+      "path": "src/components/ReportListPaging.jsx",
+      "sha256": "39efdce3f8392e82dc721bfebb60cb5229486e70f694b0363e7c0f5b0a2b39a9",
+      "bytes": 848
+    },
+    {
+      "path": "src/components/ReportPageTrial.jsx",
+      "sha256": "c3572155872a44d0483b93ff748aa6b21d586cdee8314f2f8fff64f98b16d30e",
+      "bytes": 7547
+    },
+    {
+      "path": "src/components/ReportPairedTextControls.jsx",
+      "sha256": "915b8f30e19daa90a9c9a218ea9be5ae46293770da0eaa2774b0a84451b9c570",
+      "bytes": 5487
+    },
+    {
+      "path": "src/components/ReportParagraphControls.jsx",
+      "sha256": "24fec98f9348d51f8577ed9d7e339341da3a9fbfe68101b26b22a3e0cc425ee7",
+      "bytes": 1902
+    },
+    {
+      "path": "src/components/ReportPlatform.jsx",
+      "sha256": "03df291578044b2ee54a4559a3f957b577b301549b42272125c956355735db59",
+      "bytes": 57205
+    },
+    {
+      "path": "src/components/ReportReferenceAnalysis.jsx",
+      "sha256": "4b5786d0013adc565db89a7e07c2d922fd0fa478f28b41ee524920c04c9d6df9",
+      "bytes": 6757
+    },
+    {
+      "path": "src/components/ReportReferenceProjects.jsx",
+      "sha256": "104271ebb6c94cebb88bb41cf4e32d761addc4fb5cb1b9031a03c57ff001b345",
+      "bytes": 15112
+    },
+    {
+      "path": "src/components/ReportReproductionReview.jsx",
+      "sha256": "e907bf4aa1c11a28e1718a37427cb600dded25ed5f92ec1f34674935aff093be",
+      "bytes": 3500
+    },
+    {
+      "path": "src/components/ReportRestorationInventory.jsx",
+      "sha256": "1a70aee64d9457dc5ecb3e5e3fb84d5816fdcab6e3b98f162ef4b803da7657f1",
+      "bytes": 3571
+    },
+    {
+      "path": "src/components/ReportSourceLocation.jsx",
+      "sha256": "7bda58133e3c9e44e293bb08d28746ea638254db352b929ed3dfbad7d1bcca76",
+      "bytes": 3360
+    },
+    {
+      "path": "src/components/ReportSpecification.jsx",
+      "sha256": "4ee8b076f0f06e31fce6790919b9d99b6221a4f0dbc5a003af68994cf07bedcf",
+      "bytes": 13673
+    },
+    {
+      "path": "src/components/ReportStudio.css",
+      "sha256": "454c3a19750122872b2ea075c8339b3a4e353201130bfbf6acb4b949d8f54ff5",
+      "bytes": 65515
+    },
+    {
+      "path": "src/components/ReportStudio.jsx",
+      "sha256": "4dbe56fdd12322b42fa59fb79b01baf362f8e47e8dce04a0bc099d7e95e66555",
+      "bytes": 63415
+    },
+    {
+      "path": "src/components/ReportTypographyControls.jsx",
+      "sha256": "2fde3771280c211d98254ae7fe330ff8fd60f970ef02dbaf3913d2bc7e87d057",
+      "bytes": 860
+    },
+    {
+      "path": "src/components/ReportWorkflowPanel.jsx",
+      "sha256": "66dc8d0f354a457df2065b4d1c04f63d0bc15cda5c6c799ef01092a61129a7bc",
+      "bytes": 5642
+    },
+    {
+      "path": "src/components/ReportWorkspace.css",
+      "sha256": "3179a5e70df87ca55516af234e7ed61e53c5a2abbd30107fc3e664fef8a2ebdf",
+      "bytes": 6307
+    },
+    {
+      "path": "src/components/ReportWorkspace.jsx",
+      "sha256": "461f8210332d3fb8c07a45ca6e65150b98a457cef0e48554a169d3f61a74905e",
+      "bytes": 63025
+    },
+    {
+      "path": "src/components/RightSidebar.jsx",
+      "sha256": "079bf1bc807029d5252a26dffe043e85191410349a54c16d3b9a2ceb581a9052",
+      "bytes": 7349
+    },
+    {
+      "path": "src/components/StudioFitPage.jsx",
+      "sha256": "3dcfd2663bd518605be90fab6b7ad80d8eca80f61cc81fc77371726eaf1f5ff5",
+      "bytes": 1225
+    },
+    {
+      "path": "src/components/StudioLayoutControls.jsx",
+      "sha256": "6e9a643445d9ad337aeb37265f52bf884e5b3a11bc5d73454036d0654b910176",
+      "bytes": 4328
+    },
+    {
+      "path": "src/components/TaskManager.jsx",
+      "sha256": "345e3b8da3c00104e9a6eaaaae144425802e8e7bda1ffb75ce62f27c639cbaa4",
+      "bytes": 18940
+    },
+    {
+      "path": "src/components/ThermalBmtPreview.jsx",
+      "sha256": "60c47c9e3e2bf5d6c3061212bb5de31a899cee372289253fb776d79e302d8b80",
+      "bytes": 3100
+    },
+    {
+      "path": "src/components/ThermalDeliveries.jsx",
+      "sha256": "42bb6522f43a84c9edecabbc103b226b0d5fce4d0929e28c9f91f74b2a06af04",
+      "bytes": 4433
+    },
+    {
+      "path": "src/components/common/GlobalModal.jsx",
+      "sha256": "d61a77e90d29e7af0467124d87fc1576b1c797b248cdcb9d403c9416033377e5",
+      "bytes": 6986
+    },
+    {
+      "path": "src/hooks/useImageTransform.js",
+      "sha256": "84772e874b4cf2cbb3d1c3dab3115a421672365ddcee8c3bbf547a3e66211878",
+      "bytes": 3335
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "11ebb737f11322a385a3caa4949f77df7a2efe64467ecd1418acfe8666687150",
+      "bytes": 14870
+    },
+    {
+      "path": "src/main.jsx",
+      "sha256": "1aa1b9410faa7535d6a0dda0839517dd404979404687a05ca9c9afa446131f97",
+      "bytes": 450
+    },
+    {
+      "path": "src/services/authService.js",
+      "sha256": "231cc9fd08cd92cdeb3c321cb18469b06bbf67c33eb22ce2f257a889acc4acc5",
+      "bytes": 1669
+    },
+    {
+      "path": "src/services/boardModel.js",
+      "sha256": "654d58c768661edbc13eed92d9381a729c0c89052d0dd116a96b1951f9802823",
+      "bytes": 1959
+    },
+    {
+      "path": "src/services/cadEngine.js",
+      "sha256": "ce72eba5b08af11da192b9cd2a0648989c6742f832ca6d555c6d4c6e1c33b54b",
+      "bytes": 4485
+    },
+    {
+      "path": "src/services/cadPreview.worker.js",
+      "sha256": "c5e20c4a74d6a3484258263a555efdf9982530092e83771b751034d9386d1002",
+      "bytes": 453
+    },
+    {
+      "path": "src/services/cadPreviewService.js",
+      "sha256": "f993912b09deff39e81f840308185473be8339e6f9a82fb91d4e983fee57128b",
+      "bytes": 971
+    },
+    {
+      "path": "src/services/cadRaster.js",
+      "sha256": "a66bf81b8f890a7e32b54310b7bf08488aa1ba5b3c1af7f1ce1d8f78ecad9086",
+      "bytes": 1754
+    },
+    {
+      "path": "src/services/cadRender.js",
+      "sha256": "2f2cfe861d9ffad43ec719a684dafe7fc64870c2070b8c1cfd9531b4f1e91660",
+      "bytes": 1310
+    },
+    {
+      "path": "src/services/dataService.js",
+      "sha256": "e986052d987560a5ea09b6a45d5d622a856cf1e57671679c98431d1453098b0a",
+      "bytes": 6725
+    },
+    {
+      "path": "src/services/dbService.js",
+      "sha256": "1b3149aa7ad5de603b34bfaa18c775d9a420abf7ef6d83e6a94182a02d2a3212",
+      "bytes": 5526
+    },
+    {
+      "path": "src/services/driveCacheService.js",
+      "sha256": "c562c41ab88080151d538b4eb27bcd9858dafabcb334f031387cc3ca45ed5fb0",
+      "bytes": 8355
+    },
+    {
+      "path": "src/services/driveDownloadService.js",
+      "sha256": "1bbb17d8ed61986fbb4a202a5bff9f234a80769bdece6aefbf911a050f5bf491",
+      "bytes": 4595
+    },
+    {
+      "path": "src/services/driveService.js",
+      "sha256": "7b961cbfdaa707174bbe3d0e53e1a555df2a43d8cec428e93b9fb798cc140678",
+      "bytes": 13668
+    },
+    {
+      "path": "src/services/firebaseBoardAuth.js",
+      "sha256": "04d8f5cad747f7c51c90deb983ae440117dc62cd7f4ddacd9c43c744b1a535c9",
+      "bytes": 3061
+    },
+    {
+      "path": "src/services/firebaseBoardService.js",
+      "sha256": "6d9663926e58fbffc4a39f0985d2794a7add7d45504f060b7fc5a4f8426d1e4f",
+      "bytes": 6156
+    },
+    {
+      "path": "src/services/firebaseClient.js",
+      "sha256": "728eadfcd904cba6d0d8b1c0d30e1573cebd5d1cf0ca743da49b25d4ab64694e",
+      "bytes": 751
+    },
+    {
+      "path": "src/services/firebaseIdentity.js",
+      "sha256": "5dfb0910f3eb3600f2988dcfcb854a50cb97e58908c35c9725c1c3b3977a9dad",
+      "bytes": 1030
+    },
+    {
+      "path": "src/services/firebaseMemberService.js",
+      "sha256": "8d9e93c9cbd4e0b04b6700aeca74823033837cf13106c6d236b678149399ab26",
+      "bytes": 4256
+    },
+    {
+      "path": "src/services/firebaseWorkService.js",
+      "sha256": "f182a79d2abf52a30a99c516bd4ee853d2bc73a3dbc34efb0be8459df1f1fc5b",
+      "bytes": 2269
+    },
+    {
+      "path": "src/services/galleryData.js",
+      "sha256": "b32a3945bc4e451680044895dd31ff998f0ef5516db849a32b47b792801eccca",
+      "bytes": 2010
+    },
+    {
+      "path": "src/services/imageViewerService.js",
+      "sha256": "e7ff4aba7b13e9b44c61675935dca8e0705a2573e27c39b73dd7310abdd0aa9b",
+      "bytes": 644
+    },
+    {
+      "path": "src/services/previewCache.js",
+      "sha256": "1d8d05808053ded957d0c741ab056b6532eeb5397124e3154d0c93936781dd5e",
+      "bytes": 2691
+    },
+    {
+      "path": "src/services/report/applicationData.js",
+      "sha256": "33a22d3e153c721bc3a3e0613d147159b29123593b594a0fd8a7830a554b4580",
+      "bytes": 5239
+    },
+    {
+      "path": "src/services/report/assets/hwpxBase.json",
+      "sha256": "1a751345839af479c04092b4cbf5d4662d30198a1d00ad1a33e1c00fd3862379",
+      "bytes": 49747
+    },
+    {
+      "path": "src/services/report/chapterConversion.js",
+      "sha256": "a3f07bcf6a7eee43cefca9060ca972cc4b18a473294a711a1ae6b098db9f3745",
+      "bytes": 2255
+    },
+    {
+      "path": "src/services/report/collectionForms.js",
+      "sha256": "c98d85c71415e106b9a7eafc68e54e95d099662cf9409a4bf224a0a93a6e0029",
+      "bytes": 9398
+    },
+    {
+      "path": "src/services/report/collectionIntroStyle.js",
+      "sha256": "ca392db6ef71d115837c09cfa23e99ab0b8ad1de3013695873e88c2d27ace8ea",
+      "bytes": 4385
+    },
+    {
+      "path": "src/services/report/draftCollection.js",
+      "sha256": "e12f9b06de19ccea961951b3a14176bf408b66f9af2edcd9981d7774467c0f91",
+      "bytes": 3471
+    },
+    {
+      "path": "src/services/report/draftPreparation.js",
+      "sha256": "10f70e877f40301273564992a33deba182e6b15586b0d10e1100a7b0a3b29344",
+      "bytes": 8319
+    },
+    {
+      "path": "src/services/report/draftRetention.js",
+      "sha256": "1740a2bbde4c876f8d749c07c00ebec5a2ac29dcc21817694f5f59ddcaa9d43a",
+      "bytes": 2106
+    },
+    {
+      "path": "src/services/report/draftSourceBindings.js",
+      "sha256": "f9a3bd9898bf4d086e1c74234ce28a2e0101a6f750881dc6e901a226d3cba6cc",
+      "bytes": 1080
+    },
+    {
+      "path": "src/services/report/draftWriter.js",
+      "sha256": "0a4de2ebdb7710198e7459144bd9af44192a6599c1746666b7bb223653e7daa7",
+      "bytes": 3826
+    },
+    {
+      "path": "src/services/report/electricalPreparation.js",
+      "sha256": "7cb8a56c8c2d3a991a02a8789cde2061cb6162ae219283e5f207be1c1a38de2d",
+      "bytes": 8444
+    },
+    {
+      "path": "src/services/report/engineBrowser.js",
+      "sha256": "c55b49336f7f32d7d727eaab109f7494f63464366ca8f64511d0d2c9846e1669",
+      "bytes": 1251
+    },
+    {
+      "path": "src/services/report/engineContract.js",
+      "sha256": "727afd69bc45ae86ef39516c9e7ea469a9a2b483cea71956d21445aed0a8d298",
+      "bytes": 2614
+    },
+    {
+      "path": "src/services/report/engineFacade.js",
+      "sha256": "b60a870f51e8563ba11dcf3994f4d53a4934e4460fef048b3fc7890e16840e38",
+      "bytes": 10201
+    },
+    {
+      "path": "src/services/report/engineRecovery.js",
+      "sha256": "897df4dde187a508ea744f42de9406b6e454c4b3bd9fab6253e69ae9d00a13c2",
+      "bytes": 6048
+    },
+    {
+      "path": "src/services/report/generatedHwpxValidation.js",
+      "sha256": "53ede1048c75a1fde48d8bc69a2559bf19633e4f0b53fd3bc8ed8f622af15e26",
+      "bytes": 4974
+    },
+    {
+      "path": "src/services/report/hwpxPackage.js",
+      "sha256": "fbc6fe28bc3726d5275f0c53939ebaa7d93d8e1aa9887102dbb708bb0b7a7cb6",
+      "bytes": 12732
+    },
+    {
+      "path": "src/services/report/nativeCollection.js",
+      "sha256": "5bcd1f04eea7f3a78dfd6fa96ed2b5269813b5a0311cb1e86f7afd7ca56f739b",
+      "bytes": 21235
+    },
+    {
+      "path": "src/services/report/nativePreview.js",
+      "sha256": "200aefe2c3dbca81a863b698ecaafeb28256b9217adeabe8b64af242f3341804",
+      "bytes": 2120
+    },
+    {
+      "path": "src/services/report/nativePreview.worker.js",
+      "sha256": "6dd072cc257c6e2b155fcefef995c9246643eeea50a71fda38f3bee8cef0952d",
+      "bytes": 2043
+    },
+    {
+      "path": "src/services/report/nativeSaveAudit.js",
+      "sha256": "06f3229813f1c004156957db8c425d06c7dc45b2cf2acaa3f82e0591c5a66ebe",
+      "bytes": 5780
+    },
+    {
+      "path": "src/services/report/nativeWriter.js",
+      "sha256": "91e1718a4beb5eec08fb527a608c6c1522691872d5cee6d67ceeb17ca430fb64",
+      "bytes": 6721
+    },
+    {
+      "path": "src/services/report/pageNumberDecoration.js",
+      "sha256": "73096c5991a4dfe4435efb4d7ed84706d51fa45d8450df0e3f5ed689ade92f44",
+      "bytes": 1627
+    },
+    {
+      "path": "src/services/report/pageReproduction.js",
+      "sha256": "6a149156bd1d5d4571d1ff8beebc9c03acf4c3932a38eedd559711b884f53a81",
+      "bytes": 6874
+    },
+    {
+      "path": "src/services/report/pairedCellFormatting.js",
+      "sha256": "9a4bfb4d0df39aa132d050633ac119e9737b616c84030bf6c82b92ceafd4b104",
+      "bytes": 2907
+    },
+    {
+      "path": "src/services/report/pairedParagraphStyle.js",
+      "sha256": "239cb87c5a2bd4e442fd1460924340700c06dd7e4ae50a4bd3727c3785ce9af3",
+      "bytes": 2994
+    },
+    {
+      "path": "src/services/report/pairedReferenceLearning.js",
+      "sha256": "54706c01d79ec5c4b5e13b66d7e0b8195847a209f3b0f9bcbc346f42196c2b50",
+      "bytes": 10974
+    },
+    {
+      "path": "src/services/report/pairedTableMargins.js",
+      "sha256": "63c69cea4c2bd2d79526d9f7f93c138d985c42816a247780cd49bd7f0730fdb2",
+      "bytes": 6048
+    },
+    {
+      "path": "src/services/report/pairedTextReview.js",
+      "sha256": "4025945f6cadff8bbf09004e6d1817688395e47305622e9421a8bafa479250d1",
+      "bytes": 3865
+    },
+    {
+      "path": "src/services/report/paragraphFormatting.js",
+      "sha256": "0bb2e3b5fff2f7cb5ba269bb4f9644fbab7133fb765b0ff99a64c7fa3a1e728c",
+      "bytes": 2159
+    },
+    {
+      "path": "src/services/report/paragraphRole.js",
+      "sha256": "7727b6a9f36eb1690256ae724d122b01f86e0c25062a8122550f30c1c1c692a0",
+      "bytes": 424
+    },
+    {
+      "path": "src/services/report/pdfAnalysis.js",
+      "sha256": "0631e23ab9389c9b7037bc9e234989a7a646bb8069c7cd5f548513f489818ab9",
+      "bytes": 5265
+    },
+    {
+      "path": "src/services/report/pdfAppearance.js",
+      "sha256": "06f6be8e2162a58b090553292e274014de71c775b750be2da6d8168204308b5f",
+      "bytes": 5024
+    },
+    {
+      "path": "src/services/report/pdfCellLayout.js",
+      "sha256": "61b8f3df8e593885c016bb5f3aebb15c3032ff82f647228009d8c9623962ec9d",
+      "bytes": 4584
+    },
+    {
+      "path": "src/services/report/pdfEmbeddedFonts.js",
+      "sha256": "d4ba776df984f871aecba151449654f42c2d319406cbd8a2e2813f5f7132b7e3",
+      "bytes": 5064
+    },
+    {
+      "path": "src/services/report/pdfFonts.js",
+      "sha256": "71e6a0cd3f27447e7fab632a46ceb92ba1fc5b3263379eff2b6d0504927909b9",
+      "bytes": 3065
+    },
+    {
+      "path": "src/services/report/pdfFurnitureCoordinates.js",
+      "sha256": "7bbe0a732ba645b93dd01c457b420d4212c4dbbf954a564633f01c28d8900d02",
+      "bytes": 6883
+    },
+    {
+      "path": "src/services/report/pdfGlyphGeometry.js",
+      "sha256": "cdac4215f4d662d6d44c0a8f1b1d722d1abc501c292ea55376c16405aadc137d",
+      "bytes": 3297
+    },
+    {
+      "path": "src/services/report/pdfHwpxShapes.js",
+      "sha256": "88701aef134a6b158302be8fa6a68177c67beb105063bcbe3a26be63a62879e9",
+      "bytes": 3843
+    },
+    {
+      "path": "src/services/report/pdfHwpxWriter.js",
+      "sha256": "fb9ee6d8d2a50e7b5e478e6974b85c338e9ffe8ec24c6e08bc3a166e46974154",
+      "bytes": 61542
+    },
+    {
+      "path": "src/services/report/pdfImageLimits.js",
+      "sha256": "6d7864ebe320025e09b43842a73ae7897a525a922bfdeb6f733e1c1151e3529c",
+      "bytes": 140
+    },
+    {
+      "path": "src/services/report/pdfImagePixels.js",
+      "sha256": "cb38cf9dd852e7478fe086d87afc6f97d581a42849a0c1e43ca27ce46f61b6d3",
+      "bytes": 1853
+    },
+    {
+      "path": "src/services/report/pdfOcr.js",
+      "sha256": "a62b0a402035bf3d74c90ee24de4b4385eedd2a28a20129494d93deb94ce66f5",
+      "bytes": 9967
+    },
+    {
+      "path": "src/services/report/pdfOriginalFonts.js",
+      "sha256": "36fb0ab8c83ea36f9417795cca577c6b2445716fa316fb0b8d639986bd16b0b9",
+      "bytes": 3130
+    },
+    {
+      "path": "src/services/report/pdfProvenance.js",
+      "sha256": "9a4c83dc2cac3e3f4d9a0dd25327b3ab11d2e99231d3905078e67090f1f8686e",
+      "bytes": 2294
+    },
+    {
+      "path": "src/services/report/pdfRestoration.js",
+      "sha256": "dc6302f3ad255350afe4ffed6ead20b247e46189ca8d27a06ced04385a11364f",
+      "bytes": 3493
+    },
+    {
+      "path": "src/services/report/pdfStructure.js",
+      "sha256": "35d6f22119cb71a4e6de0495914a6ed914c41d5f94e0c54ebba24cdfea44aebe",
+      "bytes": 25472
+    },
+    {
+      "path": "src/services/report/pdfTextFrame.js",
+      "sha256": "7fda3d9e1ed00814e48a48407a7f6653e4bab05e2109cd3b9a21c398298153d2",
+      "bytes": 1178
+    },
+    {
+      "path": "src/services/report/pdfWhitespaceTracking.js",
+      "sha256": "141053ae7a1c487cc9593246f0f5ec1b98f62c1feb5cdf1ecaeae40e1b0a40e1",
+      "bytes": 6811
+    },
+    {
+      "path": "src/services/report/portableEngine.js",
+      "sha256": "20e38618b8f4b98303ef9f03319a6b188066aa029a9b4b79984bec7fb9c216a0",
+      "bytes": 437
+    },
+    {
+      "path": "src/services/report/powerView.js",
+      "sha256": "5a3ab112197130b92efa8c7ebaf3bb6be0f9c6089e83768cc6218674bd68e6e3",
+      "bytes": 9627
+    },
+    {
+      "path": "src/services/report/projectArchive.js",
+      "sha256": "694aa12a3432810413efa1c4ef7b7448a6a595342eb3eaef445f3102e7bc31c4",
+      "bytes": 17593
+    },
+    {
+      "path": "src/services/report/recoveredDraftSession.js",
+      "sha256": "7ac2ed3ed3fce75afa107adee715884165698918b1e6ba9a8fd23839df094326",
+      "bytes": 5568
+    },
+    {
+      "path": "src/services/report/referenceAnalyzer.js",
+      "sha256": "fb210448fa34dfa63fca336b6c7fce4b3cdb75ac2541157b13b0905213151bed",
+      "bytes": 12379
+    },
+    {
+      "path": "src/services/report/referenceLearning.js",
+      "sha256": "851785649ef77e214d1235d29ed1430f0c1f46c1e0803d631e286fc91c9ff94d",
+      "bytes": 5362
+    },
+    {
+      "path": "src/services/report/referenceProjects.js",
+      "sha256": "e7e89ef0381732ca3e95e2a978af68784a41cb25ec82d684dd60cc6258c0a462",
+      "bytes": 17332
+    },
+    {
+      "path": "src/services/report/report.worker.js",
+      "sha256": "06068c60893feca6192de3014c608dbd275bab0311183bdf3ec25dcac8932389",
+      "bytes": 5440
+    },
+    {
+      "path": "src/services/report/reportAiClient.js",
+      "sha256": "f6c0bf4fc682cfe3fa452a33ffa0b3d04bb7b69341d2eca1da34a3d3098bd389",
+      "bytes": 1287
+    },
+    {
+      "path": "src/services/report/reportAnalysisFlow.js",
+      "sha256": "567cb4e973a99dd5b31af072b9102576d01da0d55735c8252feac64538f4ad4e",
+      "bytes": 2605
+    },
+    {
+      "path": "src/services/report/reportAnalyzer.js",
+      "sha256": "9c4ae8c8fa867707339fe204f8a5f5b7d5898a57d90b94b00ba905c55714be9b",
+      "bytes": 8163
+    },
+    {
+      "path": "src/services/report/reportCollection.js",
+      "sha256": "8f254d3ec8f95fb2935293a8d2ae5309b27eae461d550d1350f23259115b8231",
+      "bytes": 7175
+    },
+    {
+      "path": "src/services/report/reportEngine.js",
+      "sha256": "87d095311b6d1e8ec25cfa10843ba5e3d59c3c4ce2e41d22b693a93990c243de",
+      "bytes": 22578
+    },
+    {
+      "path": "src/services/report/reportInterpreter.js",
+      "sha256": "f46a9a2a0482939a99afb505502b7fdd44740b87b9115e00f6bbeda06b730c41",
+      "bytes": 4762
+    },
+    {
+      "path": "src/services/report/reportLibrary.js",
+      "sha256": "3ec129a3bc97952ac602b94c5e0e84bc70d588357092ab56cd892e07bcf5fab5",
+      "bytes": 13969
+    },
+    {
+      "path": "src/services/report/reportList.js",
+      "sha256": "83ad5b0f05aec20ea145253b0bf4cf6224026c66827b7dbe5bafa32f500e0226",
+      "bytes": 1551
+    },
+    {
+      "path": "src/services/report/reportNumbering.js",
+      "sha256": "14a5131a22b9d72b0e13fc2eecb618a8ead4487a0c310bf00ef197b0de9d0255",
+      "bytes": 20309
+    },
+    {
+      "path": "src/services/report/reportSections.js",
+      "sha256": "9057d36398129317613e9c5e4962b811c3ece6c0cd4d564bd292a26c6b37c592",
+      "bytes": 1587
+    },
+    {
+      "path": "src/services/report/reportSpecification.js",
+      "sha256": "9275bfd56c4af034575511bda58cb9eae1afb89be5e0a224128ba3b6130d1220",
+      "bytes": 6718
+    },
+    {
+      "path": "src/services/report/reportStore.js",
+      "sha256": "a5e0e46a2c5f1861647f847285cedfbfd9c25f4541e3448fb41ba06a1d28307a",
+      "bytes": 12997
+    },
+    {
+      "path": "src/services/report/reportWorkflow.js",
+      "sha256": "04f4b238b00b8be947ad82730678ff8395ae4df7660d40985b0daada5f625644",
+      "bytes": 5252
+    },
+    {
+      "path": "src/services/report/reproductionReview.js",
+      "sha256": "af29f0bdd3e5c4f712e63a3945b6e46e9d2d139fda211e0e3143a2172dea027a",
+      "bytes": 2399
+    },
+    {
+      "path": "src/services/report/restoration.js",
+      "sha256": "bc54bdfc24a8df7cd57a2012d72b48b4a2ad44a4b91d5ea2161259b4b742682a",
+      "bytes": 28416
+    },
+    {
+      "path": "src/services/report/restorationImages.js",
+      "sha256": "e834218033ffbd97a070516ad9e5d37befb2b060e937fb4f33e7a55106d8bf44",
+      "bytes": 1282
+    },
+    {
+      "path": "src/services/report/sfntFonts.js",
+      "sha256": "3478b6bf04d6aaf0a309ee8bb49b308e3dc2da31c718869084be5aae7c8fc25a",
+      "bytes": 12416
+    },
+    {
+      "path": "src/services/report/sourceParser.js",
+      "sha256": "398e66a3fc91c8e9d4ada846f9bba7c480e31e722fa9b035a562ecbee39f94ea",
+      "bytes": 18135
+    },
+    {
+      "path": "src/services/report/studioProjects.js",
+      "sha256": "1287a45e3ef848c1c888a6dd65fc691b865079448eddce3bdfc86b212a1baf30",
+      "bytes": 1141
+    },
+    {
+      "path": "src/services/report/styledTextReplacement.js",
+      "sha256": "671cefbdfd3920255e49bf52bbde690bc95caafb7270ea6d88d5f29a44038d72",
+      "bytes": 2650
+    },
+    {
+      "path": "src/services/report/thermalBmt.js",
+      "sha256": "72ccf373bf844de06728242d6be217f3d44509f24d82fd138160a6105287ad1b",
+      "bytes": 11687
+    },
+    {
+      "path": "src/services/report/thermalDelivery.js",
+      "sha256": "4c1169c010f98d1e448ffe0e7bff99541c594ba131b8374261f0a0447d111092",
+      "bytes": 1358
+    },
+    {
+      "path": "src/services/report/workflowAnalysis.js",
+      "sha256": "d258519cad336cfd76ea96a41f4ad8e5b8a8e24bf75a9416dfa7d6bace543418",
+      "bytes": 11181
+    },
+    {
+      "path": "src/services/scheduleService.js",
+      "sha256": "713796ac7dedd917f3970db012af0f538e31e5d9b4a84b7ffc242a909ed61190",
+      "bytes": 2072
+    },
+    {
+      "path": "src/services/syncService.js",
+      "sha256": "d7ed8ccf23d97cd365660a3b0f66d22c3b3e74f3840f79003e4d0c0cb59239b5",
+      "bytes": 2025
+    },
+    {
+      "path": "src/services/viewerPreviewService.js",
+      "sha256": "cdc3587f61a7300b4bfc8f76e0ed2159e2312e1861114695e27f72e4284ec354",
+      "bytes": 659
+    },
+    {
+      "path": "src/services/workModel.js",
+      "sha256": "9513307438d27d19e44f8f491d6e02103f7c33b16c2c07c9e2b1ad959e460f27",
+      "bytes": 3828
+    },
+    {
+      "path": "tailwind.config.cjs",
+      "sha256": "a47ca1dd13eede772cee8b1831cc99c92b47c75c347d3e17433cbb9e462c9983",
+      "bytes": 369
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "1a00b45080368f8b424890d639a48afce44cb031b018250dfd18c774b9edbc01",
+      "bytes": 723
+    },
+    {
+      "path": "types.ts",
+      "sha256": "e393dc2bd4b5f0827e29e16d3a5b26b82f3c62939d57d69c2cf6f07691c91970",
+      "bytes": 1762
+    },
+    {
+      "path": "vite-env.d.ts",
+      "sha256": "424faf9241dd699dda995b367ed36665732da1e6ec1f33b2fd40394488ecac92",
+      "bytes": 39
+    },
+    {
+      "path": "vite.config.js",
+      "sha256": "2bf81487921242b94b3ee12a11fe3334002ce901d716dd37e18f2327bbaa1747",
+      "bytes": 379
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "190df1c779e8223e58bfe0de1158978457b15c3b02b2c3d9684482c2c2919a6d",
+      "bytes": 421
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/Form1.Designer.cs",
+      "sha256": "4abd9aad1f0e235070ee7595fa0943a41ae7370960fa3658ab36a4ffa5a84866",
+      "bytes": 2342
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/Form1.cs",
+      "sha256": "4983aeca49627118b6c64afb4e82caa5f63f917b33ff72206541ac9cafc9b53a",
+      "bytes": 11479
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/Program.cs",
+      "sha256": "df9eb3e4d133e735f5dd2538687fb92a8c42cf79710fc3268575356b29b04b11",
+      "bytes": 452
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/WorkJindan.WinForms.csproj",
+      "sha256": "be3a5dd67059c4b5f657da8701e5fcba7840cf8f6a3b7da680df0824a5bacce7",
+      "bytes": 857
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/WorkJindan.WinForms.csproj.user",
+      "sha256": "3d6b17cfbaff603db720a83180b5826ad667a9277443c4e4a97989af799509b4",
+      "bytes": 278
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs",
+      "sha256": "f7a5d9789c863625e139ff99e1113a503830f6b85a88f6129916df83ac76b49e",
+      "bytes": 198
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.AssemblyInfo.cs",
+      "sha256": "7aef7100958fb6697447572f3f8cd6ff831cdbbb4c83cdcfd9f7a02d9abe2503",
+      "bytes": 1307
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.AssemblyInfoInputs.cache",
+      "sha256": "322a910a5c607396616ed3590ee6b032a0af057a3d3b3cd489854550480df5a1",
+      "bytes": 66
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.GeneratedMSBuildEditorConfig.editorconfig",
+      "sha256": "7efc0909321023ce7b289302ae625699679d11d36cad1332fc087772208b87ba",
+      "bytes": 1015
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.GlobalUsings.g.cs",
+      "sha256": "427d9a42fa44fd3d6c018a63a0d55b7c737dfdf7fc82cf33c069304bea4c74be",
+      "bytes": 377
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.assets.cache",
+      "sha256": "bb2bbdc05ec0255c2cf1decc7f54bdc179261b6bdb5335e6767719aed6852be6",
+      "bytes": 1528
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/Debug/net8.0-windows/WorkJindan.WinForms.csproj.AssemblyReference.cache",
+      "sha256": "e6b87e5b69cdb4dca27ff91a39e9e282e810d8ef8f72c56af5cfefdcf4a96dc4",
+      "bytes": 1947
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/WorkJindan.WinForms.csproj.nuget.dgspec.json",
+      "sha256": "5bb83b1ed4e1d06bf6efd79b963c974074d4d99aa61c002fab70796b0c2a3676",
+      "bytes": 3073
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/WorkJindan.WinForms.csproj.nuget.g.props",
+      "sha256": "682601923be8188a093ff44cdb1c362a38981ea603857c06227e4b9c51fe7b5f",
+      "bytes": 1574
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/WorkJindan.WinForms.csproj.nuget.g.targets",
+      "sha256": "cc40cc5259a92627d4467d2738ecedb5834c8106ff4bc74123caa3e3d40512c9",
+      "bytes": 503
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/project.assets.json",
+      "sha256": "0ae2226d8093dc489bf0080673f7bcea36f6f2cde6f7d3f9ff02c11b64391368",
+      "bytes": 8875
+    },
+    {
+      "path": "winforms/WorkJindan.WinForms/obj/project.nuget.cache",
+      "sha256": "a356a3172b5449ac3159168b63cc01c6c4951fb906e007ddcb77a167da9996b4",
+      "bytes": 497
+    }
+  ],
+  "roadmapSha256": "74006e494dcd2aceb7b431d7dcad540ebb529c99fbf33a5cd182423c251f385a"
+}

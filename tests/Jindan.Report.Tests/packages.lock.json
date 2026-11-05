@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0-windows7.0": {
+      "jindan.contracts": {
+        "type": "Project"
+      },
+      "jindan.core": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )"
+        }
+      },
+      "jindan.desktop.contracts": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )"
+        }
+      },
+      "jindan.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )",
+          "Jindan.Core": "[1.0.0, )"
+        }
+      },
+      "jindan.modules.reportstudio": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )",
+          "Jindan.Desktop.Contracts": "[1.0.0, )"
+        }
+      },
+      "jindan.report.adapter": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )"
+        }
+      }
+    }
+  }
+}

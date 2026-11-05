@@ -1,0 +1,25 @@
+{
+  "schema": "jindan-final-readonly-check69/1",
+  "recordedAt": "2026-11-05T02:57:19.842Z",
+  "source": {
+    "path": "handoff/SOURCE69.json",
+    "files": 349,
+    "aggregateSha256": "a5cee644e07a73cf476ec0ff73c622b667f5bb0ee151eb7f5fb990d26bfa5242",
+    "pass": 1,
+    "fail": 0,
+    "command": "node tools/source-checkpoint66.mjs verify handoff/SOURCE69.json"
+  },
+  "handoff": {
+    "path": "handoff/FILES69.json",
+    "files": 113,
+    "sha256": "bca275bf23e47111275390abd043b599499c5632de9b71d78c2e5fdac9fdd114",
+    "pass": 1,
+    "fail": 0,
+    "command": "node tools/verify-handoff69.mjs"
+  },
+  "selectedPackage": "artifacts/ready-for-review/final66-r6",
+  "artifactManifestSha256": "18ee3ca05967d16315d7d5648b744628f1773d00b1142babbd0e64409711c69d",
+  "scope": "Records the successful final read-only command outputs after publication; this additive receipt and mutable STATUS66 are outside FILES69 to avoid circular hashes.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

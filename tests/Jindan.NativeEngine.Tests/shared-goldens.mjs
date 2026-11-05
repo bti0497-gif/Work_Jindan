@@ -1,0 +1,30 @@
+﻿import {readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {dirname,join,resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {zipSync,unzipSync,strToU8,strFromU8} from 'fflate';
+import {createCanvas} from '@napi-rs/canvas';
+import {pdfAuthoringPlan,writePdfHwpx} from '../../src/Jindan.Report.Worker/engine/src/services/report/pdfHwpxWriter.js';
+import {readHwpxPackage,indexHwpxSection} from '../../src/Jindan.Report.Worker/engine/src/services/report/hwpxPackage.js';
+import {createEngineRecovery,readEngineRecovery} from '../../src/Jindan.Report.Worker/engine/src/services/report/engineRecovery.js';
+import {createZipEntryGuard} from '../../src/Jindan.Report.Worker/engine/src/services/report/zipBoundary.js';
+const folder=join(dirname(fileURLToPath(import.meta.url)),'goldens'),manifestPath=join(folder,'manifest.json');
+const sha=b=>createHash('sha256').update(b).digest('hex');
+function duplicate(entries,from,to){const b=Buffer.from(zipSync(entries)),a=Buffer.from(from),z=Buffer.from(to);assert.equal(a.length,z.length);let count=0;for(let i=0;(i=b.indexOf(a,i))>=0;i+=a.length){z.copy(b,i);count++;}assert.equal(count,2);return b;}
+function inspect(b){const e=readHwpxPackage(b);return {sha256:sha(b),entries:Object.keys(e).sort().map(name=>({name,size:e[name].length,sha256:sha(e[name])})),sections:Object.keys(e).filter(n=>/^Contents\/section\d+\.xml$/.test(n)).sort().map(name=>{const i=indexHwpxSection(strFromU8(e[name]),name);return {name,paragraphs:i.paragraphs.length,textSlots:i.slots.length,cells:i.nodes.filter(n=>n.name.split(':').at(-1)==='tc').length,pictures:i.nodes.filter(n=>n.name.split(':').at(-1)==='pic').length,slotTextSha256:sha(Buffer.from(i.slots.map(s=>s.text).join('\0')))};})};}
+async function create(){assert.equal(existsSync(manifestPath),false,'Frozen goldens already exist; do not regenerate them to make native results pass.');
+ const projectId='project:native-golden66';const canvas=createCanvas(8,6);canvas.getContext('2d').fillRect(0,0,8,6);const png=new Uint8Array(canvas.toBuffer('image/png'));
+ const image={id:'image0',bbox:[50,350,130,410],kind:'figure',operator:7};
+ const table={id:'table0',rows:2,columns:2,bbox:[50,180,350,240],columnWidths:[150,150],rowHeights:[30,30],cells:[['Label',0,0],['Result',0,1],['Synthetic',1,0],['',1,1]].map(([text,row,column])=>({id:`cell${row}${column}`,text,row,column,rowSpan:1,colSpan:1,bbox:[50+150*column,180+30*row,200+150*column,210+30*row]}))};
+ const pdf={schema:'jindan-pdf-analysis/1',projectId,source:{sha256:'a'.repeat(64)},pages:[{number:1,widthPt:595,heightPt:842,kind:'body',discipline:'process',chapter:'Synthetic',images:[image],tables:[table],lines:[{text:'Synthetic golden66',bbox:[50,90,350,110],size:16}]},{number:2,widthPt:595,heightPt:842,kind:'body',discipline:'process',chapter:'Synthetic',images:[],tables:[],lines:[{text:'Second synthetic page',bbox:[50,90,350,110],size:12}]}]};
+ const normal=writePdfHwpx(pdfAuthoringPlan(pdf,{pages:[1,2]},projectId,'reference'),{pictures:{image0:{bytes:png,width:8,height:6,originalWidth:8,originalHeight:6,method:'pdf-image-object'}}}).bytes;
+ const entries=unzipSync(normal),dtd={...entries,'Contents/section0.xml':strToU8('<!DOCTYPE x [<!ENTITY e "unsafe">]><x>&e;</x>')};
+ const fixtures={'normal.hwpx':normal,'duplicate.hwpx':duplicate(entries,'Contents/section1.xml','Contents/section0.xml'),'path.hwpx':zipSync({...entries,'../escape.bin':new Uint8Array([1])}),'malformed.hwpx':strToU8('not a ZIP document'),'dtd.hwpx':zipSync(dtd)};
+ const cases=[];for(const [name,bytes]of Object.entries(fixtures)){writeFileSync(join(folder,name),bytes);let accepted=true,expected;try{expected=inspect(bytes);}catch{accepted=false;}cases.push({name,sha256:sha(bytes),jsAccepted:accepted,...(expected?{expected}:{})});}
+ const recovery=await createEngineRecovery({projectId,files:[{id:'source',role:'source',filename:'synthetic.hwpx',bytes:normal},{id:'saved',role:'native-saved',filename:'synthetic-saved.hwpx',bytes:new Uint8Array([...normal,0]),parentIds:['source']}],state:{untrustedOldReview:{reportReady:true}}});
+ writeFileSync(join(folder,'recovery.zip'),recovery.bytes);const read=await readEngineRecovery(recovery.bytes,{projectId});const m={schema:'jindan-native-goldens/1',syntheticOnly:true,projectId,cases,recovery:{name:'recovery.zip',sha256:sha(recovery.bytes),files:read.files.map(({id,role,filename,sha256,size,entry,parentIds,requiresReanalysis})=>({id,role,filename,sha256,size,entry,parentIds,requiresReanalysis}))},sourceHashes:Object.fromEntries(['hwpxPackage.js','zipBoundary.js','engineRecovery.js','pdfHwpxWriter.js'].map(n=>[n,sha(readFileSync(resolve(folder,'../../../src/Jindan.Report.Worker/engine/src/services/report',n)))]))};
+ writeFileSync(manifestPath,JSON.stringify(m,null,2));console.log('Created frozen synthetic goldens once.');
+}
+async function verify(){const m=JSON.parse(readFileSync(manifestPath,'utf8'));let count=0;for(const c of m.cases){const bytes=readFileSync(join(folder,c.name));assert.equal(sha(bytes),c.sha256);let accepted=true,result;try{result=inspect(bytes);}catch{accepted=false;}assert.equal(accepted,c.jsAccepted);if(accepted)assert.deepEqual(result,c.expected);count++;}const r=m.recovery;const bytes=readFileSync(join(folder,r.name));assert.equal(sha(bytes),r.sha256);const recovered=await readEngineRecovery(bytes,{projectId:m.projectId});assert.deepEqual(recovered.files.map(({id,role,filename,sha256,size,entry,parentIds,requiresReanalysis})=>({id,role,filename,sha256,size,entry,parentIds,requiresReanalysis})),r.files);count++;const entries=unzipSync(readFileSync(join(folder,'normal.hwpx')));for(const opts of [{maxEntries:1},{maxExpandedBytes:1}]){const guard=createZipEntryGuard(opts);assert.throws(()=>{for(const [name,b]of Object.entries(entries))guard({name,originalSize:b.length});});count++;}console.log(JSON.stringify({sharedGoldenChecks:count,pass:count,fail:0,mode:'verify-only',reportReady:false}));}
+if(process.argv.includes('--create'))await create();await verify();
