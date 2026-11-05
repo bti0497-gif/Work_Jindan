@@ -9,6 +9,14 @@ The original `F:/jindan` is a read-only baseline. Work here, never in its backup
 No old credentials, session or user workspace is included. No cloud service or
 paid AI provider is enabled. `reportReady=false`, `supervisorAccepted=false`.
 
+## Development priorities
+
+- [보고서 분석과 현장 조사 준비 개발 로드맵 초안](docs/future-report-workflow-roadmap-20261106.md)
+  records the proposed registrant/discipline workflow for further review.
+  The immediate priority is Drive file management and the Firebase board.
+  AI API/login integration is deferred until the roadmap is agreed and needed.
+  This planning document does not change frozen handoff evidence or enable cloud services.
+
 ## Review and build
 
 - Current EXECUTE70 candidate, scoped implementation and exact self-tests:
