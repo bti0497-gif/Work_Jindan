@@ -29,7 +29,7 @@ public static class Program
                 using var login = new LoginDialog(store); if (login.ShowDialog() != DialogResult.OK || login.Actor is null) return 0;
                 using var modules = DesktopModules.Load(root);
                 using var reports = new ReportBridge(store.DataRoot, root, modules.Entries.Any(e => e.Module.ModuleId == "report-studio"), (context, operation, ct) => store.AuthorizeDocumentAsync(login.Actor, context, operation is not ("analyze" or "preview" or "inspectMaterial" or "readThermalBmt" or "readPowerView" or "cadPreview" or "locate"), ct));
-                var services = new WorkspaceServices(login.Actor, store, reports);
+                using var services = new WorkspaceServices(login.Actor, store, reports);
                 using var form = new WorkbenchForm(root, modules, services); Application.Run(form); if (!form.LogoutRequested) return 0;
             }
         }
@@ -48,8 +48,11 @@ public sealed class ReportBridge : IReportService, IDisposable
     public void Invalidate(string contextId) => implementation?.Invalidate(contextId);
     public void Dispose() => implementation?.Dispose();
 }
-public sealed class WorkspaceServices(Identity actor, LocalWorkspace store, IReportService reports) : IWorkspaceServices, IReportWorkspaceAccess
+public sealed class WorkspaceServices(Identity actor, LocalWorkspace store, IReportService reports) : IWorkspaceServices, IReportWorkspaceAccess, IWorkspaceSyncAccess, IDisposable
 {
+    private readonly WorkspaceSyncService sync = new(store, actor);
+    public IWorkspaceSyncService Sync => sync;
+    public void Dispose() => sync.Dispose();
     public Task AuthorizeReportWorkspaceAsync(DocumentContext context, bool write, CancellationToken ct = default) => store.AuthorizeDocumentAsync(actor, context, write, ct);
     public Task<AssetInfo?> ResolveExistingReportAssetAsync(DocumentContext context, string storedPath, CancellationToken ct = default) => store.ResolveProjectAssetAsync(actor, context, storedPath, ct);
     public async Task<bool> CanWriteReportWorkspaceAsync(DocumentContext context, CancellationToken ct = default) { await store.AuthorizeDocumentAsync(actor, context, false, ct); try { await store.AuthorizeDocumentAsync(actor, context, true, ct); return true; } catch (Jindan.Core.WorkspaceException error) when (error.Code == "FORBIDDEN") { return false; } }

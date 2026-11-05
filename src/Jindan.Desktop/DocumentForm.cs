@@ -29,5 +29,5 @@ public sealed class DocumentForm : Form
         }
         base.OnFormClosing(e);
     }
-    protected override void Dispose(bool disposing) { if (disposing && !IsDisposed) { Document.TitleChanged -= TitleUpdated; Controls.Remove(Document.View); Document.Dispose(); } base.Dispose(disposing); }
+    protected override void Dispose(bool disposing) { if (disposing && !IsDisposed) { Document.TitleChanged -= TitleUpdated; Document.Dispose(); } base.Dispose(disposing); }
 }

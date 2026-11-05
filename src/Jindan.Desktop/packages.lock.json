@@ -14,7 +14,8 @@
       "jindan.desktop.contracts": {
         "type": "Project",
         "dependencies": {
-          "Jindan.Contracts": "[1.0.0, )"
+          "Jindan.Contracts": "[1.0.0, )",
+          "Jindan.Core": "[1.0.0, )"
         }
       },
       "jindan.infrastructure": {

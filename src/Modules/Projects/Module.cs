@@ -13,7 +13,7 @@ public sealed class Module : RecordModule
 #else
     public string FeatureRevision => "project-crud-v1";
 #endif
-    public override RecordSchema Schema => new("projects", DisplayName, [new("title", "프로젝트명", Required: true), new("facility", "시설·발주처"), new("startDate", "시작일 (YYYY-MM-DD)", "date"), new("endDate", "종료일 (YYYY-MM-DD)", "date"), new("status", "상태", Choices: ["계획", "진행중", "완료", "중지"]), new("content", "업무·범위", "multiline"), new("relatedFiles", "관련 자료 식별자")], false);
+    public override RecordSchema Schema => new("projects", DisplayName, [new("title", "프로젝트명", Required: true), new("facility", "시설·발주처"), new("startDate", "시작일 (YYYY-MM-DD)", "date"), new("endDate", "종료일 (YYYY-MM-DD)", "date"), new("status", "상태", Choices: ["계획", "진행중", "완료", "중지"]), new("content", "업무·범위", "richtext"), new("contentRtf", "로컬 문자 서식", "richtext-data"), new("relatedFiles", "관련 자료 식별자")], false);
     public override IWorkspaceDocument CreateDocument(DocumentContext context) => new ProjectDocument(Services, Schema, context);
 }
 public sealed class ProjectDocument : RecordDocument

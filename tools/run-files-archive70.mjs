@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {spawn} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const [outArg,installationArg,harnessArg,mode='fixed']=process.argv.slice(2),out=path.resolve(root,outArg??'');
+if(!outArg||!out.startsWith(path.join(root,'artifacts')+path.sep)||fs.existsSync(out)||fs.existsSync(out+'.COMMAND.json')||!['old','fixed'].includes(mode))throw Error('Fresh owned artifacts output and old/fixed mode required');
+const installation=installationArg&&installationArg!=='source'?path.resolve(root,installationArg):null;
+const exe=installation?path.join(installation,'.runtime/dotnet.exe'):path.join(root,'.tools/dotnet/dotnet.exe');
+const harness=harnessArg?path.resolve(root,harnessArg):path.join(root,'tests/Jindan.FilesArchive.Tests/bin/Release/net10.0-windows/Jindan.FilesArchive.Tests.dll');
+if(!harness.startsWith(root+path.sep))throw Error('Owned harness path required');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');const args=[harness,out,...(mode==='old'?['--expect-old']:[]),...(installation?['--installation='+installation]:[])];
+const startedAt=new Date().toISOString();let stdout='',stderr='';const child=spawn(exe,args,{cwd:root,windowsHide:false,stdio:['ignore','pipe','pipe'],env:{...process.env,DOTNET_ROOT:path.dirname(exe),DOTNET_ROOT_X64:path.dirname(exe),DOTNET_MULTILEVEL_LOOKUP:'0',DOTNET_GENERATE_ASPNET_CERTIFICATE:'false',DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1'}});child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);const exit=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('close',resolve)});
+fs.writeFileSync(out+'.stdout.log',stdout,{flag:'wx'});fs.writeFileSync(out+'.stderr.log',stderr,{flag:'wx'});const resultPath=path.join(out,'RESULT.json'),resultPresent=fs.existsSync(resultPath);const receipt={schema:'jindan-files-archive70/1',mode,meaning:mode==='old'?'Pre-fix defect reproduction, not product acceptance':'Fixed synthetic regression',command:[exe,...args],pid:child.pid,startedAt,endedAt:new Date().toISOString(),windowsHide:false,exit,resultPresent,harnessSha256:hash(harness),runtimeSha256:hash(exe),resultPath,stdoutSha256:hash(out+'.stdout.log'),stderrSha256:hash(out+'.stderr.log'),reportReady:false,supervisorAccepted:false};fs.writeFileSync(out+'.COMMAND.json',JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt));console.log(stdout);if(stderr)console.log(stderr);process.exitCode=exit===0&&resultPresent?0:1;

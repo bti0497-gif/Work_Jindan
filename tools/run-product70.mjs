@@ -1,0 +1,26 @@
+// Serialized, owned local GUI gates against one immutable review package.
+import fs from 'node:fs';import path from 'node:path';import {spawn} from 'node:child_process';import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const [reviewArg,outArg,phase]=process.argv.slice(2),review=path.resolve(reviewArg||''),out=path.resolve(outArg||''),app=path.join(review,'application');
+if(phase&&phase!=='--after-photos')throw Error('Unknown scoped diagnostic phase');
+if(!reviewArg||!outArg||!review.startsWith(path.join(root,'artifacts/ready-for-review')+path.sep)||!out.startsWith(path.join(root,'artifacts')+path.sep)||fs.existsSync(out)||!fs.existsSync(path.join(review,'PREPARATION_RESULT.json')))throw Error('Exact prepared review and fresh owned output required.');
+fs.mkdirSync(out);const commands=[],runtime=path.join(app,'.runtime/dotnet.exe');
+async function run(label,exe,args){let stdout='',stderr='';const startedAt=new Date().toISOString();const child=spawn(exe,args,{cwd:root,windowsHide:true,shell:false,env:{...process.env,DOTNET_ROOT:path.dirname(runtime),DOTNET_ROOT_X64:path.dirname(runtime),DOTNET_MULTILEVEL_LOOKUP:'0',DOTNET_GENERATE_ASPNET_CERTIFICATE:'false',DOTNET_CLI_TELEMETRY_OPTOUT:'1'},stdio:['ignore','pipe','pipe']});let overflow=false;for(const [key,stream]of [['stdout',child.stdout],['stderr',child.stderr]])stream.on('data',b=>{if((key==='stdout'?stdout:stderr).length+b.length>16*1024*1024){overflow=true;return;}if(key==='stdout')stdout+=b.toString();else stderr+=b.toString();});const exit=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('close',resolve);});fs.writeFileSync(path.join(out,label+'.stdout.log'),stdout);fs.writeFileSync(path.join(out,label+'.stderr.log'),stderr);commands.push({label,command:[exe,...args],startedAt,endedAt:new Date().toISOString(),exit,overflow});fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({complete:false,review,commands,reportReady:false,supervisorAccepted:false},null,2));console.log(label+' exit='+exit);if(exit!==0||overflow)throw Error(label+' failed; preserve logs and investigate.');}
+async function build(label,project){const folder=path.join(out,'build-'+label);await run('build-'+label,'powershell.exe',['-NoProfile','-NonInteractive','-File','tools/dotnet.ps1','build',project,'-c','Release','-p:InstallationRoot='+app,'-o',folder]);return folder;}
+async function gate(label,dll,args,visible=true){await run(label,process.execPath,['tools/run-gate70.mjs',...(visible?['--visible']:[]),label,path.join(out,label),runtime,dll,...args]);const fault=path.join(out,label,'owned-thread-exceptions.log');if(fs.existsSync(fault)&&fs.statSync(fault).size)throw Error(label+' recorded an owned UI exception, including normal-close; assertions alone do not approve this gate.');}
+try{
+ const ui=await build('desktop','tests/Jindan.Desktop.UiTests/Jindan.Desktop.UiTests.csproj');
+ for(const [label,flag]of [['native-photos','--photos-only'],['native-main',null],['native-calendar','--calendar-only'],['native-selection','--selection69-only'],['native-row-order','--row-order-only']]){if(phase&&['native-main','native-photos'].includes(label))continue;await gate(label,path.join(ui,'Jindan.Desktop.UiTests.dll'),['--package',app,'--output',path.join(out,label),'--require-packaged-bytes',...(flag?[flag]:[])]);}
+ const report=await build('report','tests/Jindan.Report.Tests/Report.GuiSmoke.csproj');
+ await gate('report',path.join(report,'Report.GuiSmoke.dll'),[root,process.execPath,'--package',app,'--output',path.join(out,'report')]);
+ const files=await build('files-board','tests/Jindan.LocalModules.Tests/Jindan.LocalModules.Tests.csproj');
+ await gate('files-board',path.join(files,'Jindan.LocalModules.Tests.dll'),[path.join(out,'files-board'),app]);
+ const clone=path.join(root,'artifacts','product-patch66-'+path.basename(out),'application');
+ await run('clone',process.execPath,['tools/prepare-product-clone66.mjs',review,clone,path.join(out,'clone-receipt.json')]);
+ const patch=await build('patch','tests/Jindan.Patch.ProductTests/Jindan.Patch.ProductTests.csproj');
+ await gate('patch',path.join(patch,'Jindan.Patch.ProductTests.dll'),[clone,path.join(root,'artifacts/patches66/projects-v2-'+path.basename(review)),path.join(out,'patch')],false);
+ const entry=await build('entry','tests/Jindan.Launch.Tests/Jindan.Launch.Tests.csproj');
+ await gate('entry',path.join(entry,'Jindan.Launch.Tests.dll'),[clone,path.join(out,'entry')],false);
+ await run('launcher-health','powershell.exe',['-NoProfile','-NonInteractive','-File',path.join(review,'Run.ps1'),'-HealthCheck']);
+ fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({schema:'jindan-product70/1',complete:true,passed:true,review,phase:phase||'all',commands,scope:phase?'Scoped diagnostic continuation after photos; main/photos are NOT included or claimed passed.':'Exact packaged local synthetic UI/reopen/report/Files/Board/patch/entry; native Hancom and company approval excluded.',reportReady:false,supervisorAccepted:false},null,2));
+}catch(e){fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({schema:'jindan-product70/1',complete:false,passed:false,review,error:e.message,commands,reportReady:false,supervisorAccepted:false},null,2));throw e;}

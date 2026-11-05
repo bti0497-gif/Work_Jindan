@@ -1,0 +1,144 @@
+{
+  "schema": "jindan-scoped-visual-review70/1",
+  "recordedAt": "2026-11-05T10:49:43.527Z",
+  "selectedPackage": "artifacts/ready-for-review/final70-r5",
+  "artifactManifestSha256": "9a28197b7af03011805183e7697667b7defa7152720ff1bdce59c59713689589",
+  "rootCaptures": [
+    {
+      "path": "artifacts/final70-product05/native-main/02-tabs-context-window.png",
+      "sha256": "00c65883a64fd832f7159e4587229d8e024158d7775204c41288e5dac6c335f3",
+      "method": "actual-owned-window-PrintWindow",
+      "manuallyInspected": true,
+      "observation": "Active project, document tabs, commands and context panels readable; no major overlap observed."
+    },
+    {
+      "path": "artifacts/final70-product05/native-photos/08-photo-visible-headers-window.png",
+      "sha256": "ca5c8de196d5285afb107314934034b2063cde56ce0cbdc198cf7657883fdf77",
+      "method": "actual-owned-window-PrintWindow",
+      "manuallyInspected": true,
+      "observation": "Photo headers/actions, thumbnail, fitted preview and read-only source identity readable."
+    },
+    {
+      "path": "artifacts/final70-product05/native-selection/selection69-first-single-photo-bound-window.png",
+      "sha256": "316cd40d2137ba0dc3a0986dea1478ec1dcb8bbe189f410f5d8acba3c604fd97",
+      "method": "actual-owned-window-PrintWindow",
+      "manuallyInspected": true,
+      "observation": "Selected first photo row matches inspector and preview context."
+    },
+    {
+      "path": "artifacts/final70-product05/report/PreservationTab70.png",
+      "sha256": "75a745e75fae41d727ad9b3008f688ce000c214e4ddfd54b471eebf73a900717",
+      "method": "controlled-WinForms-DrawToBitmap",
+      "manuallyInspected": true,
+      "observation": "Preservation audit commands and before/after hashes readable; explicit non-acceptance notice visible. Not a Hancom capture."
+    },
+    {
+      "path": "artifacts/final70-product05/report/ProposalTab70.png",
+      "sha256": "b3ac6265962260e0892d458d976f87f570383f4e1a1584ea6b339a0be106bc06",
+      "method": "controlled-WinForms-DrawToBitmap",
+      "manuallyInspected": true,
+      "observation": "Offline proposal request/response and explicit apply commands readable; provider not configured and approval flags false. Not a Hancom capture."
+    },
+    {
+      "path": "artifacts/final70-product05/patch/v2-restored.png",
+      "sha256": "63653267c137bdbf1814f14ff62072794436783edfd1608afe0df98db79b8cef",
+      "method": "actual-owned-window-PrintWindow",
+      "manuallyInspected": true,
+      "observation": "Patched Projects filter and version notice appear in owned application copy."
+    },
+    {
+      "path": "artifacts/final70-product05/patch/v1-restored.png",
+      "sha256": "2006498d28ec7855e4e0ff5e0d15d7a102f2267056bc7069a0dbd923ccc6977d",
+      "method": "actual-owned-window-PrintWindow",
+      "manuallyInspected": true,
+      "observation": "Rollback removes patch filter, restores two rows and editor context."
+    }
+  ],
+  "featureReview": {
+    "path": "artifacts/remaining70-ui05/VISUAL_REVIEW70.json",
+    "sha256": "764490cdfd6bd6425ac50a4e6e3e52f0f11b47af37700c8236bc4db75904542f",
+    "actualWindowCaptures": [
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-project-richtext-window.png",
+        "sha256": "65f765b6ab28930aadc401f22098c3394f51cdc14adca891dbf4dd73b18f26b5",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-board-thread-window.png",
+        "sha256": "f9acd37b0a8904a1dd58dd2c0bd575e5fb3dc9dcd853a7cc996c0f2edf01ffa8",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-dashboard-eight-window.png",
+        "sha256": "8ca1161280dfecd7b68d75c34b2e8efbff4db98ceecf591cc10ae03dceac65f8",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-dashboard-last-tile-viewport-window.png",
+        "sha256": "23babfd39149d93e1630ab9576a4197a3eab415ef54bef738083e180f17d7b61",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-clicked-original-preview-window.png",
+        "sha256": "6977d6911346bb1410dac5995fb2a85128c89d23ba9471b3d7562c1dc7edb32e",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-exact-cad-preview-window.png",
+        "sha256": "8a7dfb756a8ef2864623a3286afd781d8f06c30caba05c8be45ebc6c83611353",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-dynamic-files-drive-cache-window.png",
+        "sha256": "45592228bd4059a21622f0cca011c8f62eccc69a3cfdefd16020bdffb3fa62df",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-default-sync-blocked-window.png",
+        "sha256": "abf3b728557e4414fde0a4fa36a807aa9b760046a02b7ed45988b64a4dd9d1e8",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-fresh-richtext-window.png",
+        "sha256": "84d9f153a8c09abbd080b58bb3111635471308e10875de97baf2e56a88bc7ce3",
+        "inspected": true
+      },
+      {
+        "path": "F:\\jindan-dotnet\\artifacts\\remaining70-ui05\\remaining70-fresh-dashboard-window.png",
+        "sha256": "40832c9d9c8b4f8b1528e227c819f9501937151df540a7590ea0cd79dde53eef",
+        "inspected": true
+      }
+    ],
+    "observation": "All ten actual owned window captures inspected. Project and Board toolbar/editor/thread readable; bold source and plain reply retained after fresh process. Dashboard first/current and fresh Inspector show ID/title/authoritative content without raw RTF; eight loaded local tiles retain first/last horizontal viewport navigation. Exact photo fit preview and DXF circle/line, dynamic offline Drive tree/list and default sync queued state with disabled production send/schedule readable."
+  },
+  "driveReview": {
+    "receipt": "artifacts/drive70/FINAL_R5_VERIFICATION.json",
+    "sha256": "eac8f9c22d8c9e6bd8cd733b77f7bff14fce1b248d0bed99a28cde5e79786004",
+    "captures": [
+      {
+        "path": "artifacts/drive70-ui-r5-01/02-cached-folder-native.png",
+        "sha256": "46970a145551892796c1a9a3bcad71a2b9e4eeb90deed1d2713dc81522b7f184",
+        "method": "actual-owned-window-PrintWindow",
+        "manuallyInspected": true
+      },
+      {
+        "path": "artifacts/drive70-ui-r5-01/03-offline-cache-native.png",
+        "sha256": "fa78be5ff81bbfcd0f6c2abff956317d8ae1ebf3cd62ab92aa921b655eb01ad3",
+        "method": "actual-owned-window-PrintWindow",
+        "manuallyInspected": true
+      },
+      {
+        "path": "artifacts/drive70-ui-r5-01/05-duplicate-DuplicateRename-native.png",
+        "sha256": "c141791443255e212715e82bfca10c267e5a4acc3c3b46ced9df80eec50dce3d",
+        "method": "actual-owned-window-PrintWindow",
+        "manuallyInspected": true
+      }
+    ],
+    "observation": "Scoped folder hierarchy/list, offline cache/failure and duplicate rename readable without observed major overlap."
+  },
+  "passed": true,
+  "newP0orP1ObservedInInspectedCaptures": false,
+  "scope": "Named synthetic final-r5 workbench captures only. Reports controlled captures are distinguished from actual owned desktop windows. No all-screen, physical150/200DPI, native Hancom, company data, all fonts/objects or release acceptance is inferred.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}

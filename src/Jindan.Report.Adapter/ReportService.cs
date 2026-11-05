@@ -33,7 +33,7 @@ public sealed class ReportService : IReportService, IDisposable
     }
     private sealed class BoundaryException(string code) : Exception("Local report boundary rejected the operation.") { public string Code = code; }
     private static readonly HashSet<string> DraftOperations = ["writeDraft", "exportCollection", "importCollection"];
-    private static readonly HashSet<string> BoundOperations = ["prepareDraft", "writeDraft", "exportCollection", "importCollection", "restore", "pairReference", "discipline", "electrical", "specification", "locate"];
+    private static readonly HashSet<string> BoundOperations = ["prepareDraft", "writeDraft", "exportCollection", "importCollection", "restore", "pairReference", "discipline", "electrical", "specification", "locate", "nativeSaveAudit"];
 
     public ReportService(string dataRoot, string nodePath, string workerPath, int timeoutMs = 120000, bool enableTestOperations = false, Func<DocumentContext, string, CancellationToken, Task>? authorize = null)
     {

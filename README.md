@@ -11,9 +11,15 @@ paid AI provider is enabled. `reportReady=false`, `supervisorAccepted=false`.
 
 ## Review and build
 
-- Current REVIEW69 revision and exact evidence: [handoff/FINAL69.md](handoff/FINAL69.md).
-  R4 and rejected R5 are preserved history; R6 local self-validation is complete.
-  Independent acceptance and company/native-report gates remain pending.
+- Current EXECUTE70 candidate, scoped implementation and exact self-tests:
+  [handoff/FINAL70.md](handoff/FINAL70.md), [docs/run-review70.md](docs/run-review70.md).
+  [handoff/REMAINING70.json](handoff/REMAINING70.json) separates missing real
+  providers, native preservation and company acceptance from local test results.
+  Complete source70 and a verified source ZIP are identified in that handoff.
+- Historical REVIEW69 revision and exact evidence: [handoff/FINAL69.md](handoff/FINAL69.md).
+  R4 and rejected R5 are preserved history; R6 received scoped synthetic
+  independent review. Its result is not transferred to a new candidate, and
+  company/native-report acceptance remains pending.
   Historical ROADMAP66 handoff: [handoff/FINAL66.md](handoff/FINAL66.md).
 - Progress and machine-readable gates: [handoff/STATUS66.json](handoff/STATUS66.json).
 - Run and local update instructions: [docs/run-review66.md](docs/run-review66.md).

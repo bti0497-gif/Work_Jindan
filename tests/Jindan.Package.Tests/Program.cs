@@ -102,6 +102,7 @@ internal static partial class Program
         v1 = Fixture("ModuleV1"); v2 = Fixture("ModuleV2");
         if (!File.Exists(v1) || !File.Exists(v2)) throw new Exception("Build fixture projects first.");
         if (packagedRoot is not null) await Run("69 three update libraries match exact review bytes and owned children use bundled runtime", () => { Assert(packagedAssemblies.Count == 3 && File.Exists(Path.Combine(packagedRoot, ".runtime", "dotnet.exe")), "Exact package binding incomplete"); return Task.CompletedTask; });
+        if (packagedRoot is not null) await Run("70 every managed module dependency is shared-contract or exact declared private payload", CheckModuleClosure70);
         await Run("actual DLL v1-to-v2 health and explicit rollback preserve host/other module/data", async () =>
         {
             var one = Package("projects", v1); var two = Package("projects", v2, "2.0.0"); var other = Package("photos", v1); var root = Installation(one); Copy(other, Installed(root, "photos"));

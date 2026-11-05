@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><UseWindowsForms>true</UseWindowsForms></PropertyGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' == ''"><ProjectReference Include="../../src/Modules/Files/Jindan.Modules.Files.csproj" /><ProjectReference Include="../../src/Jindan.Infrastructure/Jindan.Infrastructure.csproj" /></ItemGroup>
+  <ItemGroup Condition="'$(InstallationRoot)' != ''">
+    <Reference Include="Jindan.Contracts"><HintPath>$(InstallationRoot)/Jindan.Contracts.dll</HintPath></Reference>
+    <Reference Include="Jindan.Core"><HintPath>$(InstallationRoot)/Jindan.Core.dll</HintPath></Reference>
+    <Reference Include="Jindan.Desktop.Contracts"><HintPath>$(InstallationRoot)/Jindan.Desktop.Contracts.dll</HintPath></Reference>
+    <Reference Include="Jindan.Infrastructure"><HintPath>$(InstallationRoot)/Jindan.Infrastructure.dll</HintPath></Reference>
+    <Reference Include="Jindan.Modules.Files"><HintPath>$(InstallationRoot)/modules/files/Jindan.Modules.Files.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

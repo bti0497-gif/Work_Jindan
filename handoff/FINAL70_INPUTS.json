@@ -1,0 +1,52 @@
+{
+  "schema": "jindan-final-inputs70/1",
+  "selectedPackage": "artifacts/ready-for-review/final70-r5",
+  "sourceGate": "artifacts/checks70/2026-11-05T09-59-55-927Z/RESULT.json",
+  "focusedPostSource": [
+    "artifacts/dashboard70-source06/RESULT.json"
+  ],
+  "productGate": "artifacts/final70-product05/RESULT.json",
+  "remainingGate": "artifacts/remaining70-ui05.COMMAND.json",
+  "driveGate": "artifacts/drive70-ui-r5-01/RESULT.json",
+  "archiveGate": "artifacts/archive70-r5-01/RESULT.json",
+  "dependencyGate": "artifacts/files-dependency70-r5.json",
+  "snapshotGate": "artifacts/final70-snapshot05/RESULT.json",
+  "integrityBefore": "artifacts/review70-integrity-before.json",
+  "integrityAfter": "artifacts/review70-integrity-final.json",
+  "preservation": "artifacts/preservation70/FINAL_RESULT.json",
+  "frozenSource": "artifacts/source70-final/RESULT.json",
+  "visualReview": "handoff/VISUAL70.json",
+  "oldFindings": [
+    "artifacts/remaining70-ui01/ui-result.json",
+    "artifacts/remaining70-ui-diagnostic02/ui-result.json",
+    "artifacts/archive70-old-repro01/RESULT.json",
+    "artifacts/remaining70-ui02/ui-result.json",
+    "artifacts/remaining70-r2-board-diagnostic01/ui-result.json",
+    "artifacts/files-dependency70-r2-OLD.json",
+    "artifacts/remaining70-ui03/VISUAL_REVIEW70.json",
+    "artifacts/dashboard70-source05/RESULT.json",
+    "artifacts/final70-product04/native-photos/ui-result.json",
+    "artifacts/photo70-r4-diagnostic01/ui-result.json",
+    "artifacts/photo70-r4-diagnostic02/ui-result.json",
+    "artifacts/PHOTO_DISPOSAL70_CAUSAL.json"
+  ],
+  "proofFolders": [
+    "artifacts/final70-product05",
+    "artifacts/final70-product05/native-main",
+    "artifacts/final70-product05/native-photos",
+    "artifacts/final70-product05/native-calendar",
+    "artifacts/final70-product05/native-selection",
+    "artifacts/final70-product05/native-row-order",
+    "artifacts/final70-product05/report",
+    "artifacts/final70-product05/files-board",
+    "artifacts/final70-product05/patch",
+    "artifacts/final70-product05/entry",
+    "artifacts/remaining70-ui05",
+    "artifacts/drive70-ui-r5-01",
+    "artifacts/archive70-r5-01",
+    "artifacts/final70-snapshot05"
+  ],
+  "reportReady": false,
+  "supervisorAccepted": false,
+  "syntheticFixtures": "artifacts/final70-fixtures05/INPUT_OUTPUT70.json"
+}

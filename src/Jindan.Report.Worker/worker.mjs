@@ -206,6 +206,11 @@ async function execute(files){
             return {ok:true,operation:'cadPreview',contractVersion:engine.contractVersion,value:{...metadata,pngBytes:bytes,layoutVerified:false},reportReady:false};
         }
         case 'analyze':return engine.analyze(input,options);
+        case 'nativeSaveAudit':{
+            await requireBundle();if(bundle.material.format!=='hwpx'||!files.filled)fail('UNSUPPORTED_FORMAT');
+            const {auditNativeSave}=await import('./engine/src/services/report/nativeSaveAudit.js');
+            return {ok:true,operation:'nativeSaveAudit',contractVersion:engine.contractVersion,value:await auditNativeSave(files.source,files.filled,{expectedBeforeSha256:request.sourceSha256,expectedAfterSha256:hash(files.filled)}),reportReady:false};
+        }
         case 'inspectLegacyProject':{
             const library=await import('./engine/src/services/report/projectArchive.js'),parsed=await library.readProjectArchive(files.source);let total=0;const restored=[];
             for(const {material,blob}of parsed.restored){if(material.size>MAX_FILE||(total+=material.size)>512*1024*1024)fail('FILE_TOTAL_LIMIT');const bytes=new Uint8Array(await blob.arrayBuffer());if(hash(bytes)!==material.sha256)fail('BINDING_MISMATCH');restored.push({legacyId:material.id,role:material.role,filename:material.filename,format:material.format,size:material.size,sha256:material.sha256,metadata:material,bytes});}
@@ -254,6 +259,16 @@ async function execute(files){
             const data=context.payload||{},action=String(parameters.action||'inspect');let extra={};
             switch(action){
                 case 'inspect':break;
+                case 'mapInputCell70':{
+                    const evidence=files.evidence?.find(item=>item.id===data.materialId);if(!evidence||hash(evidence.bytes)!==data.sha256)fail('BINDING_MISMATCH');
+                    workspace=await (await import('./engine/src/services/report/inputCell70.js')).mapInputCell70(workspace,evidence.bytes,data);break;
+                }
+                case 'proposalRequest':case 'proposalInspect':case 'proposalApply':{
+                    const proposals=await import('./engine/src/services/report/proposalExchange70.js'),mode=String(data.mode||'analysis');
+                    if(action==='proposalRequest')extra={proposalRequest:await proposals.prepareProposal(workspace,mode)};
+                    else if(action==='proposalInspect')extra={proposalReview:await proposals.inspectProposal(workspace,mode,data.envelope)};
+                    else workspace=await proposals.applyProposal(workspace,mode,data.envelope,{explicitApply:data.explicitApply});break;
+                }
                 case 'addTableFields':{
                     const table=bundle.document.tables.find(table=>table.id===data.tableId);if(!table)fail('BINDING_MISMATCH');workspace=library.addFields(workspace,data.judgmentsOnly?library.proposeJudgmentFields(bundle.document,table,Number(data.headerRows??1),Number(data.labelColumns??1)):library.proposeTableFields(bundle.document,table,Number(data.headerRows??1),Number(data.labelColumns??1)));break;
                 }

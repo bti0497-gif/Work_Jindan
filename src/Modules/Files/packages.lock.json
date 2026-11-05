@@ -5,10 +5,24 @@
       "jindan.contracts": {
         "type": "Project"
       },
-      "jindan.desktop.contracts": {
+      "jindan.core": {
         "type": "Project",
         "dependencies": {
           "Jindan.Contracts": "[1.0.0, )"
+        }
+      },
+      "jindan.desktop.contracts": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )",
+          "Jindan.Core": "[1.0.0, )"
+        }
+      },
+      "jindan.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "Jindan.Contracts": "[1.0.0, )",
+          "Jindan.Core": "[1.0.0, )"
         }
       }
     }

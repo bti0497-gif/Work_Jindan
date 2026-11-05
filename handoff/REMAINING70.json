@@ -1,0 +1,1870 @@
+{
+  "schema": "jindan-remaining70/1",
+  "createdAt": "2026-11-05T11:16:32.638Z",
+  "features28": [
+    {
+      "id": "shell",
+      "title": "현재 진입점·탐색·창 제어",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "shell"
+      },
+      "originalSourcePaths": [
+        "src/main.jsx",
+        "src/App.jsx",
+        "src/components/LeftSidebar.jsx",
+        "src/components/RightSidebar.jsx"
+      ],
+      "originalObservedCommands": [
+        "Dashboard",
+        "Projects",
+        "Processes",
+        "Files",
+        "Report Studio",
+        "process/mechanical/electrical reports",
+        "Tasks",
+        "Board",
+        "admin Members",
+        "window controls"
+      ],
+      "originalModelFields": [
+        "activeMenu",
+        "viewMode",
+        "selectedProject",
+        "selectedPost",
+        "currentUser"
+      ],
+      "originalStorage": "React state and Electron window IPC",
+      "newModule": "Desktop",
+      "implementationMode": "native",
+      "codeAnchor": "src/Jindan.Desktop/WorkbenchForm.cs",
+      "actualBehaviorAndBoundary": "MDI/context/layout/reopen; actual UI synthetic only",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "projects",
+      "title": "프로젝트 목록·검색·CRUD·기간 상태",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "projects"
+      },
+      "originalSourcePaths": [
+        "src/components/ProjectList.jsx",
+        "src/components/ProjectWrite.jsx",
+        "src/components/ProjectView.jsx",
+        "src/services/workModel.js",
+        "src/services/scheduleService.js"
+      ],
+      "originalObservedCommands": [
+        "List/search title and content",
+        "Create",
+        "Detail",
+        "Edit",
+        "Confirm own deletion",
+        "Calendar progress"
+      ],
+      "originalModelFields": [
+        "id",
+        "title",
+        "startDate",
+        "endDate",
+        "content(HTML)",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "menu",
+        "fileId",
+        "ownerUid",
+        "deleted"
+      ],
+      "originalStorage": "localStorage jindan_db_프로젝트관리; queued Firebase jindan_projects",
+      "newModule": "projects",
+      "implementationMode": "native",
+      "codeAnchor": "src/Jindan.Desktop.Contracts/RichTextEditor70.cs",
+      "actualBehaviorAndBoundary": "Bounded native RTF companion and plain-text authority; actual old arbitrary HTML fidelity is not implemented",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "processes",
+      "title": "프로젝트 소속 공정·완료·수정·삭제",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "processes"
+      },
+      "originalSourcePaths": [
+        "src/components/ProcessList.jsx",
+        "src/services/workModel.js",
+        "src/services/scheduleService.js"
+      ],
+      "originalObservedCommands": [
+        "Search/select project",
+        "Order by start date",
+        "Create/edit process",
+        "Complete selected",
+        "Delete selected",
+        "Calendar progress"
+      ],
+      "originalModelFields": [
+        "id",
+        "projectId",
+        "title",
+        "startDate",
+        "endDate",
+        "isCompleted",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "ownerUid",
+        "deleted"
+      ],
+      "originalStorage": "localStorage jindan_db_공정관리; queued Firebase jindan_processes",
+      "newModule": "processes",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Processes/Module.cs",
+      "actualBehaviorAndBoundary": "Project-scoped CRUD/completion; atomic outbox integrated",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "tasks",
+      "title": "달력별 할일·공개/개인",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "tasks"
+      },
+      "originalSourcePaths": [
+        "src/components/TaskManager.jsx",
+        "src/services/workModel.js",
+        "src/components/RightSidebar.jsx"
+      ],
+      "originalObservedCommands": [
+        "Month navigation",
+        "Select date",
+        "Add/edit",
+        "Toggle public",
+        "Delete own",
+        "Upcoming task navigation"
+      ],
+      "originalModelFields": [
+        "id",
+        "date",
+        "content",
+        "isPublic",
+        "author",
+        "authorId",
+        "createdAt",
+        "updatedAt",
+        "ownerUid",
+        "deleted"
+      ],
+      "originalStorage": "localStorage jindan_db_할일관리; queued Firebase jindan_tasks",
+      "newModule": "tasks",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Tasks/Module.cs",
+      "actualBehaviorAndBoundary": "Public/private calendar and atomic outbox integrated",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "board-posts",
+      "title": "게시글 CRUD·실시간 목록·검색·페이지",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "board-posts"
+      },
+      "originalSourcePaths": [
+        "src/components/BoardList.jsx",
+        "src/components/BoardWrite.jsx",
+        "src/components/BoardView.jsx",
+        "src/services/boardModel.js",
+        "src/services/firebaseBoardService.js"
+      ],
+      "originalObservedCommands": [
+        "Board and notice lists",
+        "Search",
+        "Paging",
+        "Create/edit/delete",
+        "Concurrent-update detection"
+      ],
+      "originalModelFields": [
+        "id",
+        "menu",
+        "title",
+        "content(HTML)",
+        "attachments[]",
+        "author",
+        "authorId",
+        "ownerUid",
+        "createdAt",
+        "updatedAt",
+        "deleted",
+        "migratedBy"
+      ],
+      "originalStorage": "Firestore jindan_board_posts direct transactions/listeners; legacy local import",
+      "newModule": "board",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Board/RichThread70.cs",
+      "actualBehaviorAndBoundary": "Native bounded formatted posts/thread; arbitrary HTML/CSS not implemented",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "board-comments",
+      "title": "댓글·첨부·레거시 가져오기",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "board-comments"
+      },
+      "originalSourcePaths": [
+        "src/components/BoardView.jsx",
+        "src/components/BoardWrite.jsx",
+        "src/services/firebaseBoardService.js",
+        "src/services/dataService.js"
+      ],
+      "originalObservedCommands": [
+        "Comment",
+        "Add/remove attachments",
+        "Download",
+        "Admin legacy import"
+      ],
+      "originalModelFields": [
+        "comment:id/postId/content/ownerUid/author/createdAt",
+        "attachment:id/name/size/mimeType"
+      ],
+      "originalStorage": "Firestore jindan_board_comments; Google Drive resources",
+      "newModule": "board",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Board/LocalAttachments.cs",
+      "actualBehaviorAndBoundary": "Native reply/attachment flow; imported legacy links do not create cloud authorization",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "members",
+      "title": "회원·관리자 계정 관리",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "members"
+      },
+      "originalSourcePaths": [
+        "src/components/MemberList.jsx",
+        "src/services/firebaseMemberService.js",
+        "src/services/firebaseBoardAuth.js"
+      ],
+      "originalObservedCommands": [
+        "Active list",
+        "Create account",
+        "Edit profile/role",
+        "Deactivate selected",
+        "Reject own administrator deletion"
+      ],
+      "originalModelFields": [
+        "uid",
+        "firebaseUid",
+        "person_id",
+        "name",
+        "position",
+        "userLevel",
+        "role",
+        "isActive",
+        "createdAt",
+        "updatedAt"
+      ],
+      "originalStorage": "Firestore jindan_members; local profile cache; secondary Firebase Auth provisioning",
+      "newModule": "members",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Members/Module.cs",
+      "actualBehaviorAndBoundary": "Local membership/admin gates; independent company identities absent",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "auth",
+      "title": "로그인·복원·비밀번호 변경·로그아웃",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "auth"
+      },
+      "originalSourcePaths": [
+        "src/components/Login.jsx",
+        "src/components/ChangePassword.jsx",
+        "src/services/authService.js",
+        "src/services/firebaseBoardAuth.js",
+        "src/services/firebaseIdentity.js"
+      ],
+      "originalObservedCommands": [
+        "ID/password sign-in",
+        "Restore verified session",
+        "Reauthenticate and change password",
+        "Sign out"
+      ],
+      "originalModelFields": [
+        "uid",
+        "firebaseUid",
+        "person_id",
+        "name",
+        "position",
+        "role",
+        "email",
+        "isActive"
+      ],
+      "originalStorage": "Firebase Auth; sessionStorage currentUser; verified member profile",
+      "newModule": "Identity",
+      "implementationMode": "native",
+      "codeAnchor": "src/Jindan.Desktop/LoginDialog.cs",
+      "actualBehaviorAndBoundary": "Independent explicit local login/password/logout; no cloud token/session migration",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "work-sync",
+      "title": "업무 큐·충돌 보호·주기 동기화",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "work-sync"
+      },
+      "originalSourcePaths": [
+        "src/App.jsx",
+        "src/services/syncService.js",
+        "src/services/workModel.js",
+        "src/services/dbService.js",
+        "src/services/firebaseWorkService.js"
+      ],
+      "originalObservedCommands": [
+        "Start/menu sync",
+        "Work-change debounce250ms",
+        "Push1minute",
+        "Pull5minutes",
+        "Error/retry status"
+      ],
+      "originalModelFields": [
+        "tableName",
+        "id",
+        "operation(upsert/delete)",
+        "revision",
+        "timestamp",
+        "ownerUid",
+        "deleted",
+        "updatedAt"
+      ],
+      "originalStorage": "localStorage jindan_sync_queue/jindan_last_sync and3 work tables; Firebase",
+      "newModule": "Sync",
+      "implementationMode": "native",
+      "codeAnchor": "src/Jindan.Infrastructure/LocalWorkspace.Sync70.cs",
+      "actualBehaviorAndBoundary": "Atomic row/outbox, ACK/version/identity checks, status menu, explicit push and opt-in scheduler, strict injected legacy mapper. Real Firebase provider and remote-to-native pull/apply are NOT implemented. Requires approved external/local identity+ID mapping, deployed schema/richer-field conflict policy and allowed provider access.",
+      "historicalBaselineStatus": "implemented-not-live-verified",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "drive-files",
+      "title": "공유 Drive 탐색·파일 작업",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "drive-files"
+      },
+      "originalSourcePaths": [
+        "src/components/FileManager.jsx",
+        "src/components/FileContextMenu.jsx",
+        "src/services/driveService.js",
+        "src/services/driveDownloadService.js",
+        "src/services/driveCacheService.js"
+      ],
+      "originalObservedCommands": [
+        "Tree/back/forward/parent navigation",
+        "List/grid",
+        "Name search/sort",
+        "Multi/range/drag select",
+        "Create folder",
+        "Upload/drop",
+        "Duplicate-name policy",
+        "F2 rename",
+        "Trash",
+        "Drag move",
+        "Single download/multiple ZIP"
+      ],
+      "originalModelFields": [
+        "id",
+        "name",
+        "size",
+        "modifiedTime",
+        "owners",
+        "mimeType",
+        "webContentLink",
+        "parentFolderId",
+        "folderPath"
+      ],
+      "originalStorage": "Drive v3 desktop ephemeral token; cached folder lists",
+      "newModule": "files",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Files/FolderArchive70.cs",
+      "actualBehaviorAndBoundary": "Local tree/duplicate skip-rename-cancel/aliases, selected+recursive ZIP with exact same-handle SHA and late ACL/context/revision/cancel recheck. Real Google provider/OAuth/capability/etag/server mutations/export remain NOT implemented.",
+      "historicalBaselineStatus": "implemented-not-live-verified",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "drive-cache",
+      "title": "Drive 목록 캐시·백그라운드 갱신",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "drive-cache"
+      },
+      "originalSourcePaths": [
+        "src/App.jsx",
+        "src/services/driveCacheService.js",
+        "src/components/FileManager.jsx"
+      ],
+      "originalObservedCommands": [
+        "Start warm",
+        "10minute refresh",
+        "Online refresh",
+        "Manual sync",
+        "Cache status/error"
+      ],
+      "originalModelFields": [
+        "folders/files tree",
+        "lastSynced",
+        "syncing",
+        "error"
+      ],
+      "originalStorage": "localStorage Drive cache plus live tree",
+      "newModule": "Sync",
+      "implementationMode": "none",
+      "codeAnchor": "src/Jindan.Infrastructure/DriveListingCache70.cs",
+      "actualBehaviorAndBoundary": "Persistent scoped bounded offline cache/TTL/force/in-flight sharing/revision/fallback and clearly synthetic UI. Actual Google listing/provider is NOT implemented.",
+      "historicalBaselineStatus": "blocked",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "legacy-drive-system",
+      "title": "레거시 시스템 폴더·리소스·로그",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "legacy-drive-system"
+      },
+      "originalSourcePaths": [
+        "src/App.jsx",
+        "src/services/dataService.js"
+      ],
+      "originalObservedCommands": [
+        "Initialize .system/json/resources",
+        "JSON data log",
+        "Attachment resources",
+        "Action log",
+        "Delete JSON older than7days"
+      ],
+      "originalModelFields": [
+        "tableName",
+        "data",
+        "op",
+        "id",
+        "timestamp"
+      ],
+      "originalStorage": "Google Drive .system/json/resources",
+      "newModule": "Infrastructure",
+      "implementationMode": "none",
+      "codeAnchor": "src/Jindan.Infrastructure/OfflineDrive70.cs",
+      "actualBehaviorAndBoundary": "Explicit fake-only initialization/resource/log/compensation/retention contracts. Actual remote system writes/provider are NOT implemented; startup has no remote or synthetic implicit writes.",
+      "historicalBaselineStatus": "blocked",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "photos-gallery",
+      "title": "현행 사진·CAD 갤러리/뷰어",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "photos-gallery"
+      },
+      "originalSourcePaths": [
+        "src/components/DashboardGallery.jsx",
+        "src/components/ImageViewer.jsx",
+        "src/components/ImageViewerWindow.jsx",
+        "src/services/galleryData.js",
+        "src/services/imageViewerService.js",
+        "src/hooks/useImageTransform.js"
+      ],
+      "originalObservedCommands": [
+        "Recent8 thumbnails",
+        "Open image/CAD window",
+        "Folder tree",
+        "Previous/next",
+        "Zoom/fit",
+        "Pan",
+        "Return to app"
+      ],
+      "originalModelFields": [
+        "file:id/name/mimeType/size/modifiedTime",
+        "parentFolderId",
+        "folderPath",
+        "selectedFolderId",
+        "selectedFileId",
+        "zoom/pan"
+      ],
+      "originalStorage": "Drive tree/blobs; transient viewer state; bounded preview cache",
+      "newModule": "photos",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Dashboard/DashboardGallery.cs",
+      "actualBehaviorAndBoundary": "Up to8 local photo/CAD tiles, scoped exact open/preview; no invented Drive modifiedTime ordering",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "photos-new",
+      "title": "로드맵 신규 사진관리 요구",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "photos-new"
+      },
+      "originalSourcePaths": [
+        "src/components/DashboardGallery.jsx",
+        "src/services/galleryData.js"
+      ],
+      "originalObservedCommands": [
+        "NEW project/site/album linkage",
+        "NEW local import",
+        "NEW description/classification/capture metadata",
+        "NEW edited-copy export"
+      ],
+      "originalModelFields": [
+        "projectId",
+        "site",
+        "albumId",
+        "description",
+        "classification",
+        "captureMetadata",
+        "contentHash",
+        "originalPath",
+        "editedArtifactId"
+      ],
+      "originalStorage": "NEW separate local repository; no automatic production import",
+      "newModule": "photos",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Photos",
+      "actualBehaviorAndBoundary": "Immutable originals, edited copies, bounded thumbnail paging/zoom/pan/context/reopen",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "cad",
+      "title": "DWG/DXF 미리보기",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "cad"
+      },
+      "originalSourcePaths": [
+        "src/services/cadEngine.js",
+        "src/services/cadPreviewService.js",
+        "src/services/cadPreview.worker.js",
+        "src/services/cadRender.js",
+        "src/services/cadRaster.js",
+        "src/services/viewerPreviewService.js"
+      ],
+      "originalObservedCommands": [
+        "Warm CAD worker",
+        "Render DWG/DXF",
+        "PNG preview",
+        "Cancel"
+      ],
+      "originalModelFields": [
+        "filename",
+        "bytes",
+        "signal",
+        "render result",
+        "cache key(id/name/modifiedTime/size)"
+      ],
+      "originalStorage": "nasjidwg WASM worker; bounded cache",
+      "newModule": "files",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/Files/FileSource70.cs",
+      "actualBehaviorAndBoundary": "Exact registered asset tile->Files selected revision->owned bundled CAD worker; no arbitrary path/import and no pure-C# renderer claim",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "dashboard-search",
+      "title": "대시보드·기간 집계·분산 검색",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "dashboard-search"
+      },
+      "originalSourcePaths": [
+        "src/components/Dashboard.jsx",
+        "src/components/RightSidebar.jsx",
+        "src/components/ProjectList.jsx",
+        "src/components/BoardList.jsx",
+        "src/components/FileManager.jsx",
+        "src/components/ReportPlatform.jsx"
+      ],
+      "originalObservedCommands": [
+        "Active projects",
+        "Process status aggregates",
+        "Upcoming public/own tasks",
+        "Recent image/CAD",
+        "Per-list search"
+      ],
+      "originalModelFields": [
+        "activeProjects",
+        "allProjects",
+        "processes",
+        "schedule progress/status",
+        "upcomingTasks"
+      ],
+      "originalStorage": "Local cached work records plus Drive gallery",
+      "newModule": "dashboard",
+      "implementationMode": "native",
+      "codeAnchor": "src/Modules/Dashboard",
+      "actualBehaviorAndBoundary": "Scoped local search/summary+gallery; remote-authoritative recency unavailable",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-platform",
+      "title": "현행 스튜디오 문서/분석/자료·패널",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-platform"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportStudio.jsx",
+        "src/components/ReportPlatform.jsx",
+        "src/components/StudioLayoutControls.jsx",
+        "src/components/StudioFitPage.jsx",
+        "src/components/ReportAnalysisWorkspace.jsx",
+        "src/components/ReportChapterInspector.jsx"
+      ],
+      "originalObservedCommands": [
+        "Select project",
+        "Import prior report local/Drive",
+        "Select/remove report link",
+        "Preview/analysis",
+        "Select chapter",
+        "Table/figure/data management",
+        "Source location/return",
+        "Input materials",
+        "Persist side widths",
+        "Edit formatting review"
+      ],
+      "originalModelFields": [
+        "businessProjectId",
+        "projectName",
+        "reportIds",
+        "removedReportIds",
+        "activeReportId",
+        "reportMetadata",
+        "reportAnalyses",
+        "analysisReviews",
+        "chapterReviews",
+        "reproductionReviews",
+        "pdfAnalyses",
+        "pdfAuthoring",
+        "materialIds",
+        "reportSpecs"
+      ],
+      "originalStorage": "IndexedDB jindan-report-studio v3 facilityStudios/materials/files; user/project scope",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio",
+      "actualBehaviorAndBoundary": "Actual bound source preview/analysis, chapter/object location-return, source/profile actor/revision guards",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-library",
+      "title": "원본·금회자료 보관·해시·유형",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-library"
+      },
+      "originalSourcePaths": [
+        "src/services/report/reportLibrary.js",
+        "src/services/report/studioProjects.js",
+        "src/services/report/referenceProjects.js",
+        "src/components/ReportDrivePicker.jsx"
+      ],
+      "originalObservedCommands": [
+        "Import/deduplicate",
+        "Edit metadata",
+        "Preview/download original",
+        "Unlink project material",
+        "Classify reference folder",
+        "Choose whole PDF"
+      ],
+      "originalModelFields": [
+        "id(role-SHA)",
+        "filename",
+        "title",
+        "format",
+        "size",
+        "sha256",
+        "role",
+        "reportType",
+        "facility",
+        "templateGroup",
+        "notes",
+        "includeInPatterns",
+        "addedAt",
+        "updatedAt",
+        "relativePath",
+        "componentKind",
+        "chapterNumber"
+      ],
+      "originalStorage": "IndexedDB jindan-report-studio v3 materials/files/referenceProjects/referenceEntries/facilityStudios",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportMaterialsView.cs",
+      "actualBehaviorAndBoundary": "Immutable local sources/material roles; real Drive import/provider not implemented",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-analysis-restore",
+      "title": "PDF 복원분석·HWPX 작성분석·장별 재현",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-analysis-restore"
+      },
+      "originalSourcePaths": [
+        "src/services/report/sourceParser.js",
+        "src/services/report/pdfAnalysis.js",
+        "src/services/report/pdfStructure.js",
+        "src/services/report/workflowAnalysis.js",
+        "src/services/report/chapterConversion.js",
+        "src/services/report/pdfHwpxWriter.js",
+        "src/services/report/pairedReferenceLearning.js",
+        "src/services/report/pairedTextReview.js",
+        "src/services/report/reproductionReview.js"
+      ],
+      "originalObservedCommands": [
+        "PDF restoration analysis",
+        "Native authoring analysis",
+        "Paired-source learning/review",
+        "Selected chapter to HWPX",
+        "Extract font/picture",
+        "Analyze generated candidate"
+      ],
+      "originalModelFields": [
+        "source SHA/project",
+        "chapter/page/paragraph/table/cell/picture IDs",
+        "source anchors",
+        "textRuns",
+        "contentRole",
+        "formatRole",
+        "pageTypes",
+        "furniture",
+        "provenance",
+        "writer/analysis versions"
+      ],
+      "originalStorage": "Analysis in scoped studio book; original blobs; separate generated material and run",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/worker.mjs",
+      "actualBehaviorAndBoundary": "Existing hybrid PDF/HWPX engine behind owned local worker; new exact candidate native Hancom, all-object and original-font approval absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-review-draft",
+      "title": "내용역할 검토·근거바인딩·금회/빈초안",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-review-draft"
+      },
+      "originalSourcePaths": [
+        "src/services/report/draftPreparation.js",
+        "src/services/report/draftWriter.js",
+        "src/services/report/draftRetention.js",
+        "src/services/report/draftSourceBindings.js",
+        "src/services/report/draftCollection.js",
+        "src/components/ReportDraftPreparation.jsx",
+        "src/components/ReportReproductionReview.jsx"
+      ],
+      "originalObservedCommands": [
+        "keep/replace/rewrite/exclude",
+        "Declare static-label/history retention",
+        "Bind file/cell evidence",
+        "Reproduction review",
+        "Save preparation/input list",
+        "Generate blank/evidence draft"
+      ],
+      "originalModelFields": [
+        "sourceMaterialId",
+        "sourceSha256",
+        "projectId",
+        "analysis fingerprint",
+        "decision",
+        "contentRole",
+        "retention purpose",
+        "draftText",
+        "clearValue",
+        "materialIds",
+        "expected text/slot",
+        "reproductionReview"
+      ],
+      "originalStorage": "Studio analysisReviews/reproductionReviews/draftPreparations/draftRuns; separate candidate HWPX",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportPreservation70.cs",
+      "actualBehaviorAndBoundary": "Strict fresh full-role review+evidence gating, explicit blank/current distinction, exact CSV/XLSX file-cell SHA/coordinates/context, no historical promotion",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-collection",
+      "title": "조사양식 내려받기·한글저장반환·빈칸 적용",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-collection"
+      },
+      "originalSourcePaths": [
+        "src/services/report/draftCollection.js",
+        "src/services/report/collectionIntroStyle.js",
+        "src/components/ReportPlatform.jsx",
+        "src/services/report/styledTextReplacement.js"
+      ],
+      "originalObservedCommands": [
+        "Export blank HWPX",
+        "Import filled form and preview",
+        "Apply returned values to same cells",
+        "Explicit all-empty confirmation",
+        "Bind returned-file receipt"
+      ],
+      "originalModelFields": [
+        "JDF_ cell name",
+        "schemaFingerprint",
+        "sourceSha256",
+        "fieldCount",
+        "rows(id/value)",
+        "warnings",
+        "receiptMaterialId/SHA",
+        "mode"
+      ],
+      "originalStorage": "Files and collectionExports/collectionRuns; JDF cell names",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio",
+      "actualBehaviorAndBoundary": "Bound JDF/slot form/export/return/explicit blank; selected synthetic cells are not company full-form approval",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-archive-recovery",
+      "title": "프로젝트아카이브·회수·fresh review 경계",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-archive-recovery"
+      },
+      "originalSourcePaths": [
+        "src/services/report/projectArchive.js",
+        "src/services/report/engineRecovery.js",
+        "src/services/report/recoveredDraftSession.js",
+        "src/services/report/engineFacade.js",
+        "src/services/report/engineContract.js"
+      ],
+      "originalObservedCommands": [
+        "Export/open jindanproj",
+        "Back up current work",
+        "Hash-verified recovery",
+        "Reanalyze native-saved",
+        "Fresh source/fingerprint review",
+        "Resume draft"
+      ],
+      "originalModelFields": [
+        "schema",
+        "manifest",
+        "materials/files hashes",
+        "roles source/candidate/native-saved/evidence/collection/draft",
+        "parent links",
+        "project/source/fingerprint",
+        "acknowledgedReview"
+      ],
+      "originalStorage": "Studio ZIP512MB/expanded768MB/projectJSON16MB; engineRecovery separate512MB/160MB/8MB limits",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportPreservation70.cs",
+      "actualBehaviorAndBoundary": "Portable archive/recovery includes native-saved bytes and source-bound audit JSON; review is invalidated after recovery. Sidecar is not native file preservation repair.",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-discipline-workspace",
+      "title": "분야별 양식·계산·진단문구·백업",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-discipline-workspace"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportWorkspace.jsx",
+        "src/services/report/reportEngine.js",
+        "src/services/report/reportStore.js",
+        "src/services/report/collectionForms.js",
+        "src/services/report/nativeWriter.js",
+        "src/services/report/reportSections.js",
+        "src/services/report/reportWorkflow.js"
+      ],
+      "originalObservedCommands": [
+        "Select discipline/project/report",
+        "Select table/paragraph input slots",
+        "Judgment-column-only",
+        "Confirm schema",
+        "Enter current data",
+        "Rules/criteria/units",
+        "Reviewed narrative",
+        "New run/restore",
+        "Collection/backup/native exports"
+      ],
+      "originalModelFields": [
+        "engineVersion",
+        "projectId",
+        "discipline",
+        "source",
+        "document",
+        "revision/confirmedRevision",
+        "fields/rules",
+        "values",
+        "notes",
+        "narrativeValues",
+        "history/runs",
+        "materials/receipts",
+        "valueOrigins",
+        "collectedEvidence"
+      ],
+      "originalStorage": "IndexedDB jindan-report-engine v2 keyed user/project/sourceSHA/discipline",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/src/services/report/proposalExchange70.js",
+      "actualBehaviorAndBoundary": "Schema/calculation/manual notes/backup and offline request/inspect/explicit-apply; fresh review required",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "electrical-inputs",
+      "title": "전기분야 자료·범위·개선협의 준비",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "electrical-inputs"
+      },
+      "originalSourcePaths": [
+        "src/components/ElectricalReportPreparation.jsx",
+        "src/services/report/electricalPreparation.js",
+        "src/components/ThermalDeliveries.jsx",
+        "src/services/report/thermalDelivery.js"
+      ],
+      "originalObservedCommands": [
+        "Analyze PDF/folder candidates",
+        "KEPCO include/exclude reason",
+        "Period/scope",
+        "Link8 electrical input groups",
+        "Record conditions/notes",
+        "Improvement consultation"
+      ],
+      "originalModelFields": [
+        "referenceProjectId/referencePdfMaterialId",
+        "plan/signature/targets",
+        "scope",
+        "kepcoMode/kepcoReason",
+        "periodStart/end",
+        "inputs by section",
+        "notes.conditions/diagnosis/consultation/agreement",
+        "thermalDeliveries"
+      ],
+      "originalStorage": "book.electrical; source material hashes; source entry signatures",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportElectricalView.cs",
+      "actualBehaviorAndBoundary": "Bound material/period/scope/manual input, not inferred current measurements or engineering judgment",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "thermal",
+      "title": "Testo BMT 메타데이터·그림·열화상결과 묶음",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "thermal"
+      },
+      "originalSourcePaths": [
+        "src/services/report/thermalBmt.js",
+        "src/components/ThermalBmtPreview.jsx",
+        "src/services/report/thermalDelivery.js",
+        "src/components/ThermalDeliveries.jsx"
+      ],
+      "originalObservedCommands": [
+        "Inspect BMT",
+        "Device/environment/display scale/camera points",
+        "Preview/real image",
+        "Bind modified BMT/final image/optional spreadsheet",
+        "Confirm points/image"
+      ],
+      "originalModelFields": [
+        "source SHA/bytes",
+        "device",
+        "recordedClock/timeZone unconfirmed",
+        "environment",
+        "detector/grid raw",
+        "scale",
+        "points",
+        "editor markers",
+        "recomputeCoefficients",
+        "delivery bmt/image/measurements",
+        "pointsConfirmed/imageConfirmed"
+      ],
+      "originalStorage": "BMT binary up to48MB; local material and electrical linkage",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker",
+      "actualBehaviorAndBoundary": "Bound BMT metadata/preview/delivery; calibration/checksum/time/IRSoft edited-point/verified temperature evidence absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "power-quality",
+      "title": "PowerView PWV 측정자료 검사",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "power-quality"
+      },
+      "originalSourcePaths": [
+        "src/services/report/powerView.js",
+        "src/components/PowerViewPreview.jsx"
+      ],
+      "originalObservedCommands": [
+        "Inspect PWV",
+        "Choose instrument/site/record",
+        "Search channels",
+        "Count/min/max/missing/preview"
+      ],
+      "originalModelFields": [
+        "sourceSha256",
+        "instruments",
+        "sites",
+        "records",
+        "quantity/unit/prefix",
+        "representation",
+        "sample counts",
+        "snapshotLengthMs",
+        "channels count/finite/missing/min/max/preview"
+      ],
+      "originalStorage": "UTF8 PQData XML up to48MB; Base64/GZip decoded budget64MB",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker",
+      "actualBehaviorAndBoundary": "Bound PWV parsing/raw statistics; units/CT-PT/time-axis/actual engineering review absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "report-ai",
+      "title": "선택적 AI 분석·자료추출·진단초안",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-ai"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportAiSettings.jsx",
+        "src/services/report/reportAiClient.js",
+        "src/services/report/reportAnalyzer.js",
+        "src/services/report/reportInterpreter.js",
+        "src/services/report/reportCollection.js",
+        "report-ai.cjs"
+      ],
+      "originalObservedCommands": [
+        "Status/config/model list",
+        "Propose slots",
+        "Extract file-table values",
+        "Propose interpretation",
+        "Cancel"
+      ],
+      "originalModelFields": [
+        "request id",
+        "source/project/discipline/input fingerprint",
+        "response schema",
+        "models/status/usage/cacheHit"
+      ],
+      "originalStorage": "Electron IPC; local protected settings/environment reference only; response cache",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/src/services/report/proposalExchange70.js",
+      "actualBehaviorAndBoundary": "Deterministic bounded offline proposal exchange/injected fixture timeout-cancel/stale-source/review contract. Real model/provider execution is NOT implemented; model/key/billing changes and paid/network calls forbidden.",
+      "historicalBaselineStatus": "blocked",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    },
+    {
+      "id": "updates-release",
+      "title": "기존 전체앱 업데이트와 새 모듈패치",
+      "category": "1-local-implemented-self-validation",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "updates-release"
+      },
+      "originalSourcePaths": [
+        "src/App.jsx",
+        "package.json",
+        "main.cjs",
+        "preload.cjs"
+      ],
+      "originalObservedCommands": [
+        "Legacy update events/progress",
+        "Confirmed restart",
+        "NSIS package",
+        "Publish script",
+        "NEW module package patch/rollback"
+      ],
+      "originalModelFields": [
+        "app version",
+        "update info/progress",
+        "package manifest/signature/hash (new)"
+      ],
+      "originalStorage": "Legacy electron-updater/GitHub releases; NEW local package manifest policy",
+      "newModule": "Update",
+      "implementationMode": "native",
+      "codeAnchor": "src/Jindan.Update",
+      "actualBehaviorAndBoundary": "Stopped owned clone Projects1.0->1.1->1.0, snapshot/rollback and unrelated DLL/runtime/business data hashes; not publisher signing or deployment",
+      "historicalBaselineStatus": "implemented-and-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false
+    }
+  ],
+  "reportFeatures11": [
+    {
+      "id": "report-platform",
+      "title": "현행 스튜디오 문서/분석/자료·패널",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-platform"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportStudio.jsx",
+        "src/components/ReportPlatform.jsx",
+        "src/components/StudioLayoutControls.jsx",
+        "src/components/StudioFitPage.jsx",
+        "src/components/ReportAnalysisWorkspace.jsx",
+        "src/components/ReportChapterInspector.jsx"
+      ],
+      "originalObservedCommands": [
+        "Select project",
+        "Import prior report local/Drive",
+        "Select/remove report link",
+        "Preview/analysis",
+        "Select chapter",
+        "Table/figure/data management",
+        "Source location/return",
+        "Input materials",
+        "Persist side widths",
+        "Edit formatting review"
+      ],
+      "originalModelFields": [
+        "businessProjectId",
+        "projectName",
+        "reportIds",
+        "removedReportIds",
+        "activeReportId",
+        "reportMetadata",
+        "reportAnalyses",
+        "analysisReviews",
+        "chapterReviews",
+        "reproductionReviews",
+        "pdfAnalyses",
+        "pdfAuthoring",
+        "materialIds",
+        "reportSpecs"
+      ],
+      "originalStorage": "IndexedDB jindan-report-studio v3 facilityStudios/materials/files; user/project scope",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio",
+      "actualBehaviorAndBoundary": "Actual bound source preview/analysis, chapter/object location-return, source/profile actor/revision guards",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Native PDF and HWP/HWPX bytes directly rendered; no paired-PDF fallback",
+        "HWPX page match is independent-renderer text evidence, not Hancom pagination"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-library",
+      "title": "원본·금회자료 보관·해시·유형",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-library"
+      },
+      "originalSourcePaths": [
+        "src/services/report/reportLibrary.js",
+        "src/services/report/studioProjects.js",
+        "src/services/report/referenceProjects.js",
+        "src/components/ReportDrivePicker.jsx"
+      ],
+      "originalObservedCommands": [
+        "Import/deduplicate",
+        "Edit metadata",
+        "Preview/download original",
+        "Unlink project material",
+        "Classify reference folder",
+        "Choose whole PDF"
+      ],
+      "originalModelFields": [
+        "id(role-SHA)",
+        "filename",
+        "title",
+        "format",
+        "size",
+        "sha256",
+        "role",
+        "reportType",
+        "facility",
+        "templateGroup",
+        "notes",
+        "includeInPatterns",
+        "addedAt",
+        "updatedAt",
+        "relativePath",
+        "componentKind",
+        "chapterNumber"
+      ],
+      "originalStorage": "IndexedDB jindan-report-studio v3 materials/files/referenceProjects/referenceEntries/facilityStudios",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportMaterialsView.cs",
+      "actualBehaviorAndBoundary": "Immutable local sources/material roles; real Drive import/provider not implemented",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Drive real import/service permission remains a separate gated adapter",
+        "Reference-folder metadata is local; old Drive/IndexedDB identities are not reused"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-analysis-restore",
+      "title": "PDF 복원분석·HWPX 작성분석·장별 재현",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-analysis-restore"
+      },
+      "originalSourcePaths": [
+        "src/services/report/sourceParser.js",
+        "src/services/report/pdfAnalysis.js",
+        "src/services/report/pdfStructure.js",
+        "src/services/report/workflowAnalysis.js",
+        "src/services/report/chapterConversion.js",
+        "src/services/report/pdfHwpxWriter.js",
+        "src/services/report/pairedReferenceLearning.js",
+        "src/services/report/pairedTextReview.js",
+        "src/services/report/reproductionReview.js"
+      ],
+      "originalObservedCommands": [
+        "PDF restoration analysis",
+        "Native authoring analysis",
+        "Paired-source learning/review",
+        "Selected chapter to HWPX",
+        "Extract font/picture",
+        "Analyze generated candidate"
+      ],
+      "originalModelFields": [
+        "source SHA/project",
+        "chapter/page/paragraph/table/cell/picture IDs",
+        "source anchors",
+        "textRuns",
+        "contentRole",
+        "formatRole",
+        "pageTypes",
+        "furniture",
+        "provenance",
+        "writer/analysis versions"
+      ],
+      "originalStorage": "Analysis in scoped studio book; original blobs; separate generated material and run",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/worker.mjs",
+      "actualBehaviorAndBoundary": "Existing hybrid PDF/HWPX engine behind owned local worker; new exact candidate native Hancom, all-object and original-font approval absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Paired original fonts/geometry are static evidence, not actual Hancom font-use approval",
+        "Optional paired-text-review file contract exists in adapter; automated text rewriting is not enabled"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-review-draft",
+      "title": "내용역할 검토·근거바인딩·금회/빈초안",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-review-draft"
+      },
+      "originalSourcePaths": [
+        "src/services/report/draftPreparation.js",
+        "src/services/report/draftWriter.js",
+        "src/services/report/draftRetention.js",
+        "src/services/report/draftSourceBindings.js",
+        "src/services/report/draftCollection.js",
+        "src/components/ReportDraftPreparation.jsx",
+        "src/components/ReportReproductionReview.jsx"
+      ],
+      "originalObservedCommands": [
+        "keep/replace/rewrite/exclude",
+        "Declare static-label/history retention",
+        "Bind file/cell evidence",
+        "Reproduction review",
+        "Save preparation/input list",
+        "Generate blank/evidence draft"
+      ],
+      "originalModelFields": [
+        "sourceMaterialId",
+        "sourceSha256",
+        "projectId",
+        "analysis fingerprint",
+        "decision",
+        "contentRole",
+        "retention purpose",
+        "draftText",
+        "clearValue",
+        "materialIds",
+        "expected text/slot",
+        "reproductionReview"
+      ],
+      "originalStorage": "Studio analysisReviews/reproductionReviews/draftPreparations/draftRuns; separate candidate HWPX",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportPreservation70.cs",
+      "actualBehaviorAndBoundary": "Strict fresh full-role review+evidence gating, explicit blank/current distinction, exact CSV/XLSX file-cell SHA/coordinates/context, no historical promotion",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Program acknowledgment never means human engineering/native-layout approval",
+        "Formatting candidate keeps past content and is not a current draft",
+        "Current company measurements/judgments remain absent; no old values silently promoted"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-collection",
+      "title": "조사양식 내려받기·한글저장반환·빈칸 적용",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-collection"
+      },
+      "originalSourcePaths": [
+        "src/services/report/draftCollection.js",
+        "src/services/report/collectionIntroStyle.js",
+        "src/components/ReportPlatform.jsx",
+        "src/services/report/styledTextReplacement.js"
+      ],
+      "originalObservedCommands": [
+        "Export blank HWPX",
+        "Import filled form and preview",
+        "Apply returned values to same cells",
+        "Explicit all-empty confirmation",
+        "Bind returned-file receipt"
+      ],
+      "originalModelFields": [
+        "JDF_ cell name",
+        "schemaFingerprint",
+        "sourceSha256",
+        "fieldCount",
+        "rows(id/value)",
+        "warnings",
+        "receiptMaterialId/SHA",
+        "mode"
+      ],
+      "originalStorage": "Files and collectionExports/collectionRuns; JDF cell names",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio",
+      "actualBehaviorAndBoundary": "Bound JDF/slot form/export/return/explicit blank; selected synthetic cells are not company full-form approval",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Synthetic native UI flow only; exact new company/Hancom-SaveAs documents remain unapproved",
+        "Selected inputs do not approve a company-wide complete form"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-archive-recovery",
+      "title": "프로젝트아카이브·회수·fresh review 경계",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-archive-recovery"
+      },
+      "originalSourcePaths": [
+        "src/services/report/projectArchive.js",
+        "src/services/report/engineRecovery.js",
+        "src/services/report/recoveredDraftSession.js",
+        "src/services/report/engineFacade.js",
+        "src/services/report/engineContract.js"
+      ],
+      "originalObservedCommands": [
+        "Export/open jindanproj",
+        "Back up current work",
+        "Hash-verified recovery",
+        "Reanalyze native-saved",
+        "Fresh source/fingerprint review",
+        "Resume draft"
+      ],
+      "originalModelFields": [
+        "schema",
+        "manifest",
+        "materials/files hashes",
+        "roles source/candidate/native-saved/evidence/collection/draft",
+        "parent links",
+        "project/source/fingerprint",
+        "acknowledgedReview"
+      ],
+      "originalStorage": "Studio ZIP512MB/expanded768MB/projectJSON16MB; engineRecovery separate512MB/160MB/8MB limits",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportPreservation70.cs",
+      "actualBehaviorAndBoundary": "Portable archive/recovery includes native-saved bytes and source-bound audit JSON; review is invalidated after recovery. Sidecar is not native file preservation repair.",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "160MiB input/512MiB aggregate transport is intentionally narrower than maximum legacy512MiB ZIP",
+        "Old identities/permissions/review/current-values are not adopted",
+        "Actual company project recovery and SaveAs preservation remain independent gates"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-discipline-workspace",
+      "title": "분야별 양식·계산·진단문구·백업",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-discipline-workspace"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportWorkspace.jsx",
+        "src/services/report/reportEngine.js",
+        "src/services/report/reportStore.js",
+        "src/services/report/collectionForms.js",
+        "src/services/report/nativeWriter.js",
+        "src/services/report/reportSections.js",
+        "src/services/report/reportWorkflow.js"
+      ],
+      "originalObservedCommands": [
+        "Select discipline/project/report",
+        "Select table/paragraph input slots",
+        "Judgment-column-only",
+        "Confirm schema",
+        "Enter current data",
+        "Rules/criteria/units",
+        "Reviewed narrative",
+        "New run/restore",
+        "Collection/backup/native exports"
+      ],
+      "originalModelFields": [
+        "engineVersion",
+        "projectId",
+        "discipline",
+        "source",
+        "document",
+        "revision/confirmedRevision",
+        "fields/rules",
+        "values",
+        "notes",
+        "narrativeValues",
+        "history/runs",
+        "materials/receipts",
+        "valueOrigins",
+        "collectedEvidence"
+      ],
+      "originalStorage": "IndexedDB jindan-report-engine v2 keyed user/project/sourceSHA/discipline",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/src/services/report/proposalExchange70.js",
+      "actualBehaviorAndBoundary": "Schema/calculation/manual notes/backup and offline request/inspect/explicit-apply; fresh review required",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "No past source-cell number is copied into a current input",
+        "Unchecked old nativeWriter whole-document route is deliberately not enabled; native drafts use strict full-review path",
+        "Manual engineering/AI/company approval remains separate"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "electrical-inputs",
+      "title": "전기분야 자료·범위·개선협의 준비",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "electrical-inputs"
+      },
+      "originalSourcePaths": [
+        "src/components/ElectricalReportPreparation.jsx",
+        "src/services/report/electricalPreparation.js",
+        "src/components/ThermalDeliveries.jsx",
+        "src/services/report/thermalDelivery.js"
+      ],
+      "originalObservedCommands": [
+        "Analyze PDF/folder candidates",
+        "KEPCO include/exclude reason",
+        "Period/scope",
+        "Link8 electrical input groups",
+        "Record conditions/notes",
+        "Improvement consultation"
+      ],
+      "originalModelFields": [
+        "referenceProjectId/referencePdfMaterialId",
+        "plan/signature/targets",
+        "scope",
+        "kepcoMode/kepcoReason",
+        "periodStart/end",
+        "inputs by section",
+        "notes.conditions/diagnosis/consultation/agreement",
+        "thermalDeliveries"
+      ],
+      "originalStorage": "book.electrical; source material hashes; source entry signatures",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Modules/ReportStudio/ReportElectricalView.cs",
+      "actualBehaviorAndBoundary": "Bound material/period/scope/manual input, not inferred current measurements or engineering judgment",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Keyword classification is a review candidate, not a diagnosis",
+        "Historical imported files cannot implicitly become current electrical evidence",
+        "No live KEPCO fetch/service integration or invented measurements"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "thermal",
+      "title": "Testo BMT 메타데이터·그림·열화상결과 묶음",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "thermal"
+      },
+      "originalSourcePaths": [
+        "src/services/report/thermalBmt.js",
+        "src/components/ThermalBmtPreview.jsx",
+        "src/services/report/thermalDelivery.js",
+        "src/components/ThermalDeliveries.jsx"
+      ],
+      "originalObservedCommands": [
+        "Inspect BMT",
+        "Device/environment/display scale/camera points",
+        "Preview/real image",
+        "Bind modified BMT/final image/optional spreadsheet",
+        "Confirm points/image"
+      ],
+      "originalModelFields": [
+        "source SHA/bytes",
+        "device",
+        "recordedClock/timeZone unconfirmed",
+        "environment",
+        "detector/grid raw",
+        "scale",
+        "points",
+        "editor markers",
+        "recomputeCoefficients",
+        "delivery bmt/image/measurements",
+        "pointsConfirmed/imageConfirmed"
+      ],
+      "originalStorage": "BMT binary up to48MB; local material and electrical linkage",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker",
+      "actualBehaviorAndBoundary": "Bound BMT metadata/preview/delivery; calibration/checksum/time/IRSoft edited-point/verified temperature evidence absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Raw grid temperatureC stays null and unit unverified",
+        "Camera metadata is not final IRSoft edited-point verification",
+        "Calibration/checksum/timezone/engineering review remains unresolved"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "power-quality",
+      "title": "PowerView PWV 측정자료 검사",
+      "category": "2-local-implemented-actual-domain-native-validation-pending",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "power-quality"
+      },
+      "originalSourcePaths": [
+        "src/services/report/powerView.js",
+        "src/components/PowerViewPreview.jsx"
+      ],
+      "originalObservedCommands": [
+        "Inspect PWV",
+        "Choose instrument/site/record",
+        "Search channels",
+        "Count/min/max/missing/preview"
+      ],
+      "originalModelFields": [
+        "sourceSha256",
+        "instruments",
+        "sites",
+        "records",
+        "quantity/unit/prefix",
+        "representation",
+        "sample counts",
+        "snapshotLengthMs",
+        "channels count/finite/missing/min/max/preview"
+      ],
+      "originalStorage": "UTF8 PQData XML up to48MB; Base64/GZip decoded budget64MB",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker",
+      "actualBehaviorAndBoundary": "Bound PWV parsing/raw statistics; units/CT-PT/time-axis/actual engineering review absent",
+      "historicalBaselineStatus": "hybrid-tested",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "No PWV editing/device acquisition or automatic engineering judgment",
+        "Units/CT-PT/time axis/period/statistics require actual domain review"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    },
+    {
+      "id": "report-ai",
+      "title": "선택적 AI 분석·자료추출·진단초안",
+      "category": "4-external-provider-or-contract-blocked",
+      "originalInventoryRef": {
+        "path": "migration/feature-inventory66.json",
+        "featureId": "report-ai"
+      },
+      "originalSourcePaths": [
+        "src/components/ReportAiSettings.jsx",
+        "src/services/report/reportAiClient.js",
+        "src/services/report/reportAnalyzer.js",
+        "src/services/report/reportInterpreter.js",
+        "src/services/report/reportCollection.js",
+        "report-ai.cjs"
+      ],
+      "originalObservedCommands": [
+        "Status/config/model list",
+        "Propose slots",
+        "Extract file-table values",
+        "Propose interpretation",
+        "Cancel"
+      ],
+      "originalModelFields": [
+        "request id",
+        "source/project/discipline/input fingerprint",
+        "response schema",
+        "models/status/usage/cacheHit"
+      ],
+      "originalStorage": "Electron IPC; local protected settings/environment reference only; response cache",
+      "newModule": "report-studio",
+      "implementationMode": "hybrid",
+      "codeAnchor": "src/Jindan.Report.Worker/src/services/report/proposalExchange70.js",
+      "actualBehaviorAndBoundary": "Deterministic bounded offline proposal exchange/injected fixture timeout-cancel/stale-source/review contract. Real model/provider execution is NOT implemented; model/key/billing changes and paid/network calls forbidden.",
+      "historicalBaselineStatus": "blocked",
+      "baselineEvidenceNotInherited": true,
+      "localGapRemaining": false,
+      "validationManifest": "handoff/VALIDATION70.json",
+      "companyApproved": false,
+      "historicalLocalLimitations": [
+        "Live provider configuration/model list/key reuse/paid requests are not invoked or copied",
+        "No native UI AI-provider execution is claimed",
+        "Real provider adapter, credentials, model availability and paid integration are separate forbidden/gated actions"
+      ],
+      "nativeHancomApproval": false,
+      "companyWorkflowApproved": false
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "not-implemented-provider",
+      "feature": "Firebase push and native pull/apply",
+      "minimum": "Approved external identity/native-ID membership binding, deployed source schema and richer-field conflict policy, allowed real provider endpoint/auth; current transport is injected only."
+    },
+    {
+      "kind": "not-implemented-provider",
+      "feature": "Google Drive production transport/system mutations",
+      "minimum": "Approved account/root/capability/OAuth/etag/export and rollback contracts; cache/system integration is explicitly offline/synthetic."
+    },
+    {
+      "kind": "not-implemented-provider",
+      "feature": "AI model execution",
+      "minimum": "Explicit provider/model/key/budget/data authorization; only bounded offline proposal exchange is implemented, no paid call or invented current facts."
+    },
+    {
+      "kind": "native-validation-and-preservation",
+      "feature": "Original fonts/embedded font files/source JSON/tab native SaveAs",
+      "minimum": "Exact company native before/after files and authorized supervisor-owned Hancom test. Audit/sidecar detects loss; it does not repair native loss or substitute for whole-file approval."
+    },
+    {
+      "kind": "parity-limit",
+      "feature": "Legacy browser HTML/CSS, image codecs and Drive-authoritative recency",
+      "minimum": "Native bounded character/paragraph formatting and documented local registry ordering are implemented; arbitrary HTML/CSS rendering and real remote recency are absent. Native Photos supports JPEG/PNG/BMP/GIF/TIFF; WebP/AVIF native import/browser-decoder fidelity is not implemented and Dashboard may show a visible fallback. No codec was installed or original converted."
+    },
+    {
+      "kind": "company-acceptance",
+      "feature": "All cells/numbers/objects/current-period full company workflow",
+      "minimum": "Actual approved current sources and engineering human review; absent values stay blank. Synthetic tests do not approve company data."
+    },
+    {
+      "kind": "environment-and-release",
+      "feature": "Physical150/200 DPI, signing, service deployment, Aside direct input",
+      "minimum": "Physical permitted environment and separate acceptance. Direct Aside delivery remains unverified; no retry or external publication performed."
+    }
+  ],
+  "locallyUnreportedGaps": [],
+  "interpretation": "Local scoped implementation/self-tests are complete; explicitly missing providers and native/company acceptance are not renamed implemented or approved.",
+  "reportReady": false,
+  "supervisorAccepted": false
+}
