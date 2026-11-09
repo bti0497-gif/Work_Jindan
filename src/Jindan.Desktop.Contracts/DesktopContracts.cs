@@ -25,11 +25,13 @@ public interface IDesktopModule : IDisposable
     void Activate(IWorkspaceDocument document);
     void Deactivate(IWorkspaceDocument document);
 }
-public abstract class RecordModule : IDesktopModule
+public abstract class RecordModule : IDesktopModule, IModuleNavigation73
 {
     protected IWorkspaceServices Services { get; private set; } = null!;
     public abstract string ModuleId { get; }
     public abstract string DisplayName { get; }
+    public virtual NavigationGroup73? NavigationGroup => null;
+    public virtual IReadOnlyList<NavigationRoute73> SidebarRoutes => [new(ModuleId, DisplayName)];
     public virtual string Version => "1.0.0";
     public abstract RecordSchema Schema { get; }
     public IReadOnlyList<RecordSchema> Schemas => [Schema];

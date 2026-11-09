@@ -105,9 +105,9 @@ public sealed partial class ReportDocument : UserControl, IWorkspaceDocument, IS
         var rightButtons = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true }; AddButton(rightButtons, "ApplyReviewRow", "선택 항목 결정 적용", ApplySelectedDecision);
         _propertyPanel.Controls.Add(_properties); _propertyPanel.Controls.Add(rightButtons); _propertyPanel.Controls.Add(_reviewText); _propertyPanel.Controls.Add(_retentionNote); _propertyPanel.Controls.Add(_clear); _propertyPanel.Controls.Add(_retention); _propertyPanel.Controls.Add(_decision); _propertyPanel.Controls.Add(_role); _propertyPanel.Controls.Add(_evidence);
         _propertyPanel.Controls.Add(new Label { Text = "자료 근거 / 역할 / 결정 / 유지 목적 / 새 문구", Dock = DockStyle.Top, Height = 42 });
-        BuildSpecializedTabs(); BuildFormattingTab(); BuildLibraryTab(); BuildMaterialsTab(); BuildLegacyArchiveTab(); BuildRecoveryTab(); BuildRemainingReport70(); SetContext(context);
+        BuildSpecializedTabs(); BuildFormattingTab(); BuildLibraryTab(); BuildMaterialsTab(); BuildLegacyArchiveTab(); BuildRecoveryTab(); BuildRemainingReport70(); SimplifyCommands72(); SetContext(context);
     }
-    private static void AddButton(FlowLayoutPanel panel, string name, string label, Action action) { var button = new Button { Name = name, Text = label, AutoSize = true, Margin = new Padding(3) }; button.Click += (_, _) => action(); panel.Controls.Add(button); }
+    private static void AddButton(FlowLayoutPanel panel, string name, string label, Action action) { var button = new Button { Name = name, Text = label, AutoSize = true, Margin = new Padding(3), Tag = action }; button.Click += (_, _) => action(); panel.Controls.Add(button); }
     public void SetContext(DocumentContext context)
     {
         if (_contextInitialized) { RequireLocal(context.ContextId == Context.ContextId, "REPORT_CONTEXT_ID_CHANGED"); RequireLocal(!_dirty && !_disciplineEditorDirty, "REPORT_UNSAVED_CONTEXT"); }
@@ -121,6 +121,7 @@ public sealed partial class ReportDocument : UserControl, IWorkspaceDocument, IS
     {
         _loading = true; try
         {
+            if (Context.ProjectId is null) { RefreshLists(); Status("왼쪽에서 프로젝트를 선택해 주세요."); return; }
             await AuthorizeProfile(false, CancellationToken.None);
             var projectRows = await _services.Data.ListAsync(_services.Actor, new("projects"));
             if (generation != _generation || loadVersion != _loadVersion) return;

@@ -2,6 +2,10 @@
 
 The new implementation lives only in F:/jindan-dotnet. F:/jindan, its HEAD48daf3e, dirty/untracked files, original documents, frozen artifacts and supervisor evidence are read-only baselines. No production database or old credentials are imported automatically. Report/business approval remains `reportReady=false`, `supervisorAccepted=false`.
 
+Current UI direction: [navigation73.md](navigation73.md) supersedes the original
+top project-selector/document-tab chrome below. The shell now exposes one menu
+row and composes module-declared sidebar navigation; Studio is a dedicated surface.
+
 ## Responsibility and dependency direction
 
 - **Jindan.Contracts** is UI-independent: schema/version records, identity, document/project context, command/results/progress, workspace/data/asset/report service interfaces. It contains no WinForms controls, database implementation or feature DLL references.

@@ -2,9 +2,11 @@ using Jindan.Contracts;
 using Jindan.Desktop.Contracts;
 namespace Jindan.Modules.Members;
 
-public sealed class Module : IDesktopModule
+public sealed class Module : IDesktopModule, IModuleNavigation73
 {
     private IWorkspaceServices services = null!;
+    public NavigationGroup73 NavigationGroup => new("members", "회원관리", "members", 60, true);
+    public IReadOnlyList<NavigationRoute73> SidebarRoutes => [new("members", "회원 목록")];
     public string ModuleId => "members"; public string DisplayName => "회원·권한 관리"; public string Version => "1.0.0";
     public IReadOnlyList<RecordSchema> Schemas => [];
     public void Initialize(IWorkspaceServices value) => services = value;

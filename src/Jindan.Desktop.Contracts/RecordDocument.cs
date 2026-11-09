@@ -36,15 +36,24 @@ public class RecordDocument : UserControl, IWorkspaceDocument
     public RecordDocument(IWorkspaceServices services, RecordSchema schema, DocumentContext context)
     {
         Services = services; Schema = schema; Context = context; Dock = DockStyle.Fill;
+        BackColor = Color.White; WorkspaceUi74.Grid(Grid); WorkspaceUi74.Commands(Toolbar);
+        Toolbar.Name = "WorkspaceCommands"; Notice.Padding = new Padding(8); Notice.BackColor = Color.FromArgb(247, 249, 253);
+        Grid.Paint += (_, e) =>
+        {
+            if (Grid.Rows.Count != 0) return;
+            var message = Schema.ProjectScoped && Context.ProjectId is null ? "왼쪽에서 프로젝트를 선택하세요." : "등록된 항목이 없습니다.";
+            var area = new Rectangle(12, Grid.ColumnHeadersHeight + 24, Math.Max(0, Grid.ClientSize.Width - 24), 60);
+            TextRenderer.DrawText(e.Graphics, message, Grid.Font, area, Color.SlateGray, TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak);
+        };
         Controls.Add(Grid); Controls.Add(Notice); Controls.Add(Toolbar);
         AddAction("새 항목", () => { NewRecord(); return Task.CompletedTask; }); AddAction("저장", () => SaveAsync()); AddAction("선택 삭제", DeleteSelectedAsync); AddAction("다시 읽기", () => RefreshAsync());
         AddAction("이전 목록", async () => { if (page > 0) { page--; await RefreshAsync(currentSearch); } }); AddAction("다음 목록", async () => { page++; await RefreshAsync(currentSearch); });
-        foreach (var f in schema.Fields) { Grid.Columns.Add(f.Key, f.Label); if (f.Type == "richtext-data") Grid.Columns[f.Key]!.Visible = false; }
+        foreach (var f in schema.Fields) { Grid.Columns.Add(f.Key, f.Label.Replace(" (YYYY-MM-DD)", "")); if (f.Type is "richtext-data" or "richtext" or "multiline") Grid.Columns[f.Key]!.Visible = false; }
         Grid.SelectionChanged += OnGridSelection;
         Grid.CurrentCellChanged += OnGridSelection;
         var nav = new FlowLayoutPanel() { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false, AutoScroll = true };
         var caption = new Label() { Text = schema.Label + " 검색", AutoSize = true, Margin = new Padding(8) };
-        var search = new TextBox() { Width = 220, PlaceholderText = "현재 프로젝트에서 검색", Name = "Search" };
+        var search = new TextBox() { Width = 220, PlaceholderText = schema.Kind switch { "projects" => "프로젝트 검색", "board" => "게시글 검색", "tasks" => "할일 검색", "files" => "파일 검색", _ => "현재 프로젝트에서 검색" }, Name = "Search" };
         UpdateScope();
         nav.Controls.AddRange([caption, search, scope]); NavigationPanel.Controls.Add(nav);
         search.TextChanged += async (_, _) => { if (!refreshing) await RunAsync(() => RefreshAsync(search.Text)); };
@@ -52,7 +61,7 @@ public class RecordDocument : UserControl, IWorkspaceDocument
         foreach (var field in schema.Fields)
         {
             if (field.Type == "richtext-data") continue;
-            props.Controls.Add(new Label() { Text = field.Label + (field.Required ? " *" : ""), AutoSize = true, Margin = new Padding(0, 7, 0, 2) });
+            props.Controls.Add(new Label() { Name = "Label_" + field.Key, Text = field.Label + (field.Required ? " *" : ""), AutoSize = true, Margin = new Padding(0, 7, 0, 2) });
             Control input;
             if (field.Type == "richtext") { var rich = new RichTextEditor70() { Name = field.Key }; rich.FormattingChanged += (_, _) => { if (refreshing) return; try { var value = rich.CaptureFormatting(); ChangeField(field.Key, value.Text); Values[field.Key + "Rtf"] = value.Rtf; } catch { Notice.Text = "지원하지 않는 서식입니다. 개체·그림·필드 없이 일반 텍스트로 붙여넣으세요."; SetDirty(true); } }; input = rich; }
             else if (field.Choices is { Length: > 0 }) { var combo = new ComboBox() { Dock = DockStyle.Top, DropDownStyle = ComboBoxStyle.DropDownList, Name = field.Key }; combo.Items.AddRange(field.Choices); combo.SelectedIndexChanged += (_, _) => ChangeField(field.Key, combo.Text); input = combo; }
@@ -60,9 +69,35 @@ public class RecordDocument : UserControl, IWorkspaceDocument
             editors[field.Key] = input; props.Controls.Add(input);
         }
         PropertiesPanel.Controls.Add(props);
+        if (schema.Kind == "files") HideInternalFields74("assetId", "sha256", "folderId");
+        if (schema.Kind == "board") HideInternalFields74("parentId", "attachmentId", "attachmentIds");
         Load += async (_, _) => { await RunAsync(() => RefreshAsync()); ready.TrySetResult(); };
     }
-    protected void AddAction(string caption, Func<Task> action) { var item = new ToolStripButton(caption); item.Click += async (_, _) => await RunAsync(action); Toolbar.Items.Add(item); }
+    private void HideInternalFields74(params string[] keys)
+    {
+        foreach (var key in keys)
+        {
+            if (Grid.Columns.Contains(key)) Grid.Columns[key]!.Visible = false;
+            if (editors.TryGetValue(key, out var editor)) editor.Visible = false;
+            foreach (var label in PropertiesPanel.Controls.Find("Label_" + key, true)) label.Visible = false;
+        }
+    }
+    protected void AddAction(string caption, Func<Task> action)
+    {
+        // Keep the everyday commands visible; secondary operations belong to a
+        // small task menu instead of an ever-growing horizontal button row.
+        if (caption == "Drive 목록 캐시 · 로컬 시험" || Schema.Kind == "files" && caption is "새 항목" or "선택 삭제") return;
+        var label = caption switch { "새 항목" => Schema.Kind switch { "projects" => "프로젝트 등록", "processes" => "공정 추가", "tasks" => "할일 추가", "board" => "글쓰기", _ => "새 항목" }, "선택 삭제" => "삭제", "다시 읽기" => "새로고침", "공유 Drive · 서버 조회" => "공유 드라이브", "Firebase 게시판 · 서버 조회" => "서버 게시판", "로컬 파일 가져오기" => "파일 추가 (로컬)", "새 로컬 폴더" => "새폴더", "자료 이름 변경" => "이름 변경", "선택 자료 일괄 삭제" => "삭제", "원본 내보내기" => "내려받기", _ => caption };
+        if (caption is "새 항목" or "저장" or "선택 삭제" or "다시 읽기" or "공유 Drive · 서버 조회" or "Firebase 게시판 · 서버 조회" or "로컬 파일 가져오기" or "새 로컬 폴더")
+        {
+            var item = new ToolStripButton(label) { Name = "Command_" + caption, Tag = caption }; item.Click += async (_, _) => await RunAsync(action); Toolbar.Items.Add(item); return;
+        }
+        var group = caption is "이전 목록" or "다음 목록" or "뒤로" or "앞으로" or "상위 폴더" or "목록/타일" ? "보기"
+            : Schema.Kind == "files" ? "파일" : Schema.Kind == "board" ? "게시글" : "작업";
+        var menu = Toolbar.Items.OfType<ToolStripDropDownButton>().FirstOrDefault(x => x.Text == group);
+        if (menu is null) { menu = new ToolStripDropDownButton(group); Toolbar.Items.Add(menu); }
+        var command = menu.DropDownItems.Add(label, null, async (_, _) => await RunAsync(action)); command.Name = "Command_" + caption; command.Tag = caption;
+    }
     protected async Task RunAsync(Func<Task> action) { try { await action(); } catch (OperationCanceledException) { Notice.Text = "작업 취소됨"; } catch (Exception error) { Notice.Text = error.Message.Length > 240 ? "작업을 완료하지 못했습니다." : error.Message; } }
     protected void SetDirty(bool value) { dirty = value; TitleChanged?.Invoke(this, EventArgs.Empty); }
     public void SetField(string key, string value) { if (!editors.ContainsKey(key)) throw new ArgumentException("Unknown field"); if (editors[key] is RichTextEditor70 rich) { rich.Fill(value, ""); Values.Remove(key + "Rtf"); } else editors[key].Text = value; ChangeField(key, value); }
@@ -133,7 +168,7 @@ public class RecordDocument : UserControl, IWorkspaceDocument
         refreshing = true; try { Grid.Rows.Clear(); foreach (var row in rows.Skip(page * PageSize).Take(PageSize)) { var i = Grid.Rows.Add(Schema.Fields.Select(f => (object)row.Fields.GetValueOrDefault(f.Key, "")).ToArray()); Grid.Rows[i].Tag = row; } } finally { refreshing = false; }
         var selectedRow = Grid.Rows.Cast<DataGridViewRow>().FirstOrDefault(r => r.Tag is WorkRecord record && record.Id == selectedId) ?? Grid.Rows.Cast<DataGridViewRow>().FirstOrDefault();
         ApplySelection(selectedRow);
-        Notice.Text = $"{rows.Count}개 항목 · 목록 {page + 1}/{Math.Max(1, (rows.Count + PageSize - 1) / PageSize)} · 독립 로컬 저장소";
+        Notice.Text = $"{rows.Count}개 항목 · 목록 {page + 1}/{Math.Max(1, (rows.Count + PageSize - 1) / PageSize)}";
     }
     public async Task SelectExistingAsync(string id, long expectedRevision, CancellationToken ct = default)
     {

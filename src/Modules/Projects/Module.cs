@@ -3,8 +3,11 @@ using Jindan.Desktop.Contracts;
 using Jindan.Core;
 namespace Jindan.Modules.Projects;
 
-public sealed class Module : RecordModule
+public sealed class Module : RecordModule, IProjectSelectionModule75
 {
+    public Form CreateProjectSelectionDialog() => new ProjectPicker75(Services);
+    public override NavigationGroup73 NavigationGroup => new("projects", "프로젝트", "projects", 10, false);
+    public override IReadOnlyList<NavigationRoute73> SidebarRoutes => [new("projects", "프로젝트관리"), new("processes", "공정관리")];
     public override string ModuleId => "projects";
     public override string DisplayName => "프로젝트 관리";
 #if PATCH_V2

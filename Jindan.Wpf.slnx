@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="src/Wpf/Jindan.Wpf.Desktop/Jindan.Wpf.Desktop.csproj" />
+  <Project Path="src/Wpf/Jindan.Wpf.Login/Jindan.Wpf.Login.csproj" />
+  <Project Path="src/Wpf/Jindan.Wpf.Projects/Jindan.Wpf.Projects.csproj" />
+  <Project Path="src/Wpf/Jindan.Wpf.Shared/Jindan.Wpf.Shared.csproj" />
+  <Project Path="src/Wpf/Jindan.Startup/Jindan.Startup.csproj" />
+  <Project Path="src/Wpf/Jindan.Startup.Server/Jindan.Startup.Server.csproj" />
+  <Project Path="tests/Jindan.Wpf.Startup.Tests/Jindan.Wpf.Startup.Tests.csproj" />
+</Solution>

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>Exe</OutputType><UseAppHost>false</UseAppHost><UseWPF>true</UseWPF></PropertyGroup>
+ <ItemGroup>
+  <ProjectReference Include="../../src/Wpf/Jindan.Wpf.Desktop/Jindan.Wpf.Desktop.csproj" />
+  <ProjectReference Include="../../src/Wpf/Jindan.Wpf.Login/Jindan.Wpf.Login.csproj" />
+  <ProjectReference Include="../../src/Wpf/Jindan.Wpf.Projects/Jindan.Wpf.Projects.csproj" />
+ </ItemGroup>
+</Project>

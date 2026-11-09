@@ -1,7 +1,29 @@
 # Jindan modular workbench — ROADMAP66
 
-Windows x64 .NET 10 WinForms MDI workbench with nine explicitly loaded feature
-packages. Native business modules use shared contracts and the local repository;
+Current UI development: [WPF startup76](docs/wpf-startup76.md), a separate native
+WPF + WPF UI host with login and project-picker DLLs connected to the existing
+Firebase service. Use `Jindan.Wpf.slnx` for this limited startup implementation.
+No WPF deployment package is produced; the existing WinForms workbench below
+and its report functionality remain preserved.
+
+Latest refinement: [project chooser and .tzprj connection files77](docs/project-files77.md)
+adds muted surfaces, cancellable project switching and small connection-file
+open/save. The additive connection-metadata rules were deployed to `work-jindan`
+on 2026-11-09 after 32 synthetic permission checks; active source was verified.
+The real project save/import/re-export check passed on the same day; the source
+project remained unchanged. Drive/report targets on that project are not yet configured.
+The follow-up UI refinement78 uses a consistent "프로젝트 열기" title and
+project-name/file-path columns, remembers user-selected file locations locally,
+and reuses accessible existing projects when reopening known files. The shell
+starts maximized with normal maximize/restore/resize controls available.
+69 synthetic startup/file/UI checks pass; see the latest section of the same document.
+
+Windows x64 .NET 10 WinForms workbench with nine explicitly loaded feature
+packages. Business documents use MDI; Report Studio switches to a dedicated
+workspace that preserves its open document when returning to business screens.
+The current shell has one menu row and DLL-provided sidebar navigation; see
+[navigation 73](docs/navigation73.md) and [UI simplification 72](docs/simple-ui72.md).
+Native business modules use shared contracts and the local repository;
 report layout and CAD currently use isolated, bounded Node workers. This is not
 a pure C# PDF/HWPX renderer or approval for company report production.
 
@@ -18,6 +40,10 @@ paid AI provider is enabled. `reportReady=false`, `supervisorAccepted=false`.
   This planning document does not change frozen handoff evidence or enable cloud services.
 
 ## Review and build
+
+- Current development: [native Drive/Firebase read connections71](docs/cloud-read71.md).
+  This adds explicit session connections and diagnostics to the native modular app.
+  FINAL70 below remains an immutable historical candidate, not the new development build.
 
 - Current EXECUTE70 candidate, scoped implementation and exact self-tests:
   [handoff/FINAL70.md](handoff/FINAL70.md), [docs/run-review70.md](docs/run-review70.md).
@@ -67,5 +93,6 @@ selection/retention, source metadata loss, tab changes, object editability,
 picture-save settings and real current measurements/engineering decisions remain
 separate gates. Never treat retained historical measurements as current data or
 programmatic review acknowledgement as human approval. No commit, push, upload,
-deployment, font installation or security/paid-provider setting change is part
-of this work.
+font installation or paid-provider setting change is part of this work.
+The explicitly approved additive Firestore rules deployment is recorded in
+[project-files77](docs/project-files77.md); it does not change these report gates.

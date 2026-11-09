@@ -16,7 +16,10 @@ public sealed class RichTextEditor70 : UserControl
     {
         Height = 290; MinimumSize = new Size(150, 230); Dock = DockStyle.Top;
         Controls.Add(Editor); Controls.Add(toolbar);
-        void Action(string caption, Action action) { var b = new Button() { Text = caption, AutoSize = true, MinimumSize = new Size(28, 27), Margin = new Padding(1), TabStop = false }; b.Click += (_, _) => { action(); NotifyChanged(); Editor.Focus(); }; toolbar.Controls.Add(b); }
+        var extra = new ContextMenuStrip();
+        var format = new Button { Text = "서식", ContextMenuStrip = extra, AutoSize = true, Margin = new Padding(1), TabStop = false }; format.Click += (_, _) => extra.Show(format, new Point(0, format.Height));
+        Disposed += (_, _) => extra.Dispose();
+        void Action(string caption, Action action) { if (caption is not ("굵게" or "기울임" or "밑줄")) { extra.Items.Add(caption, null, (_, _) => { action(); NotifyChanged(); Editor.Focus(); }); return; } var b = new Button() { Text = caption, AutoSize = true, MinimumSize = new Size(28, 27), Margin = new Padding(1), TabStop = false }; b.Click += (_, _) => { action(); NotifyChanged(); Editor.Focus(); }; toolbar.Controls.Add(b); }
         Action("굵게", () => Toggle(FontStyle.Bold)); Action("기울임", () => Toggle(FontStyle.Italic)); Action("밑줄", () => Toggle(FontStyle.Underline)); Action("취소선", () => Toggle(FontStyle.Strikeout));
         var size = new ComboBox() { Width = 55, DropDownStyle = ComboBoxStyle.DropDownList, Margin = new Padding(1), Name = "RichFontSize" }; size.Items.AddRange(new object[] { 10, 11, 12, 14, 16, 18, 24, 32 }); size.SelectedItem = 11; size.SelectedIndexChanged += (_, _) => { if (filling || size.SelectedItem is not int points) return; var font = Editor.SelectionFont ?? Editor.Font; Editor.SelectionFont = new Font(font.FontFamily, points, font.Style); NotifyChanged(); Editor.Focus(); }; toolbar.Controls.Add(size);
         Action("서체", () => { using var dialog = new FontDialog() { Font = Editor.SelectionFont ?? Editor.Font, MinSize = 8, MaxSize = 72, ShowEffects = false }; if (dialog.ShowDialog(this) == DialogResult.OK) Editor.SelectionFont = dialog.Font; });
@@ -25,6 +28,7 @@ public sealed class RichTextEditor70 : UserControl
         Action("왼쪽", () => Editor.SelectionAlignment = HorizontalAlignment.Left); Action("가운데", () => Editor.SelectionAlignment = HorizontalAlignment.Center); Action("오른쪽", () => Editor.SelectionAlignment = HorizontalAlignment.Right);
         Action("목록", () => Editor.SelectionBullet = !Editor.SelectionBullet); Action("인용 들여쓰기", () => Editor.SelectionIndent = Editor.SelectionIndent == 0 ? 24 : 0);
         Action("가로 구분", () => Editor.SelectedText = "\n────────────\n");
+        toolbar.Controls.Add(format);
         Editor.TextChanged += (_, _) => NotifyChanged();
     }
     void Toggle(FontStyle style) { var font = Editor.SelectionFont ?? Editor.Font; Editor.SelectionFont = new Font(font.FontFamily, font.Size, font.Style ^ style); }

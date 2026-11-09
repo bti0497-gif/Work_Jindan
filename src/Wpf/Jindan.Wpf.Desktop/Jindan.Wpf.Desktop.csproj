@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>WinExe</OutputType><UseAppHost>false</UseAppHost><UseWPF>true</UseWPF><ApplicationIcon>../../Jindan.Desktop/Assets/brand.ico</ApplicationIcon></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Jindan.Wpf.Shared/Jindan.Wpf.Shared.csproj" />
+    <ProjectReference Include="../Jindan.Startup.Server/Jindan.Startup.Server.csproj" />
+    <ProjectReference Include="../Jindan.Wpf.Login/Jindan.Wpf.Login.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Jindan.Wpf.Projects/Jindan.Wpf.Projects.csproj" ReferenceOutputAssembly="false" />
+    <EmbeddedResource Include="../../Jindan.Desktop/Assets/server-public.json" LogicalName="server-public.json" />
+  </ItemGroup>
+  <Target Name="CopyStartupModules" AfterTargets="Build">
+    <ItemGroup><StartupModule Include="../Jindan.Wpf.Login/bin/$(Configuration)/$(TargetFramework)/Jindan.Wpf.Login.dll;../Jindan.Wpf.Projects/bin/$(Configuration)/$(TargetFramework)/Jindan.Wpf.Projects.dll" /></ItemGroup>
+    <Copy SourceFiles="@(StartupModule)" DestinationFolder="$(TargetDir)modules" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

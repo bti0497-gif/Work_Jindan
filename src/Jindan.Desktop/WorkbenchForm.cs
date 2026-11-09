@@ -5,15 +5,15 @@ namespace Jindan.Desktop;
 
 public sealed partial class WorkbenchForm : Form
 {
+    private readonly string? startupProject75;
     private readonly DesktopModules modules;
     private readonly IWorkspaceServices services;
     private readonly string installationRoot;
     private readonly MenuStrip menu = new();
-    private readonly TabControl tabs = new() { Dock = DockStyle.Top, Height = 32 };
-    private readonly ToolStrip projectTools = new() { Dock = DockStyle.Top, GripStyle = ToolStripGripStyle.Hidden, CanOverflow = false };
     private long projectRefreshGeneration;
-    private readonly ToolStrip tools = new() { Dock = DockStyle.Top, GripStyle = ToolStripGripStyle.Hidden };
-    private readonly ToolStripComboBox projects = new() { AutoSize = false, Width = 290, DropDownWidth = 420, DropDownStyle = ComboBoxStyle.DropDownList };
+    private readonly List<ProjectChoice73> projectChoices = [new(null, "프로젝트를 선택하세요")];
+    private string? selectedProjectId;
+    private readonly Dictionary<DocumentForm, WorkspaceSidebar73> sidebars = new();
     private readonly StatusStrip status = new();
     private readonly ToolStripStatusLabel state = new() { Spring = true, TextAlign = ContentAlignment.MiddleLeft };
     private readonly Panel left = new() { Dock = DockStyle.Left, Width = 260, Padding = new Padding(5) }, right = new() { Dock = DockStyle.Right, Width = 280, Padding = new Padding(5) };
@@ -23,62 +23,106 @@ public sealed partial class WorkbenchForm : Form
     private int preferredLeftWidth = 260, preferredRightWidth = 280;
     private bool leftVisible = true, rightVisible = true;
     private DocumentForm? previous;
-    private bool syncing, closing, closeRequestPending, dpiClampPending;
+    private bool closing, closeRequestPending, dpiClampPending;
     private string arrangement = "tabs";
     private readonly TaskCompletionSource ready = new(TaskCreationOptions.RunContinuationsAsynchronously);
     public Task Ready => ready.Task;
     public bool LogoutRequested { get; private set; }
-    public IReadOnlyList<DocumentForm> Documents => MdiChildren.OfType<DocumentForm>().ToArray();
-    public string? SelectedProjectId => projects.SelectedItem is ProjectItem project ? project.Id : null;
+    public IReadOnlyList<DocumentForm> Documents => MdiChildren.OfType<DocumentForm>().Concat(studio is { IsDisposed: false } ? new[] { studio } : Array.Empty<DocumentForm>()).ToArray();
+    public string? SelectedProjectId => selectedProjectId;
     public int ModuleCount => modules.Entries.Count;
     public int LeftPanelWidth => left.Width; public int RightPanelWidth => right.Width;
     public string? ActivePanelContextId => previous?.Document.Context.ContextId;
-    public WorkbenchForm(string root, DesktopModules catalog, IWorkspaceServices value)
+    public WorkbenchForm(string root, DesktopModules catalog, IWorkspaceServices value, string? initialProjectId = null)
     {
-        installationRoot = root; modules = catalog; services = value; Text = "기술진단팀 · 모듈형 작업대"; Name = "JindanWorkbench"; IsMdiContainer = true; Width = 1450; Height = 940; MinimumSize = new Size(900, 620); StartPosition = FormStartPosition.CenterScreen; AutoScaleMode = AutoScaleMode.Dpi;
+        startupProject75 = initialProjectId; installationRoot = root; modules = catalog; services = value; Text = "기술진단팀 · 모듈형 작업대"; Name = "JindanWorkbench"; IsMdiContainer = true; Width = 1450; Height = 940; MinimumSize = new Size(900, 620); StartPosition = FormStartPosition.CenterScreen; AutoScaleMode = AutoScaleMode.Dpi;
+        WindowState = FormWindowState.Maximized; MaximizeBox = false; MinimizeBox = true; FormBorderStyle = FormBorderStyle.FixedSingle; Icon = ApplicationBrand75.LoadIcon();
+        Font = new Font("맑은 고딕", 10F); menu.Font = Font; status.Font = Font;
+        menu.Padding = new Padding(8, 5, 8, 5); menu.BackColor = Color.White;
+        left.BackColor = Color.FromArgb(242, 246, 252); right.BackColor = Color.FromArgb(247, 249, 253);
         foreach (var entry in modules.Entries) entry.Module.Initialize(services);
         if (services is WorkspaceServices owned) owned.OpenRequested = (module, project, source) => { try { if (project is not null) SelectProject(project); var opened = OpenDocument(module); if (source is not null) { if (opened.Document is not ISourceDocument target) { opened.Close(); return false; } _ = RunAsync(() => target.OpenSourceAsync(source)); } return true; } catch { state.Text = "요청한 문서·프로젝트 모듈을 열 수 없습니다."; return false; } };
-        var file = new ToolStripMenuItem("파일"); file.DropDownItems.Add("자료 새로 읽기", null, async (_, _) => await RefreshProjectsAsync()); file.DropDownItems.Add("업무·파일 저장소 사본 내보내기", null, async (_, _) => await ExportWorkspaceAsync()); file.DropDownItems.Add("가져오기 미리보기", null, async (_, _) => await ImportWorkspaceAsync()); file.DropDownItems.Add("마지막 가져오기 되돌리기", null, async (_, _) => await RunAsync(() => services.Data.RollbackLastImportAsync(services.Actor, MessageBox.Show(this, "마지막 가져오기를 되돌릴까요?", "되돌리기", MessageBoxButtons.YesNo) == DialogResult.Yes))); file.DropDownItems.Add("암호 변경", null, (_, _) => ChangePassword()); file.DropDownItems.Add("종료", null, (_, _) => Close());
-        var feature = new ToolStripMenuItem("업무"); foreach (var (module, _) in modules.Entries) { var captured = module; feature.DropDownItems.Add(module.DisplayName, null, (_, _) => OpenDocument(captured.ModuleId)); tools.Items.Add(new ToolStripButton(module.DisplayName, null, (_, _) => OpenDocument(captured.ModuleId))); }
-        file.DropDownItems.Add("이전 업무 JSON 가져오기", null, async (_, _) => await ImportLegacyWorkAsync());
+        var file = new ToolStripMenuItem("설정");
+        if (services is Jindan.Contracts.Cloud.ICloudWorkspaceAccess cloud) file.DropDownItems.Add("서버 연결", null, (_, _) => { using var window = new CloudConnectionsWindow71(cloud.Cloud); window.ShowDialog(this); });
+        if (services is not WorkspaceServices { ServerSession: true }) file.DropDownItems.Add("비밀번호 변경", null, (_, _) => ChangePassword());
         file.DropDownItems.Add("로그아웃", null, (_, _) => { LogoutRequested = true; Close(); });
-        var windows = new ToolStripMenuItem("창"); windows.DropDownItems.Add("탭 보기", null, (_, _) => Arrange("tabs")); windows.DropDownItems.Add("좌우 비교", null, (_, _) => Arrange("vertical")); windows.DropDownItems.Add("상하 비교", null, (_, _) => Arrange("horizontal")); windows.DropDownItems.Add("계단식", null, (_, _) => Arrange("cascade")); windows.DropDownItems.Add("왼쪽 패널 표시", null, (_, _) => TogglePanel("left")); windows.DropDownItems.Add("오른쪽 패널 표시", null, (_, _) => TogglePanel("right")); windows.DropDownItems.Add("왼쪽 패널 분리/복귀", null, (_, _) => ToggleFloating("left")); windows.DropDownItems.Add("오른쪽 패널 분리/복귀", null, (_, _) => ToggleFloating("right")); windows.DropDownItems.Add("패널 위치 맞바꾸기", null, (_, _) => SwapPanels()); windows.DropDownItems.Add("배치 저장", null, async (_, _) => await SaveLayoutAsync()); menu.Items.AddRange([file, feature, windows]); AddSync70Menu(); MainMenuStrip = menu;
-        projectTools.Items.Add(new ToolStripLabel("현재 프로젝트")); projectTools.Items.Add(projects); var refresh = new ToolStripButton("목록 갱신"); refresh.Click += async (_, _) => await RunAsync(RefreshProjectsAsync); projectTools.Items.Add(refresh);
-        status.Items.Add(state); state.Text = modules.Errors.Count > 0 ? "일부 모듈 차단: " + string.Join(", ", modules.Errors) : "독립 로컬 작업공간 · 보고서 실무 미승인";
-        Controls.Add(left); Controls.Add(leftSplitter); Controls.Add(right); Controls.Add(rightSplitter); Controls.Add(tabs); Controls.Add(tools); Controls.Add(projectTools); Controls.Add(menu); Controls.Add(status);
-        MdiChildActivate += ActiveChanged; tabs.SelectedIndexChanged += (_, _) => { if (!syncing && tabs.SelectedTab?.Tag is DocumentForm doc) doc.Activate(); }; projects.SelectedIndexChanged += ProjectChanged;
+        file.DropDownItems.Add("종료", null, (_, _) => Close());
+        foreach (var group in modules.Entries.Select(e => (e.Module as IModuleNavigation73)?.NavigationGroup).OfType<NavigationGroup73>().Where(g => !g.AdminOnly || services.Actor.Role == "admin").GroupBy(g => g.Id).Select(g => g.First()).OrderBy(g => g.Order))
+        {
+            var captured = modules.Entries.Any(e => e.Module.ModuleId == group.DefaultModule) ? group.DefaultModule : modules.Entries.First(e => (e.Module as IModuleNavigation73)?.NavigationGroup?.Id == group.Id).Module.ModuleId;
+            var item = new ToolStripMenuItem(group.Label) { Name = "Menu_" + group.Id, Tag = group.Id };
+            item.Click += (_, _) => NavigateToModule73(captured); menu.Items.Add(item);
+        }
+        menu.Name = "MainNavigation"; menu.Items.Add(file); MainMenuStrip = menu;
+        status.Items.Add(state); state.Text = modules.Errors.Count > 0 ? "일부 모듈 차단: " + string.Join(", ", modules.Errors) : services is WorkspaceServices { ServerSession: true } ? "서버 로그인 · 프로젝트 연결됨 · 기타 업무는 로컬 저장" : "독립 로컬 작업공간 · 보고서 실무 미승인";
+        Controls.Add(left); Controls.Add(leftSplitter); Controls.Add(right); Controls.Add(rightSplitter); Controls.Add(menu); Controls.Add(status);
+        InitializeStudioWorkspace();
+        MdiChildActivate += ActiveChanged;
+        Controls.OfType<MdiClient>().Single().SizeChanged += (_, _) => FitBusinessWorkspace74();
         Resize += (_, _) => ApplyPanelLayout(); leftSplitter.SplitterMoved += (_, _) => { preferredLeftWidth = Math.Clamp(left.Width, 140, 600); ApplyPanelLayout(); }; rightSplitter.SplitterMoved += (_, _) => { preferredRightWidth = Math.Clamp(right.Width, 140, 600); ApplyPanelLayout(); };
         DpiChanged += (_, _) => QueueOwnerBoundsClamp();
-        Shown += async (_, _) => { QueueOwnerBoundsClamp(); await RunAsync(async () => { await RestoreLayoutAsync(); await RefreshProjectsAsync(); if (modules.Entries.Any(e => e.Module.ModuleId == "projects")) OpenDocument("projects"); }); ready.TrySetResult(); };
-        KeyPreview = true; KeyDown += async (_, e) => { if (e.Control && e.KeyCode == Keys.S) { e.SuppressKeyPress = true; if (ActiveMdiChild is DocumentForm doc) await RunAsync(() => doc.Document.SaveAsync()); } if (e.Control && e.KeyCode == Keys.W) { e.SuppressKeyPress = true; ActiveMdiChild?.Close(); } };
+        Shown += async (_, _) => { QueueOwnerBoundsClamp(); await RunAsync(async () => { await RestoreLayoutAsync(); await RefreshProjectsAsync(); if (startupProject75 is not null) SelectProject(startupProject75); if (modules.Entries.Any(e => e.Module.ModuleId == "projects")) OpenDocument("projects"); }); ready.TrySetResult(); };
+        KeyPreview = true; KeyDown += async (_, e) => { if (e.Control && e.KeyCode == Keys.S) { e.SuppressKeyPress = true; if (CurrentDocument is DocumentForm doc) await RunAsync(() => doc.Document.SaveAsync()); } if (e.Control && e.KeyCode == Keys.W) { e.SuppressKeyPress = true; CurrentDocument?.Close(); } };
     }
-    private sealed record ProjectItem(string? Id, string Title) { public override string ToString() => Title; }
     public async Task RefreshProjectsAsync()
     {
-        var g = ++projectRefreshGeneration; var rows = await services.Data.ListAsync(services.Actor, new("projects")); if (g != projectRefreshGeneration || IsDisposed) return; var selected = SelectedProjectId; syncing = true; try { projects.Items.Clear(); projects.Items.Add(new ProjectItem(null, "프로젝트를 선택하세요")); foreach (var p in rows) projects.Items.Add(new ProjectItem(p.Id, p.Fields.GetValueOrDefault("title", p.Id))); projects.SelectedIndex = Enumerable.Range(0, projects.Items.Count).FirstOrDefault(i => ((ProjectItem)projects.Items[i]!).Id == selected); } finally { syncing = false; }
+        var generation = ++projectRefreshGeneration;
+        var rows = await services.Data.ListAsync(services.Actor, new("projects"));
+        if (generation != projectRefreshGeneration || IsDisposed) return;
+        projectChoices.Clear(); projectChoices.Add(new(null, "프로젝트를 선택하세요"));
+        projectChoices.AddRange(rows.Select(p => new ProjectChoice73(p.Id, p.Fields.GetValueOrDefault("title", p.Id))));
+        foreach (var (document, sidebar) in sidebars) sidebar.SetProjects(projectChoices, document.Document.Context.ProjectId);
     }
-    public void SelectProject(string id) { for (var i = 0; i < projects.Items.Count; i++) if (projects.Items[i] is ProjectItem p && p.Id == id) { projects.SelectedIndex = i; return; } throw new InvalidOperationException("프로젝트 목록에서 찾을 수 없습니다."); }
-    private void ProjectChanged(object? sender, EventArgs e) { if (syncing || ActiveMdiChild is not DocumentForm doc) return; try { doc.Document.SetContext(doc.Document.Context with { ProjectId = SelectedProjectId }); BindPanels(doc); } catch { state.Text = "미저장 변경이 있어 프로젝트 문맥을 유지합니다."; syncing = true; try { for (var i = 0; i < projects.Items.Count; i++) if (projects.Items[i] is ProjectItem p && p.Id == doc.Document.Context.ProjectId) projects.SelectedIndex = i; } finally { syncing = false; } } }
+    public void SelectProject(string id)
+    {
+        if (!projectChoices.Any(p => p.Id == id)) throw new InvalidOperationException("프로젝트 목록에서 찾을 수 없습니다.");
+        ChangeProject73(id);
+    }
+    private void ChangeProject73(string? id)
+    {
+        if (id is null && startupProject75 is not null) { if (CurrentDocument is DocumentForm current && sidebars.TryGetValue(current, out var selectedSidebar)) selectedSidebar.SetProjects(projectChoices, current.Document.Context.ProjectId); return; }
+        if (CurrentDocument is not DocumentForm document) { selectedProjectId = id; return; }
+        try { document.Document.SetContext(document.Document.Context with { ProjectId = id }); selectedProjectId = id; BindPanels(document); }
+        catch { state.Text = "미저장 변경이 있어 프로젝트를 유지합니다."; selectedProjectId = document.Document.Context.ProjectId; if (sidebars.TryGetValue(document, out var sidebar)) sidebar.SetProjects(projectChoices, selectedProjectId); }
+    }
+    public DocumentForm NavigateToModule73(string moduleId)
+    {
+        if (moduleId == "report-studio") return OpenStudio();
+        if (studioActive) ReturnToWork();
+        var existing = MdiChildren.OfType<DocumentForm>().FirstOrDefault(d => d.Module.ModuleId == moduleId && d.Document.Context.ProjectId == SelectedProjectId);
+        if (existing is not null) { existing.Activate(); return existing; }
+        return OpenDocument(moduleId);
+    }
     public DocumentForm OpenDocument(string moduleId)
     {
+        if (moduleId == "report-studio") return OpenStudio();
+        if (studioActive) ReturnToWork();
         var module = modules.Entries.Single(e => e.Module.ModuleId == moduleId).Module;
-        var context = new DocumentContext(Guid.NewGuid().ToString("N"), moduleId, SelectedProjectId, services.Actor.Id); var document = module.CreateDocument(context); var form = new DocumentForm(module, document) { MdiParent = this };
+        var context = new DocumentContext(Guid.NewGuid().ToString("N"), moduleId, SelectedProjectId, services.Actor.Id); var document = module.CreateDocument(context); if (services is WorkspaceServices diagnosticServices) diagnosticServices.RecordModuleOpen(moduleId); var form = new DocumentForm(module, document) { MdiParent = this, Font = Font, ControlBox = false, ShowIcon = false, FormBorderStyle = FormBorderStyle.None };
         EventHandler? recordsChanged = null;
         if (moduleId == "projects" && document is RecordDocument records)
         {
             recordsChanged = async (_, _) => await RunAsync(RefreshProjectsAsync);
             records.RecordsChanged += recordsChanged;
         }
-        var tab = new TabPage(document.Title) { Tag = form }; tabs.TabPages.Add(tab); form.FormClosed += (_, _) => { if (recordsChanged is not null && document is RecordDocument records) records.RecordsChanged -= recordsChanged; if (previous == form) { UnbindPanels(); previous = null; } tabs.TabPages.Remove(tab); tab.Dispose(); services.Reports.Invalidate(context.ContextId); }; form.TextChanged += (_, _) => tab.Text = form.Text; form.Show(); if (arrangement == "tabs") form.WindowState = FormWindowState.Maximized; tabs.SelectedTab = tab; return form;
+        form.FormClosed += (_, _) => { if (recordsChanged is not null && document is RecordDocument records) records.RecordsChanged -= recordsChanged; if (previous == form) { UnbindPanels(); previous = null; } ReleaseSidebar73(form); services.Reports.Invalidate(context.ContextId); };
+        form.Show(); FitBusinessWorkspace74(); return form;
     }
-    private void ActiveChanged(object? sender, EventArgs e) { if (previous is not null && !previous.IsDisposed) previous.Module.Deactivate(previous.Document); if (ActiveMdiChild is not DocumentForm active) { UnbindPanels(); previous = null; return; } previous = active; active.Module.Activate(active.Document); BindPanels(active); syncing = true; try { foreach (TabPage tab in tabs.TabPages) if (tab.Tag == active) tabs.SelectedTab = tab; var id = active.Document.Context.ProjectId; for (var i = 0; i < projects.Items.Count; i++) if (projects.Items[i] is ProjectItem p && p.Id == id) projects.SelectedIndex = i; } finally { syncing = false; } }
+    private void ActiveChanged(object? sender, EventArgs e)
+    {
+        if (studioActive) return;
+        if (previous is not null && !previous.IsDisposed) previous.Module.Deactivate(previous.Document);
+        if (ActiveMdiChild is not DocumentForm active) { UnbindPanels(); previous = null; return; }
+        previous = active; selectedProjectId = active.Document.Context.ProjectId;
+        active.Module.Activate(active.Document); BindPanels(active); FitBusinessWorkspace74();
+    }
     // Contributions belong to the document. Hide them while their old native
     // parent is still valid, before a switch/close detaches them. A live nested
     // SplitContainer otherwise paints during the parentless visibility cascade.
     private static void DetachPanels(Control host) { foreach (Control control in host.Controls) control.Visible = false; host.Controls.Clear(); }
     private void UnbindPanels() { DetachPanels(left); DetachPanels(right); foreach (var window in floating.Values) DetachPanels(window); }
-    private void BindPanels(DocumentForm document) { UnbindPanels(); Control l = document.Module.CreateLeftPanel(document.Document), r = document.Module.CreateRightPanel(document.Document); l.Dock = DockStyle.Fill; r.Dock = DockStyle.Fill; (floating.GetValueOrDefault("left")?.Controls ?? left.Controls).Add(l); (floating.GetValueOrDefault("right")?.Controls ?? right.Controls).Add(r); l.Visible = true; r.Visible = true; left.AccessibleDescription = document.Document.Context.ContextId; right.AccessibleDescription = document.Document.Context.ContextId; }
-    public void Arrange(string mode) { arrangement = mode; foreach (var doc in Documents) doc.WindowState = FormWindowState.Normal; if (mode == "tabs") { if (ActiveMdiChild is not null) ActiveMdiChild.WindowState = FormWindowState.Maximized; } else LayoutMdi(mode == "vertical" ? MdiLayout.TileVertical : mode == "horizontal" ? MdiLayout.TileHorizontal : MdiLayout.Cascade); }
+    private void BindPanels(DocumentForm document) { UnbindPanels(); Control l = Sidebar73(document), r = document.Module.CreateRightPanel(document.Document); l.Dock = DockStyle.Fill; r.Dock = DockStyle.Fill; (floating.GetValueOrDefault("left")?.Controls ?? left.Controls).Add(l); (floating.GetValueOrDefault("right")?.Controls ?? right.Controls).Add(r); l.Visible = true; r.Visible = true; left.AccessibleDescription = document.Document.Context.ContextId; right.AccessibleDescription = document.Document.Context.ContextId; }
+    public void Arrange(string mode) { arrangement = mode; foreach (var doc in Documents) doc.WindowState = FormWindowState.Normal; if (mode == "tabs") { FitBusinessWorkspace74(); } else LayoutMdi(mode == "vertical" ? MdiLayout.TileVertical : mode == "horizontal" ? MdiLayout.TileHorizontal : MdiLayout.Cascade); }
     public void TogglePanel(string side) { if (side == "left") leftVisible = !leftVisible; else rightVisible = !rightVisible; ApplyPanelLayout(); }
     public void SetPanelWidths(int leftWidth, int rightWidth) { preferredLeftWidth = Math.Clamp(leftWidth, 140, 600); preferredRightWidth = Math.Clamp(rightWidth, 140, 600); ApplyPanelLayout(); }
     private void QueueOwnerBoundsClamp()
@@ -135,5 +179,5 @@ public sealed partial class WorkbenchForm : Form
         }
         finally { closeRequestPending = false; }
     }
-    protected override void Dispose(bool disposing) { if (disposing) { if (services is WorkspaceServices owned) owned.OpenRequested = null; MdiChildActivate -= ActiveChanged; foreach (var f in floating.Values.ToArray()) { DetachPanels(f); f.Dispose(); } floating.Clear(); UnbindPanels(); } base.Dispose(disposing); }
+    protected override void Dispose(bool disposing) { if (disposing) { if (services is WorkspaceServices owned) owned.OpenRequested = null; MdiChildActivate -= ActiveChanged; foreach (var f in floating.Values.ToArray()) { DetachPanels(f); f.Dispose(); } floating.Clear(); UnbindPanels(); foreach (var sidebar in sidebars.Values) sidebar.Dispose(); sidebars.Clear(); } base.Dispose(disposing); }
 }

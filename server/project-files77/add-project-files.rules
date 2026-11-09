@@ -1,0 +1,27 @@
+    // Add inside match /databases/{database}/documents, before the deny-all match.
+    // Existing collection rules (including personal tasks) remain unchanged.
+    function validProjectFile77(data, projectId) {
+      return data.keys().hasAll(['projectId', 'ownerUid', 'sourceSha256', 'schemaVersion', 'metadataJson', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['projectId', 'ownerUid', 'sourceSha256', 'schemaVersion', 'metadataJson', 'createdAt', 'updatedAt'])
+        && data.projectId == projectId && projectId.size() > 0 && projectId.size() <= 128
+        && data.ownerUid is string && data.ownerUid.size() > 0
+        && data.sourceSha256 is string && data.sourceSha256.matches('^[a-f0-9]{64}$')
+        && data.schemaVersion == 1
+        && data.metadataJson is string && data.metadataJson.size() > 0 && data.metadataJson.size() <= 300000
+        && data.createdAt is string && data.updatedAt is string;
+    }
+    match /jindan_project_files/{projectId} {
+      // Like the existing project list, active company members can read shared connection metadata.
+      // Missing-document gets are needed to recover/retry a create-only registration.
+      allow get: if member();
+      allow list: if false;
+      allow create: if member() && validProjectFile77(request.resource.data, projectId)
+        && request.resource.data.ownerUid == request.auth.uid
+        && getAfter(/databases/$(database)/documents/jindan_projects/$(projectId)).data.ownerUid == request.auth.uid
+        && getAfter(/databases/$(database)/documents/jindan_projects/$(projectId)).data.deleted == false;
+      allow update: if member() && (resource.data.ownerUid == request.auth.uid || admin())
+        && validProjectFile77(request.resource.data, projectId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['metadataJson', 'updatedAt'])
+        && get(/databases/$(database)/documents/jindan_projects/$(projectId)).data.deleted == false;
+      allow delete: if false;
+    }

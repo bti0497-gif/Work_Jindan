@@ -4,6 +4,8 @@ namespace Jindan.Modules.Tasks;
 
 public sealed class Module : RecordModule
 {
+    public override NavigationGroup73 NavigationGroup => new("tasks", "할일관리", "tasks", 30, false);
+    public override IReadOnlyList<NavigationRoute73> SidebarRoutes => [new("tasks", "할일 목록")];
     public override string ModuleId => "tasks";
     public override string DisplayName => "할 일 관리";
     public override RecordSchema Schema => new("tasks", DisplayName, [new("title", "할 일", Required: true), new("startDate", "시작일 (YYYY-MM-DD)", "date"), new("endDate", "마감일 (YYYY-MM-DD)", "date"), new("status", "상태", Choices: ["할 일", "진행중", "완료"]), new("priority", "우선순위", Choices: ["보통", "높음", "낮음"]), new("isPublic", "공개 일정", Choices: ["false", "true"]), new("assignee", "담당자"), new("relatedProjectId", "관련 프로젝트 식별자"), new("content", "상세 내용", "multiline")], false);

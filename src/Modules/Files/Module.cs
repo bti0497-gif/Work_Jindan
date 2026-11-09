@@ -4,7 +4,10 @@ namespace Jindan.Modules.Files;
 
 public sealed class Module : RecordModule
 {
+    public override NavigationGroup73 NavigationGroup => new("files", "파일관리", "files", 20, false);
+    public override IReadOnlyList<NavigationRoute73> SidebarRoutes => [new("files", "파일 목록")];
     public override string ModuleId => "files";
+    public override string Version => "1.0.1";
     public override string DisplayName => "파일·자료 관리";
     public override RecordSchema Schema => new("files", DisplayName, [new("title", "자료명", Required: true), new("assetId", "원본 자산 식별자", "readonly", true), new("sha256", "원본 SHA256", "readonly"), new("size", "바이트", "readonly"), new("category", "분류", Choices: ["일반", "보고서", "계측", "설계", "사진", "CAD"]), new("folderId", "로컬 폴더 식별자"), new("content", "설명", "multiline")]);
     public override void Initialize(IWorkspaceServices services) { base.Initialize(services); services.Data.RegisterSchema(new("file-folders", "로컬 자료 폴더", [new("title", "폴더명", Required: true), new("parentId", "상위 폴더")], true)); }
@@ -12,8 +15,9 @@ public sealed class Module : RecordModule
 }
 public sealed partial class FileDocument : RecordDocument, ISourceDocument
 {
-    public FileDocument(IWorkspaceServices services, RecordSchema schema, DocumentContext context) : base(services, schema, context) { AddAction("로컬 파일 가져오기", ImportAsync); AddAction("원본 내보내기", ExportAsync); AddAction("로컬 내용 보기", PreviewAsync); AddAction("Drive 목록 캐시 · 로컬 시험", OpenDriveCacheAsync); InitializeFolders(); }
+    public FileDocument(IWorkspaceServices services, RecordSchema schema, DocumentContext context) : base(services, schema, context) { AddAction("로컬 파일 가져오기", ImportAsync); AddAction("원본 내보내기", ExportAsync); AddAction("로컬 내용 보기", PreviewAsync); AddAction("Drive 목록 캐시 · 로컬 시험", OpenDriveCacheAsync); InitializeFolders(); InitializeCloud71(); }
     async Task OpenDriveCacheAsync() { if (Context.ProjectId is null) throw new InvalidOperationException("프로젝트를 선택하세요."); await Services.Data.ListAsync(Services.Actor, new("files", Context.ProjectId)); using var view = new DriveCacheWindow(Services, Context); view.ShowDialog(this); }
+    void InitializeCloud71() { if (Services is Jindan.Contracts.Cloud.ICloudWorkspaceAccess access) AddAction("공유 Drive · 서버 조회", () => { using var window = new CloudDriveWindow71(access.Cloud); window.ShowDialog(this); return Task.CompletedTask; }); }
     public Task<WorkRecord> ImportPathAsync(string file, CancellationToken ct = default) => ImportPathAsync(file, LocalFileDuplicatePolicy.Reject, ct);
     public async Task<WorkRecord> ImportPathAsync(string file, LocalFileDuplicatePolicy policy, CancellationToken ct = default)
     {

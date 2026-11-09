@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.Loader;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -18,6 +18,7 @@ public sealed record ModuleManifest
     public int MinimumHostContractMajor { get; init; } = 1;
     public int MaximumHostContractMajor { get; init; } = 1;
     public int DataSchemaVersion { get; init; } = 1;
+    public string[] RequiredHostCapabilities { get; init; } = [];
     public PackageDependency[] Dependencies { get; init; } = [];
     public PackageFile[] Files { get; init; } = [];
 }
@@ -67,6 +68,7 @@ public static partial class ModuleCatalog
         catch (JsonException) { throw new PackageException("MANIFEST_INVALID", "Module manifest JSON is invalid."); }
         if (manifest.SchemaVersion != 1 || string.IsNullOrEmpty(manifest.ModuleId) || !Identifier().IsMatch(manifest.ModuleId) || !System.Version.TryParse(manifest.Version, out _) || string.IsNullOrWhiteSpace(manifest.EntryType) || manifest.DataSchemaVersion < 1 || manifest.Files is null || manifest.Dependencies is null) throw new PackageException("MANIFEST_INVALID", "Module identity or schema is invalid.");
         if (manifest.MinimumHostContractMajor < 1 || manifest.MaximumHostContractMajor < manifest.MinimumHostContractMajor || hostContractMajor < manifest.MinimumHostContractMajor || hostContractMajor > manifest.MaximumHostContractMajor) throw new PackageException("INCOMPATIBLE", "Module host contract is incompatible.");
+        if (manifest.RequiredHostCapabilities is null || manifest.RequiredHostCapabilities.Any(c => c is not ("cloud-read/71" or "sidebar-navigation/73" or "project-selection/75"))) throw new PackageException("INCOMPATIBLE", "Required host capability is unavailable.");
         if (manifest.Files.Length is 0 or > 10000 || manifest.Files.Any(f => f is null)) throw new PackageException("LIMIT", "Module payload count is invalid.");
         var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase); long total = 0;
         foreach (var file in manifest.Files)

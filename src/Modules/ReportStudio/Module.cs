@@ -3,9 +3,11 @@ using Jindan.Desktop.Contracts;
 
 namespace Jindan.Modules.ReportStudio;
 
-public sealed class Module : IDesktopModule
+public sealed class Module : IDesktopModule, IModuleNavigation73
 {
     private IWorkspaceServices _services = null!;
+    public NavigationGroup73 NavigationGroup => new("report-studio", "보고서 스튜디오", "report-studio", 40);
+    public IReadOnlyList<NavigationRoute73> SidebarRoutes => [];
     public string ModuleId => "report-studio";
     public string DisplayName => "보고서 스튜디오";
     public string Version => "1.0.0";

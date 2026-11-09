@@ -5,6 +5,8 @@ namespace Jindan.Modules.Processes;
 
 public sealed class Module : RecordModule
 {
+    public override NavigationGroup73 NavigationGroup => new("projects", "프로젝트", "projects", 10, false);
+    public override IReadOnlyList<NavigationRoute73> SidebarRoutes => [new("projects", "프로젝트관리"), new("processes", "공정관리")];
     public override string ModuleId => "processes";
     public override string DisplayName => "공정·일정 관리";
     public override RecordSchema Schema => new("processes", DisplayName, [new("title", "공정·업무명", Required: true), new("startDate", "시작일 (YYYY-MM-DD)", "date"), new("endDate", "종료일 (YYYY-MM-DD)", "date"), new("isCompleted", "완료 여부", Choices: ["false", "true"]), new("progress", "진행률 (%)", "number"), new("relatedTask", "관련 업무 식별자"), new("content", "내용", "multiline")]);

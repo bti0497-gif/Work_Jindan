@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><UseWPF>true</UseWPF></PropertyGroup>
+  <ItemGroup><PackageReference Include="WPF-UI" Version="4.3.0" /><ProjectReference Include="../Jindan.Startup/Jindan.Startup.csproj" /></ItemGroup>
+  <ItemGroup><Resource Include="../../Jindan.Desktop/Assets/brand.png" Link="Assets/brand.png" /><Resource Include="../../Jindan.Desktop/Assets/brand.ico" Link="Assets/brand.ico" /></ItemGroup>
+</Project>
